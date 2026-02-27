@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initReviewsSlider();
     initMap();
     initContactForm();
-    initCountUp();
 
     setTimeout(() => {
       document.querySelector('.hero')?.classList.add('loaded');
@@ -224,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     L.control.zoom({ position: 'topright' }).addTo(map);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19
@@ -233,42 +232,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const goldIcon = L.divIcon({
       className: 'custom-marker',
       html: `<div style="
-        width: 16px; height: 16px;
+        width: 18px; height: 18px;
         background: #c9a96e;
-        border: 3px solid #fff;
+        border: 3px solid #1a1a2e;
         border-radius: 50%;
-        box-shadow: 0 2px 12px rgba(201,169,110,0.5);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 12px rgba(201,169,110,0.4);
       "></div>`,
-      iconSize: [16, 16],
-      iconAnchor: [8, 8],
+      iconSize: [18, 18],
+      iconAnchor: [9, 9],
       popupAnchor: [0, -12]
     });
 
     const greenIcon = L.divIcon({
       className: 'custom-marker',
       html: `<div style="
-        width: 14px; height: 14px;
-        background: #4ade80;
-        border: 3px solid #fff;
+        width: 16px; height: 16px;
+        background: #22c55e;
+        border: 3px solid #1a1a2e;
         border-radius: 50%;
-        box-shadow: 0 2px 12px rgba(74,222,128,0.4);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 10px rgba(34,197,94,0.3);
       "></div>`,
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
       popupAnchor: [0, -10]
     });
 
     const whiteIcon = L.divIcon({
       className: 'custom-marker',
       html: `<div style="
-        width: 12px; height: 12px;
-        background: #ffffff;
+        width: 14px; height: 14px;
+        background: #1a1a2e;
         border: 3px solid #c9a96e;
         border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35);
       "></div>`,
-      iconSize: [12, 12],
-      iconAnchor: [6, 6],
+      iconSize: [14, 14],
+      iconAnchor: [7, 7],
       popupAnchor: [0, -8]
     });
 
