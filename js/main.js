@@ -223,17 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     L.control.zoom({ position: 'topright' }).addTo(map);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19
-    }).addTo(map);
-
-    // Add labels as separate layer with dark styling
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
-      subdomains: 'abcd',
-      maxZoom: 19,
-      opacity: 0.6
     }).addTo(map);
 
     const goldIcon = L.divIcon({
@@ -241,9 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
       html: `<div style="
         width: 18px; height: 18px;
         background: #c9a96e;
-        border: 3px solid rgba(255,255,255,0.9);
+        border: 3px solid #1a1a2e;
         border-radius: 50%;
-        box-shadow: 0 0 16px rgba(201,169,110,0.7), 0 2px 12px rgba(201,169,110,0.5);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 12px rgba(201,169,110,0.4);
       "></div>`,
       iconSize: [18, 18],
       iconAnchor: [9, 9],
@@ -254,10 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
       className: 'custom-marker',
       html: `<div style="
         width: 16px; height: 16px;
-        background: #4ade80;
-        border: 3px solid rgba(255,255,255,0.9);
+        background: #22c55e;
+        border: 3px solid #1a1a2e;
         border-radius: 50%;
-        box-shadow: 0 0 14px rgba(74,222,128,0.6), 0 2px 12px rgba(74,222,128,0.4);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 10px rgba(34,197,94,0.3);
       "></div>`,
       iconSize: [16, 16],
       iconAnchor: [8, 8],
@@ -268,10 +261,10 @@ document.addEventListener('DOMContentLoaded', () => {
       className: 'custom-marker',
       html: `<div style="
         width: 14px; height: 14px;
-        background: #ffffff;
+        background: #1a1a2e;
         border: 3px solid #c9a96e;
         border-radius: 50%;
-        box-shadow: 0 0 12px rgba(255,255,255,0.4), 0 2px 8px rgba(0,0,0,0.3);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.35);
       "></div>`,
       iconSize: [14, 14],
       iconAnchor: [7, 7],

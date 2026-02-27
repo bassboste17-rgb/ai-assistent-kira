@@ -1060,17 +1060,24 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  border: 2px solid rgba(201, 169, 110, 0.2);
+  border: 2px solid rgba(201, 169, 110, 0.3);
 }
 
 #georgia-map {
   height: 550px;
   width: 100%;
-  background: #050508;
+  background: #f5f5f5;
 }
 
-#georgia-map .leaflet-tile-pane {
-  filter: brightness(0.7) saturate(0.3);
+#georgia-map .leaflet-control-zoom a {
+  background: #1a1a2e;
+  color: #c9a96e;
+  border-color: rgba(201, 169, 110, 0.3);
+}
+
+#georgia-map .leaflet-control-zoom a:hover {
+  background: #c9a96e;
+  color: #1a1a2e;
 }
 
 .map-legend {
@@ -1079,7 +1086,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   gap: 32px;
   padding: 24px;
-  background: rgba(26, 26, 46, 0.9);
+  background: rgba(26, 26, 46, 0.95);
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(201, 169, 110, 0.15);
 }
@@ -1758,10 +1765,11 @@ h1, h2, h3, h4, h5, h6 {
   }
   .map-legend {
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 12px;
+    padding: 16px;
   }
   #georgia-map {
-    height: 400px;
+    height: 350px;
   }
   .tour-featured-details {
     flex-wrap: wrap;
@@ -1786,5 +1794,20 @@ h1, h2, h3, h4, h5, h6 {
   }
   .review-quote {
     display: none;
+  }
+  #georgia-map {
+    height: 280px;
+  }
+  .map-container {
+    border-radius: 12px;
+  }
+  .map-legend {
+    gap: 8px;
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .legend-item {
+    font-size: 12px;
   }
 }
