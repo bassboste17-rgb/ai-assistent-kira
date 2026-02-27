@@ -1066,7 +1066,11 @@ h1, h2, h3, h4, h5, h6 {
 #georgia-map {
   height: 550px;
   width: 100%;
-  background: var(--color-dark);
+  background: #050508;
+}
+
+#georgia-map .leaflet-tile-pane {
+  filter: brightness(0.7) saturate(0.3);
 }
 
 .map-legend {
