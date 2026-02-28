@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initReviewsSlider();
     initMap();
     initContactForm();
+    initVideoModal();
+    initReviewForm();
 
     setTimeout(() => {
       document.querySelector('.hero')?.classList.add('loaded');
@@ -405,6 +407,186 @@ document.addEventListener('DOMContentLoaded', () => {
           form.reset();
         }, 3000);
       }, 1500);
+    });
+  }
+
+  /* ---------- Video Modal ---------- */
+  function initVideoModal() {
+    const openBtn = document.getElementById('openVideoBtn');
+    const modal = document.getElementById('videoModal');
+    const closeBtn = document.getElementById('closeVideoBtn');
+    const iframe = document.getElementById('videoIframe');
+
+    // Replace with your actual YouTube video ID
+    const videoUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0';
+
+    if (!openBtn || !modal) return;
+
+    openBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+      iframe.src = videoUrl;
+      document.body.style.overflow = 'hidden';
+    });
+
+    function closeModal() {
+      modal.classList.remove('active');
+      iframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+  }
+
+  /* ---------- Review Form ---------- */
+  function initReviewForm() {
+    const form = document.getElementById('reviewForm');
+    const starRating = document.getElementById('starRating');
+    const ratingInput = document.getElementById('reviewRating');
+
+    if (!form || !starRating) return;
+
+    let currentRating = 0;
+    const starBtns = starRating.querySelectorAll('.star-btn');
+
+    // Star hover effect
+    starBtns.forEach((btn) => {
+      btn.addEventListener('mouseenter', () => {
+        const hoverRating = parseInt(btn.dataset.rating);
+        starBtns.forEach((s) => {
+          const r = parseInt(s.dataset.rating);
+          s.classList.toggle('hover', r <= hoverRating && r > currentRating);
+        });
+      });
+
+      btn.addEventListener('click', () => {
+        currentRating = parseInt(btn.dataset.rating);
+        ratingInput.value = currentRating;
+        starBtns.forEach((s) => {
+          const r = parseInt(s.dataset.rating);
+          s.classList.toggle('active', r <= currentRating);
+          s.classList.remove('hover');
+        });
+      });
+    });
+
+    starRating.addEventListener('mouseleave', () => {
+      starBtns.forEach((s) => s.classList.remove('hover'));
+    });
+
+    // Form submission
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const firstName = document.getElementById('reviewFirstName').value.trim();
+      const lastName = document.getElementById('reviewLastName').value.trim();
+      const country = document.getElementById('reviewCountry').value;
+      const rating = parseInt(ratingInput.value);
+      const text = document.getElementById('reviewText').value.trim();
+
+      if (!firstName || !lastName || !country || rating === 0 || !text) {
+        if (rating === 0) {
+          alert('Пожалуйста, выберите оценку');
+          return;
+        }
+        return;
+      }
+
+      // Generate initials from first letter of first and last name
+      const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+
+      // Build star SVGs
+      let starsHtml = '';
+      for (let i = 0; i < 5; i++) {
+        if (i < rating) {
+          starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+        } else {
+          starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+        }
+      }
+
+      // Create new review card
+      const newCard = document.createElement('div');
+      newCard.className = 'review-card';
+      newCard.innerHTML = `
+        <div class="review-card-inner">
+          <span class="review-quote">&ldquo;</span>
+          <div class="review-stars">${starsHtml}</div>
+          <p class="review-text">${text}</p>
+          <div class="review-author">
+            <div class="review-avatar">${initials}</div>
+            <div class="review-info">
+              <h4>${firstName} ${lastName}</h4>
+              <p>${country}</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Append the new review card to the reviews track
+      const track = document.querySelector('.reviews-track');
+      if (track) {
+        track.appendChild(newCard);
+
+        // Add a new dot
+        const dotsContainer = document.querySelector('.reviews-dots');
+        if (dotsContainer) {
+          const newDot = document.createElement('button');
+          newDot.className = 'review-dot';
+          newDot.setAttribute('aria-label', `Отзыв ${track.children.length}`);
+          dotsContainer.appendChild(newDot);
+
+          // Bind click to the new dot
+          newDot.addEventListener('click', () => {
+            const dots = document.querySelectorAll('.review-dot');
+            const index = Array.from(dots).indexOf(newDot);
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+          });
+        }
+
+        // Navigate to the new review
+        const totalSlides = track.children.length;
+        const newIndex = totalSlides - 1;
+        track.style.transform = `translateX(-${newIndex * 100}%)`;
+        document.querySelectorAll('.review-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === newIndex);
+        });
+      }
+
+      // Show success state
+      const btn = form.querySelector('.btn-submit-review');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Отзыв добавлен!
+      `;
+      btn.style.background = '#4ade80';
+      btn.style.color = '#0f0f1a';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+        form.reset();
+        currentRating = 0;
+        ratingInput.value = 0;
+        starBtns.forEach((s) => {
+          s.classList.remove('active');
+          s.classList.remove('hover');
+        });
+      }, 3000);
     });
   }
 

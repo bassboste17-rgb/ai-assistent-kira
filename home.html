@@ -36,10 +36,10 @@
           Выбрать тур
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
-        <a href="#contact" class="btn-secondary">
+        <button type="button" class="btn-secondary" id="openVideoBtn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Смотреть видео
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -114,6 +114,41 @@
         <p class="section-subtitle">Выберите идеальный тур для себя — от горных приключений до винных дегустаций в солнечной Кахетии</p>
       </div>
       <div class="tours-grid">
+        <!-- Featured Tour (First / Top) -->
+        <div class="tour-featured animate-on-scroll">
+          <div class="tour-featured-image">
+            <img src="images/tour-svaneti.jpg" alt="Сванетия — горный регион Грузии">
+          </div>
+          <div class="tour-featured-content">
+            <div class="tour-featured-tag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Рекомендуем
+            </div>
+            <h3 class="tour-featured-title">Сванетия — жемчужина Кавказа</h3>
+            <p class="tour-featured-desc">Погрузитесь в мир средневековых сванских башен, величественных ледников и нетронутой природы высокогорного региона Грузии.</p>
+            <div class="tour-featured-details">
+              <span class="tour-featured-detail">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                3 дня / 2 ночи
+              </span>
+              <span class="tour-featured-detail">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                2-8 чел.
+              </span>
+              <span class="tour-featured-detail">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                4.9
+              </span>
+            </div>
+            <div class="tour-featured-bottom">
+              <span class="tour-featured-price">$195 <small>/ чел.</small></span>
+              <a href="#contact" class="btn-featured">
+                Забронировать
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
         <!-- Tour Card 1 -->
         <div class="tour-card animate-on-scroll delay-1">
           <div class="tour-card-image">
@@ -226,41 +261,6 @@
               Подробнее
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
-          </div>
-        </div>
-        <!-- Featured Tour -->
-        <div class="tour-featured animate-on-scroll">
-          <div class="tour-featured-image">
-            <img src="images/tour-svaneti.jpg" alt="Сванетия — горный регион Грузии">
-          </div>
-          <div class="tour-featured-content">
-            <div class="tour-featured-tag">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              Рекомендуем
-            </div>
-            <h3 class="tour-featured-title">Сванетия — жемчужина Кавказа</h3>
-            <p class="tour-featured-desc">Погрузитесь в мир средневековых сванских башен, величественных ледников и нетронутой природы высокогорного региона Грузии.</p>
-            <div class="tour-featured-details">
-              <span class="tour-featured-detail">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                3 дня / 2 ночи
-              </span>
-              <span class="tour-featured-detail">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                2-8 чел.
-              </span>
-              <span class="tour-featured-detail">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                4.9
-              </span>
-            </div>
-            <div class="tour-featured-bottom">
-              <span class="tour-featured-price">$195 <small>/ чел.</small></span>
-              <a href="#contact" class="btn-featured">
-                Забронировать
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-            </div>
           </div>
         </div>
       </div>
@@ -380,6 +380,72 @@
           </button>
         </div>
       </div>
+      <!-- Add Review Form -->
+      <div class="add-review-section animate-on-scroll">
+        <h3 class="add-review-title">Оставить отзыв</h3>
+        <p class="add-review-subtitle">Поделитесь своими впечатлениями о путешествии с DAMQ Travel</p>
+        <form id="reviewForm" class="review-form">
+          <div class="review-form-row">
+            <div class="form-group">
+              <label for="reviewFirstName">Имя</label>
+              <input type="text" id="reviewFirstName" placeholder="Ваше имя" required>
+            </div>
+            <div class="form-group">
+              <label for="reviewLastName">Фамилия</label>
+              <input type="text" id="reviewLastName" placeholder="Ваша фамилия" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reviewCountry">Страна</label>
+            <select id="reviewCountry" required>
+              <option value="">Выберите страну</option>
+              <option value="Россия">Россия</option>
+              <option value="Украина">Украина</option>
+              <option value="Беларусь">Беларусь</option>
+              <option value="Казахстан">Казахстан</option>
+              <option value="Грузия">Грузия</option>
+              <option value="Армения">Армения</option>
+              <option value="Азербайджан">Азербайджан</option>
+              <option value="Узбекистан">Узбекистан</option>
+              <option value="Германия">Германия</option>
+              <option value="Франция">Франция</option>
+              <option value="Израиль">Израиль</option>
+              <option value="Турция">Турция</option>
+              <option value="США">США</option>
+              <option value="Другая">Другая</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Оценка</label>
+            <div class="star-rating" id="starRating">
+              <button type="button" class="star-btn" data-rating="1" aria-label="1 star">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-rating="2" aria-label="2 stars">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-rating="3" aria-label="3 stars">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-rating="4" aria-label="4 stars">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+              <button type="button" class="star-btn" data-rating="5" aria-label="5 stars">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </button>
+            </div>
+            <input type="hidden" id="reviewRating" value="0">
+          </div>
+          <div class="form-group">
+            <label for="reviewText">Ваш отзыв</label>
+            <textarea id="reviewText" placeholder="Расскажите о вашем путешествии..." rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit-review">
+            Отправить отзыв
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -473,6 +539,18 @@
       </div>
     </div>
   </section>
+
+  <!-- Video Modal -->
+  <div class="video-modal-overlay" id="videoModal">
+    <div class="video-modal">
+      <button class="video-modal-close" id="closeVideoBtn" aria-label="Close video">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="video-modal-content">
+        <iframe id="videoIframe" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <div id="footer-placeholder"></div>
