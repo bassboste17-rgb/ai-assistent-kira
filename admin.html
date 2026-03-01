@@ -545,6 +545,138 @@
     .toast.err { border-left: 4px solid #ef4444; }
 
     /* ═══════════════════════════════════════════
+       MULTI SELECT REGIONS
+    ═══════════════════════════════════════════ */
+    .region-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .region-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      color: #555;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .region-chip:hover { border-color: var(--gold); color: var(--gold); }
+    .region-chip.selected {
+      background: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
+    }
+    .region-chip.selected:hover { background: #c9a030; border-color: #c9a030; }
+
+    /* ═══════════════════════════════════════════
+       PHOTO UPLOAD
+    ═══════════════════════════════════════════ */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .upload-zone:hover { border-color: var(--gold); background: rgba(212,175,55,0.03); }
+    .upload-zone.dragging { border-color: var(--gold); background: rgba(212,175,55,0.06); }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-zone-icon { color: #bbb; margin-bottom: 0.3rem; }
+    .upload-zone-text { font-size: 0.82rem; color: #888; }
+    .upload-zone-text strong { color: var(--gold); }
+
+    .uploaded-photos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 0.7rem;
+    }
+    .uploaded-photo {
+      position: relative;
+      width: 80px;
+      height: 60px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .uploaded-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .uploaded-photo .remove-photo {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .uploaded-photo .remove-photo:hover { background: #ef4444; }
+
+    .upload-progress {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--gold);
+      display: none;
+    }
+    .upload-progress.active { display: block; }
+
+    /* ═══════════════════════════════════════════
+       DURATION INPUTS
+    ═══════════════════════════════════════════ */
+    .duration-row {
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
+    }
+    .duration-row .dur-field {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .duration-row input[type="number"] {
+      width: 70px;
+      padding: 0.55rem 0.7rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      outline: none;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .duration-row input[type="number"]:focus { border-color: var(--gold); }
+    .duration-row .dur-label {
+      font-size: 0.82rem;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════ */
     @media (max-width: 768px) {
@@ -588,6 +720,11 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
         Туры
         <span class="nav-count" id="cntTours">0</span>
+      </button>
+      <button class="nav-item" data-page="dayTours">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        1-დღიანი ტურები
+        <span class="nav-count" id="cntDayTours">0</span>
       </button>
       <button class="nav-item" data-page="bookings">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -730,6 +867,26 @@
       </div>
     </div>
 
+    <!-- ─── DAY TOURS ─── -->
+    <div class="page" id="dayToursPage">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">1-დღიანი ტურები</div>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
+            <input type="search" class="search" id="dayToursSearch" placeholder="ტურის ძიება...">
+            <button class="btn btn-dark" onclick="openDayTourModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              ტურის დამატება
+            </button>
+          </div>
+        </div>
+        <table class="table">
+          <thead><tr><th>სახელი</th><th>რეგიონი</th><th>ტიპი</th><th>ფასი</th><th>ხანგრძლივობა</th><th>ჯგუფი</th><th>ფოტო</th><th>მოქმედება</th></tr></thead>
+          <tbody id="dayToursTbody"><tr class="loading-row"><td colspan="8">იტვირთება...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
   </div><!-- /main -->
 </div><!-- /app -->
 
@@ -839,6 +996,99 @@
   </div>
 </div>
 
+<!-- ═══════════ DAY TOUR MODAL ═══════════ -->
+<div class="modal-wrap" id="dayTourModalWrap">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-hdr">
+      <div class="modal-title" id="dayTourModalTitle">ტურის დამატება</div>
+      <button class="modal-close" onclick="closeDayTourModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="dayTourForm" class="form-grid">
+        <input type="hidden" id="dtDocId">
+
+        <div class="fg full"><label>სახელი *</label><input type="text" id="dtName" placeholder="ტურის სახელი" required></div>
+
+        <div class="fg full"><label>აღწერა *</label><textarea id="dtDesc" placeholder="ტურის აღწერა..." required></textarea></div>
+
+        <div class="fg full"><label>მარშრუტი</label><input type="text" id="dtRoute" placeholder="თბილისი - მცხეთა - ჯვარი - ანანური"></div>
+
+        <div class="fg full">
+          <label>რეგიონი (შეარჩიეთ ერთი ან რამოდენიმე)</label>
+          <div class="region-grid" id="regionGrid">
+            <button type="button" class="region-chip" data-region="თბილისი">თბილისი</button>
+            <button type="button" class="region-chip" data-region="კახეთი">კახეთი</button>
+            <button type="button" class="region-chip" data-region="იმერეთი">იმერეთი</button>
+            <button type="button" class="region-chip" data-region="სამეგრელო">სამეგრელო</button>
+            <button type="button" class="region-chip" data-region="აჭარა">აჭარა</button>
+            <button type="button" class="region-chip" data-region="გურია">გურია</button>
+            <button type="button" class="region-chip" data-region="სვანეთი">სვანეთი</button>
+            <button type="button" class="region-chip" data-region="რაჭა-ლეჩხუმი">რაჭა-ლეჩხუმი</button>
+            <button type="button" class="region-chip" data-region="მცხეთა-მთიანეთი">მცხეთა-მთიანეთი</button>
+            <button type="button" class="region-chip" data-region="შიდა ქართლი">შიდა ქართლი</button>
+            <button type="button" class="region-chip" data-region="ქვემო ქართლი">ქვემო ქართლი</button>
+            <button type="button" class="region-chip" data-region="სამცხე-ჯავახეთი">სამცხე-ჯავახეთი</button>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label>ტიპი</label>
+          <select id="dtType">
+            <option value="ექსკურსია">ექსკურსია</option>
+            <option value="საღვინე">საღვინე</option>
+            <option value="თავგადასავლების">თავგადასავლების</option>
+            <option value="კულტურული">კულტურული</option>
+            <option value="ფოტოტური">ფოტოტური</option>
+            <option value="გასტრონომიული">გასტრონომიული</option>
+            <option value="ინდივიდუალური">ინდივიდუალური</option>
+          </select>
+        </div>
+
+        <div class="fg"><label>ფასი (USD) *</label><input type="number" id="dtPrice" placeholder="45" min="1" required></div>
+
+        <div class="fg full">
+          <label>ხანგრძლივობა</label>
+          <div class="duration-row">
+            <div class="dur-field">
+              <input type="number" id="dtDays" placeholder="0" min="0" value="1">
+              <span class="dur-label">დღე</span>
+            </div>
+            <div class="dur-field">
+              <input type="number" id="dtNights" placeholder="0" min="0" value="0">
+              <span class="dur-label">ღამე</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fg"><label>მინ. პერსონალი *</label><input type="number" id="dtMinGroup" placeholder="1" min="1" required></div>
+        <div class="fg"><label>მაქს. პერსონალი *</label><input type="number" id="dtMaxGroup" placeholder="15" min="1" required></div>
+
+        <div class="fg full">
+          <label>ფოტოები (აიტვირთება ImgBB-ზე)</label>
+          <div class="upload-zone" id="dtUploadZone">
+            <input type="file" id="dtPhotoInput" accept="image/*" multiple>
+            <div class="upload-zone-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <div class="upload-zone-text"><strong>აირჩიეთ ფოტოები</strong> ან გადმოიტანეთ აქ</div>
+          </div>
+          <div class="upload-progress" id="dtUploadProgress">იტვირთება...</div>
+          <div class="uploaded-photos" id="dtUploadedPhotos"></div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-ghost" onclick="closeDayTourModal()">გაუქმება</button>
+      <button class="btn btn-dark" onclick="saveDayTour()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        შენახვა
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- Loading overlay -->
 <div class="overlay" id="loadingOverlay">
   <div class="overlay-box">
@@ -918,7 +1168,8 @@
     dashboard: ['Дашборд',        'Обзор DAMQ Travel'],
     tours:     ['Управление турами','Добавляйте и редактируйте туры'],
     bookings:  ['Заявки',          'Запросы от клиентов'],
-    reviews:   ['Отзывы',          'Управление отзывами клиентов']
+    reviews:   ['Отзывы',          'Управление отзывами клиентов'],
+    dayTours:  ['1-დღიანი ტურები', 'დაამატეთ და მართეთ 1-დღიანი ტურები']
   };
 
   window.switchPage = function(pg) {
@@ -935,6 +1186,7 @@
     if (pg === 'tours')    loadTours();
     if (pg === 'bookings') loadBookings();
     if (pg === 'reviews')  loadReviews();
+    if (pg === 'dayTours') loadDayTours();
     document.getElementById('sidebar').classList.remove('open');
   };
 
@@ -947,7 +1199,7 @@
   });
 
   /* ── Close modals on overlay click ── */
-  ['tourModalWrap','bookModalWrap','confirmWrap'].forEach(id => {
+  ['tourModalWrap','bookModalWrap','confirmWrap','dayTourModalWrap'].forEach(id => {
     document.getElementById(id).addEventListener('click', e => {
       if (e.target.id === id) document.getElementById(id).classList.remove('open');
     });
@@ -956,10 +1208,11 @@
   /* ══════════════ DASHBOARD ══════════════ */
   async function loadDashboard() {
     try {
-      const [ts, bs, rs] = await Promise.all([
+      const [ts, bs, rs, dts] = await Promise.all([
         getDocs(collection(db, 'tours')),
         getDocs(collection(db, 'bookings')),
-        getDocs(collection(db, 'reviews'))
+        getDocs(collection(db, 'reviews')),
+        getDocs(collection(db, 'dayTours'))
       ]);
 
       document.getElementById('sTours').textContent    = ts.size;
@@ -968,6 +1221,7 @@
       document.getElementById('cntTours').textContent    = ts.size;
       document.getElementById('cntBookings').textContent = bs.size;
       document.getElementById('cntReviews').textContent  = rs.size;
+      document.getElementById('cntDayTours').textContent = dts.size;
 
       const pending = bs.docs.filter(d => (d.data().status || 'new') === 'new').length;
       document.getElementById('sPending').textContent = pending;
@@ -1291,6 +1545,244 @@
         loadReviews();
         loadDashboard();
       } catch(e) { toast('Ошибка: ' + e.message, 'err'); }
+      finally { hideLoading(); }
+    });
+  };
+
+  /* ══════════════ DAY TOURS (1-დღიანი) ══════════════ */
+  const IMGBB_KEY = 'c5bb67f26ff290d597182f756d153d50';
+  let allDayTours = [];
+  let dtUploadedImages = []; // array of { url, deleteUrl }
+
+  // Region chip multi-select
+  document.querySelectorAll('#regionGrid .region-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('selected'));
+  });
+
+  function getSelectedRegions() {
+    return Array.from(document.querySelectorAll('#regionGrid .region-chip.selected'))
+      .map(c => c.dataset.region);
+  }
+
+  function setSelectedRegions(regions) {
+    document.querySelectorAll('#regionGrid .region-chip').forEach(c => {
+      c.classList.toggle('selected', (regions || []).includes(c.dataset.region));
+    });
+  }
+
+  // ImgBB upload
+  async function uploadToImgBB(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+      method: 'POST',
+      body: formData
+    });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error?.message || 'Upload failed');
+    return { url: json.data.url, thumb: json.data.thumb?.url || json.data.url, deleteUrl: json.data.delete_url || '' };
+  }
+
+  function renderUploadedPhotos() {
+    const container = document.getElementById('dtUploadedPhotos');
+    container.innerHTML = dtUploadedImages.map((img, i) => `
+      <div class="uploaded-photo">
+        <img src="${img.thumb || img.url}" alt="photo ${i+1}">
+        <button type="button" class="remove-photo" onclick="removeDtPhoto(${i})">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  window.removeDtPhoto = function(idx) {
+    dtUploadedImages.splice(idx, 1);
+    renderUploadedPhotos();
+  };
+
+  // File input handler
+  const dtPhotoInput = document.getElementById('dtPhotoInput');
+  const dtUploadZone = document.getElementById('dtUploadZone');
+
+  dtPhotoInput.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    const progress = document.getElementById('dtUploadProgress');
+    progress.classList.add('active');
+
+    for (let i = 0; i < files.length; i++) {
+      progress.textContent = `იტვირთება ${i+1}/${files.length}...`;
+      try {
+        const result = await uploadToImgBB(files[i]);
+        dtUploadedImages.push(result);
+        renderUploadedPhotos();
+      } catch (err) {
+        toast('ფოტოს ატვირთვის შეცდომა: ' + err.message, 'err');
+      }
+    }
+    progress.classList.remove('active');
+    dtPhotoInput.value = '';
+  });
+
+  // Drag & drop
+  dtUploadZone.addEventListener('dragover', e => { e.preventDefault(); dtUploadZone.classList.add('dragging'); });
+  dtUploadZone.addEventListener('dragleave', () => dtUploadZone.classList.remove('dragging'));
+  dtUploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dtUploadZone.classList.remove('dragging');
+    dtPhotoInput.files = e.dataTransfer.files;
+    dtPhotoInput.dispatchEvent(new Event('change'));
+  });
+
+  // Load day tours
+  async function loadDayTours() {
+    document.getElementById('dayToursTbody').innerHTML =
+      `<tr class="loading-row"><td colspan="8">იტვირთება...</td></tr>`;
+    try {
+      const snap = await getDocs(collection(db, 'dayTours'));
+      allDayTours = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderDayTours(allDayTours);
+      document.getElementById('cntDayTours').textContent = allDayTours.length;
+    } catch(e) {
+      document.getElementById('dayToursTbody').innerHTML =
+        `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#e55;">შეცდომა</td></tr>`;
+    }
+  }
+
+  function renderDayTours(list) {
+    const tb = document.getElementById('dayToursTbody');
+    if (!list.length) {
+      tb.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:2.5rem;color:#bbb;">ტურები ჯერ არ დამატებულა</td></tr>`;
+      return;
+    }
+    tb.innerHTML = list.map(t => {
+      const dur = [];
+      if (t.days) dur.push(t.days + ' დღე');
+      if (t.nights) dur.push(t.nights + ' ღამე');
+      const photos = (t.photos || []);
+      return `
+      <tr>
+        <td data-label="სახელი">
+          <div class="tour-name-cell">
+            ${photos.length ? `<img src="${photos[0].thumb || photos[0].url}" class="thumb" alt="" onerror="this.style.display='none'">` : ''}
+            <strong>${t.name || '—'}</strong>
+          </div>
+        </td>
+        <td data-label="რეგიონი">${(t.regions || []).map(r => `<span class="badge b-gold" style="margin:1px;">${r}</span>`).join(' ') || '—'}</td>
+        <td data-label="ტიპი"><span class="badge b-blue">${t.type || '—'}</span></td>
+        <td data-label="ფასი"><strong>$${t.price || '—'}</strong></td>
+        <td data-label="ხანგრძლივობა">${dur.join(', ') || '—'}</td>
+        <td data-label="ჯგუფი">${t.minGroup || '?'} – ${t.maxGroup || '?'} პერს.</td>
+        <td data-label="ფოტო">${photos.length} ფოტო</td>
+        <td data-label="მოქმედება">
+          <div class="action-btns">
+            <button class="btn-icon edit" title="რედაქტირება" onclick="editDayTour('${t.id}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="btn-icon del" title="წაშლა" onclick="confirmDeleteDayTour('${t.id}','${(t.name||'').replace(/'/g,"\\'")}')">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+            </button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  document.getElementById('dayToursSearch').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    renderDayTours(allDayTours.filter(t => (t.name||'').toLowerCase().includes(q)));
+  });
+
+  // Open / close modal
+  window.openDayTourModal = function() {
+    document.getElementById('dayTourModalTitle').textContent = 'ტურის დამატება';
+    document.getElementById('dayTourForm').reset();
+    document.getElementById('dtDocId').value = '';
+    document.getElementById('dtDays').value = '1';
+    document.getElementById('dtNights').value = '0';
+    dtUploadedImages = [];
+    renderUploadedPhotos();
+    setSelectedRegions([]);
+    document.getElementById('dayTourModalWrap').classList.add('open');
+  };
+
+  window.closeDayTourModal = function() {
+    document.getElementById('dayTourModalWrap').classList.remove('open');
+  };
+
+  window.editDayTour = function(id) {
+    const t = allDayTours.find(x => x.id === id);
+    if (!t) return;
+    document.getElementById('dayTourModalTitle').textContent = 'ტურის რედაქტირება';
+    document.getElementById('dtDocId').value   = t.id;
+    document.getElementById('dtName').value    = t.name || '';
+    document.getElementById('dtDesc').value    = t.desc || '';
+    document.getElementById('dtRoute').value   = t.route || '';
+    document.getElementById('dtType').value    = t.type || 'ექსკურსია';
+    document.getElementById('dtPrice').value   = t.price || '';
+    document.getElementById('dtDays').value    = t.days ?? 1;
+    document.getElementById('dtNights').value  = t.nights ?? 0;
+    document.getElementById('dtMinGroup').value = t.minGroup || '';
+    document.getElementById('dtMaxGroup').value = t.maxGroup || '';
+    setSelectedRegions(t.regions || []);
+    dtUploadedImages = (t.photos || []).slice();
+    renderUploadedPhotos();
+    document.getElementById('dayTourModalWrap').classList.add('open');
+  };
+
+  window.saveDayTour = async function() {
+    const docId = document.getElementById('dtDocId').value;
+    const name  = document.getElementById('dtName').value.trim();
+    const price = Number(document.getElementById('dtPrice').value);
+    const minGroup = Number(document.getElementById('dtMinGroup').value);
+    const maxGroup = Number(document.getElementById('dtMaxGroup').value);
+    if (!name || !price || !minGroup || !maxGroup) {
+      toast('შეავსეთ ყველა სავალდებულო ველი', 'err');
+      return;
+    }
+
+    const data = {
+      name,
+      desc:     document.getElementById('dtDesc').value.trim(),
+      route:    document.getElementById('dtRoute').value.trim(),
+      regions:  getSelectedRegions(),
+      type:     document.getElementById('dtType').value,
+      price,
+      days:     parseInt(document.getElementById('dtDays').value) || 0,
+      nights:   parseInt(document.getElementById('dtNights').value) || 0,
+      minGroup,
+      maxGroup,
+      photos:   dtUploadedImages,
+      updatedAt: serverTimestamp()
+    };
+
+    closeDayTourModal();
+    showLoading(docId ? 'ტურის განახლება...' : 'ტურის დამატება...');
+    try {
+      if (docId) {
+        await updateDoc(doc(db, 'dayTours', docId), data);
+        toast('ტური განახლდა');
+      } else {
+        data.createdAt = serverTimestamp();
+        await addDoc(collection(db, 'dayTours'), data);
+        toast('ტური დაემატა');
+      }
+      loadDayTours();
+      loadDashboard();
+    } catch(e) {
+      toast('შეცდომა: ' + e.message, 'err');
+    } finally {
+      hideLoading();
+    }
+  };
+
+  window.confirmDeleteDayTour = function(id, name) {
+    openConfirm(`წაშალოთ ტური "${name}"?`, async () => {
+      showLoading('ტურის წაშლა...');
+      try {
+        await deleteDoc(doc(db, 'dayTours', id));
+        toast('ტური წაიშალა');
+        loadDayTours();
+        loadDashboard();
+      } catch(e) { toast('შეცდომა: ' + e.message, 'err'); }
       finally { hideLoading(); }
     });
   };
