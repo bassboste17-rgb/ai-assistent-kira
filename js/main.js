@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initVideoModal();
     initReviewForm();
+    initToursSliders();
 
     setTimeout(() => {
       document.querySelector('.hero')?.classList.add('loaded');
@@ -557,6 +558,46 @@ document.addEventListener('DOMContentLoaded', () => {
           s.classList.remove('hover');
         });
       }, 3000);
+    });
+  }
+
+  /* ---------- Tours Horizontal Sliders ---------- */
+  function initToursSliders() {
+    document.querySelectorAll('.tours-slider-wrap').forEach(wrap => {
+      const track = wrap.querySelector('.tours-grid');
+      const leftBtn = wrap.querySelector('.arrow-left');
+      const rightBtn = wrap.querySelector('.arrow-right');
+
+      if (!track || !leftBtn || !rightBtn) return;
+
+      function updateArrows() {
+        const scrollLeft = track.scrollLeft;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+
+        leftBtn.classList.toggle('disabled', scrollLeft <= 5);
+        rightBtn.classList.toggle('disabled', scrollLeft >= maxScroll - 5);
+      }
+
+      function getScrollAmount() {
+        // Scroll by one card width + gap
+        const card = track.querySelector('.tour-card') || track.querySelector('.tour-featured');
+        if (!card) return 400;
+        return card.offsetWidth + 32; // 32 = gap
+      }
+
+      leftBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      });
+
+      rightBtn.addEventListener('click', () => {
+        track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', updateArrows);
+      window.addEventListener('resize', updateArrows);
+
+      // Initial check
+      setTimeout(updateArrows, 200);
     });
   }
 

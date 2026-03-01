@@ -211,34 +211,31 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-toggle {
   display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(201, 169, 110, 0.1);
+  border: 1px solid rgba(201, 169, 110, 0.25);
+  border-radius: 10px;
   cursor: pointer;
-  padding: 4px;
   z-index: 1001;
-}
-
-.navbar-toggle span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--color-white);
-  border-radius: 2px;
   transition: all var(--transition);
 }
 
-.navbar-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+.navbar-toggle i {
+  font-size: 20px;
+  color: var(--color-accent);
+  transition: all var(--transition);
 }
 
-.navbar-toggle.active span:nth-child(2) {
-  opacity: 0;
+.navbar-toggle:hover {
+  background: rgba(201, 169, 110, 0.2);
+  border-color: rgba(201, 169, 110, 0.5);
 }
 
-.navbar-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+.navbar-toggle.active i::before {
+  content: "\f00d";
 }
 
 /* Mobile Menu */
@@ -726,10 +723,79 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ---------- Tours Section ---------- */
+.tours-slider-wrap {
+  position: relative;
+  padding: 0 32px;
+}
+
+.tours-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-white);
+  border: 2px solid rgba(201, 169, 110, 0.3);
+  border-radius: 50%;
+  color: var(--color-primary);
+  font-size: 18px;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tours-slider-arrow:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-white);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 24px rgba(201, 169, 110, 0.3);
+}
+
+.tours-slider-arrow.arrow-left {
+  left: -8px;
+}
+
+.tours-slider-arrow.arrow-right {
+  right: -8px;
+}
+
+.tours-slider-arrow.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .tours-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 32px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 4px 0;
+}
+
+.tours-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.tours-grid > .tour-card {
+  min-width: calc(50% - 16px);
+  max-width: calc(50% - 16px);
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.tours-grid > .tour-featured {
+  min-width: 100%;
+  max-width: 100%;
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 .tour-card {
@@ -909,7 +975,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Featured Tour (Wide Card) */
 .tour-featured {
-  grid-column: span 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-radius: var(--radius-lg);
@@ -2500,14 +2565,14 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1200px) {
-  .tours-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .tour-featured {
-    grid-column: span 2;
-  }
   .region-cards {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .tours-slider-arrow.arrow-left {
+    left: -8px;
+  }
+  .tours-slider-arrow.arrow-right {
+    right: -8px;
   }
 }
 
@@ -2590,14 +2655,29 @@ h1, h2, h3, h4, h5, h6 {
   .stat-item:not(:last-child)::after {
     display: none;
   }
-  .tours-grid {
-    grid-template-columns: 1fr;
+  .tours-grid > .tour-card {
+    min-width: calc(100% - 0px);
+    max-width: calc(100% - 0px);
   }
   .tour-featured {
-    grid-column: span 1;
+    grid-template-columns: 1fr;
   }
   .tour-featured-content {
     padding: 28px 20px;
+  }
+  .tours-slider-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+  .tours-slider-wrap {
+    padding: 0 24px;
+  }
+  .tours-slider-arrow.arrow-left {
+    left: -6px;
+  }
+  .tours-slider-arrow.arrow-right {
+    right: -6px;
   }
   .tours-divider {
     margin-top: 50px;
@@ -2744,6 +2824,20 @@ h1, h2, h3, h4, h5, h6 {
   }
   .tour-featured-content {
     padding: 24px 16px;
+  }
+  .tours-slider-arrow {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+  .tours-slider-wrap {
+    padding: 0 20px;
+  }
+  .tours-slider-arrow.arrow-left {
+    left: -6px;
+  }
+  .tours-slider-arrow.arrow-right {
+    right: -6px;
   }
   .tours-divider {
     margin-top: 40px;

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -113,9 +114,13 @@
         <h2 class="section-title">Полные пакеты туров</h2>
         <p class="section-subtitle">Многодневные путешествия с проживанием, транспортом и полным сопровождением гида по лучшим направлениям Грузии</p>
       </div>
-      <div class="tours-grid">
-        <!-- Featured Tour (First / Top) -->
-        <div class="tour-featured animate-on-scroll">
+      <div class="tours-slider-wrap" id="fullToursSlider">
+        <button class="tours-slider-arrow arrow-left disabled" data-dir="left" aria-label="Previous">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="tours-grid">
+          <!-- Featured Tour (First / Top) -->
+          <div class="tour-featured animate-on-scroll">
           <div class="tour-featured-image">
             <img src="images/tour-svaneti.jpg" alt="Сванетия — горный регион Грузии">
           </div>
@@ -149,6 +154,9 @@
             </div>
           </div>
         </div>
+        <button class="tours-slider-arrow arrow-right" data-dir="right" aria-label="Next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
       <div class="tours-divider animate-on-scroll">
         <div class="tours-divider-line"></div>
@@ -158,8 +166,12 @@
         </div>
         <div class="tours-divider-line"></div>
       </div>
-      <div class="tours-grid">
-        <!-- Tour Card 1 -->
+      <div class="tours-slider-wrap" id="dayToursSlider">
+        <button class="tours-slider-arrow arrow-left disabled" data-dir="left" aria-label="Previous">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="tours-grid">
+          <!-- Tour Card 1 -->
         <div class="tour-card animate-on-scroll delay-1">
           <div class="tour-card-image">
             <img src="images/tour-tbilisi.jpg" alt="Тбилиси — старый город">
@@ -273,6 +285,9 @@
             </a>
           </div>
         </div>
+        <button class="tours-slider-arrow arrow-right" data-dir="right" aria-label="Next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
     </div>
   </section>
