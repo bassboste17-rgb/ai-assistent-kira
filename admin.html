@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAMQ Travel - Admin Panel</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --surface-2: #252540;
+      --accent: #c9a96e;
+      --accent-hover: #d4b87e;
+      --text: #fff;
+      --text-muted: rgba(255,255,255,0.55);
+      --border: rgba(201,169,110,0.15);
+      --danger: #e63946;
+      --success: #4ade80;
+      --radius: 12px;
+      --font: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+    a { color: var(--accent); text-decoration: none; }
+
+    /* Layout */
+    .admin-layout { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .admin-sidebar {
+      width: 260px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+    }
+
+    .admin-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 40px;
+      padding: 0 4px;
+    }
+
+    .admin-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 3px;
+    }
+
+    .admin-logo-badge {
+      font-size: 10px;
+      font-weight: 600;
+      background: rgba(201,169,110,0.15);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    .admin-nav { list-style: none; flex: 1; }
+
+    .admin-nav li { margin-bottom: 4px; }
+
+    .admin-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .admin-nav a:hover,
+    .admin-nav a.active {
+      background: rgba(201,169,110,0.1);
+      color: var(--accent);
+    }
+
+    .admin-nav a svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .admin-sidebar-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: auto;
+    }
+
+    .admin-sidebar-footer a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+
+    .admin-sidebar-footer a:hover { color: var(--accent); }
+
+    /* Main Content */
+    .admin-main {
+      flex: 1;
+      margin-left: 260px;
+      padding: 32px 40px;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .admin-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn svg { width: 18px; height: 18px; }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-accent:hover { background: var(--accent-hover); }
+
+    .btn-danger {
+      background: rgba(230,57,70,0.15);
+      color: var(--danger);
+      border: 1px solid rgba(230,57,70,0.3);
+    }
+
+    .btn-danger:hover { background: rgba(230,57,70,0.25); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover { color: var(--accent); border-color: rgba(201,169,110,0.3); }
+
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+    /* Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 28px;
+      border: 1px solid var(--border);
+    }
+
+    .admin-tab {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font);
+      transition: all 0.2s;
+    }
+
+    .admin-tab:hover { color: var(--text); }
+    .admin-tab.active { background: var(--accent); color: var(--bg); }
+
+    /* Cards / Table */
+    .admin-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .admin-table th {
+      text-align: left;
+      padding: 14px 18px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .admin-table td {
+      padding: 14px 18px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover { background: rgba(201,169,110,0.03); }
+
+    .tour-thumb {
+      width: 60px;
+      height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .tour-type-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .type-multiday { background: rgba(201,169,110,0.15); color: var(--accent); }
+    .type-oneday { background: rgba(74,222,128,0.15); color: var(--success); }
+
+    .status-active { color: var(--success); }
+    .status-inactive { color: var(--danger); }
+
+    .td-actions { display: flex; gap: 6px; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 640px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 32px;
+    }
+
+    .modal h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      margin-bottom: 24px;
+    }
+
+    /* Form */
+    .form-group { margin-bottom: 18px; }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .form-group select option { background: var(--surface-2); color: var(--text); }
+
+    /* Image Upload */
+    .image-upload {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-upload:hover { border-color: var(--accent); background: rgba(201,169,110,0.03); }
+
+    .image-upload input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .image-upload svg { color: var(--text-muted); margin-bottom: 8px; }
+
+    .image-upload p { font-size: 13px; color: var(--text-muted); }
+
+    .image-upload .preview-img {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .image-upload.has-image .upload-placeholder { display: none; }
+    .image-upload.has-image .preview-img { display: block; }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.3; }
+    .empty-state h3 { font-size: 16px; margin-bottom: 6px; color: var(--text); }
+    .empty-state p { font-size: 13px; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .toast.success { border-color: rgba(74,222,128,0.3); }
+    .toast.error { border-color: rgba(230,57,70,0.3); }
+
+    /* Review management */
+    .review-row { display: flex; gap: 16px; align-items: flex-start; padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .review-row:hover { background: rgba(201,169,110,0.03); }
+    .review-avatar-sm { width: 40px; height: 40px; border-radius: 50%; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+    .review-content { flex: 1; }
+    .review-meta { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .review-text-sm { font-size: 14px; margin-top: 6px; line-height: 1.5; color: rgba(255,255,255,0.8); }
+    .review-actions { display: flex; gap: 6px; flex-shrink: 0; align-items: flex-start; }
+
+    /* Loading spinner */
+    .spinner { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .admin-sidebar { display: none; }
+      .admin-main { margin-left: 0; padding: 20px 16px; }
+      .form-row { grid-template-columns: 1fr; }
+      .admin-table { font-size: 12px; }
+      .admin-table th, .admin-table td { padding: 10px 12px; }
+      .tour-thumb { width: 40px; height: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-logo">
+        <span class="admin-logo-text">DAMQ</span>
+        <span class="admin-logo-badge">ADMIN</span>
+      </div>
+      <ul class="admin-nav">
+        <li>
+          <a href="#" class="active" data-section="tours" onclick="showSection('tours')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Tours
+          </a>
+        </li>
+        <li>
+          <a href="#" data-section="reviews" onclick="showSection('reviews')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Reviews
+          </a>
+        </li>
+      </ul>
+      <div class="admin-sidebar-footer">
+        <a href="home.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Site
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- TOURS SECTION -->
+      <div id="section-tours">
+        <div class="admin-header">
+          <h1>Tour Management</h1>
+          <button class="btn btn-accent" onclick="openTourModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Tour
+          </button>
+        </div>
+
+        <div class="admin-tabs">
+          <button class="admin-tab active" data-filter="all" onclick="filterTours('all', this)">All</button>
+          <button class="admin-tab" data-filter="multiday" onclick="filterTours('multiday', this)">Multi-Day</button>
+          <button class="admin-tab" data-filter="oneday" onclick="filterTours('oneday', this)">One-Day</button>
+        </div>
+
+        <div class="admin-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Duration</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="toursTableBody">
+              <tr>
+                <td colspan="7">
+                  <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <h3>Loading tours...</h3>
+                    <p>Please wait</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- REVIEWS SECTION -->
+      <div id="section-reviews" style="display:none;">
+        <div class="admin-header">
+          <h1>Review Management</h1>
+        </div>
+
+        <div class="admin-card" id="reviewsList">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <h3>Loading reviews...</h3>
+            <p>Please wait</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Tour Modal -->
+  <div class="modal-overlay" id="tourModal">
+    <div class="modal">
+      <h2 id="tourModalTitle">Add New Tour</h2>
+      <form id="tourForm">
+        <input type="hidden" id="tourId">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tour Type</label>
+            <select id="tourType" required>
+              <option value="multiday">Multi-Day Tour</option>
+              <option value="oneday">One-Day Tour</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Badge</label>
+            <input type="text" id="tourBadge" placeholder="e.g. Top, New, Hit">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="tourTitle" placeholder="Tour title" required>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="tourDesc" placeholder="Tour description" rows="3" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Duration</label>
+            <input type="text" id="tourDuration" placeholder="e.g. 3 days / 2 nights" required>
+          </div>
+          <div class="form-group">
+            <label>Group Size</label>
+            <input type="text" id="tourGroup" placeholder="e.g. 2-8 persons" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="tourPrice" placeholder="195" required>
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="tourLocation" placeholder="e.g. Svaneti, Kazbegi">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Rating (1-5)</label>
+          <input type="number" id="tourRating" min="1" max="5" step="0.1" placeholder="4.9">
+        </div>
+
+        <div class="form-group">
+          <label>Tour Image</label>
+          <div class="image-upload" id="imageUpload">
+            <input type="file" id="tourImage" accept="image/*" onchange="previewImage(this)">
+            <div class="upload-placeholder">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p>Click or drag to upload image</p>
+            </div>
+            <img class="preview-img" id="imagePreview" alt="Preview">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Featured Tour?</label>
+          <select id="tourFeatured">
+            <option value="false">No</option>
+            <option value="true">Yes (large card)</option>
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeTourModal()">Cancel</button>
+          <button type="submit" class="btn btn-accent" id="tourSubmitBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Save Tour
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-service.js"></script>
+
+  <script>
+    /* ===== State ===== */
+    let currentFilter = 'all';
+
+    /* ===== Sections ===== */
+    function showSection(name) {
+      document.getElementById('section-tours').style.display = name === 'tours' ? 'block' : 'none';
+      document.getElementById('section-reviews').style.display = name === 'reviews' ? 'block' : 'none';
+      document.querySelectorAll('.admin-nav a').forEach(a => {
+        a.classList.toggle('active', a.dataset.section === name);
+      });
+      if (name === 'reviews') loadReviews();
+      if (name === 'tours') loadTours();
+    }
+
+    /* ===== Toast ===== */
+    function showToast(msg, type) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast ' + type + ' show';
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    /* ===== Image Preview ===== */
+    function previewImage(input) {
+      const upload = document.getElementById('imageUpload');
+      const preview = document.getElementById('imagePreview');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.src = e.target.result;
+          upload.classList.add('has-image');
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    /* ===== Tour Modal ===== */
+    function openTourModal(tour) {
+      const modal = document.getElementById('tourModal');
+      const title = document.getElementById('tourModalTitle');
+      const form = document.getElementById('tourForm');
+
+      form.reset();
+      document.getElementById('imageUpload').classList.remove('has-image');
+      document.getElementById('imagePreview').src = '';
+
+      if (tour) {
+        title.textContent = 'Edit Tour';
+        document.getElementById('tourId').value = tour.id;
+        document.getElementById('tourType').value = tour.type || 'oneday';
+        document.getElementById('tourBadge').value = tour.badge || '';
+        document.getElementById('tourTitle').value = tour.title || '';
+        document.getElementById('tourDesc').value = tour.description || '';
+        document.getElementById('tourDuration').value = tour.duration || '';
+        document.getElementById('tourGroup').value = tour.groupSize || '';
+        document.getElementById('tourPrice').value = tour.price || '';
+        document.getElementById('tourLocation').value = tour.location || '';
+        document.getElementById('tourRating').value = tour.rating || '';
+        document.getElementById('tourFeatured').value = tour.featured ? 'true' : 'false';
+        if (tour.imageUrl) {
+          document.getElementById('imagePreview').src = tour.imageUrl;
+          document.getElementById('imageUpload').classList.add('has-image');
+        }
+      } else {
+        title.textContent = 'Add New Tour';
+        document.getElementById('tourId').value = '';
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeTourModal() {
+      document.getElementById('tourModal').classList.remove('active');
+    }
+
+    /* ===== Tour Form Submit ===== */
+    document.getElementById('tourForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('tourSubmitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<svg class="spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving...';
+
+      const tourId = document.getElementById('tourId').value;
+      const imageFile = document.getElementById('tourImage').files[0] || null;
+
+      const tourData = {
+        type: document.getElementById('tourType').value,
+        badge: document.getElementById('tourBadge').value.trim(),
+        title: document.getElementById('tourTitle').value.trim(),
+        description: document.getElementById('tourDesc').value.trim(),
+        duration: document.getElementById('tourDuration').value.trim(),
+        groupSize: document.getElementById('tourGroup').value.trim(),
+        price: parseInt(document.getElementById('tourPrice').value),
+        location: document.getElementById('tourLocation').value.trim(),
+        rating: parseFloat(document.getElementById('tourRating').value) || 0,
+        featured: document.getElementById('tourFeatured').value === 'true'
+      };
+
+      try {
+        if (tourId) {
+          await DamqFirebase.updateTour(tourId, tourData, imageFile);
+          showToast('Tour updated successfully', 'success');
+        } else {
+          await DamqFirebase.addTour(tourData, imageFile);
+          showToast('Tour added successfully', 'success');
+        }
+        closeTourModal();
+        loadTours();
+      } catch (err) {
+        showToast('Error saving tour: ' + err.message, 'error');
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Save Tour';
+    });
+
+    /* ===== Load Tours ===== */
+    async function loadTours() {
+      const tbody = document.getElementById('toursTableBody');
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);">Loading...</td></tr>';
+
+      const tours = await DamqFirebase.getAllTours();
+      const filtered = currentFilter === 'all' ? tours : tours.filter(t => t.type === currentFilter);
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <h3>No tours found</h3><p>Add your first tour</p></div></td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(t => `
+        <tr>
+          <td>${t.imageUrl ? '<img class="tour-thumb" src="' + t.imageUrl + '" alt="">' : '-'}</td>
+          <td><strong>${t.title}</strong></td>
+          <td><span class="tour-type-badge ${t.type === 'multiday' ? 'type-multiday' : 'type-oneday'}">${t.type === 'multiday' ? 'Multi-Day' : 'One-Day'}</span></td>
+          <td>${t.duration || '-'}</td>
+          <td>$${t.price || 0}</td>
+          <td><span class="${t.active ? 'status-active' : 'status-inactive'}">${t.active ? 'Active' : 'Inactive'}</span></td>
+          <td>
+            <div class="td-actions">
+              <button class="btn btn-ghost btn-sm" onclick='editTour("${t.id}")'>Edit</button>
+              <button class="btn btn-danger btn-sm" onclick='deleteTourConfirm("${t.id}")'>Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      // Cache tours for editing
+      window._toursCache = tours;
+    }
+
+    function filterTours(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      loadTours();
+    }
+
+    async function editTour(id) {
+      const tour = (window._toursCache || []).find(t => t.id === id);
+      if (tour) openTourModal(tour);
+    }
+
+    async function deleteTourConfirm(id) {
+      if (!confirm('Delete this tour?')) return;
+      try {
+        await DamqFirebase.deleteTour(id);
+        showToast('Tour deleted', 'success');
+        loadTours();
+      } catch (err) {
+        showToast('Error deleting tour', 'error');
+      }
+    }
+
+    /* ===== Load Reviews ===== */
+    async function loadReviews() {
+      const container = document.getElementById('reviewsList');
+      container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);">Loading...</div>';
+
+      const reviews = await DamqFirebase.getAllReviews();
+
+      if (reviews.length === 0) {
+        container.innerHTML = `<div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <h3>No reviews yet</h3><p>Reviews will appear when users submit them</p></div>`;
+        return;
+      }
+
+      container.innerHTML = reviews.map(r => {
+        const initials = (r.firstName || '?').charAt(0) + (r.lastName || '?').charAt(0);
+        const stars = '&#9733;'.repeat(r.rating || 0) + '&#9734;'.repeat(5 - (r.rating || 0));
+        const date = r.createdAt ? new Date(r.createdAt.seconds * 1000).toLocaleDateString() : 'N/A';
+        return `<div class="review-row">
+          <div class="review-avatar-sm">${initials.toUpperCase()}</div>
+          <div class="review-content">
+            <strong>${r.firstName} ${r.lastName}</strong> <span style="color:var(--accent)">${stars}</span>
+            <div class="review-meta">${r.country} &middot; ${date} &middot; ${r.approved ? '<span class="status-active">Approved</span>' : '<span class="status-inactive">Pending</span>'}</div>
+            <div class="review-text-sm">${r.text}</div>
+          </div>
+          <div class="review-actions">
+            <button class="btn btn-ghost btn-sm" onclick='toggleReview("${r.id}", ${!r.approved})'>${r.approved ? 'Hide' : 'Approve'}</button>
+            <button class="btn btn-danger btn-sm" onclick='deleteReviewConfirm("${r.id}")'>Delete</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    async function toggleReview(id, approved) {
+      try {
+        await DamqFirebase.toggleReviewApproval(id, approved);
+        showToast(approved ? 'Review approved' : 'Review hidden', 'success');
+        loadReviews();
+      } catch (err) {
+        showToast('Error updating review', 'error');
+      }
+    }
+
+    async function deleteReviewConfirm(id) {
+      if (!confirm('Delete this review?')) return;
+      try {
+        await DamqFirebase.deleteReview(id);
+        showToast('Review deleted', 'success');
+        loadReviews();
+      } catch (err) {
+        showToast('Error deleting review', 'error');
+      }
+    }
+
+    /* ===== Init ===== */
+    loadTours();
+
+    // Close modal on outside click
+    document.getElementById('tourModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('tourModal')) closeTourModal();
+    });
+  </script>
+</body>
+</html>

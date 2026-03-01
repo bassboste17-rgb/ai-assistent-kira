@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initReviewForm();
     initToursSliders();
 
+    // Load data from Firebase
+    loadFirebaseTours();
+    loadFirebaseReviews();
+
     setTimeout(() => {
       document.querySelector('.hero')?.classList.add('loaded');
     }, 100);
@@ -508,6 +512,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (track) {
         track.appendChild(newCard);
 
+        // Save to Firebase
+        saveReviewToFirebase({
+          firstName: firstName,
+          lastName: lastName,
+          country: country,
+          rating: rating,
+          text: text
+        });
+
         // Add a new dot
         const dotsContainer = document.querySelector('.reviews-dots');
         if (dotsContainer) {
@@ -564,11 +577,16 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Tours Horizontal Sliders ---------- */
   function initToursSliders() {
     document.querySelectorAll('.tours-slider-wrap').forEach(wrap => {
-      const track = wrap.querySelector('.tours-grid');
-      const leftBtn = wrap.querySelector('.arrow-left');
-      const rightBtn = wrap.querySelector('.arrow-right');
+      initSliderArrows(wrap);
+    });
+  }
 
-      if (!track || !leftBtn || !rightBtn) return;
+  function initSliderArrows(wrap) {
+    const track = wrap.querySelector('.tours-grid');
+    const leftBtn = wrap.querySelector('.arrow-left');
+    const rightBtn = wrap.querySelector('.arrow-right');
+
+    if (!track || !leftBtn || !rightBtn) return;
 
       function updateArrows() {
         const scrollLeft = track.scrollLeft;
@@ -599,6 +617,168 @@ document.addEventListener('DOMContentLoaded', () => {
       // Initial check
       setTimeout(updateArrows, 200);
     });
+  }
+
+  /* ---------- Load Tours from Firebase ---------- */
+  async function loadFirebaseTours() {
+    if (typeof DamqFirebase === 'undefined') return;
+
+    try {
+      // Load multi-day tours
+      const multidayTours = await DamqFirebase.getTours('multiday');
+      const fullGrid = document.getElementById('fullToursGrid');
+      if (fullGrid && multidayTours.length > 0) {
+        fullGrid.innerHTML = multidayTours.map(t => {
+          if (t.featured) {
+            return buildFeaturedCard(t);
+          }
+          return buildTourCard(t);
+        }).join('');
+        initSliderArrows(document.getElementById('fullToursSlider'));
+      }
+
+      // Load one-day tours
+      const onedayTours = await DamqFirebase.getTours('oneday');
+      const dayGrid = document.getElementById('dayToursGrid');
+      if (dayGrid && onedayTours.length > 0) {
+        dayGrid.innerHTML = onedayTours.map(t => buildTourCard(t)).join('');
+        initSliderArrows(document.getElementById('dayToursSlider'));
+      }
+    } catch (err) {
+      console.error('Error loading tours from Firebase:', err);
+    }
+  }
+
+  function buildFeaturedCard(t) {
+    const imgSrc = t.imageUrl || 'images/tour-svaneti.jpg';
+    return `<div class="tour-featured animate-on-scroll animated">
+      <div class="tour-featured-image">
+        <img src="${imgSrc}" alt="${t.title}">
+      </div>
+      <div class="tour-featured-content">
+        <div class="tour-featured-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          ${t.badge || 'Featured'}
+        </div>
+        <h3 class="tour-featured-title">${t.title}</h3>
+        <p class="tour-featured-desc">${t.description}</p>
+        <div class="tour-featured-details">
+          <span class="tour-featured-detail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ${t.duration}
+          </span>
+          <span class="tour-featured-detail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            ${t.groupSize}
+          </span>
+          ${t.rating ? '<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' + t.rating + '</span>' : ''}
+        </div>
+        <div class="tour-featured-bottom">
+          <span class="tour-featured-price">$${t.price} <small>/ person</small></span>
+          <a href="contact.html" class="btn-featured">
+            Book
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function buildTourCard(t) {
+    const imgSrc = t.imageUrl || 'images/tour-tbilisi.jpg';
+    return `<div class="tour-card animate-on-scroll animated">
+      <div class="tour-card-image">
+        <img src="${imgSrc}" alt="${t.title}">
+        ${t.badge ? '<span class="tour-card-badge">' + t.badge + '</span>' : ''}
+      </div>
+      <div class="tour-card-body">
+        ${t.location ? '<div class="tour-card-location"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + t.location + '</div>' : ''}
+        <h3 class="tour-card-title">${t.title}</h3>
+        <p class="tour-card-desc">${t.description}</p>
+        <div class="tour-card-meta">
+          <span class="tour-meta-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ${t.duration}
+          </span>
+          <span class="tour-meta-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            ${t.groupSize}
+          </span>
+        </div>
+      </div>
+      <div class="tour-card-footer">
+        <div class="tour-price">
+          <span class="tour-price-label">from</span>
+          <span class="tour-price-value">$${t.price} <small>/ person</small></span>
+        </div>
+        <a href="contact.html" class="btn-tour">
+          Details
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>`;
+  }
+
+  /* ---------- Load Reviews from Firebase ---------- */
+  async function loadFirebaseReviews() {
+    if (typeof DamqFirebase === 'undefined') return;
+
+    try {
+      const reviews = await DamqFirebase.getReviews();
+      if (reviews.length === 0) return;
+
+      const track = document.querySelector('.reviews-track');
+      const dotsContainer = document.querySelector('.reviews-dots');
+      if (!track || !dotsContainer) return;
+
+      // Build review cards
+      track.innerHTML = reviews.map(r => {
+        const initials = ((r.firstName || '?').charAt(0) + (r.lastName || '?').charAt(0)).toUpperCase();
+        let starsHtml = '';
+        for (let i = 0; i < 5; i++) {
+          if (i < (r.rating || 5)) {
+            starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+          } else {
+            starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+          }
+        }
+
+        return `<div class="review-card">
+          <div class="review-card-inner">
+            <span class="review-quote">&ldquo;</span>
+            <div class="review-stars">${starsHtml}</div>
+            <p class="review-text">${r.text}</p>
+            <div class="review-author">
+              <div class="review-avatar">${initials}</div>
+              <div class="review-info">
+                <h4>${r.firstName} ${r.lastName}</h4>
+                <p>${r.country || ''}</p>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Rebuild dots
+      dotsContainer.innerHTML = reviews.map((_, i) =>
+        `<button class="review-dot ${i === 0 ? 'active' : ''}" aria-label="Review ${i + 1}"></button>`
+      ).join('');
+
+      // Reinitialize slider
+      initReviewsSlider();
+    } catch (err) {
+      console.error('Error loading reviews from Firebase:', err);
+    }
+  }
+
+  /* ---------- Save Review to Firebase ---------- */
+  async function saveReviewToFirebase(reviewData) {
+    if (typeof DamqFirebase === 'undefined') return;
+    try {
+      await DamqFirebase.addReview(reviewData);
+    } catch (err) {
+      console.error('Error saving review to Firebase:', err);
+    }
   }
 
 });
