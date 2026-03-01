@@ -1063,23 +1063,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 2px solid rgba(201, 169, 110, 0.3);
 }
 
-#georgia-map {
-  height: 550px;
-  width: 100%;
-  background: #f5f5f5;
-}
-
-#georgia-map .leaflet-control-zoom a {
-  background: #1a1a2e;
-  color: #c9a96e;
-  border-color: rgba(201, 169, 110, 0.3);
-}
-
-#georgia-map .leaflet-control-zoom a:hover {
-  background: #c9a96e;
-  color: #1a1a2e;
-}
-
 .map-legend {
   display: flex;
   align-items: center;
@@ -1312,10 +1295,12 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-dark);
 }
 
-.video-modal-content iframe {
+.video-modal-content video {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: contain;
+  background: #000;
 }
 
 /* ---------- Add Review Section ---------- */
@@ -1857,44 +1842,6 @@ h1, h2, h3, h4, h5, h6 {
 .animate-on-scroll.delay-3 { transition-delay: 0.3s; }
 .animate-on-scroll.delay-4 { transition-delay: 0.4s; }
 
-/* ---------- Leaflet Overrides ---------- */
-.leaflet-popup-content-wrapper {
-  border-radius: var(--radius) !important;
-  box-shadow: var(--shadow-md) !important;
-  padding: 4px !important;
-}
-
-.leaflet-popup-content {
-  margin: 12px 16px !important;
-  font-family: var(--font-body) !important;
-}
-
-.leaflet-popup-content h3 {
-  font-family: var(--font-heading) !important;
-  font-size: 16px !important;
-  color: var(--color-primary) !important;
-  margin-bottom: 4px !important;
-}
-
-.leaflet-popup-content p {
-  font-size: 13px !important;
-  color: var(--color-text-light) !important;
-  margin: 0 !important;
-}
-
-.map-popup-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  background: var(--color-accent);
-  color: var(--color-primary);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  border-radius: 50px;
-  margin-top: 6px;
-}
-
 /* ---------- Language Switcher ---------- */
 .lang-switcher {
   position: relative;
@@ -2334,9 +2281,6 @@ h1, h2, h3, h4, h5, h6 {
     gap: 12px;
     padding: 16px;
   }
-  #georgia-map {
-    height: 350px;
-  }
   .region-cards {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
@@ -2375,19 +2319,24 @@ h1, h2, h3, h4, h5, h6 {
   .review-quote {
     display: none;
   }
-  #georgia-map {
-    height: 280px;
+  .georgia-svg-map svg {
+    min-height: 250px;
   }
-  .map-container {
-    border-radius: 12px;
-  }
-  .map-legend {
-    gap: 8px;
+  .region-cards {
+    grid-template-columns: 1fr;
+    gap: 6px;
     padding: 12px;
-    flex-direction: column;
-    align-items: flex-start;
   }
-  .legend-item {
+  .region-card-info h4 {
     font-size: 12px;
+  }
+  .region-card-info p {
+    font-size: 10px;
+  }
+  .lang-current span {
+    display: none;
+  }
+  .lang-current {
+    padding: 8px 10px;
   }
 }

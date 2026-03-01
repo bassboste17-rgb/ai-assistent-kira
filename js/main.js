@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadComponent('footer-placeholder', 'components/footer.html')
   ]).then(() => {
     initNavbar();
+    initLangSwitcher();
     initScrollAnimations();
     initReviewsSlider();
     initMap();
@@ -98,6 +99,62 @@ document.addEventListener('DOMContentLoaded', () => {
         if (toggle) toggle.classList.remove('active');
         if (mobileMenu) mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
+      });
+    });
+  }
+
+  /* ---------- Language Switcher ---------- */
+  function initLangSwitcher() {
+    const switcher = document.getElementById('langSwitcher');
+    const toggle = document.getElementById('langToggle');
+    const dropdown = document.getElementById('langDropdown');
+    const langLabel = document.getElementById('langLabel');
+    const options = document.querySelectorAll('.lang-option');
+    const mobileBtns = document.querySelectorAll('.mobile-lang-btn');
+
+    if (!switcher || !toggle) return;
+
+    // Toggle dropdown
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switcher.classList.toggle('active');
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove('active');
+      }
+    });
+
+    // Desktop lang option click
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        const lang = opt.getAttribute('data-lang');
+        options.forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        if (langLabel) langLabel.textContent = lang.toUpperCase();
+        switcher.classList.remove('active');
+
+        // Sync mobile buttons
+        mobileBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+      });
+    });
+
+    // Mobile lang button click
+    mobileBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        mobileBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (langLabel) langLabel.textContent = lang.toUpperCase();
+
+        // Sync desktop options
+        options.forEach(opt => {
+          opt.classList.toggle('active', opt.getAttribute('data-lang') === lang);
+        });
       });
     });
   }
