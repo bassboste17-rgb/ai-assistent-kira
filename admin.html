@@ -1105,21 +1105,40 @@
 <script type="module">
   import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
-    getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc,
-    doc, serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    getDatabase, ref, get, set, push, update, remove, child, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
   /* ── Config ── */
   const app = initializeApp({
     apiKey:            "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
     authDomain:        "damqtravel.firebaseapp.com",
+    databaseURL:       "https://damqtravel-default-rtdb.firebaseio.com",
     projectId:         "damqtravel",
     storageBucket:     "damqtravel.firebasestorage.app",
     messagingSenderId: "84352735773",
     appId:             "1:84352735773:web:ec9095f9020b630b1884f4",
     measurementId:     "G-3TFFBQWHNM"
   });
-  const db = getFirestore(app);
+  const db = getDatabase(app);
+
+  /* ── RTDB helpers ── */
+  async function rtdbGetAll(path) {
+    const snap = await get(ref(db, path));
+    if (!snap.exists()) return [];
+    const val = snap.val();
+    return Object.entries(val).map(([id, data]) => ({ id, ...data }));
+  }
+  async function rtdbAdd(path, data) {
+    const newRef = push(ref(db, path));
+    await set(newRef, data);
+    return newRef.key;
+  }
+  async function rtdbUpdate(path, id, data) {
+    await update(ref(db, `${path}/${id}`), data);
+  }
+  async function rtdbRemove(path, id) {
+    await remove(ref(db, `${path}/${id}`));
+  }
 
   /* ── UI helpers ── */
   function showLoading(msg = 'Сохранение...') {
@@ -1139,7 +1158,8 @@
 
   function fmtDate(ts) {
     if (!ts) return '—';
-    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    const d = new Date(ts);
+    if (isNaN(d.getTime())) return '—';
     return d.toLocaleDateString('ru-RU', { day:'2-digit', month:'2-digit', year:'2-digit' });
   }
 
@@ -1208,30 +1228,26 @@
   /* ══════════════ DASHBOARD ══════════════ */
   async function loadDashboard() {
     try {
-      const [ts, bs, rs] = await Promise.all([
-        getDocs(collection(db, 'tours')),
-        getDocs(collection(db, 'bookings')),
-        getDocs(collection(db, 'reviews'))
+      const [tours, bookings, reviews, dayTours] = await Promise.all([
+        rtdbGetAll('tours'),
+        rtdbGetAll('bookings'),
+        rtdbGetAll('reviews'),
+        rtdbGetAll('dayTours')
       ]);
 
-      const allDocsInTours = ts.docs.map(d => d.data());
-      const regularTours = allDocsInTours.filter(d => d.category !== DAY_TOUR_CATEGORY);
-      const dayToursCount = allDocsInTours.filter(d => d.category === DAY_TOUR_CATEGORY).length;
+      document.getElementById('sTours').textContent      = tours.length;
+      document.getElementById('sBookings').textContent    = bookings.length;
+      document.getElementById('sReviews').textContent     = reviews.length;
+      document.getElementById('cntTours').textContent     = tours.length;
+      document.getElementById('cntBookings').textContent  = bookings.length;
+      document.getElementById('cntReviews').textContent   = reviews.length;
+      document.getElementById('cntDayTours').textContent  = dayTours.length;
 
-      document.getElementById('sTours').textContent    = regularTours.length;
-      document.getElementById('sBookings').textContent = bs.size;
-      document.getElementById('sReviews').textContent  = rs.size;
-      document.getElementById('cntTours').textContent    = regularTours.length;
-      document.getElementById('cntBookings').textContent = bs.size;
-      document.getElementById('cntReviews').textContent  = rs.size;
-      document.getElementById('cntDayTours').textContent = dayToursCount;
-
-      const pending = bs.docs.filter(d => (d.data().status || 'new') === 'new').length;
+      const pending = bookings.filter(b => (b.status || 'new') === 'new').length;
       document.getElementById('sPending').textContent = pending;
 
-      const recent = bs.docs
-        .map(d => ({ id: d.id, ...d.data() }))
-        .sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0))
+      const recent = bookings
+        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
         .slice(0, 6);
 
       const tb = document.getElementById('recentTbody');
@@ -1257,9 +1273,7 @@
     document.getElementById('toursTbody').innerHTML =
       `<tr class="loading-row"><td colspan="7">Загрузка...</td></tr>`;
     try {
-      const snap = await getDocs(collection(db, 'tours'));
-      allTours = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-        .filter(d => d.category !== DAY_TOUR_CATEGORY);
+      allTours = await rtdbGetAll('tours');
       renderTours(allTours);
       document.getElementById('cntTours').textContent = allTours.length;
       document.getElementById('sTours').textContent   = allTours.length;
@@ -1342,6 +1356,7 @@
     const price = Number(document.getElementById('fPrice').value);
     if (!name || !price) { toast('Заполните название и цену', 'err'); return; }
 
+    const now = Date.now();
     const data = {
       name,
       desc:      document.getElementById('fDesc').value.trim(),
@@ -1354,19 +1369,19 @@
       image:     document.getElementById('fImage').value.trim(),
       location:  document.getElementById('fLocation').value.trim(),
       includes:  document.getElementById('fIncludes').value.split(',').map(s => s.trim()).filter(Boolean),
-      updatedAt: serverTimestamp()
+      updatedAt: now
     };
 
     closeTourModal();
     showLoading(docId ? 'Обновление тура...' : 'Добавление тура...');
     try {
       if (docId) {
-        await updateDoc(doc(db, 'tours', docId), data);
-        toast('Тур обновлён ✓');
+        await rtdbUpdate('tours', docId, data);
+        toast('Тур обновлён');
       } else {
-        data.createdAt = serverTimestamp();
-        await addDoc(collection(db, 'tours'), data);
-        toast('Тур добавлен ✓');
+        data.createdAt = now;
+        await rtdbAdd('tours', data);
+        toast('Тур добавлен');
       }
       loadTours();
     } catch(e) {
@@ -1380,7 +1395,7 @@
     openConfirm(`Удалить тур «${name}»?`, async () => {
       showLoading('Удаление тура...');
       try {
-        await deleteDoc(doc(db, 'tours', id));
+        await rtdbRemove('tours', id);
         toast('Тур удалён');
         loadTours();
         loadDashboard();
@@ -1396,9 +1411,8 @@
     document.getElementById('bookingsTbody').innerHTML =
       `<tr class="loading-row"><td colspan="8">Загрузка...</td></tr>`;
     try {
-      const snap = await getDocs(collection(db, 'bookings'));
-      allBookings = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-        .sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+      allBookings = (await rtdbGetAll('bookings'))
+        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
       renderBookings(allBookings);
       document.getElementById('cntBookings').textContent = allBookings.length;
     } catch(e) {
@@ -1455,8 +1469,8 @@
     closeBookModal();
     showLoading('Обновление статуса...');
     try {
-      await updateDoc(doc(db, 'bookings', id), { status, updatedAt: serverTimestamp() });
-      toast('Статус обновлён ✓');
+      await rtdbUpdate('bookings', id, { status, updatedAt: Date.now() });
+      toast('Статус обновлён');
       loadBookings();
       loadDashboard();
     } catch(e) { toast('Ошибка: ' + e.message, 'err'); }
@@ -1467,7 +1481,7 @@
     openConfirm('Удалить эту заявку?', async () => {
       showLoading('Удаление...');
       try {
-        await deleteDoc(doc(db, 'bookings', id));
+        await rtdbRemove('bookings', id);
         toast('Заявка удалена');
         loadBookings();
         loadDashboard();
@@ -1483,9 +1497,8 @@
     document.getElementById('reviewsTbody').innerHTML =
       `<tr class="loading-row"><td colspan="7">Загрузка...</td></tr>`;
     try {
-      const snap = await getDocs(collection(db, 'reviews'));
-      allReviews = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-        .sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+      allReviews = (await rtdbGetAll('reviews'))
+        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
       renderReviews(allReviews);
       document.getElementById('cntReviews').textContent = allReviews.length;
       document.getElementById('sReviews').textContent   = allReviews.length;
@@ -1533,8 +1546,8 @@
   window.approveReview = async function(id) {
     showLoading('Одобрение отзыва...');
     try {
-      await updateDoc(doc(db, 'reviews', id), { status: 'approved', updatedAt: serverTimestamp() });
-      toast('Отзыв одобрен ✓');
+      await rtdbUpdate('reviews', id, { status: 'approved', updatedAt: Date.now() });
+      toast('Отзыв одобрен');
       loadReviews();
     } catch(e) { toast('Ошибка: ' + e.message, 'err'); }
     finally { hideLoading(); }
@@ -1544,7 +1557,7 @@
     openConfirm('Удалить этот отзыв?', async () => {
       showLoading('Удаление...');
       try {
-        await deleteDoc(doc(db, 'reviews', id));
+        await rtdbRemove('reviews', id);
         toast('Отзыв удалён');
         loadReviews();
         loadDashboard();
@@ -1554,11 +1567,7 @@
   };
 
   /* ══════════════ DAY TOURS (1-დღიანი) ══════════════ */
-  /* NOTE: Stored inside the 'tours' collection with category:'dayTour'
-     to avoid Firestore security rules blocking a new collection */
   const IMGBB_KEY = 'c5bb67f26ff290d597182f756d153d50';
-  const DAY_TOUR_COLLECTION = 'tours'; // reuse existing allowed collection
-  const DAY_TOUR_CATEGORY   = 'dayTour';
   let allDayTours = [];
   let dtUploadedImages = []; // array of { url, deleteUrl }
 
@@ -1640,15 +1649,12 @@
     dtPhotoInput.dispatchEvent(new Event('change'));
   });
 
-  // Load day tours (filtered from 'tours' collection by category)
+  // Load day tours from separate 'dayTours' node
   async function loadDayTours() {
     document.getElementById('dayToursTbody').innerHTML =
       `<tr class="loading-row"><td colspan="8">იტვირთება...</td></tr>`;
     try {
-      const snap = await getDocs(collection(db, DAY_TOUR_COLLECTION));
-      allDayTours = snap.docs
-        .map(d => ({ id: d.id, ...d.data() }))
-        .filter(d => d.category === DAY_TOUR_CATEGORY);
+      allDayTours = await rtdbGetAll('dayTours');
       renderDayTours(allDayTours);
       document.getElementById('cntDayTours').textContent = allDayTours.length;
     } catch(e) {
@@ -1726,7 +1732,7 @@
     document.getElementById('dtName').value    = t.name || '';
     document.getElementById('dtDesc').value    = t.desc || '';
     document.getElementById('dtRoute').value   = t.route || '';
-    document.getElementById('dtType').value    = t.type || 'ექსკურსია';
+    document.getElementById('dtType').value    = t.type || 'ექ��კურსია';
     document.getElementById('dtPrice').value   = t.price || '';
     document.getElementById('dtDays').value    = t.days ?? 1;
     document.getElementById('dtNights').value  = t.nights ?? 0;
@@ -1749,8 +1755,8 @@
       return;
     }
 
+    const now = Date.now();
     const data = {
-      category: DAY_TOUR_CATEGORY,
       name,
       desc:     document.getElementById('dtDesc').value.trim(),
       route:    document.getElementById('dtRoute').value.trim(),
@@ -1762,18 +1768,18 @@
       minGroup,
       maxGroup,
       photos:   dtUploadedImages,
-      updatedAt: serverTimestamp()
+      updatedAt: now
     };
 
     closeDayTourModal();
     showLoading(docId ? 'ტურის განახლება...' : 'ტურის დამატება...');
     try {
       if (docId) {
-        await updateDoc(doc(db, DAY_TOUR_COLLECTION, docId), data);
+        await rtdbUpdate('dayTours', docId, data);
         toast('ტური განახლდა');
       } else {
-        data.createdAt = serverTimestamp();
-        await addDoc(collection(db, DAY_TOUR_COLLECTION), data);
+        data.createdAt = now;
+        await rtdbAdd('dayTours', data);
         toast('ტური დაემატა');
       }
       await loadDayTours();
@@ -1789,7 +1795,7 @@
     openConfirm(`წაშალოთ ტური "${name}"?`, async () => {
       showLoading('ტურის წაშლა...');
       try {
-        await deleteDoc(doc(db, DAY_TOUR_COLLECTION, id));
+        await rtdbRemove('dayTours', id);
         toast('ტური წაიშალა');
         loadDayTours();
         loadDashboard();

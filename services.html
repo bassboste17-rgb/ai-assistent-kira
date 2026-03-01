@@ -931,11 +931,12 @@
   <!-- Firebase: load tours dynamically -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
       authDomain: "damqtravel.firebaseapp.com",
+      databaseURL: "https://damqtravel-default-rtdb.firebaseio.com",
       projectId: "damqtravel",
       storageBucket: "damqtravel.firebasestorage.app",
       messagingSenderId: "84352735773",
@@ -944,7 +945,14 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const db = getDatabase(app);
+
+    async function rtdbGetAll(path) {
+      const snap = await get(ref(db, path));
+      if (!snap.exists()) return [];
+      const val = snap.val();
+      return Object.entries(val).map(([id, data]) => ({ id, ...data }));
+    }
 
     const typeLabel = {
       day: 'Однодневный', multi: 'Многодневный',
@@ -1031,10 +1039,9 @@
       });
     });
 
-    // Load from Firestore
+    // Load from Realtime Database
     try {
-      const snap = await getDocs(collection(db, 'tours'));
-      allTours = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      allTours = await rtdbGetAll('tours');
       updateCounts(allTours);
       updateHeader(allTours.length);
       renderTours(allTours);

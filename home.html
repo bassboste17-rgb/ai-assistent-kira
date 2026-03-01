@@ -706,12 +706,13 @@
   <!-- Firebase: tours + contact form + reviews -->
   <script type="module">
     import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, serverTimestamp }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getDatabase, ref, get, push, set }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
       authDomain: "damqtravel.firebaseapp.com",
+      databaseURL: "https://damqtravel-default-rtdb.firebaseio.com",
       projectId: "damqtravel",
       storageBucket: "damqtravel.firebasestorage.app",
       messagingSenderId: "84352735773",
@@ -719,7 +720,20 @@
       measurementId: "G-3TFFBQWHNM"
     };
     const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+    const db  = getDatabase(app);
+
+    /* ─── RTDB helpers ─── */
+    async function rtdbGetAll(path) {
+      const snap = await get(ref(db, path));
+      if (!snap.exists()) return [];
+      const val = snap.val();
+      return Object.entries(val).map(([id, data]) => ({ id, ...data }));
+    }
+    async function rtdbAdd(path, data) {
+      const newRef = push(ref(db, path));
+      await set(newRef, data);
+      return newRef.key;
+    }
 
     /* ─── helpers ─── */
     function tourCardHTML(t, idx) {
@@ -790,8 +804,7 @@
 
     /* ─── load tours ─── */
     try {
-      const snap  = await getDocs(collection(db, 'tours'));
-      const tours = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      const tours = await rtdbGetAll('tours');
 
       const multiTours = tours.filter(t => t.type === 'multi');
       const dayTours   = tours.filter(t => t.type !== 'multi');
@@ -831,14 +844,14 @@
       const btn = document.getElementById('contactSubmitBtn');
       btn.classList.add('loading');
       try {
-        await addDoc(collection(db, 'bookings'), {
+        await rtdbAdd('bookings', {
           name:      document.getElementById('name').value.trim(),
           phone:     document.getElementById('phone').value.trim(),
           email:     document.getElementById('email').value.trim(),
           tour:      document.getElementById('tour-select').value,
           message:   document.getElementById('message').value.trim(),
           status:    'new',
-          createdAt: serverTimestamp()
+          createdAt: Date.now()
         });
         document.getElementById('contactForm').style.display = 'none';
         document.getElementById('formSuccess').classList.add('show');
@@ -858,14 +871,14 @@
       const btn = document.getElementById('reviewSubmitBtn');
       btn.classList.add('loading');
       try {
-        await addDoc(collection(db, 'reviews'), {
+        await rtdbAdd('reviews', {
           firstName: document.getElementById('reviewFirstName').value.trim(),
           lastName:  document.getElementById('reviewLastName').value.trim(),
           country:   document.getElementById('reviewCountry').value,
           rating:    rating,
           text:      document.getElementById('reviewText').value.trim(),
           status:    'pending',
-          createdAt: serverTimestamp()
+          createdAt: Date.now()
         });
         document.getElementById('reviewForm').style.display = 'none';
         document.getElementById('reviewSuccess').classList.add('show');
