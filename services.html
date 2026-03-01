@@ -108,13 +108,65 @@
       50% { transform: translateY(6px); }
     }
 
-    /* ── Filter Tabs ── */
-    .filter-bar {
+    /* ── Main Tour Tabs ── */
+    .main-tabs {
       background: var(--white);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 40;
+      padding: 0 1.5rem;
+    }
+    .main-tabs-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .main-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 1rem 1.8rem;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+      transition: color 0.25s;
+    }
+    .main-tab::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 1rem; right: 1rem;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 3px 3px 0 0;
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+    .main-tab:hover { color: var(--dark); }
+    .main-tab.active { color: var(--dark); }
+    .main-tab.active::after { transform: scaleX(1); }
+    .main-tab .tab-count {
+      background: #f0ede6;
+      color: #888;
+      border-radius: 50px;
+      padding: 2px 9px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .main-tab.active .tab-count { background: var(--gold); color: var(--dark); }
+
+    /* ── Sub-filter Tabs ── */
+    .filter-bar {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
       padding: 0 1.5rem;
     }
     .filter-inner {
@@ -125,19 +177,19 @@
       gap: 0.3rem;
       overflow-x: auto;
       scrollbar-width: none;
-      padding: 0.9rem 0;
+      padding: 0.7rem 0;
     }
     .filter-inner::-webkit-scrollbar { display: none; }
     .filter-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 0.5rem 1.1rem;
+      padding: 0.45rem 1rem;
       border-radius: 50px;
       border: 1.5px solid var(--border);
       background: transparent;
       color: var(--muted);
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       font-weight: 600;
       font-family: inherit;
       cursor: pointer;
@@ -154,6 +206,29 @@
       font-weight: 700;
     }
     .filter-btn:not(.active) .filter-count { background: #f0ede6; color: #888; }
+
+    /* ── Day Tour Card extras ── */
+    .dt-regions { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 0.7rem; }
+    .dt-region-chip {
+      display: inline-block;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--gold);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 50px;
+      letter-spacing: 0.02em;
+    }
+    .dt-route {
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
     /* ── Section ── */
     .section-wrap { padding: 5rem 1.5rem; }
@@ -665,36 +740,52 @@
     </div>
   </section>
 
-  <!-- Filter Bar -->
-  <div class="filter-bar" id="filterBar">
+  <!-- Main Tabs: 1-day vs Multi-day -->
+  <div class="main-tabs" id="mainTabs">
+    <div class="main-tabs-inner">
+      <button class="main-tab active" data-main="day1">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        1-დღიანი ტურები
+        <span class="tab-count" id="tabCountDay1">0</span>
+      </button>
+      <button class="main-tab" data-main="multi">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        მრავალდღიანი ტურები
+        <span class="tab-count" id="tabCountMulti">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Sub-filter for multi-day tours (hidden by default) -->
+  <div class="filter-bar" id="filterBar" style="display:none;">
     <div class="filter-inner">
       <button class="filter-btn active" data-filter="all">
-        Все туры
+        ყველა
         <span class="filter-count" id="countAll">0</span>
       </button>
       <button class="filter-btn" data-filter="day">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Однодневные
+        ექსკურსია
         <span class="filter-count" id="countDay">0</span>
       </button>
       <button class="filter-btn" data-filter="multi">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Многодневные
+        მრავალდღიანი
         <span class="filter-count" id="countMulti">0</span>
       </button>
       <button class="filter-btn" data-filter="wine">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M5 3h14l-1 7a7 7 0 0 1-12 0Z"/></svg>
-        Винные
+        საღვინე
         <span class="filter-count" id="countWine">0</span>
       </button>
       <button class="filter-btn" data-filter="photo">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        Фототуры
+        ფოტოტური
         <span class="filter-count" id="countPhoto">0</span>
       </button>
       <button class="filter-btn" data-filter="custom">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-        Индивидуальные
+        ინდივიდუალური
         <span class="filter-count" id="countCustom">0</span>
       </button>
     </div>
