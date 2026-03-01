@@ -12,22 +12,355 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* ──────────────────────────────────────────
+       IMPROVEMENTS ON TOP OF css/styles.css
+    ────────────────────────────────────────── */
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* ── Skeleton shimmer ── */
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .skeleton {
+      background: linear-gradient(90deg, #f0ede6 25%, #e8e4dc 50%, #f0ede6 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 10px;
+    }
+    .skeleton-card {
+      background: #fff;
+      border: 1px solid #f0ede6;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .skeleton-img  { height: 220px; }
+    .skeleton-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .skeleton-line { height: 13px; }
+    .skeleton-line.s  { width: 55%; }
+    .skeleton-line.xs { width: 35%; }
+
+    /* ── Tour card fade-in ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .tour-card-anim {
+      animation: fadeUp 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    /* ── Stats bar (new) ── */
+    .stats-bar {
+      background: #0a0a0a;
+      padding: 1.8rem 0;
+    }
+    .stats-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0.8rem 0.5rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #d4af37;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-item-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    @media (max-width: 600px) {
+      .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+    }
+
+    /* ── Hero improvements ── */
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.12);
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* ── Tour section improvements ── */
+    .tours-empty {
+      text-align: center;
+      padding: 4rem 1.5rem;
+      color: #aaa;
+      grid-column: 1 / -1;
+    }
+    .tours-empty svg { opacity: 0.3; margin-bottom: 1rem; }
+    .tours-empty h4 { color: #555; font-size: 1rem; margin-bottom: 0.4rem; }
+    .tours-empty p  { font-size: 0.88rem; }
+
+    /* ── View all tours link ── */
+    .tours-view-all {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .btn-view-all {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid #0a0a0a;
+      color: #0a0a0a;
+      background: transparent;
+      border-radius: 12px;
+      padding: 0.75rem 2rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s, transform 0.2s;
+    }
+    .btn-view-all:hover {
+      background: #0a0a0a;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ── Contact form success ── */
+    .form-success {
+      display: none;
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 1px solid #86efac;
+      border-radius: 14px;
+      padding: 1.8rem;
+      text-align: center;
+    }
+    .form-success.show { display: block; }
+    .form-success-icon {
+      width: 56px; height: 56px;
+      background: #22c55e;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      color: #fff;
+    }
+    .form-success h3 { font-size: 1.05rem; font-weight: 700; color: #166534; margin-bottom: 0.4rem; }
+    .form-success p  { font-size: 0.88rem; color: #15803d; }
+
+    /* ── Review form success ── */
+    .review-success {
+      display: none;
+      background: linear-gradient(135deg, #fffbeb, #fef9c3);
+      border: 1px solid #fde68a;
+      border-radius: 14px;
+      padding: 1.8rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .review-success.show { display: block; }
+    .review-success h3 { font-size: 1rem; font-weight: 700; color: #92400e; margin-bottom: 0.3rem; }
+    .review-success p  { font-size: 0.85rem; color: #b45309; }
+
+    /* ── Hero badge pulse ── */
+    .hero-badge {
+      animation: pulseBadge 2.5s ease-in-out infinite;
+    }
+    @keyframes pulseBadge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+      50%       { box-shadow: 0 0 0 8px rgba(212,175,55,0.12); }
+    }
+
+    /* ── Improved tour-card hover ── */
+    .tour-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .tour-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(0,0,0,0.10); }
+    .tour-featured:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.12); }
+    .tour-card-image img { transition: transform 0.5s ease; }
+    .tour-card:hover .tour-card-image img { transform: scale(1.05); }
+
+    /* ── Section divider ── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #f0ede6 30%, #f0ede6 70%, transparent);
+      margin: 0;
+    }
+
+    /* ── Floating WhatsApp btn ── */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 90;
+      width: 56px; height: 56px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.25s, box-shadow 0.25s;
+      animation: fabPop 0.5s 1s ease backwards;
+    }
+    @keyframes fabPop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .whatsapp-fab:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,0.55); }
+
+    /* ── Scroll progress bar ── */
+    #scrollProgress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #d4af37, #f0c040);
+      z-index: 1000;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ── Back to top ── */
+    .back-to-top {
+      position: fixed;
+      bottom: 5.5rem;
+      right: 2rem;
+      z-index: 90;
+      width: 44px; height: 44px;
+      background: #0a0a0a;
+      border: none;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .back-to-top.visible { opacity: 1; transform: translateY(0); }
+    .back-to-top:hover { background: #d4af37; }
+
+    /* ── btn-submit loading state ── */
+    .btn-submit.loading,
+    .btn-submit-review.loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .btn-submit.loading::after,
+    .btn-submit-review.loading::after {
+      content: '';
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      margin-left: 8px;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
 </head>
 <body>
 
+  <!-- Scroll progress bar -->
+  <div id="scrollProgress"></div>
+
   <!-- Navbar -->
-  <div id="navbar-placeholder"></div>
+  <nav class="navbar" id="navbar">
+    <div class="navbar-container">
+      <a href="home.html" class="navbar-logo">
+        <span class="logo-text">DAMQ</span>
+        <span class="logo-divider"></span>
+        <span class="logo-sub">TRAVEL</span>
+      </a>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="home.html" class="nav-link active">Главная</a></li>
+        <li><a href="services.html" class="nav-link">Услуги</a></li>
+        <li><a href="home.html#map" class="nav-link">Направления</a></li>
+        <li><a href="blog.html" class="nav-link">Блог</a></li>
+        <li><a href="contact.html" class="nav-link">Контакты</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-current" id="langToggle" aria-label="Change language">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span id="langLabel">RU</span>
+            <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lang-dropdown" id="langDropdown">
+            <button class="lang-option active" data-lang="ru"><span class="lang-flag">RU</span><span>Русский</span></button>
+            <button class="lang-option" data-lang="en"><span class="lang-flag">EN</span><span>English</span></button>
+            <button class="lang-option" data-lang="ka"><span class="lang-flag">KA</span><span>ქართული</span></button>
+          </div>
+        </div>
+        <a href="tel:+995555000000" class="navbar-phone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+995 555 000 000</span>
+        </a>
+        <a href="contact.html" class="btn-cta-nav">Забронировать</a>
+        <button class="navbar-toggle" id="navToggle" aria-label="Toggle menu">
+          <svg class="toggle-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="toggle-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <ul class="mobile-links">
+          <li><a href="home.html" class="mobile-link">Главная</a></li>
+          <li><a href="services.html" class="mobile-link">Услуги</a></li>
+          <li><a href="home.html#map" class="mobile-link">Направления</a></li>
+          <li><a href="blog.html" class="mobile-link">Блог</a></li>
+          <li><a href="contact.html" class="mobile-link">Контакты</a></li>
+        </ul>
+        <div class="mobile-lang-switcher">
+          <button class="mobile-lang-btn active" data-lang="ru">RU</button>
+          <button class="mobile-lang-btn" data-lang="en">EN</button>
+          <button class="mobile-lang-btn" data-lang="ka">KA</button>
+        </div>
+        <div class="mobile-menu-footer">
+          <a href="tel:+995555000000" class="mobile-phone">+995 555 000 000</a>
+          <a href="contact.html" class="btn-cta-nav mobile-cta">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="hero-bg">
-      <img src="images/hero-georgia.jpg" alt="Красивый пейзаж Грузии">
+      <img src="images/hero-georgia.jpg" alt="Красивый пейзаж Грузии" id="heroBg">
     </div>
     <div class="hero-overlay"></div>
+    <!-- Floating particles -->
+    <div class="hero-particles" id="heroParticles"></div>
     <div class="hero-content">
       <div class="hero-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Premium Travel Experience
+        Премиум путешествия
       </div>
       <h1 class="hero-title">Откройте для себя<br><em>магию Грузии</em></h1>
       <p class="hero-subtitle">Уникальные авторские туры по самым живописным местам Грузии. Горы, море, вино и гостеприимство — всё, что нужно для идеального путешествия.</p>
@@ -43,6 +376,28 @@
       </div>
     </div>
   </section>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-item">
+        <div class="stat-item-value" data-count="8">0+</div>
+        <div class="stat-item-label">Лет опыта</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item-value" data-count="5000">0+</div>
+        <div class="stat-item-label">Довольных клиентов</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item-value" data-count="30">0+</div>
+        <div class="stat-item-label">Маршрутов</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-item-value">4.9★</div>
+        <div class="stat-item-label">Средний рейтинг</div>
+      </div>
+    </div>
+  </div>
 
   <!-- About Section -->
   <section class="section about" id="about">
@@ -105,164 +460,61 @@
     </div>
   </section>
 
-  <!-- Tours Section -->
+  <div class="section-divider"></div>
+
+  <!-- Tours Section — dynamic from Firebase -->
   <section class="section tours" id="tours">
     <div class="section-container">
       <div class="section-header animate-on-scroll">
         <div class="section-tag">Наши туры</div>
-        <h2 class="section-title">Популярные направления</h2>
-        <p class="section-subtitle">Выберите идеальный тур для себя — от горных приключений до винных дегустаций в солнечной Кахетии</p>
+        <h2 class="section-title" id="toursTitle">Полные пакеты туров</h2>
+        <p class="section-subtitle">Многодневные путешествия с проживанием, транспортом и полным сопровождением гида по лучшим направлениям Грузии</p>
       </div>
-      <div class="tours-grid">
-        <!-- Featured Tour (First / Top) -->
-        <div class="tour-featured animate-on-scroll">
-          <div class="tour-featured-image">
-            <img src="images/tour-svaneti.jpg" alt="Сванетия — горный регион Грузии">
-          </div>
-          <div class="tour-featured-content">
-            <div class="tour-featured-tag">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              Рекомендуем
-            </div>
-            <h3 class="tour-featured-title">Сванетия — жемчужина Кавказа</h3>
-            <p class="tour-featured-desc">Погрузитесь в мир средневековых сванских башен, величественных ледников и нетронутой природы высокогорного региона Грузии.</p>
-            <div class="tour-featured-details">
-              <span class="tour-featured-detail">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                3 дня / 2 ночи
-              </span>
-              <span class="tour-featured-detail">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                2-8 чел.
-              </span>
-              <span class="tour-featured-detail">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                4.9
-              </span>
-            </div>
-            <div class="tour-featured-bottom">
-              <span class="tour-featured-price">$195 <small>/ чел.</small></span>
-              <a href="#contact" class="btn-featured">
-                Забронировать
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </a>
-            </div>
-          </div>
+
+      <!-- Multi-day tours -->
+      <div class="tours-slider-wrap" id="fullToursSlider">
+        <button class="tours-slider-arrow arrow-left disabled" data-dir="left" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="tours-grid" id="multiToursGrid">
+          <!-- skeleton -->
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line xs"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line s"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line xs"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line s"></div></div></div>
         </div>
-        <!-- Tour Card 1 -->
-        <div class="tour-card animate-on-scroll delay-1">
-          <div class="tour-card-image">
-            <img src="images/tour-tbilisi.jpg" alt="Тбилиси — старый город">
-            <span class="tour-card-badge">Хит</span>
-            <button class="tour-card-save" aria-label="Сохранить тур">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="tour-card-body">
-            <div class="tour-card-location">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Тбилиси и Мцхета
-            </div>
-            <h3 class="tour-card-title">Тбилиси и окрестности</h3>
-            <p class="tour-card-desc">Старый город, серные бани, крепость Нарикала, монастырь Джвари и древняя столица Мцхета за один день.</p>
-            <div class="tour-card-meta">
-              <span class="tour-meta-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                1 день
-              </span>
-              <span class="tour-meta-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                1-15 чел.
-              </span>
-            </div>
-          </div>
-          <div class="tour-card-footer">
-            <div class="tour-price">
-              <span class="tour-price-label">от</span>
-              <span class="tour-price-value">$45 <small>/ чел.</small></span>
-            </div>
-            <a href="#contact" class="btn-tour">
-              Подробнее
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
+        <button class="tours-slider-arrow arrow-right" data-dir="right" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div class="tours-divider animate-on-scroll">
+        <div class="tours-divider-line"></div>
+        <div class="tours-divider-content">
+          <h3>Однодневные туры</h3>
+          <p>Увлекательные экскурсии на один день по лучшим направлениям Грузии</p>
         </div>
-        <!-- Tour Card 2 -->
-        <div class="tour-card animate-on-scroll delay-2">
-          <div class="tour-card-image">
-            <img src="images/tour-kazbegi.jpg" alt="Казбеги — горы Кавказа">
-            <span class="tour-card-badge">Топ</span>
-            <button class="tour-card-save" aria-label="Сохранить тур">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="tour-card-body">
-            <div class="tour-card-location">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Степанцминда
-            </div>
-            <h3 class="tour-card-title">Казбеги и горы</h3>
-            <p class="tour-card-desc">Военно-Грузинская дорога, Гергетская церковь Святой Троицы на фоне горы Казбек. Захватывающие виды Кавказа.</p>
-            <div class="tour-card-meta">
-              <span class="tour-meta-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                1 день
-              </span>
-              <span class="tour-meta-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                1-10 чел.
-              </span>
-            </div>
-          </div>
-          <div class="tour-card-footer">
-            <div class="tour-price">
-              <span class="tour-price-label">от</span>
-              <span class="tour-price-value">$65 <small>/ чел.</small></span>
-            </div>
-            <a href="#contact" class="btn-tour">
-              Подробнее
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
+        <div class="tours-divider-line"></div>
+      </div>
+
+      <!-- Day tours -->
+      <div class="tours-slider-wrap" id="dayToursSlider">
+        <button class="tours-slider-arrow arrow-left disabled" data-dir="left" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="tours-grid" id="dayToursGrid">
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line xs"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line s"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line xs"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line s"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line xs"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line s"></div></div></div>
         </div>
-        <!-- Tour Card 3 -->
-        <div class="tour-card animate-on-scroll delay-3">
-          <div class="tour-card-image">
-            <img src="images/tour-wine.jpg" alt="Винный тур по Кахетии">
-            <span class="tour-card-badge">Новинка</span>
-            <button class="tour-card-save" aria-label="Сохранить тур">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-          </div>
-          <div class="tour-card-body">
-            <div class="tour-card-location">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Кахетия
-            </div>
-            <h3 class="tour-card-title">Винный тур по Кахетии</h3>
-            <p class="tour-card-desc">Дегустация грузинских вин в традиционных марани, посещение виноградников и город любви Сигнахи.</p>
-            <div class="tour-card-meta">
-              <span class="tour-meta-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                1 день
-              </span>
-              <span class="tour-meta-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                2-12 чел.
-              </span>
-            </div>
-          </div>
-          <div class="tour-card-footer">
-            <div class="tour-price">
-              <span class="tour-price-label">от</span>
-              <span class="tour-price-value">$55 <small>/ чел.</small></span>
-            </div>
-            <a href="#contact" class="btn-tour">
-              Подробнее
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </div>
-        </div>
+        <button class="tours-slider-arrow arrow-right" data-dir="right" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div class="tours-view-all animate-on-scroll">
+        <a href="services.html" class="btn-view-all">
+          Все туры и услуги
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -277,20 +529,6 @@
       </div>
       <div class="map-wrapper animate-on-scroll">
         <div id="georgia-map"></div>
-        <div class="map-legend">
-          <div class="legend-item">
-            <span class="legend-dot gold"></span>
-            Основные направления
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot green"></span>
-            Популярные места
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot white"></span>
-            Дополнительные локации
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -304,7 +542,7 @@
         <p class="section-subtitle">Реальные истории и впечатления путешественников, доверивших нам свой отдых</p>
       </div>
       <div class="reviews-slider animate-on-scroll">
-        <div class="reviews-track">
+        <div class="reviews-track" id="reviewsTrack">
           <div class="review-card">
             <div class="review-card-inner">
               <span class="review-quote">"</span>
@@ -318,10 +556,7 @@
               <p class="review-text">Невероятное путешествие! DAMQ Travel организовали всё на высшем уровне. Казбеги — это что-то неописуемое. Обязательно вернёмся снова!</p>
               <div class="review-author">
                 <div class="review-avatar">АК</div>
-                <div class="review-info">
-                  <h4>Анна Козлова</h4>
-                  <p>Москва, Россия</p>
-                </div>
+                <div class="review-info"><h4>Анна Козлова</h4><p>Москва, Россия</p></div>
               </div>
             </div>
           </div>
@@ -338,10 +573,7 @@
               <p class="review-text">Винный тур по Кахетии превзошёл все ожидания. Гид был потрясающий, а дегустации — незабываемые. Спасибо DAMQ Travel за идеальную организацию!</p>
               <div class="review-author">
                 <div class="review-avatar">ДМ</div>
-                <div class="review-info">
-                  <h4>Дмитрий Морозов</h4>
-                  <p>Санкт-Петербург, Россия</p>
-                </div>
+                <div class="review-info"><h4>Дмитрий Морозов</h4><p>Санкт-Петербург, Россия</p></div>
               </div>
             </div>
           </div>
@@ -358,10 +590,7 @@
               <p class="review-text">Сванетия поразила нас до глубины души. Три дня пролетели как мгновение. Профессиональный подход команды DAMQ Travel заслуживает высшей оценки.</p>
               <div class="review-author">
                 <div class="review-avatar">ЕС</div>
-                <div class="review-info">
-                  <h4>Елена Соколова</h4>
-                  <p>Киев, Украина</p>
-                </div>
+                <div class="review-info"><h4>Елена Соколова</h4><p>Киев, Украина</p></div>
               </div>
             </div>
           </div>
@@ -380,7 +609,8 @@
           </button>
         </div>
       </div>
-      <!-- Add Review Form -->
+
+      <!-- Add Review Form — saves to Firebase -->
       <div class="add-review-section animate-on-scroll">
         <h3 class="add-review-title">Оставить отзыв</h3>
         <p class="add-review-subtitle">Поделитесь своими впечатлениями о путешествии с DAMQ Travel</p>
@@ -418,21 +648,11 @@
           <div class="form-group">
             <label>Оценка</label>
             <div class="star-rating" id="starRating">
-              <button type="button" class="star-btn" data-rating="1" aria-label="1 star">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </button>
-              <button type="button" class="star-btn" data-rating="2" aria-label="2 stars">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </button>
-              <button type="button" class="star-btn" data-rating="3" aria-label="3 stars">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </button>
-              <button type="button" class="star-btn" data-rating="4" aria-label="4 stars">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </button>
-              <button type="button" class="star-btn" data-rating="5" aria-label="5 stars">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </button>
+              <button type="button" class="star-btn" data-rating="1" aria-label="1 star"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+              <button type="button" class="star-btn" data-rating="2" aria-label="2 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+              <button type="button" class="star-btn" data-rating="3" aria-label="3 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+              <button type="button" class="star-btn" data-rating="4" aria-label="4 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+              <button type="button" class="star-btn" data-rating="5" aria-label="5 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
             </div>
             <input type="hidden" id="reviewRating" value="0">
           </div>
@@ -440,16 +660,20 @@
             <label for="reviewText">Ваш отзыв</label>
             <textarea id="reviewText" placeholder="Расскажите о вашем путешествии..." rows="4" required></textarea>
           </div>
-          <button type="submit" class="btn-submit-review">
+          <button type="submit" class="btn-submit-review" id="reviewSubmitBtn">
             Отправить отзыв
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </form>
+        <div class="review-success" id="reviewSuccess">
+          <h3>Спасибо за отзыв! 🙏</h3>
+          <p>Ваш отзыв отправлен на модерацию и скоро появится на сайте.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact Section — saves to Firebase -->
   <section class="section contact" id="contact">
     <div class="section-container">
       <div class="contact-grid">
@@ -459,46 +683,26 @@
           <p class="contact-desc">Оставьте заявку, и мы свяжемся с вами в течение часа, чтобы помочь спланировать идеальное путешествие по Грузии.</p>
           <div class="contact-info-list">
             <div class="contact-info-item">
-              <div class="contact-info-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Адрес</h4>
-                <p>Тбилиси, ул. Руставели 24</p>
-              </div>
+              <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div class="contact-info-text"><h4>Адрес</h4><p>Тбилиси, ул. Руставели 24</p></div>
             </div>
             <div class="contact-info-item">
-              <div class="contact-info-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Телефон</h4>
-                <a href="tel:+995555000000">+995 555 000 000</a>
-              </div>
+              <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+              <div class="contact-info-text"><h4>Телефон</h4><a href="tel:+995555000000">+995 555 000 000</a></div>
             </div>
             <div class="contact-info-item">
-              <div class="contact-info-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Email</h4>
-                <a href="mailto:info@damq.ge">info@damq.ge</a>
-              </div>
+              <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+              <div class="contact-info-text"><h4>Email</h4><a href="mailto:info@damq.ge">info@damq.ge</a></div>
             </div>
             <div class="contact-info-item">
-              <div class="contact-info-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              </div>
-              <div class="contact-info-text">
-                <h4>Время работы</h4>
-                <p>Пн-Вс: 09:00 - 21:00</p>
-              </div>
+              <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="contact-info-text"><h4>Время работы</h4><p>Пн-Вс: 09:00 - 21:00</p></div>
             </div>
           </div>
         </div>
         <div class="contact-form-wrap animate-on-scroll delay-2">
           <h3 class="contact-form-title">Оставить заявку</h3>
-          <p class="contact-form-subtitle">Заполните форму, и мы свя��емся с вами в ближайшее время</p>
+          <p class="contact-form-subtitle">Заполните форму, и мы свяжемся с вами в ближайшее время</p>
           <form id="contactForm">
             <div class="form-row">
               <div class="form-group">
@@ -507,7 +711,7 @@
               </div>
               <div class="form-group">
                 <label for="phone">Телефон</label>
-                <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" required>
+                <input type="tel" id="phone" placeholder="+995 (___) ___-___" required>
               </div>
             </div>
             <div class="form-group">
@@ -518,23 +722,30 @@
               <label for="tour-select">Интересующий тур</label>
               <select id="tour-select">
                 <option value="">Выберите тур</option>
-                <option value="tbilisi">Тбилиси и окрестности</option>
-                <option value="kazbegi">Казбеги и горы</option>
-                <option value="wine">Винный тур по Кахетии</option>
-                <option value="svaneti">Сванетия</option>
-                <option value="batumi">Батуми и побережье</option>
-                <option value="custom">Индивидуальный тур</option>
+                <option value="Тбилиси и окрестности">Тбилиси и окрестности</option>
+                <option value="Казбеги и горы">Казбеги и горы</option>
+                <option value="Винный тур по Кахетии">Винный тур по Кахетии</option>
+                <option value="Сванетия">Сванетия</option>
+                <option value="Батуми и побережье">Батуми и побережье</option>
+                <option value="Индивидуальный тур">Индивидуальный тур</option>
               </select>
             </div>
             <div class="form-group">
               <label for="message">Сообщение</label>
               <textarea id="message" placeholder="Расскажите о ваших пожеланиях..." rows="4"></textarea>
             </div>
-            <button type="submit" class="btn-submit">
+            <button type="submit" class="btn-submit" id="contactSubmitBtn">
               Отправить заявку
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
           </form>
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>Заявка отправлена!</h3>
+            <p>Мы свяжемся с вами в течение часа. Ждите звонка!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -547,7 +758,9 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="video-modal-content">
-        <iframe id="videoIframe" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <video id="videoPlayer" controls playsinline preload="metadata">
+          <source src="video.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </div>
@@ -555,8 +768,263 @@
   <!-- Footer -->
   <div id="footer-placeholder"></div>
 
+  <!-- WhatsApp FAB -->
+  <a href="https://wa.me/995555000000" target="_blank" class="whatsapp-fab" aria-label="WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Наверх">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
   <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/main.js"></script>
+
+  <!-- Firebase: tours + contact form + reviews -->
+  <script type="module">
+    import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
+      authDomain: "damqtravel.firebaseapp.com",
+      projectId: "damqtravel",
+      storageBucket: "damqtravel.firebasestorage.app",
+      messagingSenderId: "84352735773",
+      appId: "1:84352735773:web:ec9095f9020b630b1884f4",
+      measurementId: "G-3TFFBQWHNM"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    /* ─── helpers ─── */
+    function tourCardHTML(t, idx) {
+      const delay = (idx % 3) * 0.08;
+      return `
+        <div class="tour-card tour-card-anim" style="animation-delay:${delay}s">
+          <div class="tour-card-image">
+            ${t.image
+              ? `<img src="${t.image}" alt="${t.name||''}" loading="lazy" onerror="this.style.display='none'">`
+              : `<div style="height:220px;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
+            }
+            ${t.badge ? `<span class="tour-card-badge">${t.badge}</span>` : ''}
+            <button class="tour-card-save" aria-label="Сохранить тур">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </div>
+          <div class="tour-card-body">
+            ${t.location ? `<div class="tour-card-location"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
+            <h3 class="tour-card-title">${t.name || 'Без названия'}</h3>
+            <p class="tour-card-desc">${t.desc || ''}</p>
+            <div class="tour-card-meta">
+              ${t.duration ? `<span class="tour-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
+              ${t.group    ? `<span class="tour-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.group}</span>` : ''}
+            </div>
+          </div>
+          <div class="tour-card-footer">
+            <div class="tour-price">
+              <span class="tour-price-label">от</span>
+              <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
+            </div>
+            <a href="contact.html" class="btn-tour">
+              Подробнее
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>`;
+    }
+
+    function featuredHTML(t) {
+      return `
+        <div class="tour-featured tour-card-anim">
+          <div class="tour-featured-image">
+            ${t.image ? `<img src="${t.image}" alt="${t.name||''}">` : ''}
+          </div>
+          <div class="tour-featured-content">
+            <div class="tour-featured-tag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              ${t.badge || 'Рекомендуем'}
+            </div>
+            <h3 class="tour-featured-title">${t.name || 'Без названия'}</h3>
+            <p class="tour-featured-desc">${t.desc || ''}</p>
+            <div class="tour-featured-details">
+              ${t.duration ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
+              ${t.group    ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.group}</span>` : ''}
+              ${t.rating   ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${t.rating}</span>` : ''}
+            </div>
+            <div class="tour-featured-bottom">
+              <span class="tour-featured-price">$${t.price || '—'} <small>/ чел.</small></span>
+              <a href="contact.html" class="btn-featured">Забронировать <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function emptyHTML(msg) {
+      return `<div class="tours-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><h4>${msg}</h4><p>Туры появятся после добавления в панели администратора</p></div>`;
+    }
+
+    /* ─── load tours ─── */
+    try {
+      const snap  = await getDocs(collection(db, 'tours'));
+      const tours = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+      const multiTours = tours.filter(t => t.type === 'multi');
+      const dayTours   = tours.filter(t => t.type !== 'multi');
+
+      // Multi-day
+      const multiGrid = document.getElementById('multiToursGrid');
+      if (multiTours.length > 0) {
+        multiGrid.innerHTML = featuredHTML(multiTours[0])
+          + multiTours.slice(1).map((t, i) => tourCardHTML(t, i)).join('');
+      } else {
+        multiGrid.innerHTML = emptyHTML('Многодневные туры скоро появятся');
+      }
+
+      // Day tours — populate select options too
+      const dayGrid = document.getElementById('dayToursGrid');
+      if (dayTours.length > 0) {
+        dayGrid.innerHTML = dayTours.map((t, i) => tourCardHTML(t, i)).join('');
+        // Update tour select in contact form
+        const sel = document.getElementById('tour-select');
+        if (sel && tours.length > 0) {
+          sel.innerHTML = '<option value="">Выберите тур</option>'
+            + tours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+        }
+      } else {
+        dayGrid.innerHTML = emptyHTML('Однодневные туры скоро появятся');
+      }
+
+    } catch(e) {
+      console.error('Firebase tours:', e);
+      document.getElementById('multiToursGrid').innerHTML = emptyHTML('Не удалось загрузить туры');
+      document.getElementById('dayToursGrid').innerHTML   = emptyHTML('Не удалось загрузить туры');
+    }
+
+    /* ─── Contact form → bookings ─── */
+    document.getElementById('contactForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = document.getElementById('contactSubmitBtn');
+      btn.classList.add('loading');
+      try {
+        await addDoc(collection(db, 'bookings'), {
+          name:      document.getElementById('name').value.trim(),
+          phone:     document.getElementById('phone').value.trim(),
+          email:     document.getElementById('email').value.trim(),
+          tour:      document.getElementById('tour-select').value,
+          message:   document.getElementById('message').value.trim(),
+          status:    'new',
+          createdAt: serverTimestamp()
+        });
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').classList.add('show');
+      } catch(err) {
+        console.error(err);
+        alert('Ошибка отправки. Попробуйте позже или позвоните нам.');
+      } finally {
+        btn.classList.remove('loading');
+      }
+    });
+
+    /* ─── Review form → reviews ─── */
+    document.getElementById('reviewForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const rating = parseInt(document.getElementById('reviewRating').value);
+      if (!rating) { alert('Пожалуйста, выберите оценку.'); return; }
+      const btn = document.getElementById('reviewSubmitBtn');
+      btn.classList.add('loading');
+      try {
+        await addDoc(collection(db, 'reviews'), {
+          firstName: document.getElementById('reviewFirstName').value.trim(),
+          lastName:  document.getElementById('reviewLastName').value.trim(),
+          country:   document.getElementById('reviewCountry').value,
+          rating:    rating,
+          text:      document.getElementById('reviewText').value.trim(),
+          status:    'pending',
+          createdAt: serverTimestamp()
+        });
+        document.getElementById('reviewForm').style.display = 'none';
+        document.getElementById('reviewSuccess').classList.add('show');
+      } catch(err) {
+        console.error(err);
+        alert('Ошибка отправки. Попробуйте позже.');
+      } finally {
+        btn.classList.remove('loading');
+      }
+    });
+  </script>
+
+  <!-- UI enhancements (scroll progress, back-to-top, particles, counter) -->
+  <script>
+    /* Scroll progress */
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+      document.getElementById('scrollProgress').style.width = pct + '%';
+      const btt = document.getElementById('backToTop');
+      btt.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+
+    /* Back to top */
+    document.getElementById('backToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* Hero particles */
+    const container = document.getElementById('heroParticles');
+    for (let i = 0; i < 12; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 60 + 20;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random() * 100}%;
+        animation-duration:${Math.random() * 15 + 10}s;
+        animation-delay:${Math.random() * 10}s;
+      `;
+      container.appendChild(p);
+    }
+
+    /* Counter animation for stats */
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count);
+      if (!target) return;
+      const suffix = el.textContent.includes('+') ? '+' : '';
+      let start = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        start = Math.min(start + step, target);
+        el.textContent = Math.round(start).toLocaleString() + suffix;
+        if (start >= target) clearInterval(timer);
+      }, 16);
+    }
+
+    const statsObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('[data-count]').forEach(animateCounter);
+          statsObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) statsObserver.observe(statsBar);
+
+    /* Star rating */
+    const stars = document.querySelectorAll('.star-btn');
+    stars.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const r = parseInt(btn.dataset.rating);
+        document.getElementById('reviewRating').value = r;
+        stars.forEach((s, i) => {
+          const svg = s.querySelector('svg');
+          svg.setAttribute('fill', i < r ? '#d4af37' : 'none');
+          svg.setAttribute('stroke', i < r ? '#d4af37' : 'currentColor');
+        });
+      });
+    });
+  </script>
 </body>
 </html>

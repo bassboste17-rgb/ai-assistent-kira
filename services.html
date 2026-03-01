@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Услуги — DAMQ Travel</title>
+  <meta name="description" content="Все туры и услуги DAMQ Travel — однодневные, многодневные, винные, фототуры и трансферы по Грузии.">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-dark-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --gold: #d4af37;
+      --gold-hover: #f0c040;
+      --dark: #0a0a0a;
+      --text: #1a1a1a;
+      --muted: #777;
+      --border: #f0ede6;
+      --bg: #faf9f6;
+      --white: #fff;
+      --radius: 20px;
+    }
+
+    /* ── Page Hero ── */
+    .page-hero {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--dark);
+      padding-top: 80px;
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .page-hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      transform: scale(1.04);
+      transition: transform 6s ease;
+    }
+    .page-hero:hover .page-hero-bg img { transform: scale(1.0); }
+    .page-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.35) 100%);
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      max-width: 680px;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: var(--gold);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 50px;
+      margin-bottom: 1.4rem;
+      backdrop-filter: blur(8px);
+    }
+    .page-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.12;
+      margin-bottom: 1.1rem;
+    }
+    .page-hero-title em { color: var(--gold); font-style: italic; }
+    .page-hero-subtitle {
+      color: rgba(255,255,255,0.68);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 2.2rem;
+    }
+    .hero-scroll-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ── Filter Tabs ── */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 0 1.5rem;
+    }
+    .filter-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0.9rem 0;
+    }
+    .filter-inner::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.5rem 1.1rem;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--gold); color: var(--dark); background: rgba(212,175,55,0.06); }
+    .filter-btn.active { background: var(--dark); color: #fff; border-color: var(--dark); }
+    .filter-count {
+      background: rgba(255,255,255,0.18);
+      border-radius: 50px;
+      padding: 1px 7px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .filter-btn:not(.active) .filter-count { background: #f0ede6; color: #888; }
+
+    /* ── Section ── */
+    .section-wrap { padding: 5rem 1.5rem; }
+    .section-wrap.alt { background: var(--bg); }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-head { text-align: center; margin-bottom: 3.5rem; }
+    .section-tag {
+      display: inline-block;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.9rem;
+      line-height: 1.2;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Tours Grid ── */
+    .tours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+
+    /* ── Skeleton loading ── */
+    .skeleton-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .skeleton-img {
+      height: 220px;
+      background: linear-gradient(90deg, #f0ede6 25%, #e8e4dc 50%, #f0ede6 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    .skeleton-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .skeleton-line {
+      height: 14px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #f0ede6 25%, #e8e4dc 50%, #f0ede6 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    .skeleton-line.short { width: 60%; }
+    .skeleton-line.xshort { width: 40%; }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ── Tour Card ── */
+    .tour-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .tour-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.10);
+    }
+    .tour-card-img {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .tour-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .tour-card:hover .tour-card-img img { transform: scale(1.06); }
+    .tour-card-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.2);
+    }
+    .tour-badge {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: var(--gold);
+      color: var(--dark);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+    }
+    .tour-type-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: rgba(10,10,10,0.7);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 50px;
+      backdrop-filter: blur(6px);
+    }
+    .tour-card-body {
+      padding: 1.4rem 1.4rem 0.8rem;
+      flex: 1;
+    }
+    .tour-card-location {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .tour-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+    .tour-card-desc {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .tour-card-includes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .include-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 3px 10px;
+      font-size: 0.73rem;
+      color: #555;
+      font-weight: 500;
+    }
+    .tour-card-meta {
+      display: flex;
+      gap: 1.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--border);
+      margin-bottom: 0.2rem;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      color: #666;
+    }
+    .meta-item svg { color: var(--gold); flex-shrink: 0; }
+    .tour-card-footer {
+      padding: 1rem 1.4rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .tour-price { display: flex; flex-direction: column; }
+    .tour-price-label { font-size: 0.72rem; color: #aaa; }
+    .tour-price-value { font-size: 1.5rem; font-weight: 800; color: var(--dark); line-height: 1; }
+    .tour-price-value small { font-size: 0.75rem; font-weight: 500; color: #888; }
+    .btn-book {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--dark);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: background 0.25s, transform 0.2s;
+      white-space: nowrap;
+    }
+    .btn-book:hover { background: var(--gold); color: var(--dark); transform: translateY(-1px); }
+
+    /* ── No results ── */
+    .empty-tours {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      color: var(--muted);
+    }
+    .empty-tours svg { opacity: 0.3; margin-bottom: 1rem; }
+    .empty-tours h3 { font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; }
+    .empty-tours p { font-size: 0.9rem; }
+
+    /* ── Static services ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-hover));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-item:hover::after { transform: scaleX(1); }
+    .service-item:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+    .service-icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.05));
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 15px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      margin-bottom: 1.3rem;
+    }
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+    }
+    .service-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.2rem; }
+    .service-price { font-size: 0.85rem; color: var(--dark); font-weight: 700; }
+    .service-price span { color: var(--gold); font-size: 1.2rem; }
+
+    /* ── Why us ── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .why-item { text-align: center; padding: 1.5rem 1rem; }
+    .why-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: rgba(212,175,55,0.15);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .why-title { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; }
+    .why-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Process ── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      position: relative;
+    }
+    .process-step {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .step-num {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-hover));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .step-title { font-size: 0.97rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
+    .step-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq-wrap { max-width: 760px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 0.7rem; }
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; background: none; border: none;
+      padding: 1.2rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer;
+      font-size: 0.95rem; font-weight: 600; color: var(--dark);
+      text-align: left; gap: 1rem; font-family: inherit;
+    }
+    .faq-q svg { flex-shrink: 0; color: var(--gold); transition: transform 0.3s; }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; padding: 0 1.5rem; }
+    .faq-item.open .faq-a { max-height: 300px; padding: 0 1.5rem 1.2rem; }
+    .faq-a p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 100%);
+      border-radius: 28px;
+      padding: 4rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin: 0 1.5rem;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgba(212,175,55,0.08) 0%, transparent 60%);
+    }
+    .cta-banner-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.35);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 1.4rem;
+    }
+    .cta-banner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      color: #fff; font-weight: 700;
+      margin-bottom: 1rem; line-height: 1.2;
+    }
+    .cta-banner-title em { color: var(--gold); font-style: italic; }
+    .cta-banner-sub { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 2.5rem; line-height: 1.7; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-cta-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--dark);
+      font-weight: 700; font-size: 0.95rem;
+      padding: 0.9rem 2rem; border-radius: 12px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-cta-gold:hover { background: var(--gold-hover); transform: translateY(-2px); }
+    .btn-cta-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; border: 2px solid rgba(255,255,255,0.2);
+      color: #fff; font-weight: 600; font-size: 0.95rem;
+      padding: 0.9rem 2rem; border-radius: 12px;
+      text-decoration: none;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .btn-cta-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ── Footer stub ── */
+    .page-footer { padding: 3rem 0 5rem; }
+
+    /* ── Animate on scroll ── */
+    .aos { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .aos.visible { opacity: 1; transform: translateY(0); }
+    .aos.delay-1 { transition-delay: 0.1s; }
+    .aos.delay-2 { transition-delay: 0.2s; }
+    .aos.delay-3 { transition-delay: 0.3s; }
+    .aos.delay-4 { transition-delay: 0.4s; }
+
+    @media (max-width: 768px) {
+      .cta-banner { padding: 2.5rem 1.5rem; margin: 0; border-radius: 0; }
+      .tours-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar (same as home.html) -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-container">
+      <a href="home.html" class="navbar-logo">
+        <span class="logo-text">DAMQ</span>
+        <span class="logo-divider"></span>
+        <span class="logo-sub">TRAVEL</span>
+      </a>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="home.html" class="nav-link">Главная</a></li>
+        <li><a href="services.html" class="nav-link active">Услуги</a></li>
+        <li><a href="home.html#map" class="nav-link">Направления</a></li>
+        <li><a href="blog.html" class="nav-link">Блог</a></li>
+        <li><a href="contact.html" class="nav-link">Контакты</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-current" id="langToggle" aria-label="Change language">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span id="langLabel">RU</span>
+            <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lang-dropdown" id="langDropdown">
+            <button class="lang-option active" data-lang="ru"><span class="lang-flag">RU</span><span>Русский</span></button>
+            <button class="lang-option" data-lang="en"><span class="lang-flag">EN</span><span>English</span></button>
+            <button class="lang-option" data-lang="ka"><span class="lang-flag">KA</span><span>ქართული</span></button>
+          </div>
+        </div>
+        <a href="tel:+995555000000" class="navbar-phone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+995 555 000 000</span>
+        </a>
+        <a href="contact.html" class="btn-cta-nav">Забронировать</a>
+        <button class="navbar-toggle" id="navToggle" aria-label="Toggle menu">
+          <svg class="toggle-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="toggle-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <ul class="mobile-links">
+          <li><a href="home.html" class="mobile-link">Главная</a></li>
+          <li><a href="services.html" class="mobile-link">Услуги</a></li>
+          <li><a href="home.html#map" class="mobile-link">Направления</a></li>
+          <li><a href="blog.html" class="mobile-link">Блог</a></li>
+          <li><a href="contact.html" class="mobile-link">Контакты</a></li>
+        </ul>
+        <div class="mobile-lang-switcher">
+          <button class="mobile-lang-btn active" data-lang="ru">RU</button>
+          <button class="mobile-lang-btn" data-lang="en">EN</button>
+          <button class="mobile-lang-btn" data-lang="ka">KA</button>
+        </div>
+        <div class="mobile-menu-footer">
+          <a href="tel:+995555000000" class="mobile-phone">+995 555 000 000</a>
+          <a href="contact.html" class="btn-cta-nav mobile-cta">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img src="images/hero-georgia.jpg" alt="Туры по Грузии" id="heroBg">
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="hero-tag">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Премиум туры
+      </div>
+      <h1 class="page-hero-title">Все наши <em>услуги</em><br>и туры</h1>
+      <p class="page-hero-subtitle">Выберите тур мечты — от однодневных экскурсий до многодневных путешествий по самым живописным местам Грузии.</p>
+      <div class="hero-scroll-hint">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        Прокрутите вниз
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar" id="filterBar">
+    <div class="filter-inner">
+      <button class="filter-btn active" data-filter="all">
+        Все туры
+        <span class="filter-count" id="countAll">0</span>
+      </button>
+      <button class="filter-btn" data-filter="day">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Однодневные
+        <span class="filter-count" id="countDay">0</span>
+      </button>
+      <button class="filter-btn" data-filter="multi">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Многодневные
+        <span class="filter-count" id="countMulti">0</span>
+      </button>
+      <button class="filter-btn" data-filter="wine">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M5 3h14l-1 7a7 7 0 0 1-12 0Z"/></svg>
+        Винные
+        <span class="filter-count" id="countWine">0</span>
+      </button>
+      <button class="filter-btn" data-filter="photo">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Фототуры
+        <span class="filter-count" id="countPhoto">0</span>
+      </button>
+      <button class="filter-btn" data-filter="custom">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Индивидуальные
+        <span class="filter-count" id="countCustom">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tours from Firebase -->
+  <section class="section-wrap" id="tours">
+    <div class="section-inner">
+      <div class="section-head aos">
+        <div class="section-tag">Наши туры</div>
+        <h2 class="section-title">Загружаем туры...</h2>
+        <p class="section-sub" id="toursSubtitle">Получаем актуальные данные из базы</p>
+      </div>
+      <div class="tours-grid" id="toursGrid">
+        <!-- Skeleton placeholders -->
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line xshort"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line xshort"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line xshort"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Static Services -->
+  <section class="section-wrap alt" id="services">
+    <div class="section-inner">
+      <div class="section-head aos">
+        <div class="section-tag">Дополнительно</div>
+        <h2 class="section-title">Все наши услуги</h2>
+        <p class="section-sub">Помимо туров мы предлагаем трансферы, индивидуальные маршруты и многое другое.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-item aos delay-1">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h3 class="service-title">Трансферы</h3>
+          <p class="service-desc">Аэропорт, между городами, горные курорты — везде и в любое время суток. Встреча с табличкой.</p>
+          <div class="service-price">от <span>$25</span> / маршрут</div>
+        </div>
+        <div class="service-item aos delay-2">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="service-title">Групповые туры</h3>
+          <p class="service-desc">Организуем поездки для корпоративов, свадеб, юбилеев и любых мероприятий любого масштаба.</p>
+          <div class="service-price">от <span>$35</span> / чел.</div>
+        </div>
+        <div class="service-item aos delay-3">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="service-title">Индивидуальный маршрут</h3>
+          <p class="service-desc">Разработаем уникальный маршрут под ваши интересы, даты и бюджет. Полная гибкость.</p>
+          <div class="service-price">от <span>$120</span> / группа</div>
+        </div>
+        <div class="service-item aos delay-1">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 class="service-title">Подбор жилья</h3>
+          <p class="service-desc">Подберём отели, гостевые дома и уютные апартаменты в любом регионе Грузии.</p>
+          <div class="service-price">от <span>$0</span> (бесплатно)</div>
+        </div>
+        <div class="service-item aos delay-2">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <h3 class="service-title">Фотосъёмка в туре</h3>
+          <p class="service-desc">Профессиональный фотограф сопроводит вас на самых живописных локациях Грузии.</p>
+          <div class="service-price">от <span>$80</span> / день</div>
+        </div>
+        <div class="service-item aos delay-3">
+          <div class="service-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="service-title">Экстренная помощь 24/7</h3>
+          <p class="service-desc">Наш менеджер на связи круглосуточно на протяжении всего вашего путешествия по Грузии.</p>
+          <div class="service-price"><span>Бесплатно</span> для всех клиентов</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Us -->
+  <section class="section-wrap">
+    <div class="section-inner">
+      <div class="section-head aos">
+        <div class="section-tag">Почему мы</div>
+        <h2 class="section-title">Цифры говорят сами</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item aos delay-1">
+          <div class="why-number">8+</div>
+          <div class="why-title">Лет опыта</div>
+          <div class="why-desc">Работаем с туристами со всего мира с 2016 года</div>
+        </div>
+        <div class="why-item aos delay-2">
+          <div class="why-number">5K+</div>
+          <div class="why-title">Довольных клиентов</div>
+          <div class="why-desc">Тысячи путешественников уже открыли для себя Грузию с нами</div>
+        </div>
+        <div class="why-item aos delay-3">
+          <div class="why-number">4.9</div>
+          <div class="why-title">Средний рейтинг</div>
+          <div class="why-desc">Высочайшая оценка по всем платформам отзывов</div>
+        </div>
+        <div class="why-item aos delay-4">
+          <div class="why-number">30+</div>
+          <div class="why-title">Маршрутов</div>
+          <div class="why-desc">Уникальные авторские программы по всей Грузии</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section-wrap alt">
+    <div class="section-inner">
+      <div class="section-head aos">
+        <div class="section-tag">Как это работает</div>
+        <h2 class="section-title">4 шага до путешествия</h2>
+        <p class="section-sub">Простой и прозрачный процесс от первого контакта до незабываемых впечатлений.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step aos delay-1">
+          <div class="step-num">1</div>
+          <div class="step-title">Оставьте заявку</div>
+          <p class="step-desc">Заполните форму или напишите нам — расскажите о датах и интересах.</p>
+        </div>
+        <div class="process-step aos delay-2">
+          <div class="step-num">2</div>
+          <div class="step-title">Обсудим детали</div>
+          <p class="step-desc">Свяжемся в течение часа и подберём оптимальный маршрут именно для вас.</p>
+        </div>
+        <div class="process-step aos delay-3">
+          <div class="step-num">3</div>
+          <div class="step-title">Подтвердите бронь</div>
+          <p class="step-desc">Получите программу тура и внесите предоплату 30% — всё остальное берём на себя.</p>
+        </div>
+        <div class="process-step aos delay-4">
+          <div class="step-num">4</div>
+          <div class="step-title">Наслаждайтесь!</div>
+          <p class="step-desc">Встречаем в точке старта и сопровождаем на протяжении всего путешествия.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section-wrap">
+    <div class="section-inner">
+      <div class="section-head aos">
+        <div class="section-tag">FAQ</div>
+        <h2 class="section-title">Частые вопросы</h2>
+        <p class="section-sub">Не нашли ответ — пишите напрямую, мы отвечаем быстро.</p>
+      </div>
+      <div class="faq-wrap">
+        <div class="faq-item">
+          <button class="faq-q">Нужна ли виза в Грузию?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Гражданам России, Украины, Беларуси, Казахстана и большинства стран СНГ — безвизовый въезд на 365 дней. Гражданам ЕС и США — аналогично.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Можно ли забронировать тур для группы?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Да! Работаем с группами от 1 до 50+ человек. Для больших групп — специальные условия и скидки. Свяжитесь с нами для расчёта.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Какие способы оплаты принимаете?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Наличные (USD, GEL, EUR), банковские переводы и карты Visa/Mastercard. Предоплата 30%, остаток — в день тура.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Что при отмене тура?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Отмена за 48+ часов — полный возврат. Менее 48 часов — возврат 50%. Отмена с нашей стороны — 100% возврат или перенос.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">На каких языках работают гиды?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p>Русский и английский — основные. По запросу: грузинский, немецкий, французский. Уточняйте при бронировании.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-wrap" style="padding-bottom:0;">
+    <div class="cta-banner aos">
+      <div class="cta-banner-tag">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Готовы к приключению?
+      </div>
+      <h2 class="cta-banner-title">Начните <em>путешествие</em><br>прямо сейчас</h2>
+      <p class="cta-banner-sub">Оставьте заявку и мы свяжемся в течение часа, чтобы спланировать идеальный тур.</p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn-cta-gold">
+          Оставить заявку
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="tel:+995555000000" class="btn-cta-outline">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +995 555 000 000
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-footer"></div>
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+
+  <!-- Firebase: load tours dynamically -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
+      authDomain: "damqtravel.firebaseapp.com",
+      projectId: "damqtravel",
+      storageBucket: "damqtravel.firebasestorage.app",
+      messagingSenderId: "84352735773",
+      appId: "1:84352735773:web:ec9095f9020b630b1884f4",
+      measurementId: "G-3TFFBQWHNM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const typeLabel = {
+      day: 'Однодневный', multi: 'Многодневный',
+      wine: 'Винный', photo: 'Фототур', custom: 'Индивидуальный'
+    };
+
+    let allTours = [];
+    let activeFilter = 'all';
+
+    function cardHTML(t, idx) {
+      const delay = (idx % 3) * 0.1;
+      const includes = (t.includes || []).slice(0, 3);
+      return `
+        <div class="tour-card" data-type="${t.type || ''}" style="animation-delay:${delay}s">
+          <div class="tour-card-img">
+            ${t.image
+              ? `<img src="${t.image}" alt="${t.name || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>'">`
+              : `<div class="tour-card-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
+            }
+            ${t.badge ? `<span class="tour-badge">${t.badge}</span>` : ''}
+            ${t.type ? `<span class="tour-type-badge">${typeLabel[t.type] || t.type}</span>` : ''}
+          </div>
+          <div class="tour-card-body">
+            ${t.location ? `<div class="tour-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
+            <h3 class="tour-card-title">${t.name || 'Без названия'}</h3>
+            ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : ''}
+            ${includes.length ? `<div class="tour-card-includes">${includes.map(i => `<span class="include-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${i}</span>`).join('')}</div>` : ''}
+            <div class="tour-card-meta">
+              ${t.duration ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
+              ${t.group ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.group}</span>` : ''}
+              ${t.rating ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${t.rating}</span>` : ''}
+            </div>
+          </div>
+          <div class="tour-card-footer">
+            <div class="tour-price">
+              <span class="tour-price-label">от</span>
+              <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
+            </div>
+            <a href="contact.html" class="btn-book">
+              Забронировать
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>`;
+    }
+
+    function renderTours(tours) {
+      const grid = document.getElementById('toursGrid');
+      if (tours.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-tours">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <h3>Туры не найдены</h3>
+            <p>По выбранному фильтру туров пока нет. Попробуйте другую категорию.</p>
+          </div>`;
+        return;
+      }
+      grid.innerHTML = tours.map((t, i) => cardHTML(t, i)).join('');
+    }
+
+    function updateCounts(tours) {
+      document.getElementById('countAll').textContent = tours.length;
+      ['day','multi','wine','photo','custom'].forEach(type => {
+        const el = document.getElementById('count' + type.charAt(0).toUpperCase() + type.slice(1));
+        if (el) el.textContent = tours.filter(t => t.type === type).length;
+      });
+    }
+
+    function updateHeader(count) {
+      document.querySelector('#tours .section-title').textContent =
+        count > 0 ? `${count} ${count === 1 ? 'тур' : count < 5 ? 'тура' : 'туров'} для вас` : 'Туры';
+      document.getElementById('toursSubtitle').textContent =
+        count > 0 ? 'Актуальные предложения DAMQ Travel — выберите свой идеальный маршрут' : 'Скоро здесь появятся туры';
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        const filtered = activeFilter === 'all' ? allTours : allTours.filter(t => t.type === activeFilter);
+        renderTours(filtered);
+      });
+    });
+
+    // Load from Firestore
+    try {
+      const snap = await getDocs(collection(db, 'tours'));
+      allTours = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      updateCounts(allTours);
+      updateHeader(allTours.length);
+      renderTours(allTours);
+    } catch (e) {
+      console.error('Firebase error:', e);
+      document.getElementById('toursGrid').innerHTML = `
+        <div class="empty-tours">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <h3>Ошибка загрузки</h3>
+          <p>Не удалось загрузить туры. Проверьте подключение или попробуйте позже.</p>
+        </div>`;
+      document.querySelector('#tours .section-title').textContent = 'Наши туры';
+      document.getElementById('toursSubtitle').textContent = '';
+    }
+
+    // AOS
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.aos').forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>

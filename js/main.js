@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- Load Navbar & Footer ---------- */
+  /* ---------- Load Footer ---------- */
   async function loadComponent(id, path) {
     try {
       const res = await fetch(path);
@@ -19,17 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  Promise.all([
-    loadComponent('navbar-placeholder', 'components/navbar.html'),
-    loadComponent('footer-placeholder', 'components/footer.html')
-  ]).then(() => {
-    initNavbar();
+  // Navbar is inlined in HTML, init immediately
+  initNavbar();
+  initLangSwitcher();
+
+  // Load footer, then init everything else
+  loadComponent('footer-placeholder', 'components/footer.html').then(() => {
     initScrollAnimations();
     initReviewsSlider();
     initMap();
     initContactForm();
     initVideoModal();
     initReviewForm();
+    initToursSliders();
 
     setTimeout(() => {
       document.querySelector('.hero')?.classList.add('loaded');
@@ -98,6 +100,62 @@ document.addEventListener('DOMContentLoaded', () => {
         if (toggle) toggle.classList.remove('active');
         if (mobileMenu) mobileMenu.classList.remove('active');
         document.body.style.overflow = '';
+      });
+    });
+  }
+
+  /* ---------- Language Switcher ---------- */
+  function initLangSwitcher() {
+    const switcher = document.getElementById('langSwitcher');
+    const toggle = document.getElementById('langToggle');
+    const dropdown = document.getElementById('langDropdown');
+    const langLabel = document.getElementById('langLabel');
+    const options = document.querySelectorAll('.lang-option');
+    const mobileBtns = document.querySelectorAll('.mobile-lang-btn');
+
+    if (!switcher || !toggle) return;
+
+    // Toggle dropdown
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switcher.classList.toggle('active');
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove('active');
+      }
+    });
+
+    // Desktop lang option click
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        const lang = opt.getAttribute('data-lang');
+        options.forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        if (langLabel) langLabel.textContent = lang.toUpperCase();
+        switcher.classList.remove('active');
+
+        // Sync mobile buttons
+        mobileBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+      });
+    });
+
+    // Mobile lang button click
+    mobileBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        mobileBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (langLabel) langLabel.textContent = lang.toUpperCase();
+
+        // Sync desktop options
+        options.forEach(opt => {
+          opt.classList.toggle('active', opt.getAttribute('data-lang') === lang);
+        });
       });
     });
   }
@@ -226,147 +284,45 @@ document.addEventListener('DOMContentLoaded', () => {
     L.control.zoom({ position: 'topright' }).addTo(map);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19
     }).addTo(map);
 
-    const goldIcon = L.divIcon({
+    const regionIcon = L.divIcon({
       className: 'custom-marker',
-      html: `<div style="
-        width: 18px; height: 18px;
-        background: #c9a96e;
-        border: 3px solid #1a1a2e;
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 12px rgba(201,169,110,0.4);
-      "></div>`,
-      iconSize: [18, 18],
-      iconAnchor: [9, 9],
-      popupAnchor: [0, -12]
-    });
-
-    const greenIcon = L.divIcon({
-      className: 'custom-marker',
-      html: `<div style="
-        width: 16px; height: 16px;
-        background: #22c55e;
-        border: 3px solid #1a1a2e;
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 0 10px rgba(34,197,94,0.3);
-      "></div>`,
+      html: '<div style="width:16px;height:16px;background:#e63946;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3),0 0 10px rgba(230,57,70,0.4);"></div>',
       iconSize: [16, 16],
       iconAnchor: [8, 8],
       popupAnchor: [0, -10]
     });
 
-    const whiteIcon = L.divIcon({
-      className: 'custom-marker',
-      html: `<div style="
-        width: 14px; height: 14px;
-        background: #1a1a2e;
-        border: 3px solid #c9a96e;
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-      "></div>`,
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
-      popupAnchor: [0, -8]
-    });
-
+    // Georgian regions as markers
     const locations = [
-      {
-        lat: 41.7151, lng: 44.8271,
-        title: 'Тбилиси',
-        desc: 'Столица Грузии, старый город с серными банями',
-        badge: 'Столица',
-        icon: goldIcon
-      },
-      {
-        lat: 42.6560, lng: 44.6387,
-        title: 'Казбеги (Степанцминда)',
-        desc: 'Гергетская церковь, вид на гору Казбек',
-        badge: 'Горы',
-        icon: goldIcon
-      },
-      {
-        lat: 41.6410, lng: 41.6340,
-        title: 'Батуми',
-        desc: 'Черноморский курорт, современная архитектура',
-        badge: 'Побережье',
-        icon: goldIcon
-      },
-      {
-        lat: 43.0096, lng: 42.7120,
-        title: 'Местиа (Сванетия)',
-        desc: 'Средневековые башни, горные пейзажи',
-        badge: 'Горы',
-        icon: goldIcon
-      },
-      {
-        lat: 41.8395, lng: 45.3520,
-        title: 'Сигнахи',
-        desc: 'Город любви, винодельческий регион Кахетия',
-        badge: 'Вино',
-        icon: greenIcon
-      },
-      {
-        lat: 42.2679, lng: 42.6990,
-        title: 'Кутаиси',
-        desc: 'Храм Баграти, пещера Прометея',
-        badge: 'Культура',
-        icon: greenIcon
-      },
-      {
-        lat: 41.8379, lng: 44.7700,
-        title: 'Мцхета',
-        desc: 'Древняя столица, монастырь Джвари',
-        badge: 'Наследие',
-        icon: greenIcon
-      },
-      {
-        lat: 41.3780, lng: 43.4050,
-        title: 'Вардзия',
-        desc: 'Пещерный монастырь XII века',
-        badge: 'История',
-        icon: whiteIcon
-      },
-      {
-        lat: 42.3450, lng: 43.9960,
-        title: 'Гори',
-        desc: 'Родина Сталина, пещерный город Уплисцихе',
-        badge: 'История',
-        icon: whiteIcon
-      },
-      {
-        lat: 42.7180, lng: 44.5200,
-        title: 'Гудаури',
-        desc: 'Горнолыжный курорт, параглайдинг',
-        badge: 'Активный отдых',
-        icon: whiteIcon
-      },
-      {
-        lat: 41.7800, lng: 45.8000,
-        title: 'Телави',
-        desc: 'Сердце Кахетии, винные погреба',
-        badge: 'Вино',
-        icon: greenIcon
-      },
-      {
-        lat: 42.5860, lng: 41.5680,
-        title: 'Местийский ледник',
-        desc: 'Тропа к леднику Чалаади',
-        badge: 'Природа',
-        icon: whiteIcon
-      }
+      { lat: 41.7151, lng: 44.8271, title: 'Тбилиси', desc: 'Столица Грузии, старый город с серными банями', badge: 'Столица', region: 'tbilisi' },
+      { lat: 41.8395, lng: 45.3520, title: 'Кахетия', desc: 'Сигнахи, Телави, винные погреба и виноградники', badge: 'Вино', region: 'kakheti' },
+      { lat: 42.6560, lng: 44.6387, title: 'Мцхета-Мтианети', desc: 'Казбеги, монастырь Джвари, Военно-Грузинская дорога', badge: 'Горы', region: 'mtskheta' },
+      { lat: 41.6410, lng: 41.6340, title: 'Аджария', desc: 'Батуми, Черноморское побережье, современная архитектура', badge: 'Побережье', region: 'adjara' },
+      { lat: 42.2679, lng: 42.6990, title: 'Имеретия', desc: 'Кутаиси, храм Баграти, пещера Прометея', badge: 'Культура', region: 'imereti' },
+      { lat: 42.5090, lng: 41.8710, title: 'Самегрело', desc: 'Мартвильский каньон, каньон Окаце, озеро Палиастоми', badge: 'Природа', region: 'samegrelo' },
+      { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe' },
+      { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli' },
+      { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli' },
+      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha' },
+      { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria' },
+      { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia' }
     ];
 
     locations.forEach(loc => {
-      const marker = L.marker([loc.lat, loc.lng], { icon: loc.icon }).addTo(map);
-      marker.bindPopup(`
-        <h3>${loc.title}</h3>
-        <p>${loc.desc}</p>
-        <span class="map-popup-badge">${loc.badge}</span>
-      `);
+      const marker = L.marker([loc.lat, loc.lng], { icon: regionIcon }).addTo(map);
+      marker.bindPopup(
+        '<div style="min-width:180px;">' +
+          '<h3 style="font-family:Playfair Display,serif;font-size:15px;margin:0 0 4px;color:#1a1a2e;">' + loc.title + '</h3>' +
+          '<p style="font-size:12px;color:#555;margin:0 0 8px;line-height:1.4;">' + loc.desc + '</p>' +
+          '<span class="map-popup-badge">' + loc.badge + '</span>' +
+          '<br><a href="services.html" style="display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:#c9a96e;text-decoration:none;">Подробнее &rarr;</a>' +
+        '</div>'
+      );
     });
 
     // Enable scroll zoom on focus
@@ -410,31 +366,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ---------- Video Modal ---------- */
+  /* ---------- Video Modal (Native Fullscreen) ---------- */
   function initVideoModal() {
     const openBtn = document.getElementById('openVideoBtn');
     const modal = document.getElementById('videoModal');
     const closeBtn = document.getElementById('closeVideoBtn');
-    const iframe = document.getElementById('videoIframe');
+    const video = document.getElementById('videoPlayer');
 
-    // Replace with your actual YouTube video ID
-    const videoUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0';
-
-    if (!openBtn || !modal) return;
+    if (!openBtn || !modal || !video) return;
 
     openBtn.addEventListener('click', () => {
+      // Show the modal first so the video is visible in the DOM
       modal.classList.add('active');
-      iframe.src = videoUrl;
       document.body.style.overflow = 'hidden';
+      video.play();
+
+      // Then try to go fullscreen on the VIDEO element itself
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {});
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      }
     });
 
     function closeModal() {
       modal.classList.remove('active');
-      iframe.src = '';
+      video.pause();
+      video.currentTime = 0;
       document.body.style.overflow = '';
     }
 
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeModal);
 
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeModal();
@@ -443,6 +407,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('active')) {
         closeModal();
+      }
+    });
+
+    // When exiting fullscreen, keep modal open so user can still watch
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && modal.classList.contains('active')) {
+        // User exited fullscreen, video stays in modal
       }
     });
   }
@@ -587,6 +558,46 @@ document.addEventListener('DOMContentLoaded', () => {
           s.classList.remove('hover');
         });
       }, 3000);
+    });
+  }
+
+  /* ---------- Tours Horizontal Sliders ---------- */
+  function initToursSliders() {
+    document.querySelectorAll('.tours-slider-wrap').forEach(wrap => {
+      const track = wrap.querySelector('.tours-grid');
+      const leftBtn = wrap.querySelector('.arrow-left');
+      const rightBtn = wrap.querySelector('.arrow-right');
+
+      if (!track || !leftBtn || !rightBtn) return;
+
+      function updateArrows() {
+        const scrollLeft = track.scrollLeft;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+
+        leftBtn.classList.toggle('disabled', scrollLeft <= 5);
+        rightBtn.classList.toggle('disabled', scrollLeft >= maxScroll - 5);
+      }
+
+      function getScrollAmount() {
+        // Scroll by one card width + gap
+        const card = track.querySelector('.tour-card') || track.querySelector('.tour-featured');
+        if (!card) return 400;
+        return card.offsetWidth + 32; // 32 = gap
+      }
+
+      leftBtn.addEventListener('click', () => {
+        track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+      });
+
+      rightBtn.addEventListener('click', () => {
+        track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', updateArrows);
+      window.addEventListener('resize', updateArrows);
+
+      // Initial check
+      setTimeout(updateArrows, 200);
     });
   }
 

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог — DAMQ Travel</title>
+  <meta name="description" content="Блог DAMQ Travel — статьи, советы и истории о путешествиях по Грузии.">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-dark-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-container">
+      <a href="home.html" class="navbar-logo">
+        <span class="logo-text">DAMQ</span>
+        <span class="logo-divider"></span>
+        <span class="logo-sub">TRAVEL</span>
+      </a>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="home.html" class="nav-link">Главная</a></li>
+        <li><a href="services.html" class="nav-link">Услуги</a></li>
+        <li><a href="home.html#map" class="nav-link">Направления</a></li>
+        <li><a href="blog.html" class="nav-link active">Блог</a></li>
+        <li><a href="contact.html" class="nav-link">Контакты</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-current" id="langToggle" aria-label="Change language">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span id="langLabel">RU</span>
+            <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="lang-dropdown" id="langDropdown">
+            <button class="lang-option active" data-lang="ru"><span class="lang-flag">RU</span><span>Русский</span></button>
+            <button class="lang-option" data-lang="en"><span class="lang-flag">EN</span><span>English</span></button>
+            <button class="lang-option" data-lang="ka"><span class="lang-flag">KA</span><span>ქართული</span></button>
+          </div>
+        </div>
+        <a href="tel:+995555000000" class="navbar-phone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+995 555 000 000</span>
+        </a>
+        <a href="contact.html" class="btn-cta-nav">Забронировать</a>
+        <button class="navbar-toggle" id="navToggle" aria-label="Toggle menu">
+          <svg class="toggle-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="toggle-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <ul class="mobile-links">
+          <li><a href="home.html" class="mobile-link">Главная</a></li>
+          <li><a href="services.html" class="mobile-link">Услуги</a></li>
+          <li><a href="home.html#map" class="mobile-link">Направления</a></li>
+          <li><a href="blog.html" class="mobile-link">Блог</a></li>
+          <li><a href="contact.html" class="mobile-link">Контакты</a></li>
+        </ul>
+        <div class="mobile-lang-switcher">
+          <button class="mobile-lang-btn active" data-lang="ru">RU</button>
+          <button class="mobile-lang-btn" data-lang="en">EN</button>
+          <button class="mobile-lang-btn" data-lang="ka">KA</button>
+        </div>
+        <div class="mobile-menu-footer">
+          <a href="tel:+995555000000" class="mobile-phone">+995 555 000 000</a>
+          <a href="contact.html" class="btn-cta-nav mobile-cta">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="page-header-bg">
+      <img src="images/hero-georgia.jpg" alt="Блог DAMQ Travel">
+    </div>
+    <div class="page-header-overlay"></div>
+    <div class="page-header-content">
+      <div class="section-tag">Наш блог</div>
+      <h1 class="page-header-title">Блог о путешествиях</h1>
+      <p class="page-header-subtitle">Истории, советы и вдохновение для ваших путешествий по Грузии</p>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section class="section" id="blog">
+    <div class="section-container">
+      <div class="blog-grid">
+        <article class="blog-card animate-on-scroll">
+          <div class="blog-card-image">
+            <img src="images/tour-svaneti.jpg" alt="Сванетия">
+            <span class="blog-card-category">Горы</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span>15 февраля 2026</span>
+              <span>5 мин чтения</span>
+            </div>
+            <h3 class="blog-card-title">10 причин посетить Сванетию этим летом</h3>
+            <p class="blog-card-desc">Сванетия — это горный рай с средневековыми башнями, ледниками и невероятными пейзажами. Узнайте, почему этот регион стоит включить в ваш маршрут.</p>
+            <a href="#" class="blog-card-link">
+              Читать далее
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+        <article class="blog-card animate-on-scroll delay-1">
+          <div class="blog-card-image">
+            <img src="images/tour-wine.jpg" alt="Вино Кахетии">
+            <span class="blog-card-category">Вино</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span>8 февраля 2026</span>
+              <span>7 мин чтения</span>
+            </div>
+            <h3 class="blog-card-title">Гид по грузинскому вину: от Саперави до Хванчкары</h3>
+            <p class="blog-card-desc">Грузия — родина виноделия с 8000-летней историей. Расскажем о главных сортах, которые стоит попробовать в вашем путешествии.</p>
+            <a href="#" class="blog-card-link">
+              Читать далее
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+        <article class="blog-card animate-on-scroll delay-2">
+          <div class="blog-card-image">
+            <img src="images/tour-tbilisi.jpg" alt="Тбилиси">
+            <span class="blog-card-category">Города</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span>1 февраля 2026</span>
+              <span>6 мин чтения</span>
+            </div>
+            <h3 class="blog-card-title">Тбилиси за 48 часов: идеальный маршрут</h3>
+            <p class="blog-card-desc">Как провести два дня в столице Грузии с максимальной пользой — от старого города до современных кварталов.</p>
+            <a href="#" class="blog-card-link">
+              Читать далее
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+        <article class="blog-card animate-on-scroll delay-3">
+          <div class="blog-card-image">
+            <img src="images/tour-kazbegi.jpg" alt="Казбеги">
+            <span class="blog-card-category">Горы</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span>25 января 2026</span>
+              <span>4 мин чтения</span>
+            </div>
+            <h3 class="blog-card-title">Военно-Грузинская дорога: путешествие к небу</h3>
+            <p class="blog-card-desc">Одна из самых живописных дорог мира проведёт вас через ущелья, перевалы и к подножию великого Казбека.</p>
+            <a href="#" class="blog-card-link">
+              Читать далее
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>
