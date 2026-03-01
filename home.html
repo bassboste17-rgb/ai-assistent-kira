@@ -735,6 +735,14 @@
       return newRef.key;
     }
 
+    /* ─── RTDB array helper ─── */
+    function toArray(val) {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
+      if (typeof val === 'object') return Object.values(val);
+      return [];
+    }
+
     /* ─── helpers ─── */
     function tourCardHTML(t, idx) {
       const delay = (idx % 3) * 0.08;

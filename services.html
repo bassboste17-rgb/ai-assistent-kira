@@ -959,12 +959,19 @@
       wine: 'Винный', photo: 'Фототур', custom: 'Индивидуальный'
     };
 
+    function toArray(val) {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
+      if (typeof val === 'object') return Object.values(val);
+      return [];
+    }
+
     let allTours = [];
     let activeFilter = 'all';
 
     function cardHTML(t, idx) {
       const delay = (idx % 3) * 0.1;
-      const includes = (t.includes || []).slice(0, 3);
+      const includes = toArray(t.includes).slice(0, 3);
       return `
         <div class="tour-card" data-type="${t.type || ''}" style="animation-delay:${delay}s">
           <div class="tour-card-img">

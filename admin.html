@@ -1140,6 +1140,16 @@
     await remove(ref(db, `${path}/${id}`));
   }
 
+  /* ── RTDB array helper ──
+     Firebase RTDB converts arrays to objects with numeric keys.
+     This converts them back to real arrays safely. */
+  function toArray(val) {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'object') return Object.values(val);
+    return [];
+  }
+
   /* ── UI helpers ── */
   function showLoading(msg = 'Сохранение...') {
     document.getElementById('loadingLabel').textContent = msg;
@@ -1218,7 +1228,7 @@
     document.getElementById('sidebar').classList.toggle('open');
   });
 
-  /* ── Close modals on overlay click ── */
+  /* ── Close modals on overlay click ─�� */
   ['tourModalWrap','bookModalWrap','confirmWrap','dayTourModalWrap'].forEach(id => {
     document.getElementById(id).addEventListener('click', e => {
       if (e.target.id === id) document.getElementById(id).classList.remove('open');
@@ -1346,7 +1356,7 @@
     document.getElementById('fRating').value    = t.rating   || '';
     document.getElementById('fImage').value     = t.image    || '';
     document.getElementById('fLocation').value  = t.location || '';
-    document.getElementById('fIncludes').value  = (t.includes || []).join(', ');
+    document.getElementById('fIncludes').value  = toArray(t.includes).join(', ');
     document.getElementById('tourModalWrap').classList.add('open');
   };
 
@@ -1582,8 +1592,9 @@
   }
 
   function setSelectedRegions(regions) {
+    const arr = toArray(regions);
     document.querySelectorAll('#regionGrid .region-chip').forEach(c => {
-      c.classList.toggle('selected', (regions || []).includes(c.dataset.region));
+      c.classList.toggle('selected', arr.includes(c.dataset.region));
     });
   }
 
@@ -1699,7 +1710,8 @@
       const dur = [];
       if (t.days) dur.push(t.days + ' დღე');
       if (t.nights) dur.push(t.nights + ' ღამე');
-      const photos = (t.photos || []);
+      const photos = toArray(t.photos);
+      const regions = toArray(t.regions);
       return `
       <tr>
         <td data-label="სახელი">
@@ -1708,7 +1720,7 @@
             <strong>${t.name || '—'}</strong>
           </div>
         </td>
-        <td data-label="რეგიონი">${(t.regions || []).map(r => `<span class="badge b-gold" style="margin:1px;">${r}</span>`).join(' ') || '—'}</td>
+        <td data-label="რეგიონი">${regions.map(r => `<span class="badge b-gold" style="margin:1px;">${r}</span>`).join(' ') || '—'}</td>
         <td data-label="ტიპი"><span class="badge b-blue">${t.type || '—'}</span></td>
         <td data-label="ფასი"><strong>$${t.price || '—'}</strong></td>
         <td data-label="ხანგრძლივობა">${dur.join(', ') || '—'}</td>
@@ -1764,8 +1776,8 @@
     document.getElementById('dtNights').value  = t.nights ?? 0;
     document.getElementById('dtMinGroup').value = t.minGroup || '';
     document.getElementById('dtMaxGroup').value = t.maxGroup || '';
-    setSelectedRegions(t.regions || []);
-    dtUploadedImages = (t.photos || []).slice();
+    setSelectedRegions(toArray(t.regions));
+    dtUploadedImages = toArray(t.photos).slice();
     renderUploadedPhotos();
     document.getElementById('dayTourModalWrap').classList.add('open');
   };
@@ -1830,7 +1842,7 @@
     });
   };
 
-  /* ══════════════ CONFIRM ══════════════ */
+  /* ══════════════ CONFIRM ════��═════════ */
   let _confirmCb = null;
   function openConfirm(text, cb) {
     document.getElementById('confirmTxt').textContent = text;
