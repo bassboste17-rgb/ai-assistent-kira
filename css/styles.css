@@ -1895,6 +1895,333 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 6px;
 }
 
+/* ---------- Language Switcher ---------- */
+.lang-switcher {
+  position: relative;
+  z-index: 1002;
+}
+
+.lang-current {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(201, 169, 110, 0.12);
+  border: 1.5px solid rgba(201, 169, 110, 0.3);
+  border-radius: 50px;
+  color: var(--color-accent);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all var(--transition);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lang-current:hover {
+  background: rgba(201, 169, 110, 0.22);
+  border-color: rgba(201, 169, 110, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(201, 169, 110, 0.15);
+}
+
+.lang-current svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent);
+}
+
+.lang-current .lang-arrow {
+  transition: transform var(--transition);
+}
+
+.lang-switcher.active .lang-current .lang-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-switcher.active .lang-current {
+  background: rgba(201, 169, 110, 0.25);
+  border-color: var(--color-accent);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 170px;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  padding: 6px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.25s ease;
+}
+
+.lang-switcher.active .lang-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.lang-option:hover {
+  background: rgba(201, 169, 110, 0.12);
+  color: var(--color-white);
+}
+
+.lang-option.active {
+  background: rgba(201, 169, 110, 0.18);
+  color: var(--color-accent);
+}
+
+.lang-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 20px;
+  background: rgba(201, 169, 110, 0.15);
+  border: 1px solid rgba(201, 169, 110, 0.25);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--color-accent);
+}
+
+.lang-option.active .lang-flag {
+  background: rgba(201, 169, 110, 0.3);
+  border-color: var(--color-accent);
+}
+
+/* Mobile Language Switcher */
+.mobile-lang-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+  padding: 6px;
+  background: rgba(201, 169, 110, 0.08);
+  border: 1px solid rgba(201, 169, 110, 0.15);
+  border-radius: 50px;
+}
+
+.mobile-lang-btn {
+  padding: 8px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mobile-lang-btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mobile-lang-btn.active {
+  background: var(--color-accent);
+  color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(201, 169, 110, 0.3);
+}
+
+/* ---------- SVG Map Styles ---------- */
+.georgia-svg-map {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-dark);
+}
+
+.georgia-svg-map svg {
+  display: block;
+}
+
+.region-link {
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.region-link:hover .region-path,
+.region-link:focus .region-path {
+  fill: rgba(201, 169, 110, 0.3);
+  stroke: #c9a96e;
+  stroke-width: 2.5;
+  filter: url(#regionGlow);
+}
+
+.region-link:hover .region-dot,
+.region-link:focus .region-dot {
+  r: 7;
+  fill: #c9a96e;
+  filter: drop-shadow(0 0 6px rgba(201, 169, 110, 0.6));
+}
+
+.region-path {
+  transition: all 0.3s ease;
+}
+
+.region-dot {
+  transition: all 0.3s ease;
+}
+
+.region-dot-capital {
+  filter: drop-shadow(0 0 8px rgba(201, 169, 110, 0.5));
+}
+
+/* Region Tooltip */
+.region-tooltip {
+  position: absolute;
+  z-index: 10;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: all 0.2s ease;
+  max-width: 260px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.region-tooltip.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.region-tooltip-title {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 4px;
+}
+
+.region-tooltip-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.region-tooltip-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(201, 169, 110, 0.2);
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  color: var(--color-accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 50px;
+}
+
+/* Region Cards Grid */
+.region-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 24px;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(201, 169, 110, 0.15);
+}
+
+.region-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(201, 169, 110, 0.06);
+  border: 1px solid rgba(201, 169, 110, 0.12);
+  border-radius: var(--radius-sm);
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.region-card:hover,
+.region-card.highlighted {
+  background: rgba(201, 169, 110, 0.15);
+  border-color: rgba(201, 169, 110, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(201, 169, 110, 0.1);
+}
+
+.region-card-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(201, 169, 110, 0.4);
+}
+
+.region-card-info {
+  flex: 1;
+}
+
+.region-card-info h4 {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 1px;
+}
+
+.region-card-info p {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.region-card svg {
+  color: var(--color-accent);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all var(--transition-fast);
+}
+
+.region-card:hover svg,
+.region-card.highlighted svg {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1200px) {
   .tours-grid {
@@ -1902,6 +2229,9 @@ h1, h2, h3, h4, h5, h6 {
   }
   .tour-featured {
     grid-column: span 2;
+  }
+  .region-cards {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1914,6 +2244,9 @@ h1, h2, h3, h4, h5, h6 {
   }
   .navbar-toggle {
     display: flex;
+  }
+  .lang-switcher {
+    order: -1;
   }
   .about-grid {
     grid-template-columns: 1fr;
@@ -1939,6 +2272,9 @@ h1, h2, h3, h4, h5, h6 {
   }
   .tour-featured-content {
     padding: 40px 36px;
+  }
+  .region-cards {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -2000,6 +2336,20 @@ h1, h2, h3, h4, h5, h6 {
   }
   #georgia-map {
     height: 350px;
+  }
+  .region-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 16px;
+  }
+  .region-card {
+    padding: 10px 12px;
+  }
+  .region-card-info h4 {
+    font-size: 12px;
+  }
+  .region-card-info p {
+    font-size: 10px;
   }
   .tour-featured-details {
     flex-wrap: wrap;

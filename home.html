@@ -10,7 +10,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -27,7 +26,7 @@
     <div class="hero-content">
       <div class="hero-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Premium Travel Experience
+        Премиум путешествия
       </div>
       <h1 class="hero-title">Откройте для себя<br><em>магию Грузии</em></h1>
       <p class="hero-subtitle">Уникальные авторские туры по самым живописным местам Грузии. Горы, море, вино и гостеприимство — всё, что нужно для идеального путешествия.</p>
@@ -276,20 +275,235 @@
         <p class="section-subtitle">Исследуйте все направления наших туров на интерактивной карте Грузии</p>
       </div>
       <div class="map-wrapper animate-on-scroll">
-        <div id="georgia-map"></div>
-        <div class="map-legend">
-          <div class="legend-item">
-            <span class="legend-dot gold"></span>
-            Основные направления
+        <div class="georgia-svg-map" id="georgia-map-svg">
+          <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <defs>
+              <filter id="regionGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+              <linearGradient id="mapBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:#0f0f1a;stop-opacity:1"/>
+              </linearGradient>
+            </defs>
+            <!-- Background -->
+            <rect width="900" height="500" fill="url(#mapBg)" rx="16"/>
+            
+            <!-- Sea area hint -->
+            <text x="80" y="420" fill="rgba(201,169,110,0.15)" font-family="'Playfair Display', serif" font-size="18" font-style="italic">Black Sea</text>
+            
+            <!-- Abkhazia / აფხაზეთი -->
+            <a href="#region-abkhazia" class="region-link" data-region="abkhazia">
+              <path d="M80,120 Q120,80 180,90 Q220,95 260,110 Q280,120 290,140 Q280,160 250,170 Q210,175 170,165 Q130,155 100,140 Z" 
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="180" cy="130" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="180" y="155" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="11" font-weight="600">Абхазия</text>
+            </a>
+            
+            <!-- Samegrelo / სამეგრელო -->
+            <a href="#region-samegrelo" class="region-link" data-region="samegrelo">
+              <path d="M170,170 Q210,160 260,165 Q300,175 310,200 Q300,230 270,240 Q230,245 190,230 Q160,215 155,195 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="235" cy="200" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="235" y="225" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="11" font-weight="600">Самегрело</text>
+            </a>
+            
+            <!-- Guria / გურია -->
+            <a href="#region-guria" class="region-link" data-region="guria">
+              <path d="M155,240 Q190,235 220,245 Q240,260 235,285 Q220,305 190,300 Q160,290 145,270 Q150,250 155,240 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="195" cy="270" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="195" y="295" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Гурия</text>
+            </a>
+
+            <!-- Adjara / აჭარა -->
+            <a href="#region-adjara" class="region-link" data-region="adjara">
+              <path d="M100,280 Q135,265 155,275 Q170,290 175,315 Q170,345 145,355 Q115,350 95,330 Q85,310 100,280 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="138" cy="315" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="138" y="340" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Аджария</text>
+            </a>
+
+            <!-- Racha-Lechkhumi / რაჭა-ლეჩხუმი -->
+            <a href="#region-racha" class="region-link" data-region="racha">
+              <path d="M260,110 Q310,95 370,100 Q400,110 410,135 Q400,160 370,170 Q330,175 290,165 Q265,150 260,130 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="340" cy="135" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="340" y="158" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Рача-Лечхуми</text>
+            </a>
+
+            <!-- Imereti / იმერეთი -->
+            <a href="#region-imereti" class="region-link" data-region="imereti">
+              <path d="M270,185 Q320,175 370,180 Q410,190 420,215 Q415,245 385,260 Q345,270 300,260 Q265,245 255,220 Q260,195 270,185 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="345" cy="220" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="345" y="245" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="11" font-weight="600">Имеретия</text>
+            </a>
+
+            <!-- Samtskhe-Javakheti / სამცხე-ჯავახეთი -->
+            <a href="#region-samtskhe" class="region-link" data-region="samtskhe">
+              <path d="M310,275 Q355,265 390,275 Q420,290 430,325 Q420,360 385,375 Q345,380 310,365 Q290,345 295,315 Q300,290 310,275 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="365" cy="325" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="365" y="348" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="9.5" font-weight="600">Самцхе-Джавахети</text>
+            </a>
+
+            <!-- Shida Kartli / შიდა ქართლი -->
+            <a href="#region-shida-kartli" class="region-link" data-region="shida-kartli">
+              <path d="M420,155 Q465,140 520,148 Q555,160 560,190 Q550,220 515,230 Q475,235 435,225 Q410,210 405,185 Q410,165 420,155 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="485" cy="190" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="485" y="213" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Шида Картли</text>
+            </a>
+
+            <!-- Mtskheta-Mtianeti / მცხეთა-მთიანეთი -->
+            <a href="#region-mtskheta" class="region-link" data-region="mtskheta">
+              <path d="M530,100 Q580,85 635,95 Q665,110 670,145 Q660,180 625,195 Q585,200 545,190 Q520,175 515,150 Q520,120 530,100 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="595" cy="145" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="595" y="170" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="9.5" font-weight="600">Мцхета-Мтианети</text>
+            </a>
+
+            <!-- Tbilisi / თბილისი -->
+            <a href="#region-tbilisi" class="region-link" data-region="tbilisi">
+              <path d="M595,200 Q625,195 650,205 Q668,218 665,240 Q655,260 630,265 Q605,265 585,252 Q575,235 580,218 Q585,205 595,200 Z"
+                    class="region-path region-capital" fill="rgba(201,169,110,0.25)" stroke="#c9a96e" stroke-width="2.5"/>
+              <circle cx="625" cy="230" r="7" fill="#c9a96e" class="region-dot region-dot-capital">
+                <animate attributeName="r" values="7;9;7" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <text x="625" y="255" text-anchor="middle" fill="#c9a96e" font-family="'Playfair Display', serif" font-size="13" font-weight="700">Тбилиси</text>
+            </a>
+
+            <!-- Kvemo Kartli / ქვემო ქართლი -->
+            <a href="#region-kvemo-kartli" class="region-link" data-region="kvemo-kartli">
+              <path d="M520,260 Q570,250 620,260 Q655,275 665,310 Q655,345 620,360 Q575,370 530,355 Q505,335 500,305 Q505,275 520,260 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="585" cy="310" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="585" y="333" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="10" font-weight="600">Квемо Картли</text>
+            </a>
+
+            <!-- Kakheti / კახეთი -->
+            <a href="#region-kakheti" class="region-link" data-region="kakheti">
+              <path d="M670,120 Q720,100 775,115 Q815,135 830,175 Q835,220 815,260 Q790,295 750,310 Q710,315 680,295 Q660,270 665,235 Q668,190 670,155 Z"
+                    class="region-path" fill="rgba(201,169,110,0.12)" stroke="rgba(201,169,110,0.4)" stroke-width="1.5"/>
+              <circle cx="750" cy="200" r="5" fill="#c9a96e" class="region-dot"/>
+              <text x="750" y="225" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="'Inter', sans-serif" font-size="12" font-weight="600">Кахетия</text>
+            </a>
+
+            <!-- Decorative Caucasus mountains line at top -->
+            <path d="M50,80 Q100,40 160,60 Q220,30 290,55 Q350,25 420,50 Q480,20 550,45 Q610,15 680,40 Q740,15 800,45 Q850,30 880,50" 
+                  fill="none" stroke="rgba(201,169,110,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+            <text x="450" y="45" text-anchor="middle" fill="rgba(201,169,110,0.2)" font-family="'Playfair Display', serif" font-size="12" font-style="italic">Большой Кавказ</text>
+
+          </svg>
+          
+          <!-- Region Info Tooltip -->
+          <div class="region-tooltip" id="regionTooltip">
+            <h4 class="region-tooltip-title"></h4>
+            <p class="region-tooltip-desc"></p>
+            <span class="region-tooltip-badge"></span>
           </div>
-          <div class="legend-item">
-            <span class="legend-dot green"></span>
-            Популярные места
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot white"></span>
-            Дополнительные локации
-          </div>
+        </div>
+        
+        <!-- Region Cards below the map -->
+        <div class="region-cards">
+          <a href="#region-tbilisi" class="region-card" data-region="tbilisi">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Тбилиси</h4>
+              <p>Столица Грузии</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-kakheti" class="region-card" data-region="kakheti">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Кахетия</h4>
+              <p>Винный регион</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-mtskheta" class="region-card" data-region="mtskheta">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Мцхета-Мтианети</h4>
+              <p>Казбеги, Джвари</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-adjara" class="region-card" data-region="adjara">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Аджария</h4>
+              <p>Батуми, побережье</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-imereti" class="region-card" data-region="imereti">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Имеретия</h4>
+              <p>Кутаиси, пещеры</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-samegrelo" class="region-card" data-region="samegrelo">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Самегрело</h4>
+              <p>Мартвильский каньон</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-samtskhe" class="region-card" data-region="samtskhe">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Самцхе-Джавахети</h4>
+              <p>Вардзия, Боржоми</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-shida-kartli" class="region-card" data-region="shida-kartli">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Шида Картли</h4>
+              <p>Гори, Уплисцихе</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-kvemo-kartli" class="region-card" data-region="kvemo-kartli">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Квемо Картли</h4>
+              <p>Дманиси, Болниси</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-racha" class="region-card" data-region="racha">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Рача-Лечхуми</h4>
+              <p>Горное вино, природа</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-guria" class="region-card" data-region="guria">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Гурия</h4>
+              <p>Чайные плантации</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="#region-abkhazia" class="region-card" data-region="abkhazia">
+            <div class="region-card-dot" style="background:#c9a96e;"></div>
+            <div class="region-card-info">
+              <h4>Абхазия</h4>
+              <p>Историческая область</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -540,14 +754,17 @@
     </div>
   </section>
 
-  <!-- Video Modal -->
+  <!-- Video Modal (Native Fullscreen) -->
   <div class="video-modal-overlay" id="videoModal">
     <div class="video-modal">
       <button class="video-modal-close" id="closeVideoBtn" aria-label="Close video">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="video-modal-content">
-        <iframe id="videoIframe" width="100%" height="100%" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <video id="videoPlayer" controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;background:#000;">
+          <source src="videos/damq-travel.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   </div>
@@ -556,7 +773,6 @@
   <div id="footer-placeholder"></div>
 
   <!-- Scripts -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
