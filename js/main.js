@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     L.control.zoom({ position: 'topright' }).addTo(map);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const goldIcon = L.divIcon({
       className: 'custom-marker',
-      html: '<div style="width:18px;height:18px;background:#c9a96e;border:3px solid #1a1a2e;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.35),0 0 12px rgba(201,169,110,0.4);"></div>',
+      html: '<div style="width:18px;height:18px;background:#c9a96e;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.25),0 0 12px rgba(201,169,110,0.4);"></div>',
       iconSize: [18, 18],
       iconAnchor: [9, 9],
       popupAnchor: [0, -12]
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const greenIcon = L.divIcon({
       className: 'custom-marker',
-      html: '<div style="width:16px;height:16px;background:#22c55e;border:3px solid #1a1a2e;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.35),0 0 10px rgba(34,197,94,0.3);"></div>',
+      html: '<div style="width:16px;height:16px;background:#22c55e;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.25),0 0 10px rgba(34,197,94,0.3);"></div>',
       iconSize: [16, 16],
       iconAnchor: [8, 8],
       popupAnchor: [0, -10]
@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const whiteIcon = L.divIcon({
       className: 'custom-marker',
-      html: '<div style="width:14px;height:14px;background:#1a1a2e;border:3px solid #c9a96e;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>',
+      html: '<div style="width:14px;height:14px;background:#fff;border:3px solid #c9a96e;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.25);"></div>',
       iconSize: [14, 14],
       iconAnchor: [7, 7],
       popupAnchor: [0, -8]
@@ -389,32 +389,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('closeVideoBtn');
     const video = document.getElementById('videoPlayer');
 
-    if (!openBtn || !video) return;
+    if (!openBtn || !modal || !video) return;
 
     openBtn.addEventListener('click', () => {
+      // Show the modal first so the video is visible in the DOM
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
       video.play();
-      // Request fullscreen on the VIDEO element only (not the whole page)
+
+      // Then try to go fullscreen on the VIDEO element itself
       if (video.requestFullscreen) {
-        video.requestFullscreen();
+        video.requestFullscreen().catch(() => {});
+      } else if (video.webkitEnterFullscreen) {
+        video.webkitEnterFullscreen();
       } else if (video.webkitRequestFullscreen) {
         video.webkitRequestFullscreen();
-      } else if (video.webkitEnterFullscreen) {
-        // iOS Safari native fullscreen
-        video.webkitEnterFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
       }
     });
 
-    // When exiting fullscreen, pause video
-    document.addEventListener('fullscreenchange', () => {
-      if (!document.fullscreenElement) {
-        video.pause();
+    function closeModal() {
+      modal.classList.remove('active');
+      video.pause();
+      video.currentTime = 0;
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
       }
     });
-    document.addEventListener('webkitfullscreenchange', () => {
-      if (!document.webkitFullscreenElement) {
-        video.pause();
+
+    // When exiting fullscreen, keep modal open so user can still watch
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && modal.classList.contains('active')) {
+        // User exited fullscreen, video stays in modal
       }
     });
   }

@@ -1846,19 +1846,19 @@ h1, h2, h3, h4, h5, h6 {
 #georgia-map {
   height: 550px;
   width: 100%;
-  background: #1a1a2e;
+  background: #f5f5f5;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 #georgia-map .leaflet-control-zoom a {
-  background: #1a1a2e;
-  color: #c9a96e;
-  border-color: rgba(201, 169, 110, 0.3);
+  background: #fff;
+  color: #1a1a2e;
+  border-color: rgba(0, 0, 0, 0.15);
 }
 
 #georgia-map .leaflet-control-zoom a:hover {
   background: #c9a96e;
-  color: #1a1a2e;
+  color: #fff;
 }
 
 .leaflet-popup-content-wrapper {
@@ -2133,6 +2133,42 @@ h1, h2, h3, h4, h5, h6 {
 
 .tours-sub-heading:first-of-type {
   margin-top: 40px;
+}
+
+/* Tours Divider (Однодневные туры) */
+.tours-divider {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  padding: 0 10px;
+}
+
+.tours-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent);
+}
+
+.tours-divider-content {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.tours-divider-content h3 {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.tours-divider-content p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  max-width: 420px;
 }
 
 /* ---------- Language Switcher ---------- */

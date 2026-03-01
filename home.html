@@ -110,12 +110,8 @@
     <div class="section-container">
       <div class="section-header animate-on-scroll">
         <div class="section-tag">Наши туры</div>
-        <h2 class="section-title">Популярные направления</h2>
-        <p class="section-subtitle">Выберите идеальный тур для себя — от горных приключений до винных дегустаций в солнечной Кахетии</p>
-      </div>
-      <div class="tours-sub-heading animate-on-scroll">
-        <h3>Полные туры</h3>
-        <p>Многодневные путешествия с проживанием и полным сопровождением</p>
+        <h2 class="section-title">Полные пакеты туров</h2>
+        <p class="section-subtitle">Многодневные путешествия с проживанием, транспортом и полным сопровождением гида по лучшим направлениям Грузии</p>
       </div>
       <div class="tours-grid">
         <!-- Featured Tour (First / Top) -->
@@ -154,9 +150,13 @@
           </div>
         </div>
       </div>
-      <div class="tours-sub-heading animate-on-scroll">
-        <h3>Однодневные туры</h3>
-        <p>Увлекательные экскурсии на один день по лучшим направлениям Грузии</p>
+      <div class="tours-divider animate-on-scroll">
+        <div class="tours-divider-line"></div>
+        <div class="tours-divider-content">
+          <h3>Однодневные туры</h3>
+          <p>Увлекательные экскурсии на один день по лучшим направлениям Грузии</p>
+        </div>
+        <div class="tours-divider-line"></div>
       </div>
       <div class="tours-grid">
         <!-- Tour Card 1 -->
@@ -238,7 +238,7 @@
         <!-- Tour Card 3 -->
         <div class="tour-card animate-on-scroll delay-3">
           <div class="tour-card-image">
-            <img src="images/tour-wine.jpg" alt="Винный тур по Кахетии">
+            <img src="images/tour-wine.jpg" alt="Винный тур ��о Кахетии">
             <span class="tour-card-badge">Новинка</span>
             <button class="tour-card-save" aria-label="Сохранить тур">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -550,10 +550,19 @@
     </div>
   </section>
 
-  <!-- Hidden Video Element for Fullscreen Playback -->
-  <video id="videoPlayer" controls playsinline preload="metadata" style="display:none;">
-    <source src="video.mp4" type="video/mp4">
-  </video>
+  <!-- Video Modal for Fullscreen Playback -->
+  <div class="video-modal-overlay" id="videoModal">
+    <div class="video-modal">
+      <button class="video-modal-close" id="closeVideoBtn" aria-label="Close video">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="video-modal-content">
+        <video id="videoPlayer" controls playsinline preload="metadata">
+          <source src="video.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <div id="footer-placeholder"></div>
