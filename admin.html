@@ -1207,13 +1207,15 @@
 
   /* ══════════════ DASHBOARD ══════════════ */
   async function loadDashboard() {
+    console.log("[v0] loadDashboard called");
     try {
       const [ts, bs, rs, dts] = await Promise.all([
         getDocs(collection(db, 'tours')),
         getDocs(collection(db, 'bookings')),
         getDocs(collection(db, 'reviews')),
-        getDocs(collection(db, 'dayTours'))
+        getDocs(collection(db, 'dayTours')).catch(() => ({ size: 0, docs: [] }))
       ]);
+      console.log("[v0] Dashboard loaded - tours:", ts.size, "bookings:", bs.size, "reviews:", rs.size, "dayTours:", dts.size);
 
       document.getElementById('sTours').textContent    = ts.size;
       document.getElementById('sBookings').textContent = bs.size;
@@ -1244,7 +1246,7 @@
             <td data-label="Дата">${fmtDate(b.createdAt)}</td>
           </tr>`).join('');
       }
-    } catch(e) { console.error('Dashboard:', e); }
+    } catch(e) { console.error('[v0] Dashboard ERROR:', e); }
   }
 
   /* ══════════════ TOURS ══════════════ */
@@ -1634,16 +1636,19 @@
 
   // Load day tours
   async function loadDayTours() {
+    console.log("[v0] loadDayTours called");
     document.getElementById('dayToursTbody').innerHTML =
       `<tr class="loading-row"><td colspan="8">იტვირთება...</td></tr>`;
     try {
       const snap = await getDocs(collection(db, 'dayTours'));
+      console.log("[v0] dayTours loaded:", snap.size, "documents");
       allDayTours = snap.docs.map(d => ({ id: d.id, ...d.data() }));
       renderDayTours(allDayTours);
       document.getElementById('cntDayTours').textContent = allDayTours.length;
     } catch(e) {
+      console.error("[v0] loadDayTours ERROR:", e);
       document.getElementById('dayToursTbody').innerHTML =
-        `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#e55;">შეცდომა</td></tr>`;
+        `<tr><td colspan="8" style="text-align:center;padding:2rem;color:#e55;">შეცდომა: ${e.message}</td></tr>`;
     }
   }
 
@@ -1734,8 +1739,10 @@
     const price = Number(document.getElementById('dtPrice').value);
     const minGroup = Number(document.getElementById('dtMinGroup').value);
     const maxGroup = Number(document.getElementById('dtMaxGroup').value);
+    console.log("[v0] saveDayTour called:", { docId, name, price, minGroup, maxGroup });
     if (!name || !price || !minGroup || !maxGroup) {
       toast('შეავსეთ ყველა სავალდებულო ველი', 'err');
+      console.log("[v0] Validation failed - missing required fields");
       return;
     }
 
@@ -1756,18 +1763,23 @@
 
     closeDayTourModal();
     showLoading(docId ? 'ტურის განახლება...' : 'ტურის დამატება...');
+    console.log("[v0] About to save to Firebase:", JSON.stringify(data, null, 2));
     try {
       if (docId) {
+        console.log("[v0] Updating existing doc:", docId);
         await updateDoc(doc(db, 'dayTours', docId), data);
         toast('ტური განახლდა');
       } else {
         data.createdAt = serverTimestamp();
-        await addDoc(collection(db, 'dayTours'), data);
+        console.log("[v0] Adding new doc to dayTours collection");
+        const ref = await addDoc(collection(db, 'dayTours'), data);
+        console.log("[v0] Document added with ID:", ref.id);
         toast('ტური დაემატა');
       }
-      loadDayTours();
+      await loadDayTours();
       loadDashboard();
     } catch(e) {
+      console.error("[v0] saveDayTour ERROR:", e);
       toast('შეცდომა: ' + e.message, 'err');
     } finally {
       hideLoading();
