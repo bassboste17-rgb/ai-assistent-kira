@@ -1253,7 +1253,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .video-modal {
   position: relative;
-  width: 90%;
+  width: 94%;
   max-width: 960px;
   aspect-ratio: 16 / 9;
   transform: scale(0.9);
@@ -1847,7 +1847,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 550px;
   width: 100%;
   background: #f5f5f5;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-radius: var(--radius-lg);
 }
 
 #georgia-map .leaflet-control-zoom a {
@@ -2562,10 +2562,25 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 24px;
   }
   .navbar-container {
-    padding: 0 24px;
+    padding: 0 16px;
+  }
+  .navbar-actions {
+    gap: 10px;
+  }
+  .navbar-phone {
+    display: none;
+  }
+  .hero {
+    min-height: 550px;
   }
   .hero-content {
-    padding: 0 24px;
+    padding: 0 20px;
+  }
+  .hero-title {
+    font-size: clamp(28px, 8vw, 48px);
+  }
+  .hero-subtitle {
+    font-size: 15px;
   }
   .hero-stats-inner {
     grid-template-columns: repeat(2, 1fr);
@@ -2580,6 +2595,20 @@ h1, h2, h3, h4, h5, h6 {
   }
   .tour-featured {
     grid-column: span 1;
+  }
+  .tour-featured-content {
+    padding: 28px 20px;
+  }
+  .tours-divider {
+    margin-top: 50px;
+    margin-bottom: 28px;
+    gap: 14px;
+  }
+  .tours-divider-content h3 {
+    font-size: 22px;
+  }
+  .tours-divider-content p {
+    font-size: 13px;
   }
   .about-features {
     grid-template-columns: 1fr;
@@ -2605,10 +2634,8 @@ h1, h2, h3, h4, h5, h6 {
   .form-row {
     grid-template-columns: 1fr;
   }
-  .map-legend {
-    flex-wrap: wrap;
-    gap: 12px;
-    padding: 16px;
+  #georgia-map {
+    height: 350px;
   }
   .region-cards {
     grid-template-columns: 1fr 1fr;
@@ -2634,22 +2661,103 @@ h1, h2, h3, h4, h5, h6 {
   .btn-cta-nav {
     display: none;
   }
+  .section-title {
+    font-size: clamp(24px, 6vw, 36px);
+  }
 }
 
 @media (max-width: 480px) {
+  .section {
+    padding: 60px 0;
+  }
+  .section-container {
+    padding: 0 16px;
+  }
+  .navbar-container {
+    padding: 0 12px;
+  }
+  .navbar-logo .logo-text {
+    font-size: 22px;
+    letter-spacing: 2px;
+  }
+  .navbar-logo .logo-sub {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+  .navbar-logo .logo-divider {
+    height: 18px;
+  }
+  .navbar-actions {
+    gap: 8px;
+  }
+  .hero {
+    min-height: 480px;
+  }
+  .hero-content {
+    padding: 0 16px;
+  }
+  .hero-badge {
+    font-size: 10px;
+    padding: 6px 14px;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-size: clamp(24px, 8vw, 36px);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
   .hero-actions {
     flex-direction: column;
+    gap: 10px;
   }
   .hero-actions .btn-primary,
   .hero-actions .btn-secondary {
     width: 100%;
     justify-content: center;
+    padding: 14px 24px;
+    font-size: 13px;
+  }
+  .section-tag {
+    font-size: 10px;
+  }
+  .section-title {
+    font-size: clamp(22px, 6vw, 30px);
+  }
+  .section-subtitle {
+    font-size: 13px;
   }
   .review-quote {
     display: none;
   }
-  .georgia-svg-map svg {
-    min-height: 250px;
+  .review-card-inner {
+    padding: 24px 16px;
+  }
+  .review-text {
+    font-size: 14px;
+  }
+  .tour-card-content {
+    padding: 20px 16px;
+  }
+  .tour-featured-content {
+    padding: 24px 16px;
+  }
+  .tours-divider {
+    margin-top: 40px;
+    margin-bottom: 24px;
+    gap: 10px;
+  }
+  .tours-divider-content h3 {
+    font-size: 18px;
+  }
+  .tours-divider-content p {
+    font-size: 12px;
+  }
+  #georgia-map {
+    height: 260px;
   }
   .region-cards {
     grid-template-columns: 1fr;
@@ -2662,11 +2770,26 @@ h1, h2, h3, h4, h5, h6 {
   .region-card-info p {
     font-size: 10px;
   }
+  .contact-form-wrap {
+    padding: 24px 16px;
+  }
+  .contact-info h3 {
+    font-size: 22px;
+  }
+  .mobile-link {
+    font-size: 26px;
+  }
+  .mobile-links li {
+    margin-bottom: 18px;
+  }
   .lang-current span {
     display: none;
   }
   .lang-current {
     padding: 8px 10px;
+  }
+  .footer-col h3 {
+    font-size: 14px;
   }
 }
 
@@ -2679,7 +2802,10 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 768px) {
   .page-header {
-    height: 320px;
+    height: 280px;
+  }
+  .page-header-title {
+    font-size: clamp(28px, 6vw, 40px);
   }
   .blog-grid {
     grid-template-columns: 1fr;
@@ -2687,22 +2813,25 @@ h1, h2, h3, h4, h5, h6 {
   .services-grid {
     grid-template-columns: 1fr;
   }
-  #georgia-map {
-    height: 380px;
-  }
 }
 
 @media (max-width: 480px) {
   .page-header {
-    height: 260px;
+    height: 220px;
   }
-  #georgia-map {
-    height: 280px;
+  .page-header-title {
+    font-size: 26px;
   }
-  .map-legend {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 12px;
+  .page-header-subtitle {
+    font-size: 13px;
+  }
+  .blog-card-body {
+    padding: 16px;
+  }
+  .blog-card-title {
+    font-size: 17px;
+  }
+  .service-card {
+    padding: 24px 20px;
   }
 }

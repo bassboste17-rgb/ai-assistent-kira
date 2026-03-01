@@ -288,55 +288,38 @@ document.addEventListener('DOMContentLoaded', () => {
       maxZoom: 19
     }).addTo(map);
 
-    const goldIcon = L.divIcon({
+    const regionIcon = L.divIcon({
       className: 'custom-marker',
-      html: '<div style="width:18px;height:18px;background:#c9a96e;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.25),0 0 12px rgba(201,169,110,0.4);"></div>',
-      iconSize: [18, 18],
-      iconAnchor: [9, 9],
-      popupAnchor: [0, -12]
-    });
-
-    const greenIcon = L.divIcon({
-      className: 'custom-marker',
-      html: '<div style="width:16px;height:16px;background:#22c55e;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.25),0 0 10px rgba(34,197,94,0.3);"></div>',
+      html: '<div style="width:16px;height:16px;background:#e63946;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3),0 0 10px rgba(230,57,70,0.4);"></div>',
       iconSize: [16, 16],
       iconAnchor: [8, 8],
       popupAnchor: [0, -10]
     });
 
-    const whiteIcon = L.divIcon({
-      className: 'custom-marker',
-      html: '<div style="width:14px;height:14px;background:#fff;border:3px solid #c9a96e;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.25);"></div>',
-      iconSize: [14, 14],
-      iconAnchor: [7, 7],
-      popupAnchor: [0, -8]
-    });
-
     // Georgian regions as markers
     const locations = [
-      { lat: 41.7151, lng: 44.8271, title: 'Тбилиси', desc: 'Столица Грузии, старый город с серными банями', badge: 'Столица', region: 'tbilisi', icon: goldIcon },
-      { lat: 41.8395, lng: 45.3520, title: 'Кахетия', desc: 'Сигнахи, Телави, винные погреба и виноградники', badge: 'Вино', region: 'kakheti', icon: goldIcon },
-      { lat: 42.6560, lng: 44.6387, title: 'Мцхета-Мтианети', desc: 'Казбеги, монастырь Джвари, Военно-Грузинская дорога', badge: 'Горы', region: 'mtskheta', icon: goldIcon },
-      { lat: 41.6410, lng: 41.6340, title: 'Аджария', desc: 'Батуми, Черноморское побережье, современная архитектура', badge: 'Побережье', region: 'adjara', icon: goldIcon },
-      { lat: 42.2679, lng: 42.6990, title: 'Имеретия', desc: 'Кутаиси, храм Баграти, пещера Прометея', badge: 'Культура', region: 'imereti', icon: greenIcon },
-      { lat: 42.5090, lng: 41.8710, title: 'Самегрело', desc: 'Мартвильский каньон, каньон Окаце, озеро Палиастоми', badge: 'Природа', region: 'samegrelo', icon: greenIcon },
-      { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe', icon: greenIcon },
-      { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli', icon: whiteIcon },
-      { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli', icon: whiteIcon },
-      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha', icon: whiteIcon },
-      { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria', icon: whiteIcon },
-      { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia', icon: whiteIcon },
-      { lat: 43.0096, lng: 42.7120, title: 'Местийский ледник', desc: 'Тропа к леднику Чалаади', badge: 'Природа', region: 'mestia', icon: greenIcon }
+      { lat: 41.7151, lng: 44.8271, title: 'Тбилиси', desc: 'Столица Грузии, старый город с серными банями', badge: 'Столица', region: 'tbilisi' },
+      { lat: 41.8395, lng: 45.3520, title: 'Кахетия', desc: 'Сигнахи, Телави, винные погреба и виноградники', badge: 'Вино', region: 'kakheti' },
+      { lat: 42.6560, lng: 44.6387, title: 'Мцхета-Мтианети', desc: 'Казбеги, монастырь Джвари, Военно-Грузинская дорога', badge: 'Горы', region: 'mtskheta' },
+      { lat: 41.6410, lng: 41.6340, title: 'Аджария', desc: 'Батуми, Черноморское побережье, современная архитектура', badge: 'Побережье', region: 'adjara' },
+      { lat: 42.2679, lng: 42.6990, title: 'Имеретия', desc: 'Кутаиси, храм Баграти, пещера Прометея', badge: 'Культура', region: 'imereti' },
+      { lat: 42.5090, lng: 41.8710, title: 'Самегрело', desc: 'Мартвильский каньон, каньон Окаце, озеро Палиастоми', badge: 'Природа', region: 'samegrelo' },
+      { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe' },
+      { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli' },
+      { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli' },
+      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha' },
+      { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria' },
+      { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia' }
     ];
 
     locations.forEach(loc => {
-      const marker = L.marker([loc.lat, loc.lng], { icon: loc.icon }).addTo(map);
+      const marker = L.marker([loc.lat, loc.lng], { icon: regionIcon }).addTo(map);
       marker.bindPopup(
         '<div style="min-width:180px;">' +
           '<h3 style="font-family:Playfair Display,serif;font-size:15px;margin:0 0 4px;color:#1a1a2e;">' + loc.title + '</h3>' +
           '<p style="font-size:12px;color:#555;margin:0 0 8px;line-height:1.4;">' + loc.desc + '</p>' +
           '<span class="map-popup-badge">' + loc.badge + '</span>' +
-          (loc.region !== 'mestia' ? '<br><a href="services.html" style="display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:#c9a96e;text-decoration:none;">Подробнее &rarr;</a>' : '') +
+          '<br><a href="services.html" style="display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:#c9a96e;text-decoration:none;">Подробнее &rarr;</a>' +
         '</div>'
       );
     });
