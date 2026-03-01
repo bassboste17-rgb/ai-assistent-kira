@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- Load Navbar & Footer ---------- */
+  /* ---------- Load Footer ---------- */
   async function loadComponent(id, path) {
     try {
       const res = await fetch(path);
@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  Promise.all([
-    loadComponent('navbar-placeholder', 'components/navbar.html'),
-    loadComponent('footer-placeholder', 'components/footer.html')
-  ]).then(() => {
-    initNavbar();
-    initLangSwitcher();
+  // Navbar is inlined in HTML, init immediately
+  initNavbar();
+  initLangSwitcher();
+
+  // Load footer, then init everything else
+  loadComponent('footer-placeholder', 'components/footer.html').then(() => {
     initScrollAnimations();
     initReviewsSlider();
     initMap();
