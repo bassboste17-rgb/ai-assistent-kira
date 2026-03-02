@@ -305,244 +305,183 @@
       100% { background-position: -200% 0; }
     }
 
-    /* ── Tour Card - Premium Design ── */
+    /* ── Tour Card - Vertical Premium Design ── */
     .tour-card {
       background: var(--white);
-      border-radius: 24px;
+      border-radius: 16px;
       overflow: hidden;
-      border: none;
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
       opacity: 0;
       transform: translateY(20px);
       animation: fadeUp 0.5s ease forwards;
-      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      height: 100%;
     }
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
-    .tour-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 24px;
-      padding: 1.5px;
-      background: linear-gradient(135deg, rgba(212,175,55,0.3), transparent 50%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.4s;
-      pointer-events: none;
-    }
-    .tour-card:hover::before { opacity: 1; }
     .tour-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 24px 56px rgba(0,0,0,0.12), 0 8px 24px rgba(212,175,55,0.08);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+      border-color: var(--gold);
     }
     .tour-card-img {
       position: relative;
-      height: 240px;
+      height: 200px;
       overflow: hidden;
+      flex-shrink: 0;
     }
     .tour-card-img img {
       width: 100%; height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: transform 0.4s ease;
     }
-    .tour-card:hover .tour-card-img img { transform: scale(1.08); }
-    .tour-card-img::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 120px;
-      background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
-      pointer-events: none;
-    }
+    .tour-card:hover .tour-card-img img { transform: scale(1.05); }
     .tour-card-img-placeholder {
       width: 100%; height: 100%;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.2);
+      color: #ccc;
     }
     .tour-badge {
       position: absolute;
-      top: 16px; left: 16px;
-      background: linear-gradient(135deg, var(--gold), #e8c547);
+      top: 12px; left: 12px;
+      background: var(--gold);
       color: var(--dark);
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 50px;
-      box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+      padding: 5px 10px;
+      border-radius: 6px;
       z-index: 2;
     }
     .tour-type-badge {
       position: absolute;
-      top: 16px; right: 16px;
-      background: rgba(255,255,255,0.95);
-      color: var(--dark);
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 50px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      z-index: 2;
-    }
-    .tour-card-price-overlay {
-      position: absolute;
-      bottom: 16px; left: 16px;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-    }
-    .tour-card-price-overlay .price-label {
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.7);
-      font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-    .tour-card-price-overlay .price-value {
-      font-size: 1.6rem;
-      font-weight: 800;
+      top: 12px; right: 12px;
+      background: var(--dark);
       color: #fff;
-      line-height: 1.1;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-    .tour-card-price-overlay .price-value small {
-      font-size: 0.7rem;
-      font-weight: 500;
-      opacity: 0.8;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      z-index: 2;
     }
     .tour-card-body {
-      padding: 1.6rem 1.6rem 0.6rem;
+      padding: 1.25rem;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-    .tour-card-location {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.78rem;
-      color: var(--gold);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.5rem;
-    }
     .tour-card-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--dark);
-      margin-bottom: 0.7rem;
-      line-height: 1.25;
-      transition: color 0.3s;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
-    .tour-card:hover .tour-card-title { color: var(--gold); }
     .tour-card-desc {
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       flex: 1;
     }
-    .tour-card-includes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }
-    .include-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 3px 10px;
-      font-size: 0.73rem;
-      color: #555;
-      font-weight: 500;
-    }
     .tour-card-meta {
       display: flex;
-      gap: 1.4rem;
-      padding: 1rem 0 0;
-      border-top: 1px solid var(--border);
-      margin-top: auto;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
     }
     .meta-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.82rem;
-      color: #555;
+      gap: 4px;
+      font-size: 0.75rem;
+      color: #666;
       font-weight: 500;
     }
     .meta-item svg { 
       color: var(--gold); 
       flex-shrink: 0; 
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
     }
     .tour-card-footer {
-      padding: 1rem 1.6rem 1.6rem;
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.75rem;
+      background: #fafafa;
     }
-    .tour-price { display: none; }
+    .tour-price {
+      display: flex;
+      flex-direction: column;
+    }
+    .tour-price-label {
+      font-size: 0.65rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .tour-price-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.1;
+    }
+    .tour-price-value small {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #888;
+    }
     .btn-book {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      gap: 6px;
       background: var(--dark);
       color: #fff;
       text-decoration: none;
-      border-radius: 14px;
-      padding: 0.9rem 2rem;
-      font-size: 0.9rem;
-      font-weight: 700;
-      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-radius: 8px;
+      padding: 0.65rem 1.1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.25s, transform 0.2s;
       white-space: nowrap;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
     }
-    .btn-book::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--gold), #e8c547);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .btn-book span, .btn-book svg { position: relative; z-index: 1; }
-    .btn-book:hover::before { opacity: 1; }
     .btn-book:hover { 
-      color: var(--dark); 
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212,175,55,0.35);
+      background: var(--gold);
+      color: var(--dark);
+      transform: translateY(-1px);
     }
     .btn-book svg {
-      transition: transform 0.3s;
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s;
     }
-    .btn-book:hover svg { transform: translateX(4px); }
+    .btn-book:hover svg { transform: translateX(3px); }
+    
+    /* Hidden elements */
+    .tour-card-price-overlay { display: none; }
+    .tour-card-location { display: none; }
+    .tour-card-includes { display: none; }
+    .include-chip { display: none; }
 
     /* ── No results ── */
     .empty-tours {
@@ -555,7 +494,7 @@
     .empty-tours h3 { font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; }
     .empty-tours p { font-size: 0.9rem; }
 
-    /* ── Static services ── */
+    /* ��─ Static services ── */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1170,7 +1109,6 @@
     function dayTourCardHTML(t, idx) {
       const delay = (idx % 3) * 0.1;
       const photos = toArray(t.photos);
-      const regions = toArray(t.regions);
       const dur = [];
       if (t.days) dur.push(t.days + ' დღე');
       if (t.hours) dur.push(t.hours + ' სთ.');
@@ -1183,24 +1121,23 @@
               : `<div class="tour-card-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
             }
             ${t.type ? `<span class="tour-type-badge">${t.type}</span>` : ''}
-            <div class="tour-card-price-overlay">
-              <span class="price-label">დან</span>
-              <span class="price-value">$${t.price || '—'} <small>/ პერს.</small></span>
-            </div>
           </div>
           <div class="tour-card-body">
-            ${regions.length ? `<div class="dt-regions">${regions.map(r => `<span class="dt-region-chip">${r}</span>`).join('')}</div>` : ''}
             <h3 class="tour-card-title">${t.name || 'უსახელო ტური'}</h3>
-            ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : ''}
+            ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : '<p class="tour-card-desc">აღწერა მალე დაემატება</p>'}
             <div class="tour-card-meta">
-              ${dur.length ? `<span class="meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${dur.join(' / ')}</span>` : ''}
-              ${t.minGroup && t.maxGroup ? `<span class="meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>${t.minGroup}-${t.maxGroup} პერს.</span>` : ''}
+              ${dur.length ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${dur.join(' / ')}</span>` : ''}
+              ${t.minGroup && t.maxGroup ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.minGroup}-${t.maxGroup} პერს.</span>` : ''}
             </div>
           </div>
           <div class="tour-card-footer">
+            <div class="tour-price">
+              <span class="tour-price-label">დან</span>
+              <span class="tour-price-value">$${t.price || '—'} <small>/ პერს.</small></span>
+            </div>
             <a href="tour.html?type=day&id=${t.id}" class="btn-book">
-              <span>სრულად ნახვა</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              სრულად
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>`;
@@ -1209,7 +1146,6 @@
     function multiDayTourCardHTML(t, idx) {
       const delay = (idx % 3) * 0.1;
       const photos = toArray(t.photos);
-      const regions = toArray(t.regions);
       const dur = [];
       if (t.days) dur.push(t.days + ' დღე');
       if (t.nights) dur.push(t.nights + ' ღამე');
@@ -1223,25 +1159,23 @@
             }
             ${t.type ? `<span class="tour-type-badge">${t.type}</span>` : ''}
             <span class="tour-badge">${dur.join(' / ') || 'მრავალდღიანი'}</span>
-            <div class="tour-card-price-overlay">
-              <span class="price-label">დან</span>
-              <span class="price-value">$${t.price || '—'} <small>/ პერს.</small></span>
-            </div>
           </div>
           <div class="tour-card-body">
-            ${t.route ? `<div class="dt-route"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.route}</div>` : ''}
-            ${regions.length ? `<div class="dt-regions">${regions.map(r => `<span class="dt-region-chip">${r}</span>`).join('')}</div>` : ''}
             <h3 class="tour-card-title">${t.name || 'უსახელო ტური'}</h3>
-            ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : ''}
+            ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : '<p class="tour-card-desc">აღწერა მალე დაემატება</p>'}
             <div class="tour-card-meta">
-              ${dur.length ? `<span class="meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${dur.join(' / ')}</span>` : ''}
-              ${t.minGroup && t.maxGroup ? `<span class="meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>${t.minGroup}-${t.maxGroup} პერს.</span>` : ''}
+              ${dur.length ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${dur.join(' / ')}</span>` : ''}
+              ${t.minGroup && t.maxGroup ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.minGroup}-${t.maxGroup} პერს.</span>` : ''}
             </div>
           </div>
           <div class="tour-card-footer">
+            <div class="tour-price">
+              <span class="tour-price-label">დან</span>
+              <span class="tour-price-value">$${t.price || '—'} <small>/ პერს.</small></span>
+            </div>
             <a href="tour.html?type=multi&id=${t.id}" class="btn-book">
-              <span>სრულად ნახვა</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              სრულად
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>`;
