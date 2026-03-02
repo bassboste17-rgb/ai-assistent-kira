@@ -1045,10 +1045,31 @@
       return Object.entries(val).map(([id, data]) => ({ id, ...data }));
     }
 
-    const typeLabel = {
-      day: 'Однодневный', multi: 'Многодневный',
-      wine: 'Винный', photo: 'Фототур', custom: 'Индивидуальный'
-    };
+    // Data storage
+    let allDayTours = [];
+    let allMultiDayTours = [];
+    let activeMainTab = 'day1';
+
+    // Main tab switching
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        activeMainTab = tab.dataset.main;
+        
+        if (activeMainTab === 'day1') {
+          document.querySelector('#tours .section-title').textContent = '1-დღიანი ტურები';
+          document.getElementById('toursSubtitle').textContent = 'ერთდღიანი ექსკურსიები საქართველოს საუკეთესო მიმართულებებით';
+          renderDayTours(allDayTours);
+          document.getElementById('tabCountDay1').textContent = allDayTours.length;
+        } else {
+          document.querySelector('#tours .section-title').textContent = 'მრავალდღიანი ტურები';
+          document.getElementById('toursSubtitle').textContent = 'მრავალდღიანი მოგზაურობა საცხოვრებლით და სრული თანხლებით';
+          renderMultiDayTours(allMultiDayTours);
+          document.getElementById('tabCountMulti').textContent = allMultiDayTours.length;
+        }
+      });
+    });
 
     function toArray(val) {
       if (!val) return [];
@@ -1057,92 +1078,132 @@
       return [];
     }
 
-    let allTours = [];
-    let activeFilter = 'all';
-
-    function cardHTML(t, idx) {
+    function dayTourCardHTML(t, idx) {
       const delay = (idx % 3) * 0.1;
-      const includes = toArray(t.includes).slice(0, 3);
+      const photos = toArray(t.photos);
+      const regions = toArray(t.regions);
+      const dur = [];
+      if (t.days) dur.push(t.days + ' დღე');
+      if (t.hours) dur.push(t.hours + ' სთ.');
+      
       return `
-        <div class="tour-card" data-type="${t.type || ''}" style="animation-delay:${delay}s">
+        <div class="tour-card" style="animation-delay:${delay}s">
           <div class="tour-card-img">
-            ${t.image
-              ? `<img src="${t.image}" alt="${t.name || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>'">`
-              : `<div class="tour-card-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
+            ${photos.length
+              ? `<img src="${photos[0].url || photos[0].thumb}" alt="${t.name || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>'">`
+              : `<div class="tour-card-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
             }
-            ${t.badge ? `<span class="tour-badge">${t.badge}</span>` : ''}
-            ${t.type ? `<span class="tour-type-badge">${typeLabel[t.type] || t.type}</span>` : ''}
+            ${t.type ? `<span class="tour-type-badge">${t.type}</span>` : ''}
           </div>
           <div class="tour-card-body">
-            ${t.location ? `<div class="tour-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
-            <h3 class="tour-card-title">${t.name || 'Без названия'}</h3>
+            ${regions.length ? `<div class="dt-regions">${regions.map(r => `<span class="dt-region-chip">${r}</span>`).join('')}</div>` : ''}
+            <h3 class="tour-card-title">${t.name || 'უსახელო ტური'}</h3>
             ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : ''}
-            ${includes.length ? `<div class="tour-card-includes">${includes.map(i => `<span class="include-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${i}</span>`).join('')}</div>` : ''}
             <div class="tour-card-meta">
-              ${t.duration ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
-              ${t.group ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.group}</span>` : ''}
-              ${t.rating ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${t.rating}</span>` : ''}
+              ${dur.length ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${dur.join(' / ')}</span>` : ''}
+              ${t.minGroup && t.maxGroup ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.minGroup}-${t.maxGroup} პერს.</span>` : ''}
             </div>
           </div>
           <div class="tour-card-footer">
             <div class="tour-price">
-              <span class="tour-price-label">от</span>
-              <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
+              <span class="tour-price-label">დან</span>
+              <span class="tour-price-value">$${t.price || '—'} <small>/ პერს.</small></span>
             </div>
-            <a href="contact.html" class="btn-book">
-              Забронировать
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <a href="tour.html?type=day&id=${t.id}" class="btn-book">
+              სრულად
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>`;
     }
 
-    function renderTours(tours) {
+    function multiDayTourCardHTML(t, idx) {
+      const delay = (idx % 3) * 0.1;
+      const photos = toArray(t.photos);
+      const regions = toArray(t.regions);
+      const dur = [];
+      if (t.days) dur.push(t.days + ' დღე');
+      if (t.nights) dur.push(t.nights + ' ღამე');
+      
+      return `
+        <div class="tour-card" style="animation-delay:${delay}s">
+          <div class="tour-card-img">
+            ${photos.length
+              ? `<img src="${photos[0].url || photos[0].thumb}" alt="${t.name || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>'">`
+              : `<div class="tour-card-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
+            }
+            ${t.type ? `<span class="tour-type-badge">${t.type}</span>` : ''}
+            <span class="tour-badge">${dur.join(' / ') || 'მრავალდღიანი'}</span>
+          </div>
+          <div class="tour-card-body">
+            ${t.route ? `<div class="dt-route"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.route}</div>` : ''}
+            ${regions.length ? `<div class="dt-regions">${regions.map(r => `<span class="dt-region-chip">${r}</span>`).join('')}</div>` : ''}
+            <h3 class="tour-card-title">${t.name || 'უსახელო ტური'}</h3>
+            ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : ''}
+            <div class="tour-card-meta">
+              ${dur.length ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${dur.join(' / ')}</span>` : ''}
+              ${t.minGroup && t.maxGroup ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.minGroup}-${t.maxGroup} პერს.</span>` : ''}
+            </div>
+          </div>
+          <div class="tour-card-footer">
+            <div class="tour-price">
+              <span class="tour-price-label">დან</span>
+              <span class="tour-price-value">$${t.price || '—'} <small>/ პერს.</small></span>
+            </div>
+            <a href="tour.html?type=multi&id=${t.id}" class="btn-book">
+              სრულად
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>`;
+    }
+
+    function renderDayTours(tours) {
       const grid = document.getElementById('toursGrid');
       if (tours.length === 0) {
         grid.innerHTML = `
           <div class="empty-tours">
-            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <h3>Туры не найдены</h3>
-            <p>По выбранному фильтру туров пока нет. Попробуйте другую категорию.</p>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <h3>ტურები ჯერ არ დამატებულა</h3>
+            <p>ტურები მალე გამოჩნდება</p>
           </div>`;
         return;
       }
-      grid.innerHTML = tours.map((t, i) => cardHTML(t, i)).join('');
+      grid.innerHTML = tours.map((t, i) => dayTourCardHTML(t, i)).join('');
     }
 
-    function updateCounts(tours) {
-      document.getElementById('countAll').textContent = tours.length;
-      ['day','multi','wine','photo','custom'].forEach(type => {
-        const el = document.getElementById('count' + type.charAt(0).toUpperCase() + type.slice(1));
-        if (el) el.textContent = tours.filter(t => t.type === type).length;
-      });
+    function renderMultiDayTours(tours) {
+      const grid = document.getElementById('toursGrid');
+      if (tours.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-tours">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <h3>ტურები ჯერ არ დამატებულა</h3>
+            <p>მრავალდღიანი ტურები მალე გამოჩნდება</p>
+          </div>`;
+        return;
+      }
+      grid.innerHTML = tours.map((t, i) => multiDayTourCardHTML(t, i)).join('');
     }
-
-    function updateHeader(count) {
-      document.querySelector('#tours .section-title').textContent =
-        count > 0 ? `${count} ${count === 1 ? 'тур' : count < 5 ? 'тура' : 'туров'} для вас` : 'Туры';
-      document.getElementById('toursSubtitle').textContent =
-        count > 0 ? 'Актуальные предложения DAMQ Travel — выберите свой идеальный маршрут' : 'Скоро здесь появятся туры';
-    }
-
-    // Filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeFilter = btn.dataset.filter;
-        const filtered = activeFilter === 'all' ? allTours : allTours.filter(t => t.type === activeFilter);
-        renderTours(filtered);
-      });
-    });
 
     // Load from Realtime Database
     try {
-      allTours = await rtdbGetAll('tours');
-      updateCounts(allTours);
-      updateHeader(allTours.length);
-      renderTours(allTours);
+      const [dayTours, multiDayTours] = await Promise.all([
+        rtdbGetAll('dayTours'),
+        rtdbGetAll('multiDayTours')
+      ]);
+      
+      allDayTours = dayTours;
+      allMultiDayTours = multiDayTours;
+      
+      document.getElementById('tabCountDay1').textContent = dayTours.length;
+      document.getElementById('tabCountMulti').textContent = multiDayTours.length;
+      
+      // Default to day tours
+      document.querySelector('#tours .section-title').textContent = '1-დღიანი ტურები';
+      document.getElementById('toursSubtitle').textContent = 'ერთდღიანი ექსკურსიები საქართველოს საუკეთესო მიმართულებებით';
+      renderDayTours(allDayTours);
+      
     } catch (e) {
       console.error('Firebase error:', e);
       document.getElementById('toursGrid').innerHTML = `

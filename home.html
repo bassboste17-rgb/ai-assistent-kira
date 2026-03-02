@@ -772,7 +772,7 @@
               <span class="tour-price-label">от</span>
               <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
             </div>
-            <a href="contact.html" class="btn-tour">
+            <a href="tour.html?type=${t.tourType || 'day'}&id=${t.tourId || t.id}" class="btn-tour">
               Подробнее
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
@@ -800,7 +800,7 @@
             </div>
             <div class="tour-featured-bottom">
               <span class="tour-featured-price">$${t.price || '—'} <small>/ чел.</small></span>
-              <a href="contact.html" class="btn-featured">Забронировать <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+              <a href="tour.html?type=${t.tourType || 'multi'}&id=${t.tourId || t.id}" class="btn-featured">Подробнее <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
             </div>
           </div>
         </div>`;
@@ -812,29 +812,67 @@
 
     /* ─── load tours ─── */
     try {
-      const tours = await rtdbGetAll('tours');
+      // Load from separate collections
+      const [multiDayTours, dayToursData] = await Promise.all([
+        rtdbGetAll('multiDayTours'),
+        rtdbGetAll('dayTours')
+      ]);
 
-      const multiTours = tours.filter(t => t.type === 'multi');
-      const dayTours   = tours.filter(t => t.type !== 'multi');
-
-      // Multi-day
+      // Multi-day tours from multiDayTours collection
       const multiGrid = document.getElementById('multiToursGrid');
-      if (multiTours.length > 0) {
-        multiGrid.innerHTML = featuredHTML(multiTours[0])
-          + multiTours.slice(1).map((t, i) => tourCardHTML(t, i)).join('');
+      if (multiDayTours.length > 0) {
+        // Transform multiDayTours to match expected format
+        const transformed = multiDayTours.map(t => {
+          const photos = toArray(t.photos);
+          const regions = toArray(t.regions);
+          const dur = [];
+          if (t.days) dur.push(t.days + ' дн.');
+          if (t.nights) dur.push(t.nights + ' ноч.');
+          return {
+            ...t,
+            image: photos.length ? (photos[0].url || photos[0].thumb) : null,
+            location: regions.join(', ') || t.route || '',
+            duration: dur.join(' / ') || '',
+            group: t.minGroup && t.maxGroup ? `${t.minGroup}-${t.maxGroup} чел.` : '',
+            badge: t.type || '',
+            tourType: 'multi',
+            tourId: t.id
+          };
+        });
+        multiGrid.innerHTML = featuredHTML(transformed[0])
+          + transformed.slice(1).map((t, i) => tourCardHTML(t, i)).join('');
       } else {
         multiGrid.innerHTML = emptyHTML('Многодневные туры скоро появятся');
       }
 
-      // Day tours — populate select options too
+      // Day tours from dayTours collection
       const dayGrid = document.getElementById('dayToursGrid');
-      if (dayTours.length > 0) {
-        dayGrid.innerHTML = dayTours.map((t, i) => tourCardHTML(t, i)).join('');
-        // Update tour select in contact form
+      if (dayToursData.length > 0) {
+        const transformed = dayToursData.map(t => {
+          const photos = toArray(t.photos);
+          const regions = toArray(t.regions);
+          const dur = [];
+          if (t.days) dur.push(t.days + ' дн.');
+          if (t.hours) dur.push(t.hours + ' ч.');
+          return {
+            ...t,
+            image: photos.length ? (photos[0].url || photos[0].thumb) : null,
+            location: regions.join(', ') || '',
+            duration: dur.join(' / ') || '',
+            group: t.minGroup && t.maxGroup ? `${t.minGroup}-${t.maxGroup} чел.` : '',
+            badge: t.type || '',
+            tourType: 'day',
+            tourId: t.id
+          };
+        });
+        dayGrid.innerHTML = transformed.map((t, i) => tourCardHTML(t, i)).join('');
+        
+        // Update tour select in contact form with all tours
         const sel = document.getElementById('tour-select');
-        if (sel && tours.length > 0) {
+        const allTours = [...multiDayTours, ...dayToursData];
+        if (sel && allTours.length > 0) {
           sel.innerHTML = '<option value="">Выберите тур</option>'
-            + tours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+            + allTours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
         }
       } else {
         dayGrid.innerHTML = emptyHTML('Однодневные туры скоро появятся');
