@@ -756,40 +756,7 @@
     </div>
   </div>
 
-  <!-- Sub-filter for multi-day tours (hidden by default) -->
-  <div class="filter-bar" id="filterBar" style="display:none;">
-    <div class="filter-inner">
-      <button class="filter-btn active" data-filter="all">
-        ყველა
-        <span class="filter-count" id="countAll">0</span>
-      </button>
-      <button class="filter-btn" data-filter="day">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        ექსკურსია
-        <span class="filter-count" id="countDay">0</span>
-      </button>
-      <button class="filter-btn" data-filter="multi">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        მრავალდღიანი
-        <span class="filter-count" id="countMulti">0</span>
-      </button>
-      <button class="filter-btn" data-filter="wine">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M5 3h14l-1 7a7 7 0 0 1-12 0Z"/></svg>
-        საღვინე
-        <span class="filter-count" id="countWine">0</span>
-      </button>
-      <button class="filter-btn" data-filter="photo">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        ფოტოტური
-        <span class="filter-count" id="countPhoto">0</span>
-      </button>
-      <button class="filter-btn" data-filter="custom">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-        ინდივიდუალური
-        <span class="filter-count" id="countCustom">0</span>
-      </button>
-    </div>
-  </div>
+  <!-- Sub-filters removed - using main tabs only -->
 
   <!-- Tours from Firebase -->
   <section class="section-wrap" id="tours">
@@ -1045,42 +1012,29 @@
       return Object.entries(val).map(([id, data]) => ({ id, ...data }));
     }
 
-    const typeLabel = {
-      day: 'Однодневный', multi: 'Многодневный',
-      wine: 'Винный', photo: 'Фототур', custom: 'Индивидуальный'
-    };
 
-    function toArray(val) {
-      if (!val) return [];
-      if (Array.isArray(val)) return val;
-      if (typeof val === 'object') return Object.values(val);
-      return [];
-    }
 
-    let allTours = [];
-    let activeFilter = 'all';
-
-    function cardHTML(t, idx) {
+    function cardHTML(t, idx, tourType) {
       const delay = (idx % 3) * 0.1;
-      const includes = toArray(t.includes).slice(0, 3);
+      const detailUrl = `tour.html?id=${t.id}&type=${tourType}`;
+      const typeLabel = tourType === 'full' ? 'Пакет тура' : 'Однодневный';
       return `
-        <div class="tour-card" data-type="${t.type || ''}" style="animation-delay:${delay}s">
+        <div class="tour-card" data-type="${tourType}" style="animation-delay:${delay}s">
           <div class="tour-card-img">
-            ${t.image
-              ? `<img src="${t.image}" alt="${t.name || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>'">`
+            ${t.imageUrl
+              ? `<img src="${t.imageUrl}" alt="${t.title || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>'">`
               : `<div class="tour-card-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
             }
             ${t.badge ? `<span class="tour-badge">${t.badge}</span>` : ''}
-            ${t.type ? `<span class="tour-type-badge">${typeLabel[t.type] || t.type}</span>` : ''}
+            <span class="tour-type-badge">${typeLabel}</span>
           </div>
           <div class="tour-card-body">
             ${t.location ? `<div class="tour-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
-            <h3 class="tour-card-title">${t.name || 'Без названия'}</h3>
-            ${t.desc ? `<p class="tour-card-desc">${t.desc}</p>` : ''}
-            ${includes.length ? `<div class="tour-card-includes">${includes.map(i => `<span class="include-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${i}</span>`).join('')}</div>` : ''}
+            <h3 class="tour-card-title">${t.title || 'Без названия'}</h3>
+            ${t.description ? `<p class="tour-card-desc">${t.description}</p>` : ''}
             <div class="tour-card-meta">
               ${t.duration ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
-              ${t.group ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.group}</span>` : ''}
+              ${t.groupSize ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.groupSize}</span>` : ''}
               ${t.rating ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${t.rating}</span>` : ''}
             </div>
           </div>
@@ -1089,60 +1043,80 @@
               <span class="tour-price-label">от</span>
               <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
             </div>
-            <a href="contact.html" class="btn-book">
-              Забронировать
+            <a href="${detailUrl}" class="btn-book">
+              Подробнее
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
           </div>
         </div>`;
     }
 
-    function renderTours(tours) {
+    let fullToursData = [];
+    let dayToursData = [];
+    let activeMainTab = 'day1';
+
+    function renderTours(tours, tourType) {
       const grid = document.getElementById('toursGrid');
       if (tours.length === 0) {
         grid.innerHTML = `
           <div class="empty-tours">
             <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <h3>Туры не найдены</h3>
-            <p>По выбранному фильтру туров пока нет. Попробуйте другую категорию.</p>
+            <p>Туры этой категории пока не добавлены. Загляните позже.</p>
           </div>`;
         return;
       }
-      grid.innerHTML = tours.map((t, i) => cardHTML(t, i)).join('');
+      grid.innerHTML = tours.map((t, i) => cardHTML(t, i, tourType)).join('');
     }
 
-    function updateCounts(tours) {
-      document.getElementById('countAll').textContent = tours.length;
-      ['day','multi','wine','photo','custom'].forEach(type => {
-        const el = document.getElementById('count' + type.charAt(0).toUpperCase() + type.slice(1));
-        if (el) el.textContent = tours.filter(t => t.type === type).length;
-      });
+    function updateHeader(tourType, count) {
+      const title = tourType === 'day' ? 'Однодневные туры' : 'Пакеты туров';
+      const subtitle = tourType === 'day' 
+        ? 'Увлекательные экскурсии на один день по лучшим направлениям Грузии'
+        : 'Многодневные путешествия с проживанием, транспортом и полным сопровождением';
+      
+      document.querySelector('#tours .section-title').textContent = 
+        count > 0 ? `${count} ${count === 1 ? 'тур' : count < 5 ? 'тура' : 'туров'} — ${title}` : title;
+      document.getElementById('toursSubtitle').textContent = subtitle;
     }
 
-    function updateHeader(count) {
-      document.querySelector('#tours .section-title').textContent =
-        count > 0 ? `${count} ${count === 1 ? 'тур' : count < 5 ? 'тура' : 'туров'} для вас` : 'Туры';
-      document.getElementById('toursSubtitle').textContent =
-        count > 0 ? 'Актуальные предложения DAMQ Travel — выберите свой идеальный маршрут' : 'Скоро здесь появятся туры';
+    function switchMainTab(tab) {
+      activeMainTab = tab;
+      document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.main-tab[data-main="${tab}"]`).classList.add('active');
+      
+      if (tab === 'day1') {
+        renderTours(dayToursData, 'day');
+        updateHeader('day', dayToursData.length);
+      } else {
+        renderTours(fullToursData, 'full');
+        updateHeader('full', fullToursData.length);
+      }
     }
 
-    // Filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
+    // Main tab buttons
+    document.querySelectorAll('.main-tab').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeFilter = btn.dataset.filter;
-        const filtered = activeFilter === 'all' ? allTours : allTours.filter(t => t.type === activeFilter);
-        renderTours(filtered);
+        switchMainTab(btn.dataset.main);
       });
     });
 
-    // Load from Realtime Database
+    // Load from Realtime Database (same collections as admin)
     try {
-      allTours = await rtdbGetAll('tours');
-      updateCounts(allTours);
-      updateHeader(allTours.length);
-      renderTours(allTours);
+      fullToursData = await rtdbGetAll('fullTours');
+      dayToursData = await rtdbGetAll('dayTours');
+      
+      // Sort by order
+      fullToursData.sort((a, b) => (a.order || 0) - (b.order || 0));
+      dayToursData.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      // Update tab counts
+      document.getElementById('tabCountDay1').textContent = dayToursData.length;
+      document.getElementById('tabCountMulti').textContent = fullToursData.length;
+      
+      // Initial render - show day tours by default
+      switchMainTab('day1');
+      
     } catch (e) {
       console.error('Firebase error:', e);
       document.getElementById('toursGrid').innerHTML = `

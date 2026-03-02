@@ -449,7 +449,7 @@
       <div class="section-header animate-on-scroll">
         <div class="section-tag">География</div>
         <h2 class="section-title">Карта наших маршрутов</h2>
-        <p class="section-subtitle">Исследуйте все направления наших туров на интерактивной карте Грузии</p>
+        <p class="section-subtitle">��сследуйте все направления наших туров на интерактивной карте Грузии</p>
       </div>
       <div class="map-wrapper animate-on-scroll">
         <div id="georgia-map"></div>
@@ -744,13 +744,14 @@
     }
 
     /* ─── helpers ─── */
-    function tourCardHTML(t, idx) {
+    function tourCardHTML(t, idx, type) {
       const delay = (idx % 3) * 0.08;
+      const detailUrl = `tour.html?id=${t.id}&type=${type}`;
       return `
         <div class="tour-card tour-card-anim" style="animation-delay:${delay}s">
           <div class="tour-card-image">
-            ${t.image
-              ? `<img src="${t.image}" alt="${t.name||''}" loading="lazy" onerror="this.style.display='none'">`
+            ${t.imageUrl
+              ? `<img src="${t.imageUrl}" alt="${t.title||''}" loading="lazy" onerror="this.style.display='none'">`
               : `<div style="height:220px;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
             }
             ${t.badge ? `<span class="tour-card-badge">${t.badge}</span>` : ''}
@@ -760,11 +761,11 @@
           </div>
           <div class="tour-card-body">
             ${t.location ? `<div class="tour-card-location"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
-            <h3 class="tour-card-title">${t.name || 'Без названия'}</h3>
-            <p class="tour-card-desc">${t.desc || ''}</p>
+            <h3 class="tour-card-title">${t.title || 'Без названия'}</h3>
+            <p class="tour-card-desc">${t.description || ''}</p>
             <div class="tour-card-meta">
               ${t.duration ? `<span class="tour-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
-              ${t.group    ? `<span class="tour-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.group}</span>` : ''}
+              ${t.groupSize ? `<span class="tour-meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.groupSize}</span>` : ''}
             </div>
           </div>
           <div class="tour-card-footer">
@@ -772,7 +773,7 @@
               <span class="tour-price-label">от</span>
               <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
             </div>
-            <a href="contact.html" class="btn-tour">
+            <a href="${detailUrl}" class="btn-tour">
               Подробнее
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
@@ -780,27 +781,28 @@
         </div>`;
     }
 
-    function featuredHTML(t) {
+    function featuredHTML(t, type) {
+      const detailUrl = `tour.html?id=${t.id}&type=${type}`;
       return `
         <div class="tour-featured tour-card-anim">
           <div class="tour-featured-image">
-            ${t.image ? `<img src="${t.image}" alt="${t.name||''}">` : ''}
+            ${t.imageUrl ? `<img src="${t.imageUrl}" alt="${t.title||''}">` : ''}
           </div>
           <div class="tour-featured-content">
             <div class="tour-featured-tag">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               ${t.badge || 'Рекомендуем'}
             </div>
-            <h3 class="tour-featured-title">${t.name || 'Без названия'}</h3>
-            <p class="tour-featured-desc">${t.desc || ''}</p>
+            <h3 class="tour-featured-title">${t.title || 'Без названия'}</h3>
+            <p class="tour-featured-desc">${t.description || ''}</p>
             <div class="tour-featured-details">
               ${t.duration ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
-              ${t.group    ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.group}</span>` : ''}
-              ${t.rating   ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${t.rating}</span>` : ''}
+              ${t.groupSize ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${t.groupSize}</span>` : ''}
+              ${t.rating ? `<span class="tour-featured-detail"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${t.rating}</span>` : ''}
             </div>
             <div class="tour-featured-bottom">
               <span class="tour-featured-price">$${t.price || '—'} <small>/ чел.</small></span>
-              <a href="contact.html" class="btn-featured">Забронировать <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+              <a href="${detailUrl}" class="btn-featured">Подробнее <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
             </div>
           </div>
         </div>`;
@@ -810,31 +812,36 @@
       return `<div class="tours-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><h4>${msg}</h4><p>Туры появятся после добавления в панели администратора</p></div>`;
     }
 
-    /* ─── load tours ─── */
+    /* ─── load tours from admin collections ─── */
     try {
-      const tours = await rtdbGetAll('tours');
+      // Load from fullTours and dayTours collections (same as admin panel)
+      const fullTours = await rtdbGetAll('fullTours');
+      const dayTours = await rtdbGetAll('dayTours');
 
-      const multiTours = tours.filter(t => t.type === 'multi');
-      const dayTours   = tours.filter(t => t.type !== 'multi');
-
-      // Multi-day
+      // Full Tours (Multi-day packages)
       const multiGrid = document.getElementById('multiToursGrid');
-      if (multiTours.length > 0) {
-        multiGrid.innerHTML = featuredHTML(multiTours[0])
-          + multiTours.slice(1).map((t, i) => tourCardHTML(t, i)).join('');
+      if (fullTours.length > 0) {
+        // Sort by order field if available
+        fullTours.sort((a, b) => (a.order || 0) - (b.order || 0));
+        multiGrid.innerHTML = featuredHTML(fullTours[0], 'full')
+          + fullTours.slice(1).map((t, i) => tourCardHTML(t, i, 'full')).join('');
       } else {
         multiGrid.innerHTML = emptyHTML('Многодневные туры скоро появятся');
       }
 
-      // Day tours — populate select options too
+      // Day Tours
       const dayGrid = document.getElementById('dayToursGrid');
       if (dayTours.length > 0) {
-        dayGrid.innerHTML = dayTours.map((t, i) => tourCardHTML(t, i)).join('');
+        // Sort by order field if available
+        dayTours.sort((a, b) => (a.order || 0) - (b.order || 0));
+        dayGrid.innerHTML = dayTours.map((t, i) => tourCardHTML(t, i, 'day')).join('');
+        
         // Update tour select in contact form
         const sel = document.getElementById('tour-select');
-        if (sel && tours.length > 0) {
+        if (sel) {
+          const allTours = [...fullTours, ...dayTours];
           sel.innerHTML = '<option value="">Выберите тур</option>'
-            + tours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+            + allTours.map(t => `<option value="${t.title}">${t.title}</option>`).join('');
         }
       } else {
         dayGrid.innerHTML = emptyHTML('Однодневные туры скоро появятся');
