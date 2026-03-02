@@ -772,7 +772,7 @@
               <span class="tour-price-label">от</span>
               <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
             </div>
-            <a href="contact.html" class="btn-tour">
+            <a href="tour-detail.html?id=${t.id}&source=${t._source || 'tours'}" class="btn-tour">
               Подробнее
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
@@ -800,7 +800,7 @@
             </div>
             <div class="tour-featured-bottom">
               <span class="tour-featured-price">$${t.price || '—'} <small>/ чел.</small></span>
-              <a href="contact.html" class="btn-featured">Забронировать <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+              <a href="tour-detail.html?id=${t.id}&source=${t._source || 'tours'}" class="btn-featured">Забронировать <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
             </div>
           </div>
         </div>`;
@@ -810,12 +810,46 @@
       return `<div class="tours-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><h4>${msg}</h4><p>Туры появятся после добавления в панели администратора</p></div>`;
     }
 
-    /* ─── load tours ─── */
-    try {
-      const tours = await rtdbGetAll('tours');
+    /* ─── Normalize new-format tour to card data ─── */
+    function normalizeTour(t, source) {
+      const photos = toArray(t.photos);
+      const dur = [];
+      if (t.days) dur.push(t.days + (t.days === 1 ? ' день' : t.days < 5 ? ' дня' : ' дней'));
+      if (t.nights) dur.push(t.nights + (t.nights === 1 ? ' ночь' : t.nights < 5 ? ' ночи' : ' ночей'));
+      return {
+        id: t.id,
+        _source: source,
+        name: t.name || '',
+        desc: t.desc || '',
+        image: (photos.length ? (photos[0].url || photos[0].thumb) : t.image) || '',
+        badge: t.badge || '',
+        location: toArray(t.regions).join(', ') || t.location || '',
+        duration: dur.join(' / ') || t.duration || '',
+        group: (t.minGroup && t.maxGroup) ? `${t.minGroup}-${t.maxGroup} чел.` : (t.group || ''),
+        price: t.price || '',
+        rating: t.rating || '',
+        route: t.route || ''
+      };
+    }
 
-      const multiTours = tours.filter(t => t.type === 'multi');
-      const dayTours   = tours.filter(t => t.type !== 'multi');
+    /* ─── load tours from dayTours + multiDayTours ─── */
+    try {
+      const [rawDayTours, rawMultiTours, oldTours] = await Promise.all([
+        rtdbGetAll('dayTours'),
+        rtdbGetAll('multiDayTours'),
+        rtdbGetAll('tours')
+      ]);
+
+      const multiTours = rawMultiTours.map(t => normalizeTour(t, 'multiDayTours'));
+      const dayTours   = rawDayTours.map(t => normalizeTour(t, 'dayTours'));
+
+      // Fallback: also include old 'tours' if new collections are empty
+      if (multiTours.length === 0 && oldTours.filter(t => t.type === 'multi').length > 0) {
+        oldTours.filter(t => t.type === 'multi').forEach(t => multiTours.push({...t, _source: 'tours'}));
+      }
+      if (dayTours.length === 0 && oldTours.filter(t => t.type !== 'multi').length > 0) {
+        oldTours.filter(t => t.type !== 'multi').forEach(t => dayTours.push({...t, _source: 'tours'}));
+      }
 
       // Multi-day
       const multiGrid = document.getElementById('multiToursGrid');
@@ -826,18 +860,20 @@
         multiGrid.innerHTML = emptyHTML('Многодневные туры скоро появятся');
       }
 
-      // Day tours — populate select options too
+      // Day tours
       const dayGrid = document.getElementById('dayToursGrid');
       if (dayTours.length > 0) {
         dayGrid.innerHTML = dayTours.map((t, i) => tourCardHTML(t, i)).join('');
-        // Update tour select in contact form
-        const sel = document.getElementById('tour-select');
-        if (sel && tours.length > 0) {
-          sel.innerHTML = '<option value="">Выберите тур</option>'
-            + tours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
-        }
       } else {
         dayGrid.innerHTML = emptyHTML('Однодневные туры скоро появятся');
+      }
+
+      // Update tour select in contact form
+      const allTours = [...multiTours, ...dayTours];
+      const sel = document.getElementById('tour-select');
+      if (sel && allTours.length > 0) {
+        sel.innerHTML = '<option value="">Выберите тур</option>'
+          + allTours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
       }
 
     } catch(e) {

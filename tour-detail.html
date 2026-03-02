@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тур — DAMQ Travel</title>
+  <meta name="description" content="Подробная информация о туре — DAMQ Travel">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-dark-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --gold: #d4af37;
+      --gold-hover: #f0c040;
+      --dark: #0a0a0a;
+      --text: #1a1a1a;
+      --muted: #777;
+      --border: #f0ede6;
+      --bg: #faf9f6;
+      --white: #fff;
+      --radius: 20px;
+    }
+    html { scroll-behavior: smooth; }
+
+    /* ── Loading state ── */
+    .page-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .page-loading .spinner {
+      width: 42px; height: 42px;
+      border: 3px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .page-loading p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+    .breadcrumb a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .breadcrumb a:hover { color: var(--dark); }
+    .breadcrumb svg { flex-shrink: 0; opacity: 0.4; }
+
+    /* ── Detail Hero ── */
+    .detail-hero {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--dark);
+      margin-bottom: 0;
+    }
+    .detail-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .detail-hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+      transition: transform 6s ease;
+    }
+    .detail-hero:hover .detail-hero-bg img { transform: scale(1.03); }
+    .detail-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 60%, rgba(10,10,10,0.35) 100%);
+    }
+    .detail-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem;
+      width: 100%;
+    }
+    .detail-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+      backdrop-filter: blur(8px);
+    }
+    .detail-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .detail-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.92rem;
+    }
+    .detail-hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .detail-hero-meta svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── Detail Content ── */
+    .detail-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+    }
+
+    .detail-main h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    .detail-desc {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Route ── */
+    .detail-route {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .detail-route h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .detail-route h3 svg { color: var(--gold); }
+    .detail-route p {
+      font-size: 0.92rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── Region Chips ── */
+    .detail-regions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 2.5rem;
+    }
+    .detail-region-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 50px;
+    }
+
+    /* ── Photo Gallery ── */
+    .detail-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 2.5rem;
+    }
+    .detail-gallery img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .detail-gallery img:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    /* ── Sidebar Card ── */
+    .detail-sidebar-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: sticky;
+      top: 100px;
+    }
+    .sidebar-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 0.3rem;
+    }
+    .sidebar-price-label { font-size: 0.82rem; color: var(--muted); }
+    .sidebar-price-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .sidebar-price-per { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
+    .sidebar-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.2rem 0;
+    }
+    .sidebar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .sidebar-info-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .sidebar-info-row svg { color: var(--gold); flex-shrink: 0; }
+    .sidebar-info-row strong { color: var(--dark); }
+    .btn-book-full {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: var(--dark);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 14px;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-book-full:hover { background: var(--gold); color: var(--dark); transform: translateY(-2px); }
+    .btn-whatsapp-full {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 14px;
+      padding: 0.85rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-top: 0.7rem;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-whatsapp-full:hover { background: #20c05c; transform: translateY(-2px); }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gold);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-bottom: 2rem;
+    }
+    .back-link:hover { color: var(--dark); }
+
+    /* ── Error State ── */
+    .detail-error {
+      text-align: center;
+      padding: 6rem 1.5rem;
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .detail-error svg { opacity: 0.2; margin-bottom: 1.5rem; }
+    .detail-error h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+    }
+    .detail-error p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .detail-error a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dark);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 0.75rem 2rem;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: background 0.25s;
+    }
+    .detail-error a:hover { background: var(--gold); color: var(--dark); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .detail-wrap {
+        grid-template-columns: 1fr;
+      }
+      .detail-sidebar-card {
+        position: static;
+      }
+    }
+    @media (max-width: 600px) {
+      .detail-hero { min-height: 340px; }
+      .detail-gallery { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-container">
+      <a href="home.html" class="navbar-logo">
+        <span class="logo-text">DAMQ</span>
+        <span class="logo-divider"></span>
+        <span class="logo-sub">TRAVEL</span>
+      </a>
+      <ul class="navbar-links" id="navLinks">
+        <li><a href="home.html" class="nav-link">Главная</a></li>
+        <li><a href="services.html" class="nav-link">Услуги</a></li>
+        <li><a href="home.html#map" class="nav-link">Направления</a></li>
+        <li><a href="blog.html" class="nav-link">Блог</a></li>
+        <li><a href="contact.html" class="nav-link">Контакты</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <a href="tel:+995555000000" class="navbar-phone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+995 555 000 000</span>
+        </a>
+        <a href="contact.html" class="btn-cta-nav">Забронировать</a>
+        <button class="navbar-toggle" id="navToggle" aria-label="Toggle menu">
+          <svg class="toggle-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg class="toggle-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <ul class="mobile-links">
+          <li><a href="home.html" class="mobile-link">Главная</a></li>
+          <li><a href="services.html" class="mobile-link">Услуги</a></li>
+          <li><a href="home.html#map" class="mobile-link">Направления</a></li>
+          <li><a href="blog.html" class="mobile-link">Блог</a></li>
+          <li><a href="contact.html" class="mobile-link">Контакты</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+          <a href="tel:+995555000000" class="mobile-phone">+995 555 000 000</a>
+          <a href="contact.html" class="btn-cta-nav mobile-cta">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content container -->
+  <div id="tourContent">
+    <div class="page-loading">
+      <div class="spinner"></div>
+      <p>Загрузка тура...</p>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <!-- Footer placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const app = initializeApp({
+      apiKey: "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
+      authDomain: "damqtravel.firebaseapp.com",
+      databaseURL: "https://damqtravel-default-rtdb.firebaseio.com",
+      projectId: "damqtravel",
+      storageBucket: "damqtravel.firebasestorage.app",
+      messagingSenderId: "84352735773",
+      appId: "1:84352735773:web:ec9095f9020b630b1884f4",
+      measurementId: "G-3TFFBQWHNM"
+    });
+    const db = getDatabase(app);
+
+    function toArray(val) {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
+      if (typeof val === 'object') return Object.values(val);
+      return [];
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const tourId = params.get('id');
+    const source = params.get('source') || 'tours';
+
+    const container = document.getElementById('tourContent');
+
+    if (!tourId) {
+      showError();
+    } else {
+      loadTour();
+    }
+
+    async function loadTour() {
+      try {
+        const snap = await get(child(ref(db), `${source}/${tourId}`));
+        if (!snap.exists()) {
+          showError();
+          return;
+        }
+        const t = { id: tourId, ...snap.val() };
+        renderTour(t);
+      } catch(e) {
+        console.error('Firebase tour detail error:', e);
+        showError();
+      }
+    }
+
+    function showError() {
+      container.innerHTML = `
+        <div class="detail-error" style="padding-top:140px;">
+          <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <h2>Тур не найден</h2>
+          <p>Возможно, тур был удалён или ссылка некорректна.</p>
+          <a href="services.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Все туры
+          </a>
+        </div>`;
+    }
+
+    function renderTour(t) {
+      const photos = toArray(t.photos);
+      const regions = toArray(t.regions);
+      const includes = toArray(t.includes);
+
+      // Duration
+      const dur = [];
+      if (t.days) dur.push(t.days + (t.days === 1 ? ' день' : t.days < 5 ? ' дня' : ' дней'));
+      if (t.nights) dur.push(t.nights + (t.nights === 1 ? ' ночь' : t.nights < 5 ? ' ночи' : ' ночей'));
+      const duration = dur.join(', ') || t.duration || '';
+
+      const group = (t.minGroup && t.maxGroup)
+        ? `${t.minGroup}-${t.maxGroup} чел.`
+        : (t.group || '');
+
+      const heroImage = (photos.length ? (photos[0].url || photos[0].thumb) : t.image) || '';
+      const location = regions.join(', ') || t.location || '';
+
+      // Update page title
+      document.title = `${t.name || 'Тур'} - DAMQ Travel`;
+
+      // Determine source label
+      const sourceLabel = source === 'dayTours' ? 'Однодневные туры' : source === 'multiDayTours' ? 'Многодневные туры' : 'Туры';
+
+      container.innerHTML = `
+        <!-- Hero -->
+        <section class="detail-hero">
+          <div class="detail-hero-bg">
+            ${heroImage ? `<img src="${heroImage}" alt="${t.name || ''}">` : ''}
+          </div>
+          <div class="detail-hero-overlay"></div>
+          <div class="detail-hero-content">
+            ${t.badge ? `<div class="detail-hero-badge">${t.badge}</div>` : ''}
+            <h1 class="detail-hero-title">${t.name || 'Без названия'}</h1>
+            <div class="detail-hero-meta">
+              ${location ? `<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${location}</span>` : ''}
+              ${duration ? `<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${duration}</span>` : ''}
+              ${group ? `<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>${group}</span>` : ''}
+              ${t.rating ? `<span><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${t.rating}</span>` : ''}
+            </div>
+          </div>
+        </section>
+
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+          <a href="home.html">Главная</a>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <a href="services.html">${sourceLabel}</a>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <span>${t.name || 'Тур'}</span>
+        </div>
+
+        <!-- Content -->
+        <div class="detail-wrap">
+          <div class="detail-main">
+            <a href="services.html" class="back-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Назад к турам
+            </a>
+
+            <h2>О туре</h2>
+            <div class="detail-desc">${(t.desc || 'Описание скоро будет добавлено.').replace(/\n/g, '<br>')}</div>
+
+            ${t.route ? `
+            <div class="detail-route">
+              <h3>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Маршрут
+              </h3>
+              <p>${t.route}</p>
+            </div>` : ''}
+
+            ${regions.length ? `
+            <h2>Регионы</h2>
+            <div class="detail-regions">
+              ${regions.map(r => `
+                <span class="detail-region-chip">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  ${r}
+                </span>`).join('')}
+            </div>` : ''}
+
+            ${includes.length ? `
+            <h2>Что включено</h2>
+            <div class="detail-regions" style="margin-bottom:2.5rem;">
+              ${includes.map(item => `
+                <span class="detail-region-chip" style="background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.25);color:#16a34a;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  ${item}
+                </span>`).join('')}
+            </div>` : ''}
+
+            ${photos.length > 1 ? `
+            <h2>Фотографии</h2>
+            <div class="detail-gallery">
+              ${photos.map((p, i) => `<img src="${p.url || p.thumb || p}" alt="Фото ${i+1}" loading="lazy" onclick="openLightbox('${p.url || p.thumb || p}')">`).join('')}
+            </div>` : ''}
+          </div>
+
+          <!-- Sidebar -->
+          <aside>
+            <div class="detail-sidebar-card">
+              <div class="sidebar-price">
+                <span class="sidebar-price-label">от</span>
+                <span class="sidebar-price-value">$${t.price || '—'}</span>
+                <span class="sidebar-price-per">/ чел.</span>
+              </div>
+              <div class="sidebar-divider"></div>
+              <div class="sidebar-info">
+                ${duration ? `
+                <div class="sidebar-info-row">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div><strong>Длительность</strong><br>${duration}</div>
+                </div>` : ''}
+                ${group ? `
+                <div class="sidebar-info-row">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                  <div><strong>Группа</strong><br>${group}</div>
+                </div>` : ''}
+                ${location ? `
+                <div class="sidebar-info-row">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <div><strong>Локация</strong><br>${location}</div>
+                </div>` : ''}
+                ${t.type ? `
+                <div class="sidebar-info-row">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                  <div><strong>Тип</strong><br>${t.type}</div>
+                </div>` : ''}
+              </div>
+              <a href="contact.html" class="btn-book-full">
+                Забронировать
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+              <a href="https://wa.me/995555000000?text=${encodeURIComponent('Здравствуйте! Интересует тур: ' + (t.name || ''))}" target="_blank" class="btn-whatsapp-full">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </aside>
+        </div>
+      `;
+
+      // Init navbar scroll
+      const navbar = document.getElementById('navbar');
+      if (navbar) {
+        window.addEventListener('scroll', () => {
+          navbar.classList.toggle('scrolled', window.scrollY > 80);
+        }, { passive: true });
+        navbar.classList.toggle('scrolled', window.scrollY > 80);
+      }
+    }
+
+    // Lightbox
+    window.openLightbox = function(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    document.getElementById('lightboxClose').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target.id === 'lightbox') {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
