@@ -299,29 +299,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Georgian regions as markers
     const locations = [
-      { lat: 41.7151, lng: 44.8271, title: 'Тбилиси', desc: 'Столица Грузии, старый город с серными банями', badge: 'Столица', region: 'tbilisi' },
-      { lat: 41.8395, lng: 45.3520, title: 'Кахетия', desc: 'Сигнахи, Телави, винные погреба и виноградники', badge: 'Вино', region: 'kakheti' },
-      { lat: 42.6560, lng: 44.6387, title: 'Мцхета-Мтианети', desc: 'Казбеги, монастырь Джвари, Военно-Грузинская дорога', badge: 'Горы', region: 'mtskheta' },
-      { lat: 41.6410, lng: 41.6340, title: 'Аджария', desc: 'Батуми, Черноморское побережье, современная архитектура', badge: 'Побережье', region: 'adjara' },
-      { lat: 42.2679, lng: 42.6990, title: 'Имеретия', desc: 'Кутаиси, храм Баграти, пещера Прометея', badge: 'Культура', region: 'imereti' },
-      { lat: 42.5090, lng: 41.8710, title: 'Самегрело', desc: 'Мартвильский каньон, каньон Окаце, озеро Палиастоми', badge: 'Природа', region: 'samegrelo' },
-      { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe' },
-      { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli' },
-      { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli' },
-      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha' },
-      { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria' },
-      { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia' }
+      { lat: 41.7151, lng: 44.8271, title: 'Тбилиси', desc: 'Столица Грузии, старый город с серными банями', badge: 'Столица', region: 'tbilisi', image: 'images/regions/tbilisi.jpg' },
+      { lat: 41.8395, lng: 45.3520, title: 'Кахетия', desc: 'Сигнахи, Телави, винные погреба и виноградники', badge: 'Вино', region: 'kakheti', image: 'images/regions/kakheti.jpg' },
+      { lat: 42.6560, lng: 44.6387, title: 'Мцхета-Мтианети', desc: 'Казбеги, монастырь Джвари, Военно-Грузинская дорога', badge: 'Горы', region: 'mtskheta', image: 'images/regions/mtskheta.jpg' },
+      { lat: 41.6410, lng: 41.6340, title: 'Аджария', desc: 'Батуми, Черноморское побережье, современная архитектура', badge: 'Побережье', region: 'adjara', image: 'images/regions/adjara.jpg' },
+      { lat: 42.2679, lng: 42.6990, title: 'Имеретия', desc: 'Кутаиси, храм Баграти, пещера Прометея', badge: 'Культура', region: 'imereti', image: 'images/regions/imereti.jpg' },
+      { lat: 42.5090, lng: 41.8710, title: 'Самегрело', desc: 'Мартвильский каньон, каньон Окаце, озеро Палиастоми', badge: 'Природа', region: 'samegrelo', image: 'images/regions/samegrelo.jpg' },
+      { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe', image: 'images/regions/samtskhe.jpg' },
+      { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli', image: 'images/regions/shida-kartli.jpg' },
+      { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli', image: 'images/regions/kvemo-kartli.jpg' },
+      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha', image: 'images/regions/racha.jpg' },
+      { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria', image: 'images/regions/guria.jpg' },
+      { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia', image: 'images/regions/abkhazia.jpg' }
     ];
 
     locations.forEach(loc => {
       const marker = L.marker([loc.lat, loc.lng], { icon: regionIcon }).addTo(map);
       marker.bindPopup(
-        '<div style="min-width:180px;">' +
-          '<h3 style="font-family:Playfair Display,serif;font-size:15px;margin:0 0 4px;color:#1a1a2e;">' + loc.title + '</h3>' +
-          '<p style="font-size:12px;color:#555;margin:0 0 8px;line-height:1.4;">' + loc.desc + '</p>' +
-          '<span class="map-popup-badge">' + loc.badge + '</span>' +
-          '<br><a href="services.html" style="display:inline-block;margin-top:8px;font-size:11px;font-weight:600;color:#c9a96e;text-decoration:none;">Подробнее &rarr;</a>' +
-        '</div>'
+        '<div class="map-popup">' +
+          '<div class="map-popup-img"><img src="' + loc.image + '" alt="' + loc.title + '" loading="lazy"></div>' +
+          '<div class="map-popup-body">' +
+            '<h3 class="map-popup-title">' + loc.title + '</h3>' +
+            '<p class="map-popup-desc">' + loc.desc + '</p>' +
+            '<span class="map-popup-badge">' + loc.badge + '</span>' +
+            '<a href="services.html" class="map-popup-link">Подробнее &rarr;</a>' +
+          '</div>' +
+        '</div>',
+        { maxWidth: 280, minWidth: 240, className: 'custom-popup' }
       );
     });
 

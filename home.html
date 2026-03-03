@@ -243,7 +243,6 @@
       <ul class="navbar-links" id="navLinks">
         <li><a href="home.html" class="nav-link active">Главная</a></li>
         <li><a href="services.html" class="nav-link">Услуги</a></li>
-        <li><a href="home.html#map" class="nav-link">Направления</a></li>
         <li><a href="blog.html" class="nav-link">Блог</a></li>
         <li><a href="contact.html" class="nav-link">Контакты</a></li>
       </ul>
@@ -276,7 +275,6 @@
         <ul class="mobile-links">
           <li><a href="home.html" class="mobile-link">Главная</a></li>
           <li><a href="services.html" class="mobile-link">Услуги</a></li>
-          <li><a href="home.html#map" class="mobile-link">Направления</a></li>
           <li><a href="blog.html" class="mobile-link">Блог</a></li>
           <li><a href="contact.html" class="mobile-link">Контакты</a></li>
         </ul>
@@ -467,16 +465,24 @@
       </div>
       <div class="reviews-slider animate-on-scroll">
         <div class="reviews-track" id="reviewsTrack">
+          <!-- Reviews loaded from Firebase -->
           <div class="review-card">
-            <div class="review-card-inner">
-              <span class="review-quote">"</span>
-              <div class="review-stars">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </div>
+            <div class="review-card-inner" style="display:flex;align-items:center;justify-content:center;min-height:200px;color:#aaa;">
+              <p>Загрузка отзывов...</p>
+            </div>
+          </div>
+        </div>
+        <div class="reviews-controls">
+          <button class="review-btn review-prev" aria-label="Предыдущий отзыв">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="reviews-dots" id="reviewsDots">
+          </div>
+          <button class="review-btn review-next" aria-label="Следующий отзыв">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
               <p class="review-text">Невероятное путешествие! DAMQ Travel организовали всё на высшем уровне. Казбеги — это что-то неописуемое. Обязательно вернёмся снова!</p>
               <div class="review-author">
                 <div class="review-avatar">АК</div>
@@ -568,6 +574,10 @@
               <option value="США">США</option>
               <option value="Другая">Другая</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label for="reviewPhone">Телефон <span style="font-weight:400;color:#999;font-size:0.85em;">(необязательно)</span></label>
+            <input type="tel" id="reviewPhone" placeholder="+995 ..." style="font-family:inherit;">
           </div>
           <div class="form-group">
             <label>Оценка</label>
@@ -878,8 +888,104 @@
 
     } catch(e) {
       console.error('Firebase tours:', e);
-      document.getElementById('multiToursGrid').innerHTML = emptyHTML('Не удалось загрузить туры');
+      document.getElementById('multiToursGrid').innerHTML = emptyHTML('Не удалось загрузи��ь туры');
       document.getElementById('dayToursGrid').innerHTML   = emptyHTML('Не удалось загрузить туры');
+    }
+
+    /* ─── Load reviews from Firebase ─── */
+    function reviewCardHTML(r) {
+      const rating = r.rating || 5;
+      let starsHtml = '';
+      for (let i = 0; i < 5; i++) {
+        if (i < rating) {
+          starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+        } else {
+          starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+        }
+      }
+      const initials = ((r.firstName || '').charAt(0) + (r.lastName || '').charAt(0)).toUpperCase() || '?';
+      const name = ((r.firstName || '') + ' ' + (r.lastName || '')).trim() || 'Аноним';
+      return `
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="review-quote">&ldquo;</span>
+            <div class="review-stars">${starsHtml}</div>
+            <p class="review-text">${r.text || ''}</p>
+            <div class="review-author">
+              <div class="review-avatar">${initials}</div>
+              <div class="review-info">
+                <h4>${name}</h4>
+                <p>${r.country || ''}</p>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    let reviewSlideIndex = 0;
+    let reviewSlideCount = 0;
+
+    function initReviewSlider() {
+      const track = document.getElementById('reviewsTrack');
+      const dotsContainer = document.getElementById('reviewsDots');
+      const prevBtn = document.querySelector('.review-prev');
+      const nextBtn = document.querySelector('.review-next');
+      if (!track) return;
+
+      reviewSlideCount = track.children.length;
+      reviewSlideIndex = 0;
+
+      // Create dots
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < reviewSlideCount; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'review-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Отзыв ' + (i + 1));
+          dot.addEventListener('click', () => goToReview(i));
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function goToReview(idx) {
+        reviewSlideIndex = (idx + reviewSlideCount) % reviewSlideCount;
+        track.style.transform = `translateX(-${reviewSlideIndex * 100}%)`;
+        document.querySelectorAll('#reviewsDots .review-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === reviewSlideIndex);
+        });
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', () => goToReview(reviewSlideIndex - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => goToReview(reviewSlideIndex + 1));
+
+      // Auto-slide
+      setInterval(() => goToReview(reviewSlideIndex + 1), 5000);
+    }
+
+    try {
+      const allReviews = await rtdbGetAll('reviews');
+      const approved = allReviews.filter(r => r.status === 'approved' || !r.status);
+      const track = document.getElementById('reviewsTrack');
+
+      if (approved.length > 0) {
+        // Sort by newest first
+        approved.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        track.innerHTML = approved.map(r => reviewCardHTML(r)).join('');
+      } else {
+        track.innerHTML = `
+          <div class="review-card">
+            <div class="review-card-inner" style="display:flex;align-items:center;justify-content:center;min-height:200px;text-align:center;color:#999;">
+              <div>
+                <p style="font-size:1rem;margin-bottom:0.5rem;">Пока нет отзывов</p>
+                <p style="font-size:0.85rem;">Будьте первым, кто оставит отзыв!</p>
+              </div>
+            </div>
+          </div>`;
+      }
+      initReviewSlider();
+    } catch(e) {
+      console.error('Firebase reviews load error:', e);
+      initReviewSlider();
     }
 
     /* ─── Contact form → bookings ─── */
@@ -919,13 +1025,29 @@
           firstName: document.getElementById('reviewFirstName').value.trim(),
           lastName:  document.getElementById('reviewLastName').value.trim(),
           country:   document.getElementById('reviewCountry').value,
+          phone:     document.getElementById('reviewPhone').value.trim(),
           rating:    rating,
           text:      document.getElementById('reviewText').value.trim(),
-          status:    'pending',
+          status:    'approved',
           createdAt: Date.now()
         });
         document.getElementById('reviewForm').style.display = 'none';
         document.getElementById('reviewSuccess').classList.add('show');
+
+        // Add the new review to the slider
+        const newReview = {
+          firstName: document.getElementById('reviewFirstName').value.trim(),
+          lastName: document.getElementById('reviewLastName').value.trim(),
+          country: document.getElementById('reviewCountry').value,
+          rating: rating,
+          text: document.getElementById('reviewText').value.trim()
+        };
+        const track = document.getElementById('reviewsTrack');
+        if (track) {
+          // Insert at beginning (newest first)
+          track.insertAdjacentHTML('afterbegin', reviewCardHTML(newReview));
+          initReviewSlider();
+        }
       } catch(err) {
         console.error(err);
         alert('Ошибка отправки. Попробуйте позже.');
