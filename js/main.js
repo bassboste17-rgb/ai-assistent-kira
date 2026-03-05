@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load footer, then init everything else
   loadComponent('footer-placeholder', 'components/footer.html').then(() => {
+    // Re-apply translations to newly loaded footer
+    const lang = localStorage.getItem('damq_lang') || 'ru';
+    if (window.setLanguage) window.setLanguage(lang);
+
     initScrollAnimations();
     initReviewsSlider();
     initMap();

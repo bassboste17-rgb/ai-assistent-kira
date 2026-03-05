@@ -337,7 +337,7 @@
         <div class="about-content animate-on-scroll delay-2">
           <div class="about-tag" data-i18n="about.tag">О компании</div>
           <h2 class="about-title" data-i18n="about.title">Ваш надёжный партнёр в мире путешествий</h2>
-          <p class="about-text" data-i18n="about.text1">DAMQ Travel — это команда профессионалов, влюблённых в Грузию. Мы создаём уникальные туристические маршруты, которые раскрывают красоту, культуру и гостеприимство этой удивительной страны.</p>
+          <p class="about-text" data-i18n="about.text1">DAMQ Travel — эт�� команда профессионалов, влюблённых в Грузию. Мы создаём уникальные туристические маршруты, которые раскрывают красоту, культуру и гостеприимство этой удивительной страны.</p>
           <p class="about-text" data-i18n="about.text2">Каждый наш тур — это тщательно продуманное путешествие с вниманием к деталям, комфортным транспортом и профессиональными гидами, говорящими на вашем языке.</p>
           <div class="about-features">
             <div class="about-feature">
@@ -597,45 +597,45 @@
 
       <!-- Add Review Form — saves to Firebase -->
       <div class="add-review-section animate-on-scroll">
-        <h3 class="add-review-title">Оставить отзыв</h3>
-        <p class="add-review-subtitle">Поделитесь своими впечатлениями о путешествии с DAMQ Travel</p>
+        <h3 class="add-review-title" data-i18n="reviews.add.title">Оставить отзыв</h3>
+        <p class="add-review-subtitle" data-i18n="reviews.add.desc">Поделитесь своими впечатлениями о путешествии с DAMQ Travel</p>
         <form id="reviewForm" class="review-form">
           <div class="review-form-row">
             <div class="form-group">
-              <label for="reviewFirstName">Имя</label>
-              <input type="text" id="reviewFirstName" placeholder="Ваше имя" required>
+              <label for="reviewFirstName" data-i18n="reviews.form.first">Имя</label>
+              <input type="text" id="reviewFirstName" placeholder="Ваше имя" data-i18n-ph="reviews.form.first" required>
             </div>
             <div class="form-group">
-              <label for="reviewLastName">Фамилия</label>
-              <input type="text" id="reviewLastName" placeholder="Ваша фамилия" required>
+              <label for="reviewLastName" data-i18n="reviews.form.last">Фамилия</label>
+              <input type="text" id="reviewLastName" placeholder="Ваша фамилия" data-i18n-ph="reviews.form.last" required>
             </div>
           </div>
           <div class="form-group">
-            <label for="reviewCountry">Страна</label>
+            <label for="reviewCountry" data-i18n="reviews.form.country">Страна</label>
             <select id="reviewCountry" required>
-              <option value="">Выберите страну</option>
-              <option value="Россия">Россия</option>
-              <option value="Украина">Украина</option>
-              <option value="Беларусь">Беларусь</option>
-              <option value="Казахстан">Казахстан</option>
-              <option value="Грузия">Грузия</option>
-              <option value="Армения">Армения</option>
-              <option value="Азербайджан">Азербайджан</option>
-              <option value="Узбекистан">Узбекистан</option>
-              <option value="Германия">Германия</option>
-              <option value="Франция">Франция</option>
-              <option value="Израиль">Израиль</option>
-              <option value="Турция">Турци��</option>
-              <option value="США">США</option>
-              <option value="Другая">Другая</option>
+              <option value="" data-i18n="reviews.form.country.select">Выберите страну</option>
+              <option value="Россия" data-i18n="country.russia">Россия</option>
+              <option value="Украина" data-i18n="country.ukraine">Украина</option>
+              <option value="Беларусь" data-i18n="country.belarus">Беларусь</option>
+              <option value="Казахстан" data-i18n="country.kazakhstan">Казахстан</option>
+              <option value="Грузия" data-i18n="country.georgia">Грузия</option>
+              <option value="Армения" data-i18n="country.armenia">Армения</option>
+              <option value="Азербайджан" data-i18n="country.azerbaijan">Азербайджан</option>
+              <option value="Узбекистан" data-i18n="country.uzbekistan">Узбекистан</option>
+              <option value="Германия" data-i18n="country.germany">Германия</option>
+              <option value="Франция" data-i18n="country.france">Франция</option>
+              <option value="Израиль" data-i18n="country.israel">Израиль</option>
+              <option value="Турция" data-i18n="country.turkey">Турция</option>
+              <option value="США" data-i18n="country.usa">США</option>
+              <option value="Другая" data-i18n="country.other">Другая</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="reviewPhone">Телефон <span style="font-weight:400;color:#999;font-size:0.85em;">(необязательно)</span></label>
+            <label for="reviewPhone"><span data-i18n="reviews.form.phone">Телефон</span> <span style="font-weight:400;color:#999;font-size:0.85em;" data-i18n="reviews.form.phone.opt">(необязательно)</span></label>
             <input type="tel" id="reviewPhone" placeholder="+995 ..." style="font-family:inherit;">
           </div>
           <div class="form-group">
-            <label>Оценка</label>
+            <label data-i18n="reviews.form.rating">Оценка</label>
             <div class="star-rating" id="starRating">
               <button type="button" class="star-btn" data-rating="1" aria-label="1 star"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
               <button type="button" class="star-btn" data-rating="2" aria-label="2 stars"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
@@ -646,17 +646,17 @@
             <input type="hidden" id="reviewRating" value="0">
           </div>
           <div class="form-group">
-            <label for="reviewText">Ваш отзыв</label>
-            <textarea id="reviewText" placeholder="Расскажите о вашем путешествии..." rows="4" required></textarea>
+            <label for="reviewText" data-i18n="reviews.form.text">Ваш отзыв</label>
+            <textarea id="reviewText" placeholder="Расскажите о вашем путешествии..." data-i18n-ph="reviews.form.text.ph" rows="4" required></textarea>
           </div>
           <button type="submit" class="btn-submit-review" id="reviewSubmitBtn">
-            Отправить отзыв
+            <span data-i18n="reviews.form.submit">Отправить отзыв</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </form>
         <div class="review-success" id="reviewSuccess">
-          <h3>Спасибо за отзыв! 🙏</h3>
-          <p>Ваш отзыв отправлен на модерацию и скоро появится на сайте.</p>
+          <h3 data-i18n="reviews.success.title">Спасибо за отзыв!</h3>
+          <p data-i18n="reviews.success.desc">Ваш отзыв отправлен на модерацию и скоро появится на сайте.</p>
         </div>
       </div>
     </div>
@@ -667,48 +667,48 @@
     <div class="section-container">
       <div class="contact-grid">
         <div class="contact-content animate-on-scroll">
-          <div class="contact-tag">Связаться с нами</div>
-          <h2 class="contact-title">Готовы к путешествию мечты?</h2>
-          <p class="contact-desc">Оставьте заявку, и мы свяжемся с вами в течение часа, чтобы помочь спланировать идеальное путешествие по Грузии.</p>
+          <div class="contact-tag" data-i18n="contact.tag">Связаться с нами</div>
+          <h2 class="contact-title" data-i18n="contact.title">Готовы к путешествию мечты?</h2>
+          <p class="contact-desc" data-i18n="contact.desc">Оставьте заявку, и мы свяжемся с вами в течение часа, чтобы помочь спланировать идеальное путешествие по Грузии.</p>
           <div class="contact-info-list">
             <div class="contact-info-item">
               <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-              <div class="contact-info-text"><h4>Адрес</h4><p>Тбилиси, ул. Руставели 24</p></div>
+              <div class="contact-info-text"><h4 data-i18n="contact.address.title">Адрес</h4><p data-i18n="contact.address">Тбилиси, ул. Руставели 24</p></div>
             </div>
             <div class="contact-info-item">
               <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-              <div class="contact-info-text"><h4>Телефон</h4><a href="tel:+995555000000">+995 555 000 000</a></div>
+              <div class="contact-info-text"><h4 data-i18n="contact.phone.title">Телефон</h4><a href="tel:+995555000000">+995 555 000 000</a></div>
             </div>
             <div class="contact-info-item">
               <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-              <div class="contact-info-text"><h4>Email</h4><a href="mailto:info@damq.ge">info@damq.ge</a></div>
+              <div class="contact-info-text"><h4 data-i18n="contact.email.title">Email</h4><a href="mailto:info@damq.ge">info@damq.ge</a></div>
             </div>
             <div class="contact-info-item">
               <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-              <div class="contact-info-text"><h4>Время работы</h4><p>Пн-Вс: 09:00 - 21:00</p></div>
+              <div class="contact-info-text"><h4 data-i18n="contact.hours.title">Время работы</h4><p data-i18n="contact.hours">Пн-Вс: 09:00 - 21:00</p></div>
             </div>
           </div>
         </div>
         <div class="contact-form-wrap animate-on-scroll delay-2">
-          <h3 class="contact-form-title">Оставить заявку</h3>
-          <p class="contact-form-subtitle">Заполните форму, и мы свяжемся с вами в ближайшее время</p>
+          <h3 class="contact-form-title" data-i18n="contact.form.title">Оставить заявку</h3>
+          <p class="contact-form-subtitle" data-i18n="contact.form.subtitle">Заполните форму, и мы свяжемся с вами в ближайшее время</p>
           <form id="contactForm">
             <div class="form-row">
               <div class="form-group">
-                <label for="name">Имя</label>
-                <input type="text" id="name" placeholder="Ваше имя" required>
+                <label for="name" data-i18n="contact.form.name">Имя</label>
+                <input type="text" id="name" placeholder="Ваше имя" data-i18n-ph="contact.form.name.ph" required>
               </div>
               <div class="form-group">
-                <label for="phone">Телефон</label>
+                <label for="phone" data-i18n="contact.form.phone">Телефон</label>
                 <input type="tel" id="phone" placeholder="+995 (___) ___-___" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email" data-i18n="contact.form.email">Email</label>
               <input type="email" id="email" placeholder="your@email.com">
             </div>
             <div class="form-group">
-              <label for="tour-select">Интересующий тур</label>
+              <label for="tour-select" data-i18n="contact.form.tour">Интересующий тур</label>
               <select id="tour-select">
                 <option value="">Выберите тур</option>
                 <option value="Тбилиси и окрестности">Тбилиси и окрестности</option>
@@ -720,11 +720,11 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="message">Сообщение</label>
-              <textarea id="message" placeholder="Расскажите о ваших пожеланиях..." rows="4"></textarea>
+              <label for="message" data-i18n="contact.form.message">Сообщение</label>
+              <textarea id="message" placeholder="Расскажите о ваших пожеланиях..." data-i18n-ph="contact.form.message.ph" rows="4"></textarea>
             </div>
             <button type="submit" class="btn-submit" id="contactSubmitBtn">
-              Отправить заявку
+              <span data-i18n="contact.form.submit">Отправить заявку</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
           </form>
@@ -732,8 +732,8 @@
             <div class="form-success-icon">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <h3>Заявка отправлена!</h3>
-            <p>Мы свяжемся с вами в течение часа. Ждите звонка!</p>
+            <h3 data-i18n="contact.form.success.title">Заявка отправлена!</h3>
+            <p data-i18n="contact.form.success.desc">Мы свяжемся с вами в течение часа. Ждите звонка!</p>
           </div>
         </div>
       </div>
