@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- Load Footer ---------- */
+  /* ---------- Load Component Helper ---------- */
   async function loadComponent(id, path) {
     try {
       const res = await fetch(path);
@@ -19,16 +19,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Navbar is inlined in HTML, init immediately
-  initNavbar();
-  initLangSwitcher();
+  /* ---------- Detect Current Page ---------- */
+  function getCurrentPage() {
+    const path = window.location.pathname;
+    const file = path.split('/').pop() || 'home.html';
+    if (file.includes('home') || file === '' || file === '/') return 'home';
+    if (file.includes('services')) return 'services';
+    if (file.includes('blog')) return 'blog';
+    if (file.includes('contact')) return 'contact';
+    if (file.includes('tour-detail')) return 'tour-detail';
+    if (file.includes('admin')) return 'admin';
+    return 'home';
+  }
 
-  // Load footer, then init everything else
-  loadComponent('footer-placeholder', 'components/footer.html').then(() => {
-    // Re-apply translations to newly loaded footer
+  /* ---------- Set Active Nav Link ---------- */
+  function setActiveNavLink() {
+    const page = getCurrentPage();
+    // Map page to data-nav attribute
+    const navMap = {
+      'home': 'home',
+      'services': 'services',
+      'blog': 'blog',
+      'contact': 'contact',
+      'tour-detail': 'services'
+    };
+    const activeNav = navMap[page] || '';
+
+    document.querySelectorAll('.nav-link, .mobile-link').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('data-nav') === activeNav) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  /* ---------- Load Navbar + Footer, then Init ---------- */
+  async function loadAndInit() {
+    // Load navbar
+    const navbarPlaceholder = document.getElementById('navbar-placeholder');
+    if (navbarPlaceholder) {
+      await loadComponent('navbar-placeholder', 'components/navbar.html');
+    }
+
+    // Set active nav link based on current page
+    setActiveNavLink();
+
+    // Init navbar functionality
+    initNavbar();
+    initLangSwitcher();
+
+    // Load footer
+    await loadComponent('footer-placeholder', 'components/footer.html');
+
+    // Apply translations to freshly loaded components
     const lang = localStorage.getItem('damq_lang') || 'ru';
     if (window.setLanguage) window.setLanguage(lang);
 
+    // Init remaining features
     initScrollAnimations();
     initReviewsSlider();
     initMap();
@@ -40,7 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.querySelector('.hero')?.classList.add('loaded');
     }, 100);
-  });
+  }
+
+  loadAndInit();
 
   /* ---------- Navbar ---------- */
   function initNavbar() {
@@ -87,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleScroll() {
       updateScrollState();
 
-      // Active section tracking
+      // Active section tracking (only on pages with sections)
       const sections = document.querySelectorAll('section[id]');
       let current = '';
       sections.forEach(section => {
@@ -98,9 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
         if (link.getAttribute('data-section') === current) {
-          link.classList.add('active');
+          // Only update if using data-section attribute
         }
       });
     }
@@ -385,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
       { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe', image: 'images/regions/samtskhe.jpg' },
       { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli', image: 'images/regions/shida-kartli.jpg' },
       { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli', image: 'images/regions/kvemo-kartli.jpg' },
-      { lat: 42.6820, lng: 43.4270, title: 'Ра��а-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha', image: 'images/regions/racha.jpg' },
+      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha', image: 'images/regions/racha.jpg' },
       { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria', image: 'images/regions/guria.jpg' },
       { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia', image: 'images/regions/abkhazia.jpg' }
     ];
