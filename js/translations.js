@@ -58,7 +58,7 @@ const translations = {
   "seasons.tag":      { ru: "Сезоны",    en: "Seasons",    ka: "სეზონები" },
   "seasons.title":    { ru: "Грузия прекрасна круглый год", en: "Georgia is beautiful all year round", ka: "საქართველო მთელი წლის მანძილზე ულამაზესია" },
   "seasons.subtitle": { ru: "Каждый сезон открывает новые грани этой удивительной страны", en: "Each season reveals new facets of this amazing country", ka: "ყოველი სეზონი ამ საოცარი ქვეყნის ახალ ფასეტებს ავლენს" },
-  "seasons.spring":       { ru: "Весна",  en: "Spring",  ka: "გაზაფხული" },
+  "seasons.spring":       { ru: "Весна",  en: "Spring",  ka: "გაზაფ���ული" },
   "seasons.spring.desc":  { ru: "Цветение садов, мягкий климат и зеленые долины", en: "Blossoming gardens, mild climate and green valleys", ka: "ბაღების ყვავილობა, რბილი კლიმატი და მწვანე ველები" },
   "seasons.spring.months":{ ru: "Март - Май", en: "March - May", ka: "მარტი - მაისი" },
   "seasons.summer":       { ru: "Лето",   en: "Summer",  ka: "ზაფხული" },
@@ -87,7 +87,7 @@ const translations = {
   "reviews.form.text":   { ru: "Ваш отзыв", en: "Your Review", ka: "თქვენი შეფასება" },
   "reviews.form.text.ph":{ ru: "Расскажите о вашем путешествии...", en: "Tell us about your trip...", ka: "მოგვიყევით თქვენი მოგზაურობის შესახებ..." },
   "reviews.form.submit": { ru: "Отправить отзыв", en: "Submit Review", ka: "შეფასების გაგზავნა" },
-  "reviews.success.title": { ru: "Спасибо за отзыв!", en: "Thank you for your review!", ka: "მადლობა თქვენი შეფასებისთვის!" },
+  "reviews.success.title": { ru: "Спасибо за отзыв!", en: "Thank you for your review!", ka: "���ადლობა თქვენი შეფასებისთვის!" },
   "reviews.success.desc":  { ru: "Ваш отзыв отправлен на модерацию и скоро появится на сайте.", en: "Your review has been sent for moderation and will appear on the site soon.", ka: "თქვენი შეფასება მოდერაციაზე გაიგზავნა და მალე საიტზე გამოჩნდება." },
 
   // ── CONTACT ──
@@ -128,6 +128,59 @@ const translations = {
   "footer.tour.svaneti": { ru: "Сванетия",               en: "Svaneti",                 ka: "სვანეთი" },
   "footer.tour.batumi":  { ru: "Батуми и побережье",     en: "Batumi & Coastline",      ka: "ბათუმი და სანაპირო" },
 
+  // ── TOUR DETAIL PAGE ──
+  "detail.loading":       { ru: "Загрузка тура...",    en: "Loading tour...",    ka: "ტურის ჩატვირთვა..." },
+  "detail.notfound":      { ru: "Тур не найден",       en: "Tour not found",     ka: "ტური ვერ მოიძებნა" },
+  "detail.notfound.desc": { ru: "Возможно, тур был удалён или ссылка некорректна.", en: "The tour may have been removed or the link is incorrect.", ka: "შესაძლოა, ტური წაიშალა ან ბმული არასწორია." },
+  "detail.alltours":      { ru: "Все туры",             en: "All Tours",          ka: "ყველა ტური" },
+  "detail.home":          { ru: "Главная",              en: "Home",               ka: "მთავარი" },
+  "detail.back":          { ru: "Назад к турам",        en: "Back to Tours",      ka: "ტურებზე დაბრუნება" },
+  "detail.about":         { ru: "О туре",               en: "About Tour",         ka: "ტურის შესახებ" },
+  "detail.nodesc":        { ru: "Описание скоро будет добавлено.", en: "Description coming soon.", ka: "აღწერა მალე დაემატება." },
+  "detail.route":         { ru: "Маршрут",              en: "Route",              ka: "მარშრუტი" },
+  "detail.regions":       { ru: "Регионы",              en: "Regions",            ka: "რეგიონები" },
+  "detail.included":      { ru: "Что включено",         en: "What's Included",    ka: "რა შედის" },
+  "detail.photos":        { ru: "Фотографии",           en: "Photos",             ka: "ფოტოები" },
+  "detail.from":          { ru: "от",                   en: "from",               ka: "დან" },
+  "detail.per.person":    { ru: "/ чел.",               en: "/ person",           ka: "/ ადამ." },
+  "detail.duration":      { ru: "Длительность",         en: "Duration",           ka: "ხანგრძლივობა" },
+  "detail.group":         { ru: "Группа",               en: "Group",              ka: "ჯგუფი" },
+  "detail.location":      { ru: "Локация",              en: "Location",           ka: "ადგილმდებარეობა" },
+  "detail.type":          { ru: "Тип",                  en: "Type",               ka: "ტიპი" },
+  "detail.book":          { ru: "Забронировать",         en: "Book Now",          ka: "დაჯავშნა" },
+  "detail.notitle":       { ru: "Без названия",         en: "Untitled",           ka: "უსათაურო" },
+  "detail.tour":          { ru: "Тур",                  en: "Tour",               ka: "ტური" },
+  "detail.day":           { ru: "день",                 en: "day",                ka: "დღე" },
+  "detail.days2":         { ru: "дня",                  en: "days",               ka: "დღე" },
+  "detail.days5":         { ru: "дней",                 en: "days",               ka: "დღე" },
+  "detail.night1":        { ru: "ночь",                 en: "night",              ka: "ღამე" },
+  "detail.nights2":       { ru: "ночи",                 en: "nights",             ka: "ღამე" },
+  "detail.nights5":       { ru: "ночей",                en: "nights",             ka: "ღამე" },
+  "detail.persons":       { ru: "чел.",                 en: "persons",            ka: "ადამ." },
+  "detail.photo":         { ru: "Фото",                 en: "Photo",              ka: "ფოტო" },
+  "detail.whatsapp.hello":{ ru: "Здравствуйте! Интересует тур: ", en: "Hello! I'm interested in the tour: ", ka: "გამარჯობა! მაინტერესებს ტური: " },
+
+  // ── SERVICES PAGE - dynamic titles ──
+  "services.daytours.title.one":   { ru: "однодневный тур",   en: "day tour",          ka: "ერთდღიანი ტური" },
+  "services.daytours.title.few":   { ru: "однодневных тура",  en: "day tours",         ka: "ერთდღიანი ტური" },
+  "services.daytours.title.many":  { ru: "однодневных туров", en: "day tours",         ka: "ერთდღიანი ტური" },
+  "services.daytours.fallback":    { ru: "Однодневные туры",  en: "Day Tours",         ka: "ერთდღიანი ტურები" },
+  "services.daytours.sub":         { ru: "Увлекательные экскурсии на один день по лучшим направлениям Грузии", en: "Exciting one-day excursions to the best destinations in Georgia", ka: "საინტერესო ერთდღიანი ექსკურსიები საქართველოს საუკეთესო მიმართულებებით" },
+  "services.multitours.title.one": { ru: "многодневный тур",   en: "multi-day tour",   ka: "მრავალდღიანი ტური" },
+  "services.multitours.title.few": { ru: "многодневных тура",  en: "multi-day tours",  ka: "მრავალდღიანი ტური" },
+  "services.multitours.title.many":{ ru: "многодневных туров", en: "multi-day tours",  ka: "მრავალდღიანი ტური" },
+  "services.multitours.fallback":  { ru: "Многодневные туры",  en: "Multi-day Tours",  ka: "მრავალდღიანი ტურები" },
+  "services.multitours.sub":       { ru: "Путешествия с проживанием, транспортом и полным сопровождением гида", en: "Trips with accommodation, transport and full guide support", ka: "მოგზაურობები საცხოვრებლით, ტრანსპორტით და გიდის სრული თანხლებით" },
+  "services.soon":                 { ru: "Скоро здесь появятся туры", en: "Tours coming soon", ka: "ტურები მალე გამოჩნდება" },
+  "services.empty.title":          { ru: "Туры не найдены",    en: "No tours found",    ka: "ტურები ვერ მოიძებნა" },
+  "services.empty.desc":           { ru: "По выбранному фильтру туров пока нет. Попробуйте другую категорию.", en: "No tours match the selected filter. Try a different category.", ka: "შერჩეული ფილტრით ტურები არ მოიძებნა. სცადეთ სხვა კატეგორია." },
+  "services.error.title":          { ru: "Ошибка загрузки",    en: "Loading Error",     ka: "ჩატვირთვის შეცდომა" },
+  "services.error.desc":           { ru: "Не удалось загрузить туры. Проверьте подключение или попробуйте позже.", en: "Failed to load tours. Check your connection or try again later.", ka: "ტურების ჩატვირთვა ვერ მოხერხდა. შეამოწმეთ კავშირი ან სცადეთ მოგვიანებით." },
+
+  // ── SERVICES FAQ missing ──
+  "services.faq.q5":        { ru: "На каких языках работают гиды?", en: "What languages do the guides speak?", ka: "რა ენებზე მუშაობენ გიდები?" },
+  "services.faq.a5":        { ru: "Русский и английский — основные. По запросу: грузинский, немецкий, французский. Уточняйте при бронировании.", en: "Russian and English are the main languages. Upon request: Georgian, German, French. Specify when booking.", ka: "რუსული და ინგლისური — ძირითადი. მოთხოვნით: ქართული, გერმანული, ფრანგული. დააზუსტეთ ჯავშანის დროს." },
+
   // ── SERVICES PAGE ──
   "services.hero.tag":     { ru: "Премиум туры",    en: "Premium Tours",    ka: "პრემიუმ ტურები" },
   "services.hero.title":   { ru: 'Все наши <em>услуги</em><br>и туры', en: 'All Our <em>Services</em><br>& Tours', ka: 'ჩვენი ყველა <em>სერვისი</em><br>და ტური' },
@@ -154,7 +207,7 @@ const translations = {
   "services.s5.title":    { ru: "Фотосъёмка в туре",        en: "Tour Photography",           ka: "ფოტოგრაფია ტურში" },
   "services.s5.desc":     { ru: "Профессиональный фотограф запечатлит лучшие моменты вашего путешествия на самых живописных локациях Грузии.", en: "A professional photographer will capture the best moments of your trip at the most scenic locations in Georgia.", ka: "პროფესიონალი ფოტოგრაფი საქართველოს ულამაზეს ლოკაციებზე თქვენი მოგზაურობის საუკეთესო მომენტებს დააფიქსირებს." },
   "services.s6.title":    { ru: "Поддержка 24/7",           en: "24/7 Support",               ka: "24/7 მხარდაჭერა" },
-  "services.s6.desc":     { ru: "Наш менеджер на связи круглосуточно на протяжении всего вашего путешествия. Решаем любые вопросы мгновенно.", en: "Our manager is available 24/7 throughout your entire trip. We resolve any issues instantly.", ka: "ჩვენი მენეჯერი მთელი მოგზაურობის განმავლობაში 24 საათის მანძილზე ხელმისაწვდომია. ნებისმიერ საკითხს მყისიერად ვწყვეტთ." },
+  "services.s6.desc":     { ru: "Наш менеджер на связи круглосуточно на протяжении всего вашего путешествия. Решаем любые вопросы мгновенно.", en: "Our manager is available 24/7 throughout your entire trip. We resolve any issues instantly.", ka: "ჩვენი მენეჯერი მთელი მოგზაურობის განმავლობაში 24 საათის მანძილზე ხელმისაწვდომია. ნების���იერ საკითხს მყისიერად ვწყვეტთ." },
 
   // ── SERVICES - Why Us ──
   "services.why.tag":      { ru: "Почему мы",         en: "Why Us",           ka: "რატომ ჩვენ" },
@@ -216,7 +269,7 @@ const translations = {
   "blog.article3.title":  { ru: "Тбилиси за 48 часов: идеальный маршрут", en: "Tbilisi in 48 Hours: The Perfect Itinerary", ka: "თბილისი 48 საათში: იდეალური მარშრუტი" },
   "blog.article3.desc":   { ru: "Как провести два дня в столице Грузии с максимальной пользой — от старого города до современных кварталов.", en: "How to spend two days in the capital of Georgia most effectively — from the old town to modern districts.", ka: "როგორ გაატაროთ ორი დღე საქართველოს დედაქალაქში მაქსიმალური სარგებლით — ძველი ქალაქიდან თანამედროვე კვარტლებამდე." },
   "blog.article4.title":  { ru: "Военно-Грузинская дорога: путешествие к небу", en: "Georgian Military Highway: Journey to the Sky", ka: "საქართველოს სამხედრო გზა: მოგზაურობა ცისკენ" },
-  "blog.article4.desc":   { ru: "Одна из самых живописных дорог мира проведёт вас через ущелья, перевалы и к подножию великого Казбека.", en: "One of the most scenic roads in the world will take you through gorges, passes and to the foot of mighty Kazbek.", ka: "ერთ-ერთი ულამაზესი გზა მსოფლიოში გაგიყვანთ ხეობებში, უღელტეხილებზე და დიდებული ყაზბეგის ძირში." },
+  "blog.article4.desc":   { ru: "Одна из самых живописных дорог мира проведёт вас через ущелья, перевалы и к подножию великого Казбека.", en: "One of the most scenic roads in the world will take you through gorges, passes and to the foot of mighty Kazbek.", ka: "ერთ-ერთი ულამაზესი გზა მსოფლ��ოში გაგიყვანთ ხეობებში, უღელტეხილებზე და დიდებული ყაზბეგის ძირში." },
 
   // ── CONTACT PAGE ──
   "contact.page.tag":      { ru: "Связаться с нами",  en: "Contact Us",       ka: "დაგვიკავშირდით" },

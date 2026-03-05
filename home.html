@@ -654,13 +654,13 @@
             <div class="form-group">
               <label for="tour-select" data-i18n="contact.form.tour">Интересующий тур</label>
               <select id="tour-select">
-                <option value="">Выберите тур</option>
-                <option value="Тбилиси и окрестности">Тбилиси и окрестности</option>
-                <option value="Казбеги и горы">Казбеги и горы</option>
-                <option value="Винный тур по Кахетии">Винный тур по Кахетии</option>
-                <option value="Сванетия">Сванетия</option>
-                <option value="Батуми и побережь��">Батуми и побережье</option>
-                <option value="Индивидуальный тур">Индивидуальный тур</option>
+                <option value="" data-i18n="contact.form.tour.select">Выберите тур</option>
+                <option value="tbilisi" data-i18n="tour.tbilisi">Тбилиси и окрестности</option>
+                <option value="kazbegi" data-i18n="tour.kazbegi">Казбеги и горы</option>
+                <option value="wine" data-i18n="tour.wine">Винный тур по Кахетии</option>
+                <option value="svaneti" data-i18n="tour.svaneti">Сванетия</option>
+                <option value="batumi" data-i18n="tour.batumi">Батуми и побережье</option>
+                <option value="custom" data-i18n="tour.custom">Индивидуальный тур</option>
               </select>
             </div>
             <div class="form-group">
@@ -907,7 +907,7 @@
         const allTours = [...multiTours, ...dayTours];
         const sel = document.getElementById('tour-select');
         if (sel && allTours.length > 0) {
-          const selectLabel = window.t ? window.t('contact.form.tour.select', lang) : 'Выберите тур';
+          const selectLabel = window.t ? window.t('contact.form.tour.select', lang) : 'Выб��рите тур';
           sel.innerHTML = `<option value="">${selectLabel}</option>`
             + allTours.map(t => `<option value="${localName(t)}">${localName(t)}</option>`).join('');
         }

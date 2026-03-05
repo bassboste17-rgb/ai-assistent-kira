@@ -930,8 +930,8 @@
           <div class="faq-a"><p data-i18n="services.faq.a4">Отмена за 48+ часов — полный возврат. Менее 48 часов — возврат 50%. Отмена с нашей стороны — 100% возврат или перенос.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q">На каких языках работают гиды?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-          <div class="faq-a"><p>Русский и английский — основные. По запросу: грузинский, немецкий, французский. Уточняйте при бронировании.</p></div>
+          <button class="faq-q"><span data-i18n="services.faq.q5">На каких языках работают гиды?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <div class="faq-a"><p data-i18n="services.faq.a5">Русский и английский — основные. По запросу: грузинский, немецкий, французский. Уточняйте при бронировании.</p></div>
         </div>
       </div>
     </div>
@@ -1003,6 +1003,9 @@
     function getLang() {
       return window.currentLang || localStorage.getItem('damq_lang') || 'ru';
     }
+    function _t(key) {
+      return window.t ? window.t(key, getLang()) : key;
+    }
     function localName(t) {
       const lang = getLang();
       return t['name_' + lang] || t.name || '';
@@ -1015,9 +1018,10 @@
     /* Normalize new-format tour */
     function normalizeTour(t, source) {
       const photos = toArray(t.photos);
+      const lang = getLang();
       const dur = [];
-      if (t.days) dur.push(t.days + (t.days === 1 ? ' день' : t.days < 5 ? ' дня' : ' дней'));
-      if (t.nights) dur.push(t.nights + (t.nights === 1 ? ' ночь' : t.nights < 5 ? ' ночи' : ' ноче��'));
+      if (t.days) dur.push(t.days + ' ' + (t.days === 1 ? _t('detail.day') : t.days < 5 ? _t('detail.days2') : _t('detail.days5')));
+      if (t.nights) dur.push(t.nights + ' ' + (t.nights === 1 ? _t('detail.night1') : t.nights < 5 ? _t('detail.nights2') : _t('detail.nights5')));
       return {
         id: t.id,
         _source: source,
@@ -1029,7 +1033,7 @@
         badge: t.badge || '',
         location: toArray(t.regions).join(', ') || t.location || '',
         duration: dur.join(' / ') || t.duration || '',
-        group: (t.minGroup && t.maxGroup) ? `${t.minGroup}-${t.maxGroup} чел.` : (t.group || ''),
+        group: (t.minGroup && t.maxGroup) ? `${t.minGroup}-${t.maxGroup} ${_t('detail.persons')}` : (t.group || ''),
         price: t.price || '',
         rating: t.rating || '',
         route: t.route || '',
@@ -1064,7 +1068,7 @@
           </div>
           <div class="tour-card-body">
             ${t.location ? `<div class="tour-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
-            <h3 class="tour-card-title">${localName(t) || 'Без названия'}</h3>
+            <h3 class="tour-card-title">${localName(t) || _t('detail.notitle')}</h3>
             ${localDesc(t) ? `<p class="tour-card-desc">${localDesc(t)}</p>` : ''}
             ${includes.length ? `<div class="tour-card-includes">${includes.map(i => `<span class="include-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${i}</span>`).join('')}</div>` : ''}
             <div class="tour-card-meta">
@@ -1092,8 +1096,8 @@
         grid.innerHTML = `
           <div class="empty-tours">
             <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <h3>Туры не найдены</h3>
-            <p>По выбранному фильтру туров пока нет. Попробуйте другую категорию.</p>
+            <h3>${_t('services.empty.title')}</h3>
+            <p>${_t('services.empty.desc')}</p>
           </div>`;
         return;
       }
@@ -1106,18 +1110,20 @@
       document.querySelector(`.main-tab[data-main="${tab}"]`).classList.add('active');
 
       if (tab === 'day1') {
-        document.getElementById('tabCountDay1').textContent = allDayTours.length;
+        const count = allDayTours.length;
+        document.getElementById('tabCountDay1').textContent = count;
         document.querySelector('#tours .section-title').textContent =
-          allDayTours.length > 0 ? `${allDayTours.length} однодневн${allDayTours.length === 1 ? 'ый тур' : allDayTours.length < 5 ? 'ых тура' : 'ых туров'}` : 'Однодневные туры';
+          count > 0 ? `${count} ${count === 1 ? _t('services.daytours.title.one') : count < 5 ? _t('services.daytours.title.few') : _t('services.daytours.title.many')}` : _t('services.daytours.fallback');
         document.getElementById('toursSubtitle').textContent =
-          allDayTours.length > 0 ? 'Увлекательные экскурсии на один день по лучшим направлениям Грузии' : 'Скоро здесь появятся туры';
+          count > 0 ? _t('services.daytours.sub') : _t('services.soon');
         renderTours(allDayTours);
       } else {
-        document.getElementById('tabCountMulti').textContent = allMultiTours.length;
+        const count = allMultiTours.length;
+        document.getElementById('tabCountMulti').textContent = count;
         document.querySelector('#tours .section-title').textContent =
-          allMultiTours.length > 0 ? `${allMultiTours.length} многодневн${allMultiTours.length === 1 ? 'ый тур' : allMultiTours.length < 5 ? 'ых тура' : 'ых туров'}` : 'Многодневные туры';
+          count > 0 ? `${count} ${count === 1 ? _t('services.multitours.title.one') : count < 5 ? _t('services.multitours.title.few') : _t('services.multitours.title.many')}` : _t('services.multitours.fallback');
         document.getElementById('toursSubtitle').textContent =
-          allMultiTours.length > 0 ? 'Путешествия с проживанием, транспортом и полным сопровождением гида' : 'Скоро здесь появятся туры';
+          count > 0 ? _t('services.multitours.sub') : _t('services.soon');
         renderTours(allMultiTours);
       }
     }
@@ -1162,10 +1168,10 @@
       document.getElementById('toursGrid').innerHTML = `
         <div class="empty-tours">
           <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <h3>Ошибка загрузки</h3>
-          <p>Не удалось загрузить туры. Проверьте подключение или попробуйте позже.</p>
+          <h3>${_t('services.error.title')}</h3>
+          <p>${_t('services.error.desc')}</p>
         </div>`;
-      document.querySelector('#tours .section-title').textContent = 'Наши туры';
+      document.querySelector('#tours .section-title').textContent = _t('services.tag');
       document.getElementById('toursSubtitle').textContent = '';
     }
 
