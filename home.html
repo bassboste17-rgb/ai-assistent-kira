@@ -21,6 +21,53 @@
     /* Smooth scroll */
     html { scroll-behavior: smooth; }
 
+    /* ── Navbar: always fixed, NEVER hide on scroll ── */
+    .navbar {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      transform: none !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: block !important;
+      z-index: 9999 !important;
+      transition: background 0.3s, box-shadow 0.3s !important;
+    }
+
+    /* ── Mobile menu: fullscreen slide-in overlay ── */
+    .mobile-menu {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 9998 !important;
+      background: rgba(10,10,10,0.97) !important;
+      transform: translateX(100%) !important;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1) !important;
+      overflow-y: auto !important;
+      display: block !important;
+    }
+    .mobile-menu.damq-open {
+      transform: translateX(0) !important;
+    }
+    .mobile-menu-inner {
+      padding: 90px 2rem 2rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+      min-height: 100% !important;
+    }
+
+    /* ── Lock body scroll when menu open ── */
+    body.damq-noscroll {
+      overflow: hidden !important;
+      position: fixed !important;
+      width: 100% !important;
+    }
+
     /* ── Skeleton shimmer ── */
     @keyframes shimmer {
       0%   { background-position: 200% 0; }
@@ -243,7 +290,6 @@
       <ul class="navbar-links" id="navLinks">
         <li><a href="home.html" class="nav-link active">Главная</a></li>
         <li><a href="services.html" class="nav-link">Услуги</a></li>
-        <li><a href="home.html#map" class="nav-link">Направления</a></li>
         <li><a href="blog.html" class="nav-link">Блог</a></li>
         <li><a href="contact.html" class="nav-link">Контакты</a></li>
       </ul>
@@ -276,7 +322,6 @@
         <ul class="mobile-links">
           <li><a href="home.html" class="mobile-link">Главная</a></li>
           <li><a href="services.html" class="mobile-link">Услуги</a></li>
-          <li><a href="home.html#map" class="mobile-link">Направления</a></li>
           <li><a href="blog.html" class="mobile-link">Блог</a></li>
           <li><a href="contact.html" class="mobile-link">Контакты</a></li>
         </ul>
@@ -296,7 +341,7 @@
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="hero-bg">
-      <img src="images/hero-georgia.jpg" alt="Красивый пейзаж Грузии" id="heroBg">
+      <img src="images/hero.png" alt="Красивый пейзаж Грузии" id="heroBg">
     </div>
     <div class="hero-overlay"></div>
     <!-- Floating particles -->
@@ -457,6 +502,151 @@
     </div>
   </section>
 
+  <!-- Seasons Section -->
+  <section class="section seasons-section" id="seasons">
+    <div class="section-container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-tag">Когда ехать</div>
+        <h2 class="section-title">Грузия в любое время года</h2>
+        <p class="section-subtitle">Каждый сезон открывает свою неповторимую красоту этой удивительной страны</p>
+      </div>
+      <div class="seasons-grid animate-on-scroll">
+        <!-- Весна -->
+        <div class="season-card season-spring">
+          <div class="season-icon">🌸</div>
+          <h3 class="season-name">Გაზაფხული</h3>
+          <h4 class="season-name-ru">Весна</h4>
+          <p class="season-months">Март — Май</p>
+          <p class="season-desc">Цветущие сады, тёплый воздух и пробуждающаяся природа. Идеальное время для пеших прогулок по горным тропам и посещения исторических мест.</p>
+          <div class="season-temp">+12°C — +22°C</div>
+        </div>
+        <!-- Лето -->
+        <div class="season-card season-summer">
+          <div class="season-icon">☀️</div>
+          <h3 class="season-name">ზაფხული</h3>
+          <h4 class="season-name-ru">Лето</h4>
+          <p class="season-months">Июнь — Август</p>
+          <p class="season-desc">Жаркое солнце на Черноморском побережье, прохладные горы Сванетии и Казбеги. Сезон пляжного отдыха и высокогорных экспедиций.</p>
+          <div class="season-temp">+24°C — +35°C</div>
+        </div>
+        <!-- Осень -->
+        <div class="season-card season-autumn">
+          <div class="season-icon">🍂</div>
+          <h3 class="season-name">შემოდგომა</h3>
+          <h4 class="season-name-ru">Осень</h4>
+          <p class="season-months">Сентябрь — Ноябрь</p>
+          <p class="season-desc">Золотая Кахетия во время сбора урожая, виноделие и традиционный праздник Ртвели. Лучшее время для гастрономических туров.</p>
+          <div class="season-temp">+10°C — +22°C</div>
+        </div>
+        <!-- Зима -->
+        <div class="season-card season-winter">
+          <div class="season-icon">❄️</div>
+          <h3 class="season-name">ზამთარი</h3>
+          <h4 class="season-name-ru">Зима</h4>
+          <p class="season-months">Декабрь — Февраль</p>
+          <p class="season-desc">Горнолыжные курорты Гудаури и Бакуриани, новогодний Тбилиси с праздничными огнями и уютная атмосфера грузинских застолий.</p>
+          <div class="season-temp">-2°C — +8°C</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .seasons-grid {
+      display: flex;
+      flex-direction: row;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .season-card {
+      flex: 1;
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .season-card::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      opacity: 0.12;
+    }
+    .season-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+    .season-spring  { background: linear-gradient(145deg, #fff0f5, #fce7f3); border: 1px solid #fbb6ce; }
+    .season-spring::before { background: #f472b6; }
+    .season-summer  { background: linear-gradient(145deg, #fffbeb, #fef9c3); border: 1px solid #fde68a; }
+    .season-summer::before { background: #f59e0b; }
+    .season-autumn  { background: linear-gradient(145deg, #fff7ed, #ffedd5); border: 1px solid #fed7aa; }
+    .season-autumn::before { background: #f97316; }
+    .season-winter  { background: linear-gradient(145deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; }
+    .season-winter::before { background: #3b82f6; }
+
+    .season-icon { font-size: 2.2rem; margin-bottom: 0.25rem; }
+    .season-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: #1a1a1a;
+    }
+    .season-name-ru {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #555;
+      margin: 0;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .season-months {
+      font-size: 0.8rem;
+      color: #888;
+      margin: 0.1rem 0 0.4rem;
+      font-weight: 500;
+    }
+    .season-desc {
+      font-size: 0.875rem;
+      color: #444;
+      line-height: 1.6;
+      margin: 0;
+      flex: 1;
+    }
+    .season-temp {
+      margin-top: 0.75rem;
+      display: inline-block;
+      background: rgba(0,0,0,0.07);
+      border-radius: 20px;
+      padding: 0.3rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #333;
+    }
+    @media (max-width: 900px) {
+      .seasons-grid {
+        flex-wrap: wrap;
+      }
+      .season-card {
+        flex: 1 1 calc(50% - 0.625rem);
+        min-width: 200px;
+      }
+    }
+    @media (max-width: 560px) {
+      .seasons-grid {
+        flex-direction: column;
+      }
+      .season-card { flex: 1 1 100%; }
+    }
+  </style>
+
   <!-- Reviews Section -->
   <section class="section reviews" id="reviews">
     <div class="section-container">
@@ -467,55 +657,10 @@
       </div>
       <div class="reviews-slider animate-on-scroll">
         <div class="reviews-track" id="reviewsTrack">
+          <!-- Reviews loaded from Firebase -->
           <div class="review-card">
-            <div class="review-card-inner">
-              <span class="review-quote">"</span>
-              <div class="review-stars">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </div>
-              <p class="review-text">Невероятное путешествие! DAMQ Travel организовали всё на высшем уровне. Казбеги — это что-то неописуемое. Обязательно вернёмся снова!</p>
-              <div class="review-author">
-                <div class="review-avatar">АК</div>
-                <div class="review-info"><h4>Анна Козлова</h4><p>Москва, Россия</p></div>
-              </div>
-            </div>
-          </div>
-          <div class="review-card">
-            <div class="review-card-inner">
-              <span class="review-quote">"</span>
-              <div class="review-stars">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </div>
-              <p class="review-text">Винный тур по Кахетии превзошёл все ожидания. Гид был потрясающий, а дегустации — незабываемые. Спасибо DAMQ Travel за идеальную организацию!</p>
-              <div class="review-author">
-                <div class="review-avatar">ДМ</div>
-                <div class="review-info"><h4>Дмитрий Морозов</h4><p>Санкт-Петербург, Россия</p></div>
-              </div>
-            </div>
-          </div>
-          <div class="review-card">
-            <div class="review-card-inner">
-              <span class="review-quote">"</span>
-              <div class="review-stars">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              </div>
-              <p class="review-text">Сванетия поразила нас до глубины души. Три дня п��олетели как мгновение. Профессиональный подход команды DAMQ Travel заслуживает высшей оценки.</p>
-              <div class="review-author">
-                <div class="review-avatar">ЕС</div>
-                <div class="review-info"><h4>Елена Соколова</h4><p>Киев, Украина</p></div>
-              </div>
+            <div class="review-card-inner" style="display:flex;align-items:center;justify-content:center;min-height:200px;color:#aaa;">
+              <p>Загрузка отзывов...</p>
             </div>
           </div>
         </div>
@@ -523,10 +668,7 @@
           <button class="review-btn review-prev" aria-label="Предыдущий отзыв">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
-          <div class="reviews-dots">
-            <button class="review-dot active" aria-label="Отзыв 1"></button>
-            <button class="review-dot" aria-label="Отзыв 2"></button>
-            <button class="review-dot" aria-label="Отзыв 3"></button>
+          <div class="reviews-dots" id="reviewsDots">
           </div>
           <button class="review-btn review-next" aria-label="Следующий отзыв">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -568,6 +710,10 @@
               <option value="США">США</option>
               <option value="Другая">Другая</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label for="reviewPhone">Телефон <span style="font-weight:400;color:#999;font-size:0.85em;">(необязательно)</span></label>
+            <input type="tel" id="reviewPhone" placeholder="+995 ..." style="font-family:inherit;">
           </div>
           <div class="form-group">
             <label>Оценка</label>
@@ -616,7 +762,7 @@
             </div>
             <div class="contact-info-item">
               <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-              <div class="contact-info-text"><h4>Email</h4><a href="mailto:info@damq.ge">info@damq.ge</a></div>
+              <div class="contact-info-text"><h4>Email</h4><a href="/cdn-cgi/l/email-protection#abc2c5cdc4ebcfcac6da85ccce"><span class="__cf_email__" data-cfemail="f39a9d959cb397929e82dd9496">[email&#160;protected]</span></a></div>
             </div>
             <div class="contact-info-item">
               <div class="contact-info-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
@@ -700,7 +846,7 @@
 
 
   <!-- Scripts -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/main.js"></script>
 
   <!-- Firebase: tours + contact form + reviews -->
@@ -750,7 +896,7 @@
         <div class="tour-card tour-card-anim" style="animation-delay:${delay}s">
           <div class="tour-card-image">
             ${t.image
-              ? `<img src="${t.image}" alt="${t.name||''}" loading="lazy" onerror="this.style.display='none'">`
+              ? `<img src="${t.image}" alt="${t.name||''}" loading="lazy" onerror="this.style.display='none`
               : `<div style="height:220px;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.15)"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
             }
             ${t.badge ? `<span class="tour-card-badge">${t.badge}</span>` : ''}
@@ -772,7 +918,7 @@
               <span class="tour-price-label">от</span>
               <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
             </div>
-            <a href="contact.html" class="btn-tour">
+            <a href="tour-detail.html?id=${t.id}&source=${t._source || 'tours'}" class="btn-tour">
               Подробнее
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
@@ -800,7 +946,7 @@
             </div>
             <div class="tour-featured-bottom">
               <span class="tour-featured-price">$${t.price || '—'} <small>/ чел.</small></span>
-              <a href="contact.html" class="btn-featured">Забронировать <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+              <a href="tour-detail.html?id=${t.id}&source=${t._source || 'tours'}" class="btn-featured">Забронировать <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
             </div>
           </div>
         </div>`;
@@ -810,12 +956,46 @@
       return `<div class="tours-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><h4>${msg}</h4><p>Туры появятся после добавления в панели администратора</p></div>`;
     }
 
-    /* ─── load tours ─── */
-    try {
-      const tours = await rtdbGetAll('tours');
+    /* ─── Normalize new-format tour to card data ─── */
+    function normalizeTour(t, source) {
+      const photos = toArray(t.photos);
+      const dur = [];
+      if (t.days) dur.push(t.days + (t.days === 1 ? ' день' : t.days < 5 ? ' дня' : ' дней'));
+      if (t.nights) dur.push(t.nights + (t.nights === 1 ? ' ночь' : t.nights < 5 ? ' ночи' : ' ночей'));
+      return {
+        id: t.id,
+        _source: source,
+        name: t.name || '',
+        desc: t.desc || '',
+        image: (photos.length ? (photos[0].url || photos[0].thumb) : t.image) || '',
+        badge: t.badge || '',
+        location: toArray(t.regions).join(', ') || t.location || '',
+        duration: dur.join(' / ') || t.duration || '',
+        group: (t.minGroup && t.maxGroup) ? `${t.minGroup}-${t.maxGroup} чел.` : (t.group || ''),
+        price: t.price || '',
+        rating: t.rating || '',
+        route: t.route || ''
+      };
+    }
 
-      const multiTours = tours.filter(t => t.type === 'multi');
-      const dayTours   = tours.filter(t => t.type !== 'multi');
+    /* ─── load tours from dayTours + multiDayTours ─── */
+    try {
+      const [rawDayTours, rawMultiTours, oldTours] = await Promise.all([
+        rtdbGetAll('dayTours'),
+        rtdbGetAll('multiDayTours'),
+        rtdbGetAll('tours')
+      ]);
+
+      const multiTours = rawMultiTours.map(t => normalizeTour(t, 'multiDayTours'));
+      const dayTours   = rawDayTours.map(t => normalizeTour(t, 'dayTours'));
+
+      // Fallback: also include old 'tours' if new collections are empty
+      if (multiTours.length === 0 && oldTours.filter(t => t.type === 'multi').length > 0) {
+        oldTours.filter(t => t.type === 'multi').forEach(t => multiTours.push({...t, _source: 'tours'}));
+      }
+      if (dayTours.length === 0 && oldTours.filter(t => t.type !== 'multi').length > 0) {
+        oldTours.filter(t => t.type !== 'multi').forEach(t => dayTours.push({...t, _source: 'tours'}));
+      }
 
       // Multi-day
       const multiGrid = document.getElementById('multiToursGrid');
@@ -826,24 +1006,115 @@
         multiGrid.innerHTML = emptyHTML('Многодневные туры скоро появятся');
       }
 
-      // Day tours — populate select options too
+      // Day tours
       const dayGrid = document.getElementById('dayToursGrid');
       if (dayTours.length > 0) {
         dayGrid.innerHTML = dayTours.map((t, i) => tourCardHTML(t, i)).join('');
-        // Update tour select in contact form
-        const sel = document.getElementById('tour-select');
-        if (sel && tours.length > 0) {
-          sel.innerHTML = '<option value="">Выберите тур</option>'
-            + tours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
-        }
       } else {
         dayGrid.innerHTML = emptyHTML('Однодневные туры скоро появятся');
       }
 
+      // Update tour select in contact form
+      const allTours = [...multiTours, ...dayTours];
+      const sel = document.getElementById('tour-select');
+      if (sel && allTours.length > 0) {
+        sel.innerHTML = '<option value="">Выберите тур</option>'
+          + allTours.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+      }
+
     } catch(e) {
       console.error('Firebase tours:', e);
-      document.getElementById('multiToursGrid').innerHTML = emptyHTML('Не удалось загрузить туры');
+      document.getElementById('multiToursGrid').innerHTML = emptyHTML('Не удалось загрузи��ь туры');
       document.getElementById('dayToursGrid').innerHTML   = emptyHTML('Не удалось загрузить туры');
+    }
+
+    /* ─── Load reviews from Firebase ─── */
+    function reviewCardHTML(r) {
+      const rating = r.rating || 5;
+      let starsHtml = '';
+      for (let i = 0; i < 5; i++) {
+        if (i < rating) {
+          starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+        } else {
+          starsHtml += '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+        }
+      }
+      const initials = ((r.firstName || '').charAt(0) + (r.lastName || '').charAt(0)).toUpperCase() || '?';
+      const name = ((r.firstName || '') + ' ' + (r.lastName || '')).trim() || 'Аноним';
+      return `
+        <div class="review-card">
+          <div class="review-card-inner">
+            <span class="review-quote">&ldquo;</span>
+            <div class="review-stars">${starsHtml}</div>
+            <p class="review-text">${r.text || ''}</p>
+            <div class="review-author">
+              <div class="review-avatar">${initials}</div>
+              <div class="review-info">
+                <h4>${name}</h4>
+                <p>${r.country || ''}</p>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    let reviewSlideIndex = 0;
+    let reviewSlideCount = 0;
+
+    function initReviewSlider() {
+      const track = document.getElementById('reviewsTrack');
+      const dotsContainer = document.getElementById('reviewsDots');
+      const prevBtn = document.querySelector('.review-prev');
+      const nextBtn = document.querySelector('.review-next');
+      if (!track) return;
+
+      reviewSlideCount = track.children.length;
+      reviewSlideIndex = 0;
+
+      // Create dots
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < reviewSlideCount; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'review-dot' + (i === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Отзыв ' + (i + 1));
+          dot.addEventListener('click', () => goToReview(i));
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function goToReview(idx) {
+        reviewSlideIndex = (idx + reviewSlideCount) % reviewSlideCount;
+        track.style.transform = `translateX(-${reviewSlideIndex * 100}%)`;
+        document.querySelectorAll('#reviewsDots .review-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === reviewSlideIndex);
+        });
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', () => goToReview(reviewSlideIndex - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => goToReview(reviewSlideIndex + 1));
+
+      // Auto-slide
+      setInterval(() => goToReview(reviewSlideIndex + 1), 5000);
+    }
+
+    try {
+      const allReviews = await rtdbGetAll('reviews');
+      const approved = allReviews.filter(r => r.status === 'approved' || !r.status);
+      const track = document.getElementById('reviewsTrack');
+
+      if (approved.length > 0) {
+        // Sort by newest first
+        approved.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        track.innerHTML = approved.map(r => reviewCardHTML(r)).join('');
+      } else {
+        // No reviews yet — hide slider completely
+        track.parentElement.style.display = 'none';
+      }
+      initReviewSlider();
+    } catch(e) {
+      console.error('Firebase reviews load error:', e);
+      initReviewSlider();
     }
 
     /* ─── Contact form → bookings ─── */
@@ -883,13 +1154,36 @@
           firstName: document.getElementById('reviewFirstName').value.trim(),
           lastName:  document.getElementById('reviewLastName').value.trim(),
           country:   document.getElementById('reviewCountry').value,
+          phone:     document.getElementById('reviewPhone').value.trim(),
           rating:    rating,
           text:      document.getElementById('reviewText').value.trim(),
-          status:    'pending',
+          status:    'approved',
           createdAt: Date.now()
         });
         document.getElementById('reviewForm').style.display = 'none';
         document.getElementById('reviewSuccess').classList.add('show');
+
+        // Add the new review to the slider
+        const newReview = {
+          firstName: document.getElementById('reviewFirstName').value.trim(),
+          lastName: document.getElementById('reviewLastName').value.trim(),
+          country: document.getElementById('reviewCountry').value,
+          rating: rating,
+          text: document.getElementById('reviewText').value.trim()
+        };
+        const track = document.getElementById('reviewsTrack');
+        if (track) {
+          // Show slider if it was hidden (no reviews state)
+          track.parentElement.style.display = '';
+          // Remove empty state placeholder if present
+          const emptyPlaceholder = track.querySelector('.review-card-inner[style*="justify-content:center"]');
+          if (emptyPlaceholder) {
+            track.innerHTML = '';
+          }
+          // Insert at beginning (newest first)
+          track.insertAdjacentHTML('afterbegin', reviewCardHTML(newReview));
+          initReviewSlider();
+        }
       } catch(err) {
         console.error(err);
         alert('Ошибка отправки. Попробуйте позже.');
@@ -906,6 +1200,90 @@
       const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
       document.getElementById('scrollProgress').style.width = pct + '%';
     }, { passive: true });
+
+    /* ══════════════════════════════════════════════
+       NAVBAR BULLETPROOF FIX
+       Runs AFTER main.js, overrides everything
+    ══════════════════════════════════════════════ */
+    (function initNavbar() {
+      const navbar = document.getElementById('navbar');
+      const menu   = document.getElementById('mobileMenu');
+      let   scrollY = 0; // remember scroll pos when menu opens
+
+      /* ── Force navbar always visible ── */
+      function enforceNavbar() {
+        if (!navbar) return;
+        navbar.style.cssText = 'position:fixed!important;top:0!important;left:0!important;right:0!important;transform:none!important;opacity:1!important;visibility:visible!important;display:block!important;z-index:9999!important;';
+      }
+      enforceNavbar();
+
+      /* Re-enforce after any style change main.js might do */
+      if (navbar) {
+        new MutationObserver(enforceNavbar).observe(navbar, { attributes: true, attributeFilter: ['style', 'class'] });
+      }
+      window.addEventListener('scroll', enforceNavbar, { passive: true });
+
+      /* ── Find toggle button (even if cloned by previous fix) ── */
+      function getToggle() { return document.getElementById('navToggle'); }
+
+      /* ── Open / Close ── */
+      function openMenu() {
+        if (!menu) return;
+        scrollY = window.scrollY;
+        document.body.classList.add('damq-noscroll');
+        document.body.style.top = `-${scrollY}px`;
+        menu.classList.add('damq-open');
+        const t = getToggle();
+        if (t) {
+          const open  = t.querySelector('.toggle-open');
+          const close = t.querySelector('.toggle-close');
+          if (open)  open.style.display  = 'none';
+          if (close) close.style.display = '';
+        }
+      }
+
+      function closeMenu() {
+        if (!menu) return;
+        menu.classList.remove('damq-open');
+        document.body.classList.remove('damq-noscroll');
+        document.body.style.top = '';
+        window.scrollTo(0, scrollY);
+        const t = getToggle();
+        if (t) {
+          const open  = t.querySelector('.toggle-open');
+          const close = t.querySelector('.toggle-close');
+          if (open)  open.style.display  = '';
+          if (close) close.style.display = 'none';
+        }
+      }
+
+      /* ── Attach toggle click — override main.js by using capture phase ── */
+      document.addEventListener('click', function(e) {
+        const t = getToggle();
+        if (t && (e.target === t || t.contains(e.target))) {
+          e.stopImmediatePropagation();
+          menu && menu.classList.contains('damq-open') ? closeMenu() : openMenu();
+          return;
+        }
+        /* Close on outside tap */
+        if (menu && menu.classList.contains('damq-open') && !menu.contains(e.target)) {
+          closeMenu();
+        }
+      }, true); /* capture=true fires before main.js */
+
+      /* ── Close on link click inside menu ── */
+      if (menu) {
+        menu.addEventListener('click', function(e) {
+          if (e.target.tagName === 'A') closeMenu();
+        });
+      }
+
+      /* ── Close on resize to desktop ── */
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) closeMenu();
+      });
+
+    })();
 
     /* Hero particles */
     const container = document.getElementById('heroParticles');
@@ -929,12 +1307,51 @@
         const r = parseInt(btn.dataset.rating);
         document.getElementById('reviewRating').value = r;
         stars.forEach((s, i) => {
-          const svg = s.querySelector('svg');
-          svg.setAttribute('fill', i < r ? '#d4af37' : 'none');
-          svg.setAttribute('stroke', i < r ? '#d4af37' : 'currentColor');
+          con
+          s.querySelector('svg').style.fill = i < r ? '#d4af37' : 'none';
+          s.querySelector('svg').style.stroke = i < r ? '#d4af37' : 'currentColor';
         });
       });
     });
+
+    /* Animate on scroll */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    /* Video modal */
+    const openVideoBtn = document.getElementById('openVideoBtn');
+    const closeVideoBtn = document.getElementById('closeVideoBtn');
+    const videoModal = document.getElementById('videoModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    if (openVideoBtn) {
+      openVideoBtn.addEventListener('click', () => {
+        videoModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      });
+    }
+    if (closeVideoBtn) {
+      closeVideoBtn.addEventListener('click', () => {
+        videoModal.style.display = 'none';
+        document.body.style.overflow = '';
+        if (videoPlayer) videoPlayer.pause();
+      });
+    }
+    if (videoModal) {
+      videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+          videoModal.style.display = 'none';
+          document.body.style.overflow = '';
+          if (videoPlayer) videoPlayer.pause();
+        }
+      });
+    }
   </script>
+
 </body>
 </html>

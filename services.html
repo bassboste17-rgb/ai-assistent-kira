@@ -266,9 +266,16 @@
 
     /* ── Tours Grid ── */
     .tours-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.8rem;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+      gap: 1.8rem !important;
+      overflow-x: visible !important;
+      scroll-snap-type: none !important;
+    }
+    .tours-grid > .tour-card {
+      min-width: 0 !important;
+      max-width: none !important;
+      flex-shrink: unset !important;
     }
 
     /* ── Skeleton loading ── */
@@ -305,12 +312,17 @@
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--border);
-      display: flex;
+      display: flex !important;
       flex-direction: column;
       transition: transform 0.3s, box-shadow 0.3s;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeUp 0.5s ease forwards;
+      width: 100%;
+      min-width: 0 !important;
+      max-width: none !important;
+      text-decoration: none;
+      color: inherit;
     }
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
@@ -653,7 +665,7 @@
 
     @media (max-width: 768px) {
       .cta-banner { padding: 2.5rem 1.5rem; margin: 0; border-radius: 0; }
-      .tours-grid { grid-template-columns: 1fr; }
+      .tours-grid { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
@@ -670,7 +682,6 @@
       <ul class="navbar-links" id="navLinks">
         <li><a href="home.html" class="nav-link">Главная</a></li>
         <li><a href="services.html" class="nav-link active">Услуги</a></li>
-        <li><a href="home.html#map" class="nav-link">Направления</a></li>
         <li><a href="blog.html" class="nav-link">Блог</a></li>
         <li><a href="contact.html" class="nav-link">Контакты</a></li>
       </ul>
@@ -703,7 +714,6 @@
         <ul class="mobile-links">
           <li><a href="home.html" class="mobile-link">Главная</a></li>
           <li><a href="services.html" class="mobile-link">Услуги</a></li>
-          <li><a href="home.html#map" class="mobile-link">Направления</a></li>
           <li><a href="blog.html" class="mobile-link">Блог</a></li>
           <li><a href="contact.html" class="mobile-link">Контакты</a></li>
         </ul>
@@ -723,7 +733,7 @@
   <!-- Hero -->
   <section class="page-hero">
     <div class="page-hero-bg">
-      <img src="images/hero-georgia.jpg" alt="Туры по Грузии" id="heroBg">
+      <img src="images/service.png" alt="Туры по Грузии" id="heroBg">
     </div>
     <div class="page-hero-overlay"></div>
     <div class="page-hero-content">
@@ -756,7 +766,7 @@
     </div>
   </div>
 
-  <!-- Sub-filter for multi-day tours (hidden by default) -->
+  <!-- Sub-filter for multi-day tours (hidden - now using main tabs) -->
   <div class="filter-bar" id="filterBar" style="display:none;">
     <div class="filter-inner">
       <button class="filter-btn active" data-filter="all">
@@ -937,7 +947,7 @@
         <div class="process-step aos delay-1">
           <div class="step-num">1</div>
           <div class="step-title">Оставьте заявку</div>
-          <p class="step-desc">Заполните форму или напишите нам — расскажите о датах и интересах.</p>
+          <p class="step-desc">��аполните форму или напишите нам — расскажите о датах и интересах.</p>
         </div>
         <div class="process-step aos delay-2">
           <div class="step-num">2</div>
@@ -1045,11 +1055,6 @@
       return Object.entries(val).map(([id, data]) => ({ id, ...data }));
     }
 
-    const typeLabel = {
-      day: 'Однодневный', multi: 'Многодневный',
-      wine: 'Винный', photo: 'Фототур', custom: 'Индивидуальный'
-    };
-
     function toArray(val) {
       if (!val) return [];
       if (Array.isArray(val)) return val;
@@ -1057,21 +1062,53 @@
       return [];
     }
 
-    let allTours = [];
-    let activeFilter = 'all';
+    /* Normalize new-format tour */
+    function normalizeTour(t, source) {
+      const photos = toArray(t.photos);
+      const dur = [];
+      if (t.days) dur.push(t.days + (t.days === 1 ? ' день' : t.days < 5 ? ' дня' : ' дней'));
+      if (t.nights) dur.push(t.nights + (t.nights === 1 ? ' ночь' : t.nights < 5 ? ' ночи' : ' ночей'));
+      return {
+        id: t.id,
+        _source: source,
+        name: t.name || '',
+        desc: t.desc || '',
+        image: (photos.length ? (photos[0].url || photos[0].thumb) : t.image) || '',
+        badge: t.badge || '',
+        location: toArray(t.regions).join(', ') || t.location || '',
+        duration: dur.join(' / ') || t.duration || '',
+        group: (t.minGroup && t.maxGroup) ? `${t.minGroup}-${t.maxGroup} чел.` : (t.group || ''),
+        price: t.price || '',
+        rating: t.rating || '',
+        route: t.route || '',
+        type: t.type || '',
+        includes: toArray(t.includes),
+        _raw: t
+      };
+    }
+
+    const typeLabel = {
+      day: 'Однодневный', multi: 'Многодневный',
+      wine: 'Винный', photo: 'Фототур', custom: 'Индивидуальный'
+    };
+
+    let allDayTours = [];
+    let allMultiTours = [];
+    let allOldTours = [];
+    let activeMainTab = 'day1';
 
     function cardHTML(t, idx) {
       const delay = (idx % 3) * 0.1;
-      const includes = toArray(t.includes).slice(0, 3);
+      const includes = t.includes ? t.includes.slice(0, 3) : [];
+      const detailUrl = `tour-detail.html?id=${t.id}&source=${t._source}`;
       return `
-        <div class="tour-card" data-type="${t.type || ''}" style="animation-delay:${delay}s">
+        <a href="${detailUrl}" class="tour-card" data-type="${t.type || ''}" style="animation-delay:${delay}s">
           <div class="tour-card-img">
             ${t.image
-              ? `<img src="${t.image}" alt="${t.name || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>'">`
+              ? `<img src="${t.image}" alt="${t.name || ''}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\"tour-card-img-placeholder\\"><svg width=\\"48\\" height=\\"48\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"1\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\\"/><circle cx=\\"12\\" cy=\\"10\\" r=\\"3\\"/></svg></div>`
               : `<div class="tour-card-img-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>`
             }
             ${t.badge ? `<span class="tour-badge">${t.badge}</span>` : ''}
-            ${t.type ? `<span class="tour-type-badge">${typeLabel[t.type] || t.type}</span>` : ''}
           </div>
           <div class="tour-card-body">
             ${t.location ? `<div class="tour-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
@@ -1089,12 +1126,12 @@
               <span class="tour-price-label">от</span>
               <span class="tour-price-value">$${t.price || '—'} <small>/ чел.</small></span>
             </div>
-            <a href="contact.html" class="btn-book">
-              Забронировать
+            <span class="btn-book">
+              Подробнее
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
+            </span>
           </div>
-        </div>`;
+        </a>`;
     }
 
     function renderTours(tours) {
@@ -1111,38 +1148,58 @@
       grid.innerHTML = tours.map((t, i) => cardHTML(t, i)).join('');
     }
 
-    function updateCounts(tours) {
-      document.getElementById('countAll').textContent = tours.length;
-      ['day','multi','wine','photo','custom'].forEach(type => {
-        const el = document.getElementById('count' + type.charAt(0).toUpperCase() + type.slice(1));
-        if (el) el.textContent = tours.filter(t => t.type === type).length;
-      });
+    function switchMainTab(tab) {
+      activeMainTab = tab;
+      document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.main-tab[data-main="${tab}"]`).classList.add('active');
+
+      if (tab === 'day1') {
+        document.getElementById('tabCountDay1').textContent = allDayTours.length;
+        document.querySelector('#tours .section-title').textContent =
+          allDayTours.length > 0 ? `${allDayTours.length} однодневн${allDayTours.length === 1 ? 'ый тур' : allDayTours.length < 5 ? 'ых тура' : 'ых туров'}` : 'Однодневные туры';
+        document.getElementById('toursSubtitle').textContent =
+          allDayTours.length > 0 ? 'Увлекательные экскурсии на один день по лучшим направлениям Грузии' : 'Скоро здесь появятся туры';
+        renderTours(allDayTours);
+      } else {
+        document.getElementById('tabCountMulti').textContent = allMultiTours.length;
+        document.querySelector('#tours .section-title').textContent =
+          allMultiTours.length > 0 ? `${allMultiTours.length} многодневн${allMultiTours.length === 1 ? 'ый тур' : allMultiTours.length < 5 ? 'ых тура' : 'ых туров'}` : 'Многодневные туры';
+        document.getElementById('toursSubtitle').textContent =
+          allMultiTours.length > 0 ? 'Путешествия с проживанием, транспортом и полным сопровождением гида' : 'Скоро здесь появятся туры';
+        renderTours(allMultiTours);
+      }
     }
 
-    function updateHeader(count) {
-      document.querySelector('#tours .section-title').textContent =
-        count > 0 ? `${count} ${count === 1 ? 'тур' : count < 5 ? 'тура' : 'туров'} для вас` : 'Туры';
-      document.getElementById('toursSubtitle').textContent =
-        count > 0 ? 'Актуальные предложения DAMQ Travel — выберите свой идеальный маршрут' : 'Скоро здесь появятся туры';
-    }
-
-    // Filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeFilter = btn.dataset.filter;
-        const filtered = activeFilter === 'all' ? allTours : allTours.filter(t => t.type === activeFilter);
-        renderTours(filtered);
-      });
+    // Main tab buttons
+    document.querySelectorAll('.main-tab').forEach(btn => {
+      btn.addEventListener('click', () => switchMainTab(btn.dataset.main));
     });
 
-    // Load from Realtime Database
+    // Load from Realtime Database - dayTours + multiDayTours + old tours
     try {
-      allTours = await rtdbGetAll('tours');
-      updateCounts(allTours);
-      updateHeader(allTours.length);
-      renderTours(allTours);
+      const [rawDayTours, rawMultiDayTours, rawOldTours] = await Promise.all([
+        rtdbGetAll('dayTours'),
+        rtdbGetAll('multiDayTours'),
+        rtdbGetAll('tours')
+      ]);
+
+      allDayTours = rawDayTours.map(t => normalizeTour(t, 'dayTours'));
+      allMultiTours = rawMultiDayTours.map(t => normalizeTour(t, 'multiDayTours'));
+
+      // Fallback: old 'tours' if new collections are empty
+      if (allDayTours.length === 0) {
+        rawOldTours.filter(t => t.type !== 'multi').forEach(t => allDayTours.push({...t, _source: 'tours', includes: toArray(t.includes)}));
+      }
+      if (allMultiTours.length === 0) {
+        rawOldTours.filter(t => t.type === 'multi').forEach(t => allMultiTours.push({...t, _source: 'tours', includes: toArray(t.includes)}));
+      }
+
+      document.getElementById('tabCountDay1').textContent = allDayTours.length;
+      document.getElementById('tabCountMulti').textContent = allMultiTours.length;
+
+      // Show day tours by default
+      switchMainTab('day1');
+
     } catch (e) {
       console.error('Firebase error:', e);
       document.getElementById('toursGrid').innerHTML = `
