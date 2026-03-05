@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   z-index: 1000;
   padding: 20px 0;
-  transition: all var(--transition);
+  transition: background var(--transition), padding var(--transition), box-shadow var(--transition);
 }
 
 .navbar.scrolled {
@@ -90,6 +90,12 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(20px);
   padding: 12px 0;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.navbar.menu-open {
+  background: var(--color-primary);
+  padding: 12px 0;
+  box-shadow: none;
 }
 
 .navbar-container {
@@ -105,7 +111,8 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 1002;
+  z-index: 1001;
+  position: relative;
 }
 
 .navbar-logo .logo-text {
@@ -219,8 +226,9 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(201, 169, 110, 0.25);
   border-radius: 10px;
   cursor: pointer;
-  z-index: 1002;
+  z-index: 1001;
   transition: all var(--transition);
+  position: relative;
 }
 
 .navbar-toggle svg {
@@ -250,21 +258,22 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   bottom: 0;
   background: var(--color-primary);
-  /* ensure the mobile overlay sits above the navbar (which is z-index:1000) */
-  z-index: 1001;
+  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s ease;
-  /* Prevent scroll bleed on iOS */
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-menu.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .mobile-menu-inner {
@@ -1965,7 +1974,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .season-card {
   flex: 1 1 0;
-  min-width: 160px;
+  min-width: 180px;
+  max-width: 260px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(201, 169, 110, 0.2);
   border-radius: var(--radius-lg);
@@ -1985,6 +1995,10 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 2.2rem;
   margin-bottom: 0.6rem;
   line-height: 1;
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .season-card h4 {
@@ -2004,9 +2018,14 @@ h1, h2, h3, h4, h5, h6 {
   .season-cards {
     gap: 12px;
     margin-top: 1.5rem;
+    justify-content: flex-start;
+    padding-left: 4px;
+    padding-right: 4px;
   }
   .season-card {
     min-width: 140px;
+    max-width: none;
+    flex: 0 0 auto;
     padding: 1.2rem 0.8rem 1rem;
   }
   .season-card-icon {
@@ -2025,7 +2044,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 10px;
   }
   .season-card {
-    min-width: 120px;
+    min-width: 130px;
     padding: 1rem 0.6rem 0.8rem;
   }
 }
