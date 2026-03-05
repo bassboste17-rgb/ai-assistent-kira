@@ -14,7 +14,7 @@ const translations = {
   // ── HERO (home) ──
   "hero.badge":     { ru: "Премиум путешествия",  en: "Premium Travel",     ka: "პრემიუმ მოგზაურობა" },
   "hero.title":     { ru: 'Откройте для себя<br><em>магию Грузии</em>', en: 'Discover the<br><em>magic of Georgia</em>', ka: 'აღმოაჩინეთ<br><em>საქართველოს მაგია</em>' },
-  "hero.subtitle":  { ru: "Уникальные авторские туры по самым живописным местам Грузии. Горы, море, вино и гостеприимство — всё, что нужно для идеального путешествия.", en: "Unique author tours through the most picturesque places of Georgia. Mountains, sea, wine and hospitality — everything you need for a perfect trip.", ka: "უნიკალური საავტორო ტურები საქართველოს ულამაზეს ადგილებში. მთები, ზღვა, ღვინო და სტუმართმოყვარეობა — ყველაფერი, რაც იდეალური მოგზაურობისთვის გჭირდებათ." },
+  "hero.subtitle":  { ru: "Откройте Грузию с теми, кто знает её сердце. Авторские маршруты, незабываемые впечатления и забота о каждой детали вашего путешествия.", en: "Explore Georgia with those who know its heart. Signature routes, unforgettable experiences and attention to every detail of your journey.", ka: "აღმოაჩინეთ საქართველო მათთან ერთად, ვინც მის გულს იცნობს. საავტორო მარშრუტები, დაუვიწყარი შთაბეჭდილებები და თქვენი მოგზაურობის ყველა დეტალზე ზრუნვა." },
   "hero.btn.tour":  { ru: "Выбрать тур",  en: "Choose Tour", ka: "ტურის არჩევა" },
   "hero.btn.video": { ru: "Смотреть видео", en: "Watch Video", ka: "ვიდეოს ნახვა" },
 
@@ -22,7 +22,7 @@ const translations = {
   "about.tag":       { ru: "О компании",    en: "About Us",    ka: "ჩვენს შესახებ" },
   "about.float":     { ru: "лет опыта",     en: "years of experience", ka: "წლის გამოცდილება" },
   "about.title":     { ru: "Ваш надёжный партнёр в мире путешествий", en: "Your reliable partner in the world of travel", ka: "თქვენი საიმედო პარტნიორი მოგზაურობის სამყაროში" },
-  "about.text1":     { ru: "DAMQ Travel — это команда профессионалов, влюблённых в Грузию. Мы создаём уникальные туристические маршруты, которые раскрывают красоту, культуру и гостеприимство этой удивительной страны.", en: "DAMQ Travel is a team of professionals in love with Georgia. We create unique travel routes that reveal the beauty, culture and hospitality of this amazing country.", ka: "DAMQ Travel — პროფესიონალთა გუნდია, რომლებსაც საქართველო უყვართ. ჩვენ ვქმნით უნიკალურ ტურისტულ მარშრუტებს, რომლებიც ამ საოცარი ქვეყნის სილამაზეს, კულტურასა და სტუმართმოყვარეობას წარმოაჩენს." },
+  "about.text1":     { ru: "DAMQ Travel — это не просто турагентство, это ваш личный проводник в мир грузинских традиций, вкусов и пейзажей. Мы вкладываем душу в каждый маршрут, чтобы вы увезли с собой не только фотографии, но и настоящие эмоции.", en: "DAMQ Travel is not just a travel agency — it is your personal guide to the world of Georgian traditions, flavors and landscapes. We pour our heart into every route so you take home not just photos, but real emotions.", ka: "DAMQ Travel მხოლოდ ტურისტული სააგენტო კი არა, თქვენი პირადი გზამკვლევია ქართული ტრადიციების, გემოვნებისა და პეიზაჟების სამყაროში. ჩვენ სულს ვდებთ ყველა მარშრუტში, რათა სახლში არა მხოლოდ ფოტოები, არამედ ნამდვილი ემოციები წაიღოთ." },
   "about.text2":     { ru: "Каждый наш тур — это тщательно продуманное путешествие с вниманием к деталям, комфортным транспортом и профессиональными гидами, говорящими на вашем языке.", en: "Each of our tours is a carefully planned trip with attention to detail, comfortable transport and professional guides speaking your language.", ka: "ჩვენი ყველა ტური საგულდაგულოდ დაგეგმილი მოგზაურობაა, დეტალებისადმი ყურადღებით, კომფორტული ტრანსპორტით და პროფესიონალი გიდებით, რომლებიც თქვენს ენაზე საუბრობენ." },
   "about.f1.title":  { ru: "Уникальные маршруты",    en: "Unique Routes",        ka: "უნიკალური მარშრუტები" },
   "about.f1.desc":   { ru: "Авторские программы по лучшим местам", en: "Author programs to the best places", ka: "საავტორო პროგრამები საუკეთესო ადგილებში" },
@@ -36,7 +36,7 @@ const translations = {
   // ── TOURS SECTION ──
   "tours.tag":            { ru: "Наши туры",           en: "Our Tours",          ka: "ჩვენი ტურები" },
   "tours.title.full":     { ru: "Полные пакеты туров", en: "Full Tour Packages", ka: "სრული ტურ-პაკეტები" },
-  "tours.subtitle":       { ru: "Многодневные путешествия с проживанием, транспортом и полным сопровождением гида по лучшим направлениям Грузии", en: "Multi-day trips with accommodation, transport and full guide support to the best destinations in Georgia", ka: "მრავალდღიანი მოგზაურობები საცხოვრებლით, ტრანსპორტით და გიდის სრული თანხლებით საქართველოს საუკეთესო მიმართულებებით" },
+  "tours.subtitle":       { ru: "Комплексные путешествия на несколько дней — жильё, транспорт и гид уже включены, вам остаётся только наслаждаться", en: "All-inclusive multi-day adventures — accommodation, transport and guide already included, all you need to do is enjoy", ka: "რამდენიმე დღიანი კომპლექსური მოგზაურობები — საცხოვრებელი, ტრანსპორტი და გიდი უკვე შედის, თქვენ მხოლოდ სიამოვნების მიღება გრჩებათ" },
   "tours.divider.title":  { ru: "Однодневные туры",    en: "Day Tours",          ka: "ერთდღიანი ტურები" },
   "tours.divider.desc":   { ru: "Увлекательные экскурсии на один день по лучшим направлениям Грузии", en: "Exciting one-day excursions to the best destinations in Georgia", ka: "საინტერესო ერთდღიანი ექსკურსიები საქართველოს საუკეთესო მიმართულებებით" },
   "tours.viewall":        { ru: "Все туры и услуги",   en: "All Tours & Services", ka: "ყველა ტური და სერვისი" },
@@ -59,13 +59,13 @@ const translations = {
   "seasons.title":    { ru: "Грузия прекрасна круглый год", en: "Georgia is beautiful all year round", ka: "საქართველო მთელი წლის მანძილზე ულამაზესია" },
   "seasons.subtitle": { ru: "Каждый сезон открывает новые грани этой удивительной страны", en: "Each season reveals new facets of this amazing country", ka: "ყოველი სეზონი ამ საოცარი ქვეყნის ახალ ფასეტებს ავლენს" },
   "seasons.spring":       { ru: "Весна",  en: "Spring",  ka: "გაზაფ���ული" },
-  "seasons.spring.desc":  { ru: "Цветение садов, мягкий климат и зеленые долины", en: "Blossoming gardens, mild climate and green valleys", ka: "ბაღების ყვავილობა, რბილი კლიმატი და მწვანე ველები" },
+  "seasons.spring.desc":  { ru: "Яркие краски природы, цветущие поля и идеальная погода для прогулок", en: "Vibrant colors of nature, blooming fields and perfect weather for exploring", ka: "ბუნების ნათელი ფერები, აყვავებული მინდვრები და გასეირნებისთვის იდეალური ამინდი" },
   "seasons.spring.months":{ ru: "Март - Май", en: "March - May", ka: "მარტი - მაისი" },
   "seasons.summer":       { ru: "Лето",   en: "Summer",  ka: "ზაფხული" },
-  "seasons.summer.desc":  { ru: "Пляжи Батуми, горные походы и фестивали", en: "Batumi beaches, mountain hikes and festivals", ka: "ბათუმის პლაჟები, მთის ლაშქრობები და ფესტივალები" },
+  "seasons.summer.desc":  { ru: "Море, солнце, горные тропы и шумные фестивали под открытым небом", en: "Sea, sunshine, mountain trails and lively open-air festivals", ka: "ზღვა, მზე, მთის ბილიკები და ხმაურიანი ფესტივალები ღია ცის ქვეშ" },
   "seasons.summer.months":{ ru: "Июнь - Август", en: "June - August", ka: "ივნისი - აგვისტო" },
   "seasons.autumn":       { ru: "Осень",  en: "Autumn",  ka: "შემოდგომა" },
-  "seasons.autumn.desc":  { ru: "Сбор винограда, золотые краски и Ртвели", en: "Grape harvest, golden colors and Rtveli", ka: "ყურძნის კრეფა, ოქროსფერი ფერები და რთველი" },
+  "seasons.autumn.desc":  { ru: "Золотые виноградники, праздник Ртвели и тёплые осенние закаты", en: "Golden vineyards, the Rtveli harvest celebration and warm autumn sunsets", ka: "ოქროსფერი ვენახები, რთველის ზეიმი და თბილი შემოდგომის მზის ჩასვლები" },
   "seasons.autumn.months":{ ru: "Сентябрь - Ноябрь", en: "September - November", ka: "სექტემბერი - ნოემბერი" },
   "seasons.winter":       { ru: "Зима",   en: "Winter",  ka: "ზამთარი" },
   "seasons.winter.desc":  { ru: "Горнолыжные курорты, термальные источники", en: "Ski resorts, thermal springs", ka: "სათხილამურო კურორტები, თერმალური წყაროები" },
@@ -93,7 +93,7 @@ const translations = {
   // ── CONTACT ──
   "contact.tag":        { ru: "Связаться с нами",  en: "Contact Us",       ka: "დაგვიკავშირდით" },
   "contact.title":      { ru: "Готовы к путешествию мечты?", en: "Ready for your dream trip?", ka: "მზად ხართ ოცნების მოგზაურობისთვის?" },
-  "contact.desc":       { ru: "Оставьте заявку, и мы свяжемся с вами в течение часа, чтобы помочь спланировать идеальное путешествие по Грузии.", en: "Leave a request and we will contact you within an hour to help plan the perfect trip to Georgia.", ka: "დატოვეთ მოთხოვნა და ჩვენ ერთ საათში დაგიკავშირდებით, რომ დაგეხმაროთ იდეალური მოგზაურობის დაგეგმვაში საქართველოში." },
+  "contact.desc":       { ru: "Оставьте заявку, и мы свяжемся с вами в течение часа, чтобы помочь спланир����вать идеальное путешествие по Грузии.", en: "Leave a request and we will contact you within an hour to help plan the perfect trip to Georgia.", ka: "დატოვეთ მოთხოვნა და ჩვენ ერთ საათში დაგიკავშირდებით, რომ დაგეხმაროთ იდეალური მოგზაურობის დაგეგმვაში საქართველოში." },
   "contact.address.title": { ru: "Адрес",   en: "Address",    ka: "მისამართი" },
   "contact.address":       { ru: "Тбилиси, ул. Руставели 24", en: "24 Rustaveli Ave, Tbilisi", ka: "თბილისი, რუსთაველის გამზ. 24" },
   "contact.phone.title":   { ru: "Телефон", en: "Phone",      ka: "ტელეფონი" },
@@ -179,7 +179,7 @@ const translations = {
 
   // ── SERVICES FAQ missing ──
   "services.faq.q5":        { ru: "На каких языках работают гиды?", en: "What languages do the guides speak?", ka: "რა ენებზე მუშაობენ გიდები?" },
-  "services.faq.a5":        { ru: "Русский и английский — основные. По запросу: грузинский, немецкий, французский. Уточняйте при бронировании.", en: "Russian and English are the main languages. Upon request: Georgian, German, French. Specify when booking.", ka: "რუსული და ინგლისური — ძირითადი. მოთხოვნით: ქართული, გერმანული, ფრანგული. დააზუსტეთ ჯავშანის დროს." },
+  "services.faq.a5":        { ru: "Русский и английский — основные. По запросу: грузинский, немецкий, французский. Уточняйте при бронировании.", en: "Russian and English are the main languages. Upon request: Georgian, German, French. Specify when booking.", ka: "რუსული და ინგლისური — ძირითადი. მო��ხოვნით: ქართული, გერმანული, ფრანგული. დააზუსტეთ ჯავშანის დროს." },
 
   // ── SERVICES PAGE ──
   "services.hero.tag":     { ru: "Премиум туры",    en: "Premium Tours",    ka: "პრემიუმ ტურები" },
@@ -239,7 +239,7 @@ const translations = {
   "services.faq.title":     { ru: "Частые вопросы",   en: "Frequently Asked", ka: "ხშირი კითხვები" },
   "services.faq.sub":       { ru: "Не нашли ответ — пишите напрямую, мы отвечаем быстро.", en: "Didn't find an answer — write to us directly, we respond quickly.", ka: "პასუხი ვერ იპოვეთ — პირდაპირ მოგვწერეთ, სწრაფად ვპასუხობთ." },
   "services.faq.q1":        { ru: "Нужна ли виза в Грузию?", en: "Do I need a visa for Georgia?", ka: "საჭიროა თუ არა ვიზა საქართველოში?" },
-  "services.faq.a1":        { ru: "Гражданам России, Украины, Беларуси, Казахстана и большинства стран СНГ — безвизовый въезд на 365 дней. Гражданам ЕС и США — аналогично.", en: "Citizens of Russia, Ukraine, Belarus, Kazakhstan and most CIS countries — visa-free entry for 365 days. EU and US citizens — similarly.", ka: "რუსეთის, უკრაინის, ბელარუსის, ყაზახეთის და დსთ-ს უმეტესი ქვეყნების მოქალაქეები — უვიზო შესვლა 365 დღით. ევროკავშირისა და აშშ-ის მოქალაქეები — ანალოგიურად." },
+  "services.faq.a1":        { ru: "Гражданам России, Украины, Беларуси, Казахстана и большинства стран СНГ — безвизовый въезд на 365 дней. Гражданам ЕС и США — аналогично.", en: "Citizens of Russia, Ukraine, Belarus, Kazakhstan and most CIS countries — visa-free entry for 365 days. EU and US citizens — similarly.", ka: "რუსეთის, უკრაინის, ბელარუსის, ყაზახეთის და დსთ-ს უმეტესი ქვეყნების მოქალაქეები — უვიზო შესვლა 365 დღით. ევრო�����ვშირისა და აშშ-ის მოქალაქეები — ანალოგიურად." },
   "services.faq.q2":        { ru: "Можно ли забронировать тур для группы?", en: "Can I book a tour for a group?", ka: "შესაძლებელია ჯგუფური ტურის დაჯავშნა?" },
   "services.faq.a2":        { ru: "Да! Работаем с группами от 1 до 50+ человек. Для больших групп — специальные условия и скидки. Свяжитесь с нами для расчёта.", en: "Yes! We work with groups from 1 to 50+ people. Special conditions and discounts for large groups. Contact us for a quote.", ka: "კი! ვმუშაობთ 1-დან 50+ ადამიანის ჯგუფებთან. დიდი ჯგუფებისთვის — სპეციალური პირობები და ფასდაკლებები. დაგვიკავშირდით გაანგარიშებისთვის." },
   "services.faq.q3":        { ru: "Какие способы оплаты принимаете?", en: "What payment methods do you accept?", ka: "რა გადახდის მეთოდებს იღებთ?" },
@@ -265,7 +265,7 @@ const translations = {
   "blog.article1.title":  { ru: "10 причин посетить Сванетию этим летом", en: "10 Reasons to Visit Svaneti This Summer", ka: "10 მიზეზი, რატომ უნდა ეწვიოთ სვანეთს ამ ზაფხულს" },
   "blog.article1.desc":   { ru: "Сванетия — это горный рай с средневековыми башнями, ледниками и невероятными пейзажами. Узнайте, почему этот регион стоит включить в ваш маршрут.", en: "Svaneti is a mountain paradise with medieval towers, glaciers and incredible landscapes. Find out why this region is worth including in your itinerary.", ka: "სვანეთი მთის სამოთხეა შუასაუკუნეების კოშკებით, მყინვარებითა და წარმოუდგენელი პეიზაჟებით. გაიგეთ, რატომ ღირს ამ რეგიონის თქვენს მარშრუტში ჩართვა." },
   "blog.article2.title":  { ru: "Гид по грузинскому вину: от Саперави до Хванчкары", en: "Guide to Georgian Wine: From Saperavi to Khvanchkara", ka: "ქართული ღვინის გიდი: საფერავიდან ხვანჭკარამდე" },
-  "blog.article2.desc":   { ru: "Грузия — родина виноделия с 8000-летней историей. Расскажем о главных сортах, которые стоит попробовать в вашем путешествии.", en: "Georgia is the birthplace of winemaking with an 8000-year history. We'll tell you about the main varieties worth trying on your trip.", ka: "საქართველო მეღვინეობის სამშობლოა 8000 წლიანი ისტორიით. მოგიყვებით მთავარი ჯიშების შესახებ, რომლებიც მოგზაურობაში ღირს დააგემოვნოთ." },
+  "blog.article2.desc":   { ru: "Грузия — родина виноделия с 8000-летней историей. Расскажем о главных сортах, которые стоит попробовать в вашем путешествии.", en: "Georgia is the birthplace of winemaking with an 8000-year history. We'll tell you about the main varieties worth trying on your trip.", ka: "საქართველო მეღვინეობის სამშობლოა 8000 წლიანი ისტორიით. მოგიყვებით მთავარი ჯიშების შესახებ, რომლები��� მოგზაურობაში ღირს დააგემოვნოთ." },
   "blog.article3.title":  { ru: "Тбилиси за 48 часов: идеальный маршрут", en: "Tbilisi in 48 Hours: The Perfect Itinerary", ka: "თბილისი 48 საათში: იდეალური მარშრუტი" },
   "blog.article3.desc":   { ru: "Как провести два дня в столице Грузии с максимальной пользой — от старого города до современных кварталов.", en: "How to spend two days in the capital of Georgia most effectively — from the old town to modern districts.", ka: "როგორ გაატაროთ ორი დღე საქართველოს დედაქალაქში მაქსიმალური სარგებლით — ძველი ქალაქიდან თანამედროვე კვარტლებამდე." },
   "blog.article4.title":  { ru: "Военно-Грузинская дорога: путешествие к небу", en: "Georgian Military Highway: Journey to the Sky", ka: "საქართველოს სამხედრო გზა: მოგზაურობა ცისკენ" },
@@ -309,9 +309,9 @@ const translations = {
   "region.racha.badge":   { ru: "Горы",             en: "Mountains",        ka: "მთები" },
   "region.guria":         { ru: "Гурия",            en: "Guria",            ka: "გურია" },
   "region.guria.desc":    { ru: "Чайные плантации, Уреки с магнитными песками", en: "Tea plantations, Ureki with magnetic sands", ka: "ჩაის პლანტაციები, ურეკი მაგნიტური ქვიშებით" },
-  "region.guria.badge":   { ru: "Природа",          en: "Nature",           ka: "ბუნება" },
+  "region.guria.badge":   { ru: "Приро��а",          en: "Nature",           ka: "ბუნება" },
   "region.abkhazia":      { ru: "Абхазия",          en: "Abkhazia",         ka: "აფხაზეთი" },
-  "region.abkhazia.desc": { ru: "Историческая область Грузии, Новый Афон, озеро Рица", en: "Historic region of Georgia, New Athos, Lake Ritsa", ka: "საქართველოს ისტორიული მხარე, ახალი ათონი, რიწის ტბა" },
+  "region.abkhazia.desc": { ru: "Историческая область Грузии, Новый Афон, озеро Рица", en: "Historic region of Georgia, New Athos, Lake Ritsa", ka: "საქართვ���ლ��ს ისტორიული მხარე, ახალი ათონი, რიწის ტბა" },
   "region.abkhazia.badge":{ ru: "Историческая область", en: "Historic Region", ka: "ისტორიული მხარე" },
 
   // ── COUNTRIES for review form ──

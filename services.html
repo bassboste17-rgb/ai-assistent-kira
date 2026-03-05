@@ -523,22 +523,135 @@
     .service-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
 
     /* ── Why us ── */
+    .why-section {
+      background: var(--color-primary, #1a1a2e);
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 0;
+    }
+    .why-section::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .why-section::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .why-section .section-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .why-section .section-tag {
+      color: var(--color-accent, #c9a96e);
+      border-color: rgba(201,169,110,0.3);
+    }
+    .why-section .section-title {
+      color: #fff;
+    }
     .why-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
     }
-    .why-item { text-align: center; padding: 1.5rem 1rem; }
+    @media (max-width: 900px) {
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+    .why-item {
+      text-align: center;
+      padding: 2.2rem 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.4s ease, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--color-accent, #c9a96e), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .why-item:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(201,169,110,0.25);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+    .why-item:hover::before {
+      opacity: 1;
+    }
+    .why-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(201,169,110,0.12);
+      color: var(--color-accent, #c9a96e);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .why-item:hover .why-icon {
+      background: rgba(201,169,110,0.2);
+      transform: scale(1.08);
+    }
     .why-number {
       font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
+      font-size: 3rem;
       font-weight: 700;
-      color: rgba(212,175,55,0.15);
+      color: #fff;
       line-height: 1;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
     }
-    .why-title { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.4rem; }
-    .why-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+    .why-number .why-suffix {
+      color: var(--color-accent, #c9a96e);
+    }
+    .why-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .why-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+    }
+    .why-divider {
+      width: 30px;
+      height: 2px;
+      background: var(--color-accent, #c9a96e);
+      margin: 0 auto 0.8rem;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
 
     /* ── Process ── */
     .process-grid {
@@ -669,8 +782,64 @@
 </head>
 <body>
 
-  <!-- Navbar (loaded from components/navbar.html) -->
-  <div id="navbar-placeholder"></div>
+  <!-- Navbar -->
+  <div id="navbar-placeholder"><nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <a href="home.html" class="navbar-logo">
+      <span class="logo-text">DAMQ</span>
+      <span class="logo-divider"></span>
+      <span class="logo-sub">TRAVEL</span>
+    </a>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="home.html" class="nav-link" data-nav="home" data-i18n="nav.home">Главная</a></li>
+      <li><a href="services.html" class="nav-link" data-nav="services" data-i18n="nav.services">Услуги</a></li>
+      <li><a href="blog.html" class="nav-link" data-nav="blog" data-i18n="nav.blog">Блог</a></li>
+      <li><a href="contact.html" class="nav-link" data-nav="contact" data-i18n="nav.contacts">Контакты</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-current" id="langToggle" aria-label="Change language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="langLabel">RU</span>
+          <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+          <button class="lang-option active" data-lang="ru"><span class="lang-flag">RU</span><span>Русский</span></button>
+          <button class="lang-option" data-lang="en"><span class="lang-flag">EN</span><span>English</span></button>
+          <button class="lang-option" data-lang="ka"><span class="lang-flag">KA</span><span>ქართული</span></button>
+        </div>
+      </div>
+      <a href="tel:+995555000000" class="navbar-phone">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>+995 555 000 000</span>
+      </a>
+      <a href="contact.html" class="btn-cta-nav" data-i18n="nav.book">Забронировать</a>
+      <button type="button" class="navbar-toggle" id="navToggle" aria-label="Toggle menu">
+        <svg class="toggle-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="toggle-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="18" y1="18" x2="6" y2="6"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <ul class="mobile-links">
+        <li><a href="home.html" class="mobile-link" data-nav="home" data-i18n="nav.home">Главная</a></li>
+        <li><a href="services.html" class="mobile-link" data-nav="services" data-i18n="nav.services">Услуги</a></li>
+        <li><a href="blog.html" class="mobile-link" data-nav="blog" data-i18n="nav.blog">Блог</a></li>
+        <li><a href="contact.html" class="mobile-link" data-nav="contact" data-i18n="nav.contacts">Контакты</a></li>
+      </ul>
+      <div class="mobile-lang-switcher">
+        <button class="mobile-lang-btn active" data-lang="ru">RU</button>
+        <button class="mobile-lang-btn" data-lang="en">EN</button>
+        <button class="mobile-lang-btn" data-lang="ka">KA</button>
+      </div>
+      <div class="mobile-menu-footer">
+        <a href="tel:+995555000000" class="mobile-phone">+995 555 000 000</a>
+        <a href="contact.html" class="btn-cta-nav mobile-cta" data-i18n="nav.book">Забронировать</a>
+      </div>
+    </div>
+  </div>
+</nav></div>
 
   <!-- Hero -->
   <section class="page-hero">
@@ -840,7 +1009,7 @@
   </section>
 
   <!-- Why Us -->
-  <section class="section-wrap">
+  <section class="why-section">
     <div class="section-inner">
       <div class="section-head aos">
         <div class="section-tag" data-i18n="services.why.tag">Почему мы</div>
@@ -848,22 +1017,38 @@
       </div>
       <div class="why-grid">
         <div class="why-item aos delay-1">
-          <div class="why-number">8+</div>
-          <div class="why-title" data-i18n="services.why.1.title">��ет опыта</div>
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="why-number"><span class="why-counter" data-target="8">0</span><span class="why-suffix">+</span></div>
+          <div class="why-divider"></div>
+          <div class="why-title" data-i18n="services.why.1.title">Лет опыта</div>
           <div class="why-desc" data-i18n="services.why.1.desc">Работаем с туристами со всего мира с 2016 года</div>
         </div>
         <div class="why-item aos delay-2">
-          <div class="why-number">5K+</div>
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="why-number"><span class="why-counter" data-target="5000" data-display="5K">0</span><span class="why-suffix">+</span></div>
+          <div class="why-divider"></div>
           <div class="why-title" data-i18n="services.why.2.title">Довольных клиентов</div>
           <div class="why-desc" data-i18n="services.why.2.desc">Тысячи путешественников уже открыли для себя Грузию с нами</div>
         </div>
         <div class="why-item aos delay-3">
-          <div class="why-number">4.9</div>
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="why-number"><span class="why-counter" data-target="4.9" data-decimals="1">0</span></div>
+          <div class="why-divider"></div>
           <div class="why-title" data-i18n="services.why.3.title">Средний рейтинг</div>
           <div class="why-desc" data-i18n="services.why.3.desc">Высочайшая оценка по всем платформам отзывов</div>
         </div>
         <div class="why-item aos delay-4">
-          <div class="why-number">30+</div>
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          </div>
+          <div class="why-number"><span class="why-counter" data-target="30">0</span><span class="why-suffix">+</span></div>
+          <div class="why-divider"></div>
           <div class="why-title" data-i18n="services.why.4.title">Маршрутов</div>
           <div class="why-desc" data-i18n="services.why.4.desc">Уникальные авторские программы по всей Грузии</div>
         </div>
@@ -919,7 +1104,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-q"><span data-i18n="services.faq.q2">Можно ли забронировать тур для группы?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-          <div class="faq-a"><p data-i18n="services.faq.a2">Да! Работаем с группами от 1 до 50+ человек. Для больших групп — специальные условия и скидки. Свяжитесь с нами для расчёта.</p></div>
+          <div class="faq-a"><p data-i18n="services.faq.a2">Да! Работаем с группами ��т 1 до 50+ человек. Для больших групп — специальные условия и скидки. Свяжитесь с нами для расчёта.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span data-i18n="services.faq.q3">Какие способы оплаты принимаете?</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
@@ -1014,6 +1199,10 @@
       const lang = getLang();
       return t['desc_' + lang] || t.desc || '';
     }
+    function truncate(str, max) {
+      if (!str) return '';
+      return str.length > max ? str.slice(0, max) + '...' : str;
+    }
 
     /* Normalize new-format tour */
     function normalizeTour(t, source) {
@@ -1069,7 +1258,7 @@
           <div class="tour-card-body">
             ${t.location ? `<div class="tour-card-location"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${t.location}</div>` : ''}
             <h3 class="tour-card-title">${localName(t) || _t('detail.notitle')}</h3>
-            ${localDesc(t) ? `<p class="tour-card-desc">${localDesc(t)}</p>` : ''}
+                ${localDesc(t) ? `<p class="tour-card-desc">${truncate(localDesc(t), 200)}</p>` : ''}
             ${includes.length ? `<div class="tour-card-includes">${includes.map(i => `<span class="include-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${i}</span>`).join('')}</div>` : ''}
             <div class="tour-card-meta">
               ${t.duration ? `<span class="meta-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${t.duration}</span>` : ''}
@@ -1175,6 +1364,36 @@
       document.getElementById('toursSubtitle').textContent = '';
     }
 
+    // ── Dynamic "Why Us" stats from Firebase ──
+    try {
+      // 1) Average rating from reviews
+      const allReviews = await rtdbGetAll('reviews');
+      const approved = allReviews.filter(r => r.status === 'approved' || !r.status);
+      if (approved.length > 0) {
+        const totalRating = approved.reduce((sum, r) => sum + (parseFloat(r.rating) || 5), 0);
+        const avgRating = (totalRating / approved.length).toFixed(1);
+        const ratingEl = document.querySelector('.why-counter[data-decimals="1"]');
+        if (ratingEl) {
+          ratingEl.dataset.target = avgRating;
+        }
+      }
+
+      // 2) Total routes = dayTours + multiDayTours
+      const totalRoutes = (allDayTours ? allDayTours.length : 0) + (allMultiTours ? allMultiTours.length : 0);
+      if (totalRoutes > 0) {
+        const routesEl = document.querySelector('.why-item:last-child .why-counter');
+        if (routesEl) {
+          routesEl.dataset.target = totalRoutes;
+          routesEl.removeAttribute('data-display');
+        }
+      }
+    } catch(e) {
+      console.error('Why-us stats error:', e);
+    }
+
+    // Signal that stats are ready
+    window.dispatchEvent(new Event('whyStatsReady'));
+
     // AOS
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
@@ -1190,6 +1409,64 @@
         if (!isOpen) item.classList.add('open');
       });
     });
+  </script>
+
+  <!-- Counter Animation -->
+  <script>
+    (function() {
+      function animateCounter(el) {
+        const target = parseFloat(el.dataset.target);
+        const display = el.dataset.display;
+        const decimals = parseInt(el.dataset.decimals) || 0;
+        const duration = 2000;
+        const start = performance.now();
+
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = eased * target;
+
+          if (display) {
+            if (display.includes('K')) {
+              const ratio = current / target;
+              const num = (ratio * parseFloat(display)).toFixed(current < target ? 1 : 0);
+              el.textContent = progress >= 1 ? display : num + 'K';
+            } else {
+              el.textContent = progress >= 1 ? display : Math.floor(current).toString();
+            }
+          } else if (decimals > 0) {
+            el.textContent = current.toFixed(decimals);
+          } else {
+            el.textContent = Math.floor(current).toString();
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          }
+        }
+        requestAnimationFrame(update);
+      }
+
+      function startObserver() {
+        const grid = document.querySelector('.why-grid');
+        if (!grid) return;
+        const observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.querySelectorAll('.why-counter').forEach(animateCounter);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+        observer.observe(grid);
+      }
+
+      // Wait for Firebase module to finish loading dynamic stats
+      window.addEventListener('whyStatsReady', startObserver);
+      // Fallback: if event already fired or never fires, start after 4s
+      setTimeout(startObserver, 4000);
+    })();
   </script>
 </body>
 </html>

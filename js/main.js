@@ -427,34 +427,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Georgian regions as markers
     const locations = [
-      { lat: 41.7151, lng: 44.8271, title: 'Тбилиси', desc: 'Столица Грузии, старый город с серными банями', badge: 'Столица', region: 'tbilisi', image: 'images/regions/tbilisi.jpg' },
-      { lat: 41.8395, lng: 45.3520, title: 'Кахетия', desc: 'Сигнахи, Телави, винные погреба и виноградники', badge: 'Вино', region: 'kakheti', image: 'images/regions/kakheti.jpg' },
-      { lat: 42.6560, lng: 44.6387, title: 'Мцхета-Мтианети', desc: 'Казбеги, монастырь Джвари, Военно-Грузинская дорога', badge: 'Горы', region: 'mtskheta', image: 'images/regions/mtskheta.jpg' },
-      { lat: 41.6410, lng: 41.6340, title: 'Аджария', desc: 'Батуми, Черноморское побережье, современная архитектура', badge: 'Побережье', region: 'adjara', image: 'images/regions/adjara.jpg' },
-      { lat: 42.2679, lng: 42.6990, title: 'Имеретия', desc: 'Кутаиси, храм Баграти, пещера Прометея', badge: 'Культура', region: 'imereti', image: 'images/regions/imereti.jpg' },
-      { lat: 42.5090, lng: 41.8710, title: 'Самегрело', desc: 'Мартвильский каньон, каньон Окаце, озеро Палиастоми', badge: 'Природа', region: 'samegrelo', image: 'images/regions/samegrelo.jpg' },
-      { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe', image: 'images/regions/samtskhe.jpg' },
-      { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli', image: 'images/regions/shida-kartli.jpg' },
-      { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli', image: 'images/regions/kvemo-kartli.jpg' },
-      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha', image: 'images/regions/racha.jpg' },
-      { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria', image: 'images/regions/guria.jpg' },
-      { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia', image: 'images/regions/abkhazia.jpg' }
+      { lat: 41.7151, lng: 44.8271, titleKey: 'region.tbilisi', descKey: 'region.tbilisi.desc', badgeKey: 'region.tbilisi.badge', region: 'tbilisi', image: 'images/regions/tbilisi.jpg' },
+      { lat: 41.6453, lng: 45.9527, titleKey: 'region.kakheti', descKey: 'region.kakheti.desc', badgeKey: 'region.kakheti.badge', region: 'kakheti', image: 'images/regions/kakheti.jpg' },
+      { lat: 42.4533, lng: 44.7218, titleKey: 'region.mtskheta', descKey: 'region.mtskheta.desc', badgeKey: 'region.mtskheta.badge', region: 'mtskheta', image: 'images/regions/mtskheta.jpg' },
+      { lat: 41.6168, lng: 41.6367, titleKey: 'region.adjara', descKey: 'region.adjara.desc', badgeKey: 'region.adjara.badge', region: 'adjara', image: 'images/regions/adjara.jpg' },
+      { lat: 42.2679, lng: 42.6946, titleKey: 'region.imereti', descKey: 'region.imereti.desc', badgeKey: 'region.imereti.badge', region: 'imereti', image: 'images/regions/imereti.jpg' },
+      { lat: 42.5090, lng: 41.8710, titleKey: 'region.samegrelo', descKey: 'region.samegrelo.desc', badgeKey: 'region.samegrelo.badge', region: 'samegrelo', image: 'images/regions/samegrelo.jpg' },
+      { lat: 41.3780, lng: 43.4050, titleKey: 'region.samtskhe', descKey: 'region.samtskhe.desc', badgeKey: 'region.samtskhe.badge', region: 'samtskhe', image: 'images/regions/samtskhe.jpg' },
+      { lat: 42.3450, lng: 43.9960, titleKey: 'region.shida', descKey: 'region.shida.desc', badgeKey: 'region.shida.badge', region: 'shida-kartli', image: 'images/regions/shida-kartli.jpg' },
+      { lat: 41.4430, lng: 44.4870, titleKey: 'region.kvemo', descKey: 'region.kvemo.desc', badgeKey: 'region.kvemo.badge', region: 'kvemo-kartli', image: 'images/regions/kvemo-kartli.jpg' },
+      { lat: 42.6820, lng: 43.4270, titleKey: 'region.racha', descKey: 'region.racha.desc', badgeKey: 'region.racha.badge', region: 'racha', image: 'images/regions/racha.jpg' },
+      { lat: 41.9730, lng: 42.1110, titleKey: 'region.guria', descKey: 'region.guria.desc', badgeKey: 'region.guria.badge', region: 'guria', image: 'images/regions/guria.jpg' },
+      { lat: 43.0096, lng: 41.0230, titleKey: 'region.abkhazia', descKey: 'region.abkhazia.desc', badgeKey: 'region.abkhazia.badge', region: 'abkhazia', image: 'images/regions/abkhazia.jpg' }
     ];
 
+    function getPopupHtml(loc) {
+      const curLang = window.currentLang || localStorage.getItem('damq_lang') || 'ru';
+      const tr = (key) => window.t ? window.t(key, curLang) : key;
+      return '<div class="map-popup">' +
+        '<div class="map-popup-img"><img src="' + loc.image + '" alt="' + tr(loc.titleKey) + '" loading="lazy"></div>' +
+        '<div class="map-popup-body">' +
+          '<h3 class="map-popup-title">' + tr(loc.titleKey) + '</h3>' +
+          '<p class="map-popup-desc">' + tr(loc.descKey) + '</p>' +
+          '<span class="map-popup-badge">' + tr(loc.badgeKey) + '</span>' +
+          '<a href="services.html" class="map-popup-link">' + tr('map.more') + ' &rarr;</a>' +
+        '</div>' +
+      '</div>';
+    }
+
+    const mapMarkers = [];
     locations.forEach(loc => {
       const marker = L.marker([loc.lat, loc.lng], { icon: regionIcon }).addTo(map);
-      marker.bindPopup(
-        '<div class="map-popup">' +
-          '<div class="map-popup-img"><img src="' + loc.image + '" alt="' + loc.title + '" loading="lazy"></div>' +
-          '<div class="map-popup-body">' +
-            '<h3 class="map-popup-title">' + loc.title + '</h3>' +
-            '<p class="map-popup-desc">' + loc.desc + '</p>' +
-            '<span class="map-popup-badge">' + loc.badge + '</span>' +
-            '<a href="services.html" class="map-popup-link">Подробнее &rarr;</a>' +
-          '</div>' +
-        '</div>',
-        { maxWidth: 280, minWidth: 240, className: 'custom-popup' }
-      );
+      marker.bindPopup(getPopupHtml(loc), { maxWidth: 280, minWidth: 240, className: 'custom-popup' });
+      mapMarkers.push({ marker, loc });
+    });
+
+    // Re-bind popups when language changes
+    window.addEventListener('langChanged', function() {
+      mapMarkers.forEach(function(item) {
+        item.marker.setPopupContent(getPopupHtml(item.loc));
+      });
     });
 
     // Enable scroll zoom on focus
