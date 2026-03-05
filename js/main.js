@@ -49,11 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Scroll effect
     function handleScroll() {
-      // if mobile menu is open we skip resizing/toggling so the overlay isn't hidden
-      if (document.body.classList.contains('menu-open')) {
-        return;
-      }
-
       if (window.scrollY > 80) {
         navbar.classList.add('scrolled');
       } else {
@@ -83,22 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mobile menu toggle
     if (toggle && mobileMenu) {
-      let savedScrollY = 0;
-
       function openMenu() {
         toggle.classList.add('active');
         mobileMenu.classList.add('active');
-        savedScrollY = window.scrollY;
         document.body.classList.add('menu-open');
-        document.body.style.top = `-${savedScrollY}px`;
       }
 
       function closeMenu() {
         toggle.classList.remove('active');
         mobileMenu.classList.remove('active');
         document.body.classList.remove('menu-open');
-        document.body.style.top = '';
-        window.scrollTo(0, savedScrollY);
       }
 
       toggle.addEventListener('click', () => {

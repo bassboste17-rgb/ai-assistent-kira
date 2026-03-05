@@ -1945,41 +1945,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ---------- Season cards below map ---------- */
-.season-cards {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 2.5rem;
-}
-
-.season-card {
-  flex: 1 1 200px;
-  background: var(--color-white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  text-align: center;
-  padding: 1.5rem 1rem;
-  transition: transform var(--transition);
-}
-
-.season-card:hover {
-  transform: translateY(-3px);
-}
-
-.season-card h4 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 0.5rem;
-}
-
-@media (max-width: 768px) {
-  .season-cards {
-    flex-direction: column;
-    align-items: center;
-  }
-}
+/* Seasons section styles are inlined in home.html */
 
 .custom-popup .leaflet-popup-content-wrapper {
   padding: 0 !important;
