@@ -4,7 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---------- Load Footer ---------- */
+  /* ---------- Load Component ---------- */
   async function loadComponent(id, path) {
     try {
       const res = await fetch(path);
@@ -19,13 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Navbar is inlined in HTML, init immediately
-  initNavbar();
-  initLangSwitcher();
+  /* ---------- Detect active page ---------- */
+  function setActivePage() {
+    const path = window.location.pathname.split('/').pop() || 'home.html';
+    const page = path.replace('.html', '') || 'home';
+    document.querySelectorAll('[data-page]').forEach(link => {
+      link.classList.toggle('active', link.getAttribute('data-page') === page);
+    });
+  }
 
-  // Load footer, then init everything else
-  loadComponent('footer-placeholder', 'components/footer.html').then(() => {
-    // Re-apply translations to newly loaded footer
+  // Load navbar and footer, then init everything
+  Promise.all([
+    loadComponent('navbar-placeholder', 'components/navbar.html'),
+    loadComponent('footer-placeholder', 'components/footer.html')
+  ]).then(() => {
+    setActivePage();
+    initNavbar();
+    initLangSwitcher();
+
+    // Apply translations to loaded components
     const lang = localStorage.getItem('damq_lang') || 'ru';
     if (window.setLanguage) window.setLanguage(lang);
 
