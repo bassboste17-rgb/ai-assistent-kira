@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Scroll effect
     function handleScroll() {
-      // if mobile menu is open we skip resizing/toggling so the overlay isn't hidden
+      // if mobile menu is open we skip so the navbar stays in menu-open state
       if (mobileMenu && mobileMenu.classList.contains('active')) {
         return;
       }
@@ -84,9 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile menu toggle
     if (toggle && mobileMenu) {
       toggle.addEventListener('click', () => {
+        const isOpening = !mobileMenu.classList.contains('active');
         toggle.classList.toggle('active');
         mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        document.body.style.overflow = isOpening ? 'hidden' : '';
+        
+        if (isOpening) {
+          navbar.classList.add('menu-open');
+        } else {
+          navbar.classList.remove('menu-open');
+          // Re-evaluate scroll state after closing
+          if (window.scrollY > 80) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        }
       });
     }
 
@@ -95,7 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
       link.addEventListener('click', () => {
         if (toggle) toggle.classList.remove('active');
         if (mobileMenu) mobileMenu.classList.remove('active');
+        navbar.classList.remove('menu-open');
         document.body.style.overflow = '';
+        // Re-evaluate scroll state
+        if (window.scrollY > 80) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
       });
     });
 
@@ -104,7 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         if (toggle) toggle.classList.remove('active');
         if (mobileMenu) mobileMenu.classList.remove('active');
+        navbar.classList.remove('menu-open');
         document.body.style.overflow = '';
+        if (window.scrollY > 80) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
       });
     });
   }

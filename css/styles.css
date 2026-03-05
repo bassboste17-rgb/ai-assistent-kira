@@ -92,6 +92,12 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
+.navbar.menu-open {
+  background: var(--color-primary);
+  padding: 12px 0;
+  box-shadow: none;
+}
+
 .navbar-container {
   max-width: 1340px;
   margin: 0 auto;
@@ -105,7 +111,8 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 1001;
+  z-index: 1002;
+  position: relative;
 }
 
 .navbar-logo .logo-text {
@@ -219,7 +226,8 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(201, 169, 110, 0.25);
   border-radius: 10px;
   cursor: pointer;
-  z-index: 1001;
+  z-index: 1002;
+  position: relative;
   transition: all var(--transition);
 }
 
@@ -250,8 +258,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   bottom: 0;
   background: var(--color-primary);
-  /* ensure the mobile overlay sits above the navbar (which is z-index:1000) */
-  z-index: 1001;
+  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1944,40 +1951,104 @@ h1, h2, h3, h4, h5, h6 {
   width: 260px !important;
 }
 
-/* ---------- Season cards below map ---------- */
+/* ---------- Seasons Section ---------- */
+.seasons-section {
+  background: var(--color-offwhite);
+}
+
 .season-cards {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 2.5rem;
 }
 
 .season-card {
-  flex: 1 1 200px;
+  flex: 1 1 0;
+  max-width: 300px;
   background: var(--color-white);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-card);
   text-align: center;
-  padding: 1.5rem 1rem;
-  transition: transform var(--transition);
+  padding: 2rem 1.5rem;
+  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1px solid var(--color-light);
 }
 
 .season-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.season-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background: rgba(201, 169, 110, 0.1);
+  border-radius: 50%;
+  color: var(--color-accent);
 }
 
 .season-card h4 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--color-primary);
   margin-bottom: 0.5rem;
 }
 
+.season-card-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.season-card-months {
+  display: inline-block;
+  padding: 4px 14px;
+  background: rgba(201, 169, 110, 0.12);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  letter-spacing: 0.5px;
+}
+
 @media (max-width: 768px) {
   .season-cards {
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .season-card {
+    flex: 1 1 calc(50% - 8px);
+    max-width: none;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .season-cards {
+    gap: 12px;
+  }
+  .season-card {
+    flex: 1 1 calc(50% - 6px);
+    padding: 1.2rem 0.8rem;
+  }
+  .season-card-icon {
+    width: 48px;
+    height: 48px;
+  }
+  .season-card-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  .season-card h4 {
+    font-size: 1rem;
+  }
+  .season-card-desc {
+    font-size: 0.8rem;
   }
 }
 
