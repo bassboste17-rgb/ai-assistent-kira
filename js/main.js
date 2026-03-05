@@ -43,22 +43,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     const toggle = document.getElementById('navToggle');
     const mobileMenu = document.getElementById('mobileMenu');
-    const navLinks = document.querySelectorAll('.nav-link, .mobile-link');
 
     if (!navbar) return;
 
-    // Scroll effect
-    function handleScroll() {
-      // if mobile menu is open we skip so the navbar stays in menu-open state
-      if (mobileMenu && mobileMenu.classList.contains('active')) {
-        return;
-      }
+    let menuIsOpen = false;
 
+    // --- helpers ---
+    function openMenu() {
+      if (!toggle || !mobileMenu) return;
+      menuIsOpen = true;
+      toggle.classList.add('active');
+      mobileMenu.classList.add('active');
+      navbar.classList.add('menu-open');
+      navbar.classList.remove('scrolled');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      if (!toggle || !mobileMenu) return;
+      menuIsOpen = false;
+      toggle.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      navbar.classList.remove('menu-open');
+      document.body.style.overflow = '';
+      // restore scroll styling
+      updateScrollState();
+    }
+
+    function updateScrollState() {
+      if (menuIsOpen) return;
       if (window.scrollY > 80) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
+    }
+
+    // --- scroll ---
+    function handleScroll() {
+      updateScrollState();
 
       // Active section tracking
       const sections = document.querySelectorAll('section[id]');
@@ -78,60 +101,31 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    // Mobile menu toggle
+    // --- toggle button ---
     if (toggle && mobileMenu) {
-      toggle.addEventListener('click', () => {
-        const isOpening = !mobileMenu.classList.contains('active');
-        toggle.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        document.body.style.overflow = isOpening ? 'hidden' : '';
-        
-        if (isOpening) {
-          navbar.classList.add('menu-open');
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (menuIsOpen) {
+          closeMenu();
         } else {
-          navbar.classList.remove('menu-open');
-          // Re-evaluate scroll state after closing
-          if (window.scrollY > 80) {
-            navbar.classList.add('scrolled');
-          } else {
-            navbar.classList.remove('scrolled');
-          }
+          openMenu();
         }
       });
     }
 
-    // Close mobile menu on link click
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (toggle) toggle.classList.remove('active');
-        if (mobileMenu) mobileMenu.classList.remove('active');
-        navbar.classList.remove('menu-open');
-        document.body.style.overflow = '';
-        // Re-evaluate scroll state
-        if (window.scrollY > 80) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
+    // --- close on any link / CTA click ---
+    document.querySelectorAll('.nav-link, .mobile-link, .mobile-cta, .btn-cta-nav').forEach(el => {
+      el.addEventListener('click', () => {
+        if (menuIsOpen) closeMenu();
       });
     });
 
-    // Close mobile menu on nav CTA click
-    document.querySelectorAll('.mobile-cta, .btn-cta-nav').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (toggle) toggle.classList.remove('active');
-        if (mobileMenu) mobileMenu.classList.remove('active');
-        navbar.classList.remove('menu-open');
-        document.body.style.overflow = '';
-        if (window.scrollY > 80) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
-      });
+    // --- close on Escape key ---
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuIsOpen) closeMenu();
     });
   }
 
@@ -339,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
       { lat: 41.3780, lng: 43.4050, title: 'Самцхе-Джавахети', desc: 'Пещерный монастырь Вардзия, Боржоми, крепость Рабат', badge: 'История', region: 'samtskhe', image: 'images/regions/samtskhe.jpg' },
       { lat: 42.3450, lng: 43.9960, title: 'Шида Картли', desc: 'Гори, пещерный город Уплисцихе', badge: 'История', region: 'shida-kartli', image: 'images/regions/shida-kartli.jpg' },
       { lat: 41.4430, lng: 44.4870, title: 'Квемо Картли', desc: 'Дманиси, Болнисский Сион', badge: 'Наследие', region: 'kvemo-kartli', image: 'images/regions/kvemo-kartli.jpg' },
-      { lat: 42.6820, lng: 43.4270, title: 'Рача-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha', image: 'images/regions/racha.jpg' },
+      { lat: 42.6820, lng: 43.4270, title: 'Ра��а-Лечхуми', desc: 'Горное вино Хванчкара, озеро Шаори', badge: 'Горы', region: 'racha', image: 'images/regions/racha.jpg' },
       { lat: 41.9730, lng: 42.1110, title: 'Гурия', desc: 'Чайные плантации, Уреки с магнитными песками', badge: 'Природа', region: 'guria', image: 'images/regions/guria.jpg' },
       { lat: 43.0096, lng: 41.0230, title: 'Абхазия', desc: 'Историческая область Грузии, Новый Афон, озеро Рица', badge: 'Историческая область', region: 'abkhazia', image: 'images/regions/abkhazia.jpg' }
     ];

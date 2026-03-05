@@ -79,9 +79,9 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999;
   padding: 20px 0;
-  transition: all var(--transition);
+  transition: background 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease;
 }
 
 .navbar.scrolled {
@@ -93,9 +93,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar.menu-open {
-  background: var(--color-primary);
+  background: var(--color-primary) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   padding: 12px 0;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .navbar-container {
@@ -105,14 +107,14 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 2;
 }
 
 .navbar-logo {
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 1002;
-  position: relative;
 }
 
 .navbar-logo .logo-text {
@@ -226,8 +228,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(201, 169, 110, 0.25);
   border-radius: 10px;
   cursor: pointer;
-  z-index: 1002;
-  position: relative;
   transition: all var(--transition);
 }
 
@@ -250,7 +250,7 @@ h1, h2, h3, h4, h5, h6 {
   display: block !important;
 }
 
-/* Mobile Menu */
+/* Mobile Menu — lives inside the <nav>, uses the nav's z-index */
 .mobile-menu {
   position: fixed;
   top: 0;
@@ -258,18 +258,20 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
   bottom: 0;
   background: var(--color-primary);
-  z-index: 999;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s ease;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 .mobile-menu.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 .mobile-menu-inner {
