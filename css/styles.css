@@ -222,24 +222,32 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  background: rgba(201, 169, 110, 0.1);
-  border: 1px solid rgba(201, 169, 110, 0.25);
+  width: 44px;
+  height: 44px;
+  background: rgba(201, 169, 110, 0.15);
+  border: 1.5px solid rgba(201, 169, 110, 0.35);
   border-radius: 10px;
   cursor: pointer;
   transition: all var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  padding: 0;
 }
 
 .navbar-toggle svg {
   width: 22px;
   height: 22px;
   color: var(--color-accent);
+  pointer-events: none;
 }
 
-.navbar-toggle:hover {
-  background: rgba(201, 169, 110, 0.2);
-  border-color: rgba(201, 169, 110, 0.5);
+.navbar-toggle:hover,
+.navbar-toggle:active {
+  background: rgba(201, 169, 110, 0.25);
+  border-color: rgba(201, 169, 110, 0.6);
 }
 
 .navbar-toggle.active .toggle-open {
@@ -2775,19 +2783,19 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 1024px) {
   .navbar-links {
-    display: none;
+    display: none !important;
   }
   .navbar-phone {
-    display: none;
+    display: none !important;
   }
   .btn-cta-nav:not(.mobile-cta) {
-    display: none;
+    display: none !important;
   }
   .lang-switcher {
-    display: none;
+    display: none !important;
   }
   .navbar-toggle {
-    display: flex;
+    display: flex !important;
   }
   .about-grid {
     grid-template-columns: 1fr;
