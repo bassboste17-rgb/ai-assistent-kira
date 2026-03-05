@@ -34,8 +34,17 @@
       z-index: 9999 !important;
       transition: background 0.3s, box-shadow 0.3s !important;
     }
+    /* Keep toggle button above the mobile overlay */
+    .navbar-toggle {
+      z-index: 10001 !important;
+      position: relative !important;
+    }
+    .navbar-logo {
+      z-index: 10001 !important;
+      position: relative !important;
+    }
 
-    /* ── Mobile menu: fullscreen slide-in overlay ── */
+    /* ── Mobile menu: fullscreen overlay (uses .active from main.js) ── */
     .mobile-menu {
       position: fixed !important;
       top: 0 !important;
@@ -44,28 +53,35 @@
       bottom: 0 !important;
       width: 100% !important;
       height: 100% !important;
-      z-index: 9998 !important;
+      z-index: 10000 !important;
       background: rgba(10,10,10,0.97) !important;
-      transform: translateX(100%) !important;
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1) !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: opacity 0.35s ease, visibility 0.35s ease !important;
       overflow-y: auto !important;
-      display: block !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
-    .mobile-menu.damq-open {
-      transform: translateX(0) !important;
+    .mobile-menu.active {
+      opacity: 1 !important;
+      visibility: visible !important;
     }
     .mobile-menu-inner {
-      padding: 90px 2rem 2rem !important;
+      padding: 2rem !important;
       display: flex !important;
       flex-direction: column !important;
-      min-height: 100% !important;
+      align-items: center !important;
+      text-align: center !important;
     }
 
     /* ── Lock body scroll when menu open ── */
-    body.damq-noscroll {
+    body.menu-open {
       overflow: hidden !important;
       position: fixed !important;
       width: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
     }
 
     /* ── Skeleton shimmer ── */
@@ -374,7 +390,7 @@
       <div class="about-grid">
         <div class="about-image-wrap animate-on-scroll">
           <div class="about-image">
-            <img src="images/about-georgia.jpg" alt="Путешествие по Грузии с DAMQ Travel">
+            <img src="images/about-georgia.jpg" alt="Путеш��ствие по Грузии с DAMQ Travel">
           </div>
           <div class="about-float-card">
             <div class="float-number">8+</div>
@@ -557,6 +573,7 @@
       flex-direction: row;
       gap: 1.25rem;
       margin-top: 2.5rem;
+      flex-wrap: nowrap;
     }
     .season-card {
       flex: 1;
@@ -632,18 +649,22 @@
     }
     @media (max-width: 900px) {
       .seasons-grid {
-        flex-wrap: wrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 0.5rem;
       }
       .season-card {
-        flex: 1 1 calc(50% - 0.625rem);
-        min-width: 200px;
+        min-width: 240px;
+        flex: 0 0 240px;
+        scroll-snap-align: start;
       }
     }
     @media (max-width: 560px) {
-      .seasons-grid {
-        flex-direction: column;
+      .season-card {
+        min-width: 220px;
+        flex: 0 0 220px;
       }
-      .season-card { flex: 1 1 100%; }
     }
   </style>
 

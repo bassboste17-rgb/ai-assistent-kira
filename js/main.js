@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scroll effect
     function handleScroll() {
       // if mobile menu is open we skip resizing/toggling so the overlay isn't hidden
-      if (mobileMenu && mobileMenu.classList.contains('active')) {
+      if (document.body.classList.contains('menu-open')) {
         return;
       }
 
@@ -83,30 +83,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mobile menu toggle
     if (toggle && mobileMenu) {
+      let savedScrollY = 0;
+
+      function openMenu() {
+        toggle.classList.add('active');
+        mobileMenu.classList.add('active');
+        savedScrollY = window.scrollY;
+        document.body.classList.add('menu-open');
+        document.body.style.top = `-${savedScrollY}px`;
+      }
+
+      function closeMenu() {
+        toggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.top = '';
+        window.scrollTo(0, savedScrollY);
+      }
+
       toggle.addEventListener('click', () => {
-        toggle.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        if (mobileMenu.classList.contains('active')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      // Close mobile menu on link click
+      navLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close mobile menu on nav CTA click
+      document.querySelectorAll('.mobile-cta, .btn-cta-nav').forEach(btn => {
+        btn.addEventListener('click', closeMenu);
       });
     }
-
-    // Close mobile menu on link click
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (toggle) toggle.classList.remove('active');
-        if (mobileMenu) mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    });
-
-    // Close mobile menu on nav CTA click
-    document.querySelectorAll('.mobile-cta, .btn-cta-nav').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (toggle) toggle.classList.remove('active');
-        if (mobileMenu) mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-    });
   }
 
   /* ---------- Language Switcher ---------- */
