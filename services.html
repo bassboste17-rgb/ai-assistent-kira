@@ -1208,6 +1208,11 @@
       // Show day tours by default
       switchMainTab('day1');
 
+      // Re-render tours when language changes
+      window.addEventListener('langChanged', () => {
+        switchMainTab(activeMainTab);
+      });
+
     } catch (e) {
       console.error('Firebase error:', e);
       document.getElementById('toursGrid').innerHTML = `
