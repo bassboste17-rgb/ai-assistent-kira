@@ -39,6 +39,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -48,6 +50,9 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -80,6 +85,7 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   z-index: 9999;
   padding: 20px 0;
   transition: background 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease;
@@ -102,8 +108,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar-container {
-  max-width: 1340px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 0 40px;
   display: flex;
   align-items: center;
@@ -527,7 +533,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-stats-inner {
-  max-width: 1340px;
+  width: 100%;
   margin: 0 auto;
   padding: 24px 40px;
   display: grid;
@@ -571,7 +577,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-container {
-  max-width: 1340px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 40px;
 }
@@ -1753,7 +1759,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer-container {
-  max-width: 1340px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 40px;
 }
@@ -2842,7 +2848,6 @@ h1, h2, h3, h4, h5, h6 {
   }
   .navbar-container {
     padding: 0 16px;
-    max-width: 100%;
   }
   .navbar-logo {
     flex-shrink: 0;
@@ -2974,7 +2979,6 @@ h1, h2, h3, h4, h5, h6 {
   }
   .navbar-container {
     padding: 0 12px;
-    max-width: 100%;
   }
   .navbar-logo {
     flex-shrink: 0;
