@@ -3071,9 +3071,13 @@ h1, h2, h3, h4, h5, h6 {
     right: -6px;
   }
   .tours-divider {
+    flex-direction: column;
     margin-top: 40px;
     margin-bottom: 24px;
     gap: 10px;
+  }
+  .tours-divider-line {
+    display: none;
   }
   .tours-divider-content h3 {
     font-size: clamp(20px, 5vw, 28px);
