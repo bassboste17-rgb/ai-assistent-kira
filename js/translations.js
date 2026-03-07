@@ -36,7 +36,7 @@ const translations = {
   // ── TOURS SECTION ──
   "tours.tag":            { ru: "Наши туры",           en: "Our Tours",          ka: "ჩვენი ტურები" },
   "tours.title.full":     { ru: "Полные пакеты туров", en: "Full Tour Packages", ka: "სრული ტურ-პაკეტები" },
-  "tours.subtitle":       { ru: "Комплексные путешествия на несколько дней — жильё, транспорт и гид уже включены, вам остаётся только наслаждаться", en: "All-inclusive multi-day adventures — accommodation, transport and guide already included, all you need to do is enjoy", ka: "რამ���ენიმე დღიანი კომპლექსური მოგზაურობები — საცხოვრებელი, ტრანსპორტი და გიდი უკვე შედის, თქვენ მხოლოდ სიამოვნების მიღება გრჩებათ" },
+  "tours.subtitle":       { ru: "Комплексные путешествия на несколько дней — жильё, транспорт и гид уже включены, вам остаётся только наслаждаться", en: "All-inclusive multi-day adventures — accommodation, transport and guide already included, all you need to do is enjoy", ka: "რამდენიმედღიანი კომპლექსური მოგზაურობები — საცხოვრებელი, ტრანსპორტი და გიდი უკვე შედის, თქვენ მხოლოდ სიამოვნების მიღება გრჩებათ" },
   "tours.divider.title":  { ru: "Однодневные туры",    en: "Day Tours",          ka: "ერთდღიანი ტურები" },
   "tours.divider.desc":   { ru: "Увлекательные экскурсии на один день по лучшим направлениям Грузии", en: "Exciting one-day excursions to the best destinations in Georgia", ka: "საინტერესო ერთდღიანი ექსკურსიები საქართველოს საუკეთესო მიმართულებებით" },
   "tours.viewall":        { ru: "Все туры и услуги",   en: "All Tours & Services", ka: "ყველა ტური და სერვისი" },
@@ -83,7 +83,7 @@ const translations = {
   // ── REVIEWS ──
   "reviews.tag":       { ru: "Отзывы",     en: "Reviews",    ka: "შეფასებები" },
   "reviews.title":     { ru: "Что говорят наши клиенты", en: "What Our Clients Say", ka: "რას ამბობენ ჩვენი კლიენტები" },
-  "reviews.subtitle":  { ru: "Реальные истории и впечатления путешественников, доверивших нам свой отдых", en: "Real stories and impressions of travelers who trusted us with their vacation", ka: "მოგზაურთა რეალური ისტორიები და შთაბეჭდილებები, რომლებმაც ჩვენ ენდნენ" },
+  "reviews.subtitle":  { ru: "Реальные истории и впечатления путешественников, доверивших нам свой отдых", en: "Real stories and impressions of travelers who trusted us with their vacation", ka: "მოგზაურთა რეალური ისტორიები და შთაბეჭდილებები, რომლებმაც თავიანთი დასვენება ჩვენ გვანდეს" },
   "reviews.add.title": { ru: "Оставить отзыв",  en: "Leave a Review",  ka: "დატოვეთ შეფასება" },
   "reviews.add.desc":  { ru: "Поделитесь своими впечатлениями о путешествии с DAMQ Travel", en: "Share your impressions of traveling with DAMQ Travel", ka: "გაგვიზიარეთ თქვენი შთაბეჭდილებები DAMQ Travel-თან მოგზაურობის შესახებ" },
   "reviews.form.first":  { ru: "Имя",      en: "First Name",   ka: "სახელი" },
@@ -121,7 +121,7 @@ const translations = {
   "contact.form.message.ph": { ru: "Расскажите о ваших пожеланиях...", en: "Tell us about your wishes...", ka: "მოგვიყევით თქვენი სურვილების შესახებ..." },
   "contact.form.submit":   { ru: "Отправить заявку",  en: "Send Request",   ka: "მოთხოვნის გაგზავნა" },
   "contact.form.success.title": { ru: "Заявка отправлена!", en: "Request Sent!", ka: "მოთხოვნა გაგზავნილია!" },
-  "contact.form.success.desc":  { ru: "Мы свяжемся с вами в течение часа. Ждите звонка!", en: "We will contact you within an hour. Expect a call!", ka: "ერთ საათში დაგიკავშირდებით. მოიცადეთ ზარი!" },
+  "contact.form.success.desc":  { ru: "Мы свяжемся с вами в течение часа. Ждите звонка!", en: "We will contact you within an hour. Expect a call!", ka: "ერთ საათში დაგიკავშირდებით. დაელოდეთ ზარს!" },
 
   // ── FOOTER ──
   "footer.desc":         { ru: "Откройте для себя Грузию с DAMQ Travel — вашим надёжным партнёром в мире незабываемых путешествий. Мы создаём уникальные маршруты, которые раскрывают красоту и душу этой удивительной страны.", en: "Discover Georgia with DAMQ Travel — your reliable partner in the world of unforgettable trips. We create unique routes that reveal the beauty and soul of this amazing country.", ka: "აღმოაჩინეთ საქართველო DAMQ Travel-თან ერთად — თქვენი საიმედო პარტნიორი დაუვიწყარი მოგზაურობების სამყაროში. ჩვენ ვქმნით უნიკალურ მარშრუტებს, რომლებიც ამ საოცარი ქვეყნის სილამაზესა და სულს ავლენს." },
@@ -227,8 +227,8 @@ const translations = {
   "services.why.2.desc":   { ru: "Тысячи путешественников уже открыли для себя Грузию с нами", en: "Thousands of travelers have already discovered Georgia with us", ka: "ათასობით მოგზაურმა უკვე აღმოაჩინა საქართველო ჩვენთან ერთად" },
   "services.why.3.title":  { ru: "Средний рейтинг",    en: "Average Rating",       ka: "საშუალო რეიტინგი" },
   "services.why.3.desc":   { ru: "Высочайшая оценка по всем платформам отзывов", en: "Highest rating across all review platforms", ka: "უმაღლესი შეფასება ყველა შეფასების პლატფორმაზე" },
-  "services.why.4.title":  { ru: "Маршрутов",          en: "Routes",               ka: "მარშრუტი" },
-  "services.why.4.desc":   { ru: "Уникальные авторские программы по всей Грузии", en: "Unique author programs throughout Georgia", ka: "უნიკალური საავტორო პროგრამები მთელს საქართველოში" },
+  "services.why.4.title":  { ru: "Маршрутов",          en: "Routes",               ka: "მარშრუტები" },
+  "services.why.4.desc":   { ru: "Уникальные авторские программы по всей Грузии", en: "Unique author programs throughout Georgia", ka: "უნიკალური საავტორო პროგრამები მთელ საქართველოში" },
 
   // ── SERVICES - Process ──
   "services.process.tag":   { ru: "Как это работает",   en: "How It Works",   ka: "როგორ მუშაობს" },
@@ -268,6 +268,7 @@ const translations = {
   "blog.title":     { ru: "Блог о путешествиях", en: "Travel Blog", ka: "მოგზაურობის ბლოგი" },
   "blog.subtitle":  { ru: "Истории, советы и вдохновение для ваших путешествий по Грузии", en: "Stories, tips and inspiration for your trips to Georgia", ka: "ისტორიები, რჩევები და შთაგონება თქვენი მოგზაურობისთვის საქართველოში" },
   "blog.readmore":  { ru: "Читать далее", en: "Read More",    ka: "სრულად ნახვა" },
+  "blog.back":      { ru: "Назад в блог", en: "Back to Blog", ka: "ბლოგზე დაბრუნება" },
   "blog.cat.mountains": { ru: "Горы",    en: "Mountains",    ka: "მთები" },
   "blog.cat.wine":      { ru: "Вино",    en: "Wine",         ka: "ღვინო" },
   "blog.cat.cities":    { ru: "Города",  en: "Cities",       ka: "ქალაქები" },

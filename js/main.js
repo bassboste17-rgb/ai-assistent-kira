@@ -402,9 +402,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mapEl = document.getElementById('georgia-map');
     if (!mapEl || typeof L === 'undefined') return;
 
+    // Responsive zoom: 6 for mobile (further away), 8 for desktop
+    const isMobile = window.innerWidth < 768;
+    const initialZoom = isMobile ? 6.2 : 7;
     const map = L.map('georgia-map', {
       center: [42.3154, 43.3569],
-      zoom: 8,
+      zoom: initialZoom,
       scrollWheelZoom: false,
       zoomControl: false
     });
