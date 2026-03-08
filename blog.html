@@ -32,6 +32,60 @@
       to   { transform: scale(1); opacity: 1; }
     }
     .whatsapp-fab:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,0.55); }
+
+    /* -- Page Hero -- */
+    .page-hero {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #0a0a0a;
+      padding-top: 80px;
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .page-hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      transform: scale(1.04);
+      transition: transform 6s ease;
+    }
+    .page-hero:hover .page-hero-bg img { transform: scale(1.0); }
+    .page-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 60%, rgba(10,10,10,0.35) 100%);
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      max-width: 680px;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(212,175,55,0.15);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: #d4af37;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 50px;
+      margin-bottom: 1.4rem;
+      backdrop-filter: blur(8px);
+    }
+    .page-hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5.5vw, 4rem); color: #fff; font-weight: 700; line-height: 1.12; margin-bottom: 1.1rem; }
+    .page-hero-subtitle { color: rgba(255,255,255,0.68); font-size: 1.05rem; line-height: 1.75; }
   </style>
 </head>
 <body>
@@ -96,15 +150,18 @@
 </nav></div>
 
   <!-- Page Header -->
-  <section class="page-header">
-    <div class="page-header-bg">
+  <section class="page-hero">
+    <div class="page-hero-bg">
       <img src="images/hero-georgia.jpg" alt="Блог DAMQ Travel">
     </div>
-    <div class="page-header-overlay"></div>
-    <div class="page-header-content">
-      <div class="section-tag" data-i18n="blog.tag">Наш блог</div>
-      <h1 class="page-header-title" data-i18n="blog.title">Блог о путешествиях</h1>
-      <p class="page-header-subtitle" data-i18n="blog.subtitle">Истории, советы и вдохновение для ваших путешествий по Грузии</p>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="hero-tag">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span data-i18n="blog.tag">Наш блог</span>
+      </div>
+      <h1 class="page-hero-title" data-i18n="blog.title">Блог о путешествиях</h1>
+      <p class="page-hero-subtitle" data-i18n="blog.subtitle">Истории, советы и вдохновение для ваших путешествий по Грузии</p>
     </div>
   </section>
 
@@ -243,9 +300,12 @@
 
     function formatDate(ts) {
       if (!ts) return '';
-      return new Date(ts).toLocaleString(getLang() === 'ka' ? 'ka-GE' : (getLang() === 'en' ? 'en-US' : 'ru-RU'), {
-        day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
-      });
+      const d = new Date(ts);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      return `${day}.${month}.${year} ${time}`;
     }
 
     function renderBlogs(blogs) {
@@ -262,25 +322,22 @@
       grid.innerHTML = blogs.map((b, idx) => {
         const title = b['title_' + lang] || b.title || '';
         const desc = b['desc_' + lang] || b.desc || '';
-        const readTime = b.readTime || 5;
-        const readTimeText = lang === 'ka' ? `${readTime} წთ კითხვა` : (lang === 'en' ? `${readTime} min read` : `${readTime} мин чтения`);
         
         return `
-        <article class="blog-card animate-on-scroll">
+        <article class="blog-card animate-on-scroll" onclick="location.href='blog-detail.html?id=${b.id}'">
           <div class="blog-card-image">
             <img src="${b.image || 'images/placeholder.jpg'}" alt="${title}" loading="lazy">
-          </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span>${formatDate(b.createdAt)}</span>
-              <span>${readTimeText}</span>
+            <div class="blog-card-body">
+              <div class="blog-card-meta">
+                <span>${formatDate(b.createdAt)}</span>
+              </div>
+              <h3 class="blog-card-title">${title}</h3>
+              <p class="blog-card-desc">${desc}</p>
+              <span class="blog-card-link">
+                <span>${window.t ? window.t('blog.readmore', lang) : 'Read More'}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
             </div>
-            <h3 class="blog-card-title">${title}</h3>
-            <p class="blog-card-desc">${desc}</p>
-            <a href="blog-detail.html?id=${b.id}" class="blog-card-link">
-              <span>${window.t ? window.t('blog.readmore', lang) : 'Read More'}</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
           </div>
         </article>
         `;

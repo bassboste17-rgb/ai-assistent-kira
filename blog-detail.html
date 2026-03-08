@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог — DAMQ Travel</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .blog-detail-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 140px 24px 80px;
+    }
+    .bd-meta {
+      display: flex;
+      gap: 16px;
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .bd-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #1a1a2e;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+    .bd-image-wrap {
+      position: relative;
+      margin-bottom: 40px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+    .bd-image {
+      width: 100%;
+      height: 500px; /* Fixed height for consistency */
+      object-fit: cover;
+      display: block;
+    }
+    .bd-actions {
+      position: absolute;
+      top: 30px; /* Moved down a bit */
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 10;
+    }
+    .bd-action-btn {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(4px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a2e;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+    .bd-action-btn:hover {
+      background: #fff;
+      transform: scale(1.1);
+      color: #c9a96e;
+    }
+    .bd-content {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: #444;
+    }
+    .bd-content p { margin-bottom: 24px; }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c9a96e;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #1a1a2e; }
+    .whatsapp-fab {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 90;
+      width: 56px; height: 56px; background: #25d366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4); color: #fff;
+      transition: transform 0.25s;
+    }
+    .whatsapp-fab:hover { transform: scale(1.1); }
+    
+    /* Slider Arrows */
+    .bd-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      background: #1a1a2e;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 5;
+    }
+    .bd-arrow:hover { background: #c9a96e; color: #1a1a2e; border-color: #c9a96e; transform: translateY(-50%) scale(1.1); }
+    .bd-arrow.left { left: 16px; }
+    .bd-arrow.right { right: 16px; }
+
+    /* Lightbox Arrows */
+    .lightbox-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      width: 64px; height: 64px;
+      background: rgba(26, 26, 46, 0.8);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10002;
+    }
+    .lightbox-arrow:hover { background: #c9a96e; color: #1a1a2e; border-color: #c9a96e; transform: translateY(-50%) scale(1.1); }
+    .lightbox-arrow.left { left: 24px; }
+    .lightbox-arrow.right { right: 24px; }
+
+    @media (max-width: 768px) { .bd-image { height: 300px; } }
+  </style>
+</head>
+<body>
+
+  <div id="navbar-placeholder"><nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <a href="home.html" class="navbar-logo">
+      <span class="logo-text">DAMQ</span>
+      <span class="logo-divider"></span>
+      <span class="logo-sub">TRAVEL</span>
+    </a>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="home.html" class="nav-link" data-nav="home" data-i18n="nav.home">Главная</a></li>
+      <li><a href="services.html" class="nav-link" data-nav="services" data-i18n="nav.services">Услуги</a></li>
+      <li><a href="blog.html" class="nav-link active" data-nav="blog" data-i18n="nav.blog">Блог</a></li>
+      <li><a href="contact.html" class="nav-link" data-nav="contact" data-i18n="nav.contacts">Контакты</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-current" id="langToggle" aria-label="Change language">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="langLabel">RU</span>
+          <svg class="lang-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-dropdown" id="langDropdown">
+          <button class="lang-option active" data-lang="ru"><span class="lang-flag">RU</span><span>Русский</span></button>
+          <button class="lang-option" data-lang="en"><span class="lang-flag">EN</span><span>English</span></button>
+          <button class="lang-option" data-lang="ka"><span class="lang-flag">KA</span><span>ქართული</span></button>
+        </div>
+      </div>
+      <a href="tel:+995591674141" class="navbar-phone">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>+995 591 67 41 41</span>
+      </a>
+      <a href="contact.html" class="btn-cta-nav" data-i18n="nav.book">Забронировать</a>
+      <button type="button" class="navbar-toggle" id="navToggle" aria-label="Toggle menu">
+        <svg class="toggle-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg class="toggle-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="18" y1="18" x2="6" y2="6"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <ul class="mobile-links">
+        <li><a href="home.html" class="mobile-link" data-nav="home" data-i18n="nav.home">Главная</a></li>
+        <li><a href="services.html" class="mobile-link" data-nav="services" data-i18n="nav.services">Услуги</a></li>
+        <li><a href="blog.html" class="mobile-link active" data-nav="blog" data-i18n="nav.blog">Блог</a></li>
+        <li><a href="contact.html" class="mobile-link" data-nav="contact" data-i18n="nav.contacts">Контакты</a></li>
+      </ul>
+      <div class="mobile-lang-switcher">
+        <button class="mobile-lang-btn active" data-lang="ru">RU</button>
+        <button class="mobile-lang-btn" data-lang="en">EN</button>
+        <button class="mobile-lang-btn" data-lang="ka">KA</button>
+      </div>
+      <div class="mobile-menu-footer">
+        <a href="tel:+995591674141" class="mobile-phone">+995 591 67 41 41</a>
+        <a href="contact.html" class="btn-cta-nav mobile-cta" data-i18n="nav.book">Забронировать</a>
+      </div>
+    </div>
+  </div>
+</nav></div>
+
+  <div class="blog-detail-wrap">
+    <a href="blog.html" class="back-link">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      <span data-i18n="blog.back">Назад в блог</span>
+    </a>
+
+    <div id="blogContentArea">
+      <div style="text-align:center;padding:4rem;color:#aaa;" data-i18n="blog.loading">Загрузка...</div>
+    </div>
+  </div>
+  
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-arrow left" id="lbPrev"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="lightbox-arrow right" id="lbNext"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div id="footer-placeholder"><footer class="footer">
+  <div class="footer-wave">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,60 C360,120 1080,0 1440,60 L1440,120 L0,120 Z" fill="currentColor"/>
+    </svg>
+  </div>
+  <div class="footer-main">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="home.html" class="footer-logo">
+            <span class="logo-text">DAMQ</span>
+            <span class="logo-divider"></span>
+            <span class="logo-sub">TRAVEL</span>
+          </a>
+          <p class="footer-desc" data-i18n="footer.desc">Откройте для себя Грузию с DAMQ Travel — вашим надёжным партнёром в мире незабываемых путешествий.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" class="social-link" aria-label="Telegram"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+            <a href="#" class="social-link" aria-label="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading" data-i18n="footer.nav">Навигация</h4>
+          <ul class="footer-list">
+            <li><a href="home.html" data-i18n="nav.home">Главная</a></li>
+            <li><a href="services.html" data-i18n="nav.services">Услуги</a></li>
+            <li><a href="home.html#tours" data-i18n="tours.tag">Наши туры</a></li>
+            <li><a href="blog.html" data-i18n="nav.blog">Блог</a></li>
+            <li><a href="contact.html" data-i18n="nav.contacts">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading" data-i18n="footer.popular">Популярные туры</h4>
+          <ul class="footer-list">
+            <li><a href="home.html#tours" data-i18n="footer.tour.tbilisi">Тбилиси и окрестности</a></li>
+            <li><a href="home.html#tours" data-i18n="footer.tour.kazbegi">Казбеги и горы</a></li>
+            <li><a href="home.html#tours" data-i18n="footer.tour.wine">Винный тур по Кахетии</a></li>
+            <li><a href="home.html#tours" data-i18n="footer.tour.svaneti">Сванетия</a></li>
+            <li><a href="home.html#tours" data-i18n="footer.tour.batumi">Батуми и побережье</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading" data-i18n="footer.contacts">Контакты</h4>
+          <ul class="footer-list footer-contacts">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Тбилиси, ул. Руставели 24</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+995591674141">+995 591 67 41 41</a></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:info@damq.ge">info@damq.ge</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-container">
+      <div class="footer-bottom-inner">
+        <p>&copy; 2026 <span data-i18n="footer.copyright">DAMQ Travel. Все права защищены.</span></p>
+        <div class="footer-legal">
+          <a href="#" data-i18n="footer.privacy">Политика конфиденциальности</a>
+          <a href="#" data-i18n="footer.terms">Условия использования</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer></div>
+
+  <a href="https://wa.me/995591674141" target="_blank" class="whatsapp-fab">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="js/translations.js"></script>
+  <script src="js/main.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
+      authDomain: "damqtravel.firebaseapp.com",
+      databaseURL: "https://damqtravel-default-rtdb.firebaseio.com",
+      projectId: "damqtravel",
+      storageBucket: "damqtravel.firebasestorage.app",
+      messagingSenderId: "84352735773",
+      appId: "1:84352735773:web:ec9095f9020b630b1884f4",
+      measurementId: "G-3TFFBQWHNM"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    function toArray(val) {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
+      if (typeof val === 'object') return Object.values(val);
+      return [];
+    }
+
+    function getLang() {
+      return localStorage.getItem('damq_lang') || 'ru';
+    }
+    function formatDate(ts) {
+      if (!ts) return '';
+      const d = new Date(ts);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      return `${day}.${month}.${year} ${time}`;
+    }
+
+    async function loadPost() {
+      const lang = getLang();
+      const notFoundText = window.t ? window.t('blog.notfound', lang) : 'Article not found';
+
+      if (!id) {
+        document.getElementById('blogContentArea').innerHTML = `<p style="text-align:center">${notFoundText}</p>`;
+        return;
+      }
+      try {
+        const snap = await get(child(ref(db), `posts/${id}`));
+        if (!snap.exists()) {
+          document.getElementById('blogContentArea').innerHTML = `<p style="text-align:center">${notFoundText}</p>`;
+          return;
+        }
+        const b = snap.val();
+        renderPost(b);
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function renderPost(b) {
+      const lang = getLang();
+      const title = b['title_' + lang] || b.title || '';
+      const desc = b['desc_' + lang] || b.desc || '';
+      const readTime = b.readTime || 5;
+      const readTimeText = lang === 'ka' ? ` წთ კითხვა` : (lang === 'en' ? ` min read` : ` мин чтения`);
+
+      // Convert newlines to <br> for content
+      const contentHtml = desc.replace(/\n/g, '<br>');
+      
+      const currentUrl = encodeURIComponent(window.location.href);
+      const shareTitle = encodeURIComponent(title);
+
+      const photos = toArray(b.photos);
+      if (photos.length === 0 && b.image) photos.push({url: b.image});
+      
+      window.blogPhotos = photos;
+      window.currentPhotoIdx = 0;
+
+      document.getElementById('blogContentArea').innerHTML = `
+        <div class="bd-meta">
+          <span>${formatDate(b.createdAt)}</span>
+          <span>•</span>
+          <span></span>
+        </div>
+        <h1 class="bd-title"></h1>
+        ${photos.length > 0 ? `
+          <div class="bd-image-wrap">
+            <img src="${photos[0].url || photos[0]}" alt="" class="bd-image" id="mainBlogImage" onclick="openLightbox(0)" style="cursor:zoom-in;">
+            ${photos.length > 1 ? `
+              <button class="bd-arrow left" onclick="prevPhoto(event)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <button class="bd-arrow right" onclick="nextPhoto(event)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+            ` : ''}
+            <div class="bd-actions">
+              <a href="https://www.facebook.com/sharer/sharer.php?u=${currentUrl}" target="_blank" class="bd-action-btn" title="Share on Facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a href="https://twitter.com/intent/tweet?url=${currentUrl}&text=${shareTitle}" target="_blank" class="bd-action-btn" title="Share on Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+              </a>
+              <button onclick="shareToInstagram()" class="bd-action-btn" title="Share on Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </button>
+              <button onclick="downloadImage()" class="bd-action-btn" title="Download Photo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+            </div>
+          </div>
+        ` : ''}
+        <div class="bd-content"></div>
+      `;
+      
+      document.title = ` — DAMQ Travel`;
+    }
+    
+    window.prevPhoto = function(e) {
+      e.stopPropagation();
+      if (!window.blogPhotos || window.blogPhotos.length < 2) return;
+      window.currentPhotoIdx = (window.currentPhotoIdx - 1 + window.blogPhotos.length) % window.blogPhotos.length;
+      updateMainImage();
+    };
+
+    window.nextPhoto = function(e) {
+      e.stopPropagation();
+      if (!window.blogPhotos || window.blogPhotos.length < 2) return;
+      window.currentPhotoIdx = (window.currentPhotoIdx + 1) % window.blogPhotos.length;
+      updateMainImage();
+    };
+
+    function updateMainImage() {
+      const img = document.getElementById('mainBlogImage');
+      const p = window.blogPhotos[window.currentPhotoIdx];
+      if (img) img.src = p.url || p;
+    }
+
+    window.shareToInstagram = function() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        const toast = document.createElement('div');
+        toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:#fff;padding:12px 24px;border-radius:50px;z-index:10000;font-family:sans-serif;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,0.2);backdrop-filter:blur(5px);';
+        toast.textContent = 'ბმული დაკოპირდა! (Link copied)';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+      });
+    };
+
+    window.downloadImage = async function() {
+      if (!window.blogPhotos || !window.blogPhotos.length) return;
+      const p = window.blogPhotos[window.currentPhotoIdx];
+      const url = p.url || p;
+      try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = 'damq-blog.jpg';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (e) {
+        window.open(url, '_blank');
+      }
+    };
+
+    // Lightbox logic
+    window.openLightbox = function(idx) {
+      if (!window.blogPhotos) return;
+      // Update lightbox index to match current slider index
+      updateLightboxImage();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    function updateLightboxImage() {
+      if (!window.blogPhotos) return;
+      const p = window.blogPhotos[window.currentPhotoIdx];
+      document.getElementById('lightboxImg').src = p.url || p;
+    }
+
+    document.getElementById('lightboxClose').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    });
+
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target.id === 'lightbox') {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.getElementById('lbPrev').addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.prevPhoto(e); // Reuse slider logic to update index
+      updateLightboxImage(); // Update lightbox image
+    });
+
+    document.getElementById('lbNext').addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.nextPhoto(e); // Reuse slider logic to update index
+      updateLightboxImage(); // Update lightbox image
+    });
+
+    loadPost();
+
+    window.addEventListener('langChanged', () => {
+      loadPost();
+    });
+  </script>
+</body>
+</html>

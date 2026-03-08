@@ -33,7 +33,7 @@
     }
     .whatsapp-fab:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,0.55); }
 
-  <style>
+  
     *, *::before, *::after { box-sizing: border-box; }
     :root {
       --gold: #d4af37;
@@ -48,7 +48,7 @@
     }
     html { scroll-behavior: smooth; }
 
-    /* ── Loading state ── */
+    /* -- Loading state -- */
     .page-loading {
       display: flex;
       align-items: center;
@@ -67,7 +67,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .page-loading p { color: var(--muted); font-size: 0.9rem; }
 
-    /* ── Breadcrumb ── */
+    /* -- Breadcrumb -- */
     .breadcrumb {
       max-width: 1200px;
       margin: 0 auto;
@@ -88,7 +88,7 @@
     .breadcrumb a:hover { color: var(--dark); }
     .breadcrumb svg { flex-shrink: 0; opacity: 0.4; }
 
-    /* ── Detail Hero ── */
+    /* -- Detail Hero -- */
     .detail-hero {
       position: relative;
       min-height: 480px;
@@ -161,7 +161,7 @@
     }
     .detail-hero-meta svg { color: var(--gold); flex-shrink: 0; }
 
-    /* ── Detail Content ── */
+    /* -- Detail Content -- */
     .detail-wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -185,7 +185,7 @@
       margin-bottom: 2.5rem;
     }
 
-    /* ── Route ── */
+    /* -- Route -- */
     .detail-route {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -210,7 +210,7 @@
       line-height: 1.7;
     }
 
-    /* ── Region Chips ── */
+    /* -- Region Chips -- */
     .detail-regions {
       display: flex;
       flex-wrap: wrap;
@@ -230,7 +230,7 @@
       border-radius: 50px;
     }
 
-    /* ── Photo Gallery ── */
+    /* -- Photo Gallery -- */
     .detail-gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -251,7 +251,7 @@
       box-shadow: 0 12px 32px rgba(0,0,0,0.12);
     }
 
-    /* ── Sidebar Card ── */
+    /* -- Sidebar Card -- */
     .detail-sidebar-card {
       background: var(--white);
       border: 1px solid var(--border);
@@ -328,7 +328,7 @@
     }
     .btn-whatsapp-full:hover { background: #20c05c; transform: translateY(-2px); }
 
-    /* ── Back link ── */
+    /* -- Back link -- */
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -342,7 +342,7 @@
     }
     .back-link:hover { color: var(--dark); }
 
-    /* ── Error State ── */
+    /* -- Error State -- */
     .detail-error {
       text-align: center;
       padding: 6rem 1.5rem;
@@ -375,7 +375,7 @@
     }
     .detail-error a:hover { background: var(--gold); color: var(--dark); }
 
-    /* ── Responsive ── */
+    /* -- Responsive -- */
     @media (max-width: 900px) {
       .detail-wrap {
         grid-template-columns: 1fr;
@@ -389,7 +389,7 @@
       .detail-gallery { grid-template-columns: 1fr 1fr; }
     }
 
-    /* ── Lightbox ── */
+    /* -- Lightbox -- */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -422,6 +422,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 10;
       transition: background 0.2s;
     }
     .lightbox-close:hover { background: rgba(255,255,255,0.2); }
@@ -498,10 +499,10 @@
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
+    <img id="lightboxImg" src="" alt="">
     <button class="lightbox-close" id="lightboxClose" aria-label="Close">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <img id="lightboxImg" src="" alt="">
   </div>
 
   <!-- Footer placeholder -->

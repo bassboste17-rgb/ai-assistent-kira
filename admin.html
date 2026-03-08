@@ -10,9 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        RESET & VARIABLES
-    ═══════════════════════════════════════════ */
+    =========================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -36,15 +36,15 @@
       min-height: 100vh;
     }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        LAYOUT
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .app {
       display: flex;
       min-height: 100vh;
     }
 
-    /* ───── SIDEBAR ───── */
+    /* ----- SIDEBAR ----- */
     .sidebar {
       width: var(--sidebar-w);
       background: var(--dark);
@@ -198,7 +198,7 @@
     }
     .btn-site:hover { background: rgba(212,175,55,0.1); color: var(--gold); border-color: rgba(212,175,55,0.25); }
 
-    /* ───── MAIN ───── */
+    /* ----- MAIN ----- */
     .main {
       margin-left: var(--sidebar-w);
       flex: 1;
@@ -238,9 +238,9 @@
     .page { display: none; padding: 2rem; }
     .page.active { display: block; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        BUTTONS
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -275,9 +275,9 @@
     .btn-icon.del:hover    { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.06); }
     .btn-icon.approve:hover{ border-color: #16a34a; color: #16a34a; background: rgba(34,197,94,0.06); }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        CARDS & STATS
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -306,9 +306,9 @@
     .stat-val   { font-size: 1.7rem; font-weight: 700; color: var(--dark); line-height: 1; margin-bottom: 0.3rem; }
     .stat-lbl   { font-size: 0.8rem; color: var(--muted); }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        TABLE CARD
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .card {
       background: var(--white);
       border-radius: var(--radius);
@@ -366,9 +366,9 @@
     .action-btns { display: flex; gap: 0.35rem; }
     .loading-row td { text-align: center; padding: 2.5rem; color: #bbb; font-size: 0.88rem; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        BADGE
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -383,9 +383,9 @@
     .b-red    { background: rgba(239,68,68,0.10);  color: #b91c1c; }
     .b-gray   { background: #f3f3f3; color: #666; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        TOUR IMAGE THUMB
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .thumb {
       width: 46px; height: 34px;
       border-radius: 6px;
@@ -396,9 +396,9 @@
     .tour-name-cell { display: flex; align-items: center; gap: 9px; }
     .stars { color: var(--gold); font-size: 0.82rem; letter-spacing: 1px; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        LOADING OVERLAY
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .overlay {
       position: fixed;
       inset: 0;
@@ -436,9 +436,9 @@
     .overlay-label { font-size: 0.92rem; font-weight: 700; color: #333; }
     .overlay-sub   { font-size: 0.76rem; color: #aaa; margin-top: -0.4rem; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        MODAL
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .modal-wrap {
       position: fixed;
       inset: 0;
@@ -494,9 +494,9 @@
       gap: 0.7rem;
     }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        FORM
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -520,9 +520,9 @@
     .fg textarea { resize: vertical; min-height: 88px; }
     .fg-hint { font-size: 0.73rem; color: #bbb; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        CONFIRM MODAL
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .confirm-body { padding: 1.8rem 1.5rem; text-align: center; }
     .confirm-icon {
       width: 60px; height: 60px;
@@ -535,9 +535,9 @@
     .confirm-ttl { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.45rem; }
     .confirm-txt { font-size: 0.87rem; color: #666; line-height: 1.6; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        TOAST
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .toast {
       position: fixed;
       bottom: 1.5rem; right: 1.5rem;
@@ -561,9 +561,9 @@
     .toast.ok  { border-left: 4px solid #22c55e; }
     .toast.err { border-left: 4px solid #ef4444; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        MULTI SELECT REGIONS
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .region-grid {
       display: flex;
       flex-wrap: wrap;
@@ -592,9 +592,9 @@
     }
     .region-chip.selected:hover { background: #c9a030; border-color: #c9a030; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        PHOTO UPLOAD
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .upload-zone {
       border: 2px dashed var(--border);
       border-radius: 12px;
@@ -662,9 +662,9 @@
     }
     .upload-progress.active { display: block; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        DURATION INPUTS
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .duration-row {
       display: flex;
       gap: 0.7rem;
@@ -693,9 +693,9 @@
       font-weight: 500;
     }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        LANGUAGE TABS (Multi-lang inputs)
-    ═══════════════════════════════════════════ */
+    =========================================== */
     .lang-tabs {
       display: flex;
       gap: 4px;
@@ -726,9 +726,9 @@
     .lang-panel { display: none; }
     .lang-panel.active { display: block; }
 
-    /* ═══════════════════════════════════════════
+    /* ===========================================
        RESPONSIVE
-    ═══════════════════════════════════════════ */
+    =========================================== */
     @media (max-width: 768px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.open { transform: translateX(0); }
@@ -746,7 +746,7 @@
 
 <div class="app">
 
-  <!-- ═══════════ SIDEBAR ═══════════ -->
+  <!-- =========== SIDEBAR =========== -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <span class="sl-text">DAMQ</span>
@@ -814,7 +814,7 @@
     </div>
   </aside>
 
-  <!-- ═══════════ MAIN ═══════════ -->
+  <!-- =========== MAIN =========== -->
   <div class="main">
 
     <!-- Topbar -->
@@ -834,7 +834,7 @@
       </button>
     </div>
 
-    <!-- ─── DASHBOARD ─── -->
+    <!-- --- DASHBOARD --- -->
     <div class="page active" id="dashboardPage">
       <div class="stats-row">
         <div class="stat-card">
@@ -874,7 +874,7 @@
       </div>
     </div>
 
-    <!-- ─── TOURS ─── -->
+    <!-- --- TOURS --- -->
     <div class="page" id="toursPage">
       <div class="card">
         <div class="card-head">
@@ -894,7 +894,7 @@
       </div>
     </div>
 
-    <!-- ─── BOOKINGS ─── -->
+    <!-- --- BOOKINGS --- -->
     <div class="page" id="bookingsPage">
       <div class="card">
         <div class="card-head">
@@ -908,7 +908,7 @@
       </div>
     </div>
 
-    <!-- ─── REVIEWS ─── -->
+    <!-- --- REVIEWS --- -->
     <div class="page" id="reviewsPage">
       <div class="card">
         <div class="card-head">
@@ -922,7 +922,7 @@
       </div>
     </div>
 
-    <!-- ─── DAY TOURS ─── -->
+    <!-- --- DAY TOURS --- -->
     <div class="page" id="dayToursPage">
       <div class="card">
         <div class="card-head">
@@ -942,7 +942,7 @@
       </div>
     </div>
 
-    <!-- ─── MULTI-DAY TOURS ─── -->
+    <!-- --- MULTI-DAY TOURS --- -->
     <div class="page" id="multiDayToursPage">
       <div class="card">
         <div class="card-head">
@@ -962,7 +962,7 @@
       </div>
     </div>
 
-    <!-- ─── BLOGS ─── -->
+    <!-- --- BLOGS --- -->
     <div class="page" id="blogsPage">
       <div class="card">
         <div class="card-head">
@@ -985,7 +985,7 @@
   </div><!-- /main -->
 </div><!-- /app -->
 
-<!-- ═══════════ TOUR MODAL ═══════════ -->
+<!-- =========== TOUR MODAL =========== -->
 <div class="modal-wrap" id="tourModalWrap">
   <div class="modal">
     <div class="modal-hdr">
@@ -1052,7 +1052,7 @@
   </div>
 </div>
 
-<!-- ═══════════ BOOKING STATUS MODAL ═══════════ -->
+<!-- =========== BOOKING STATUS MODAL =========== -->
 <div class="modal-wrap" id="bookModalWrap">
   <div class="modal sm">
     <div class="modal-hdr">
@@ -1081,7 +1081,7 @@
   </div>
 </div>
 
-<!-- ═══════════ VIEW BOOKING MODAL ═══════════ -->
+<!-- =========== VIEW BOOKING MODAL =========== -->
 <div class="modal-wrap" id="viewBookModalWrap">
   <div class="modal">
     <div class="modal-hdr">
@@ -1106,7 +1106,7 @@
   </div>
 </div>
 
-<!-- ═══════════ CONFIRM MODAL ═══════════ -->
+<!-- =========== CONFIRM MODAL =========== -->
 <div class="modal-wrap" id="confirmWrap">
   <div class="modal sm">
     <div class="confirm-body">
@@ -1123,7 +1123,7 @@
   </div>
 </div>
 
-<!-- ═══════════ DAY TOUR MODAL ═══════════ -->
+<!-- =========== DAY TOUR MODAL =========== -->
 <div class="modal-wrap" id="dayTourModalWrap">
   <div class="modal" style="max-width:680px;">
     <div class="modal-hdr">
@@ -1235,7 +1235,7 @@
   </div>
 </div>
 
-<!-- ═══════════ MULTI-DAY TOUR MODAL ═══════════ -->
+<!-- =========== MULTI-DAY TOUR MODAL =========== -->
 <div class="modal-wrap" id="multiDayTourModalWrap">
   <div class="modal" style="max-width:680px;">
     <div class="modal-hdr">
@@ -1347,7 +1347,7 @@
   </div>
 </div>
 
-<!-- ═══════════ BLOG MODAL ═══════════ -->
+<!-- =========== BLOG MODAL =========== -->
 <div class="modal-wrap" id="blogModalWrap">
   <div class="modal" style="max-width:680px;">
     <div class="modal-hdr">
@@ -1395,19 +1395,14 @@
           </select>
         </div>
 
-        <div class="fg">
-          <label>კითხვის დრო (წთ)</label>
-          <input type="number" id="blogReadTime" placeholder="5" min="1">
-        </div>
-
         <div class="fg full">
-          <label>მთავარი ფოტო (აიტვირთება ImgBB-ზე)</label>
+          <label>ფოტოები (აიტვირთება ImgBB-ზე)</label>
           <div class="upload-zone" id="blogUploadZone">
-            <input type="file" id="blogPhotoInput" accept="image/*">
+            <input type="file" id="blogPhotoInput" accept="image/*" multiple>
             <div class="upload-zone-icon">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </div>
-            <div class="upload-zone-text"><strong>აირჩიეთ ფოტო</strong> ან გადმოიტანეთ აქ</div>
+            <div class="upload-zone-text"><strong>აირჩიეთ ფოტოები</strong> ან გადმოიტანეთ აქ</div>
           </div>
           <div class="upload-progress" id="blogUploadProgress">იტვირთება...</div>
           <div class="uploaded-photos" id="blogUploadedPhotos"></div>
@@ -1436,14 +1431,14 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- ═══════════ FIREBASE ═══════════ -->
+<!-- =========== FIREBASE =========== -->
 <script type="module">
   import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
     getDatabase, ref, get, set, push, update, remove, child, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-  /* ── Config ── */
+  /* --- Config --- */
   const app = initializeApp({
     apiKey:            "AIzaSyATX_3r8vsgBU_iHWPTI11Q_vvIXRQhRB0",
     authDomain:        "damqtravel.firebaseapp.com",
@@ -1456,7 +1451,7 @@
   });
   const db = getDatabase(app);
 
-  /* ── RTDB helpers ── */
+  /* --- RTDB helpers --- */
   async function rtdbGetAll(path) {
     const snap = await get(ref(db, path));
     if (!snap.exists()) return [];
@@ -1475,7 +1470,7 @@
     await remove(ref(db, `${path}/${id}`));
   }
 
-  /* ── RTDB array helper ──
+  /* --- RTDB array helper ---
      Firebase RTDB converts arrays to objects with numeric keys.
      This converts them back to real arrays safely. */
   function toArray(val) {
@@ -1485,7 +1480,7 @@
     return [];
   }
 
-  /* ── UI helpers ── */
+  /* --- UI helpers --- */
   function showLoading(msg = 'ინახება...') {
     document.getElementById('loadingLabel').textContent = msg;
     document.getElementById('loadingOverlay').classList.add('show');
@@ -1528,7 +1523,7 @@
   function badgeCls(s)  { return STATUS_CLASS[s] || 'b-gray'; }
   function badgeLbl(s)  { return STATUS_LBL[s]   || s; }
 
-  /* ── Alert Helper ── */
+  /* --- Alert Helper --- */
   function updateBookingAlert() {
     const unseenCount = allBookings.filter(b => !b.seen).length;
     const btn = document.querySelector('.nav-item[data-page="bookings"]');
@@ -1538,7 +1533,7 @@
     }
   }
 
-  /* ── Navigation ── */
+  /* --- Navigation --- */
   const PAGE_META = {
     dashboard: ['დაფა',        'DAMQ Travel-ის მიმოხილვა'],
     tours:     ['ტურების მართვა','დაამატეთ და დაარედაქტირეთ ტურები'],
@@ -1577,8 +1572,8 @@
     document.getElementById('sidebar').classList.toggle('open');
   });
 
-  /* ── Close modals on overlay click ── */
-  /* ── Language tab switching ── */
+  /* --- Close modals on overlay click --- */
+  /* --- Language tab switching --- */
   document.querySelectorAll('.lang-tabs').forEach(tabBar => {
     tabBar.querySelectorAll('.lang-tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -1599,10 +1594,10 @@
     });
   });
 
-  /* ══════════════ GLOBAL DATA ══════════════ */
+  /* ============== GLOBAL DATA ============== */
   let allBookings = [];
 
-  /* ══════════════ DASHBOARD ══════════════ */
+  /* ============== DASHBOARD ============== */
   async function loadDashboard() {
     try {
       const [tours, bookings, reviews, dayTours, multiDayTours, blogs] = await Promise.all([
@@ -1651,7 +1646,7 @@
     } catch(e) { console.error('Dashboard:', e); }
   }
 
-  /* ══════════════ TOURS ══════════════ */
+  /* ============== TOURS ============== */
   let allTours = [];
 
   async function loadTours() {
@@ -1813,7 +1808,7 @@
     });
   };
 
-  /* ══════════════ BOOKINGS ══════════════ */
+  /* ============== BOOKINGS ============== */
   async function loadBookings() {
     document.getElementById('bookingsTbody').innerHTML =
       `<tr class="loading-row"><td colspan="8">იტვირთება...</td></tr>`;
@@ -1929,7 +1924,7 @@
     });
   };
 
-  /* ══════════════ REVIEWS ══════════════ */
+  /* ============== REVIEWS ============== */
   let allReviews = [];
 
   async function loadReviews() {
@@ -2005,7 +2000,7 @@
     });
   };
 
-  /* ══════════════ DAY TOURS (1-დღიანი) ══════════════ */
+  /* ============== DAY TOURS (1-დღიანი) ============== */
   const IMGBB_KEY = 'c5bb67f26ff290d597182f756d153d50';
   let allDayTours = [];
   let dtUploadedImages = []; // array of { url, deleteUrl }
@@ -2294,7 +2289,7 @@
     });
   };
 
-  /* ══════════════ MULTI-DAY TOURS (მრავალდღიანი) ══════════════ */
+  /* ============== MULTI-DAY TOURS (მრავალდღიანი) ============== */
   let allMultiDayTours = [];
   let mdtUploadedImages = []; // array of { url, deleteUrl }
 
@@ -2536,50 +2531,51 @@
     });
   };
 
-  /* ══════════════ BLOGS ══════════════ */
+  /* ============== BLOGS ============== */
   let allBlogs = [];
-  let blogUploadedImage = null; // { url, deleteUrl }
+  let blogUploadedImages = []; // array of { url, deleteUrl }
 
   // File input handler for blogs
   const blogPhotoInput = document.getElementById('blogPhotoInput');
   const blogUploadZone = document.getElementById('blogUploadZone');
 
   blogPhotoInput.addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
     const progress = document.getElementById('blogUploadProgress');
     progress.classList.add('active');
-    progress.textContent = 'იტვირთება...';
-    try {
-      const result = await uploadToImgBB(file);
-      blogUploadedImage = result;
-      renderBlogUploadedPhoto();
-      toast('ფოტო აიტვირთა');
-    } catch (err) {
-      console.error('ImgBB upload error:', err);
-      toast('ფოტოს ატვირთვის შეცდომა: ' + err.message, 'err');
+    let successCount = 0;
+
+    for (let i = 0; i < files.length; i++) {
+      progress.textContent = `იტვირთება ${i+1}/${files.length}...`;
+      try {
+        const result = await uploadToImgBB(files[i]);
+        blogUploadedImages.push(result);
+        renderBlogUploadedPhotos();
+        successCount++;
+      } catch (err) {
+        console.error('ImgBB upload error:', err);
+        toast('ფოტოს ატვირთვის შეცდომა: ' + err.message, 'err');
+      }
     }
     progress.classList.remove('active');
+    if (successCount > 0) toast(successCount + ' ფოტო აიტვირთა');
     blogPhotoInput.value = '';
   });
 
-  function renderBlogUploadedPhoto() {
+  function renderBlogUploadedPhotos() {
     const container = document.getElementById('blogUploadedPhotos');
-    if (!blogUploadedImage) {
-      container.innerHTML = '';
-      return;
-    }
-    container.innerHTML = `
-      <div class="uploaded-photo" style="width:120px;height:80px;">
-        <img src="${blogUploadedImage.thumb || blogUploadedImage.url}" alt="blog photo">
-        <button type="button" class="remove-photo" onclick="removeBlogPhoto()">&times;</button>
+    container.innerHTML = blogUploadedImages.map((img, i) => `
+      <div class="uploaded-photo">
+        <img src="${img.thumb || img.url}" alt="photo ${i+1}">
+        <button type="button" class="remove-photo" onclick="removeBlogPhoto(${i})">&times;</button>
       </div>
-    `;
+    `).join('');
   }
 
-  window.removeBlogPhoto = function() {
-    blogUploadedImage = null;
-    renderBlogUploadedPhoto();
+  window.removeBlogPhoto = function(idx) {
+    blogUploadedImages.splice(idx, 1);
+    renderBlogUploadedPhotos();
   };
 
   async function loadBlogs() {
@@ -2606,7 +2602,7 @@
         <td data-label="სათაური"><strong>${b.title_ka || b.title || '—'}</strong></td>
         <td data-label="კატეგორია"><span class="badge b-blue">${b.category || '—'}</span></td>
         <td data-label="თარიღი">${fmtDate(b.createdAt)}</td>
-        <td data-label="ფოტო">${b.image ? '<span style="color:#16a34a">✓</span>' : '—'}</td>
+        <td data-label="ფოტო">${(b.photos && b.photos.length) || (b.image ? 1 : 0)} ფოტო</td>
         <td data-label="მოქმედება">
           <div class="action-btns">
             <button class="btn-icon edit" title="რედაქტირება" onclick="editBlog('${b.id}')">
@@ -2629,8 +2625,8 @@
     document.getElementById('blogModalTitle').textContent = 'ბლოგის დამატება';
     document.getElementById('blogForm').reset();
     document.getElementById('blogDocId').value = '';
-    blogUploadedImage = null;
-    renderBlogUploadedPhoto();
+    blogUploadedImages = [];
+    renderBlogUploadedPhotos();
     document.getElementById('blogModalWrap').classList.add('open');
   };
 
@@ -2650,10 +2646,13 @@
     document.getElementById('blogDesc_ru').value = b.desc_ru || '';
     document.getElementById('blogDesc_en').value = b.desc_en || '';
     document.getElementById('blogCategory').value = b.category || 'mountains';
-    document.getElementById('blogReadTime').value = b.readTime || 5;
     
-    blogUploadedImage = b.image ? { url: b.image } : null;
-    renderBlogUploadedPhoto();
+    if (b.photos) {
+      blogUploadedImages = toArray(b.photos).slice();
+    } else {
+      blogUploadedImages = b.image ? [{ url: b.image }] : [];
+    }
+    renderBlogUploadedPhotos();
     document.getElementById('blogModalWrap').classList.add('open');
   };
 
@@ -2673,8 +2672,8 @@
       desc_ru: document.getElementById('blogDesc_ru').value.trim(),
       desc_en: document.getElementById('blogDesc_en').value.trim(),
       category: document.getElementById('blogCategory').value,
-      readTime: parseInt(document.getElementById('blogReadTime').value) || 5,
-      image: blogUploadedImage ? blogUploadedImage.url : '',
+      image: blogUploadedImages.length > 0 ? blogUploadedImages[0].url : '',
+      photos: blogUploadedImages,
       updatedAt: now
     };
 
@@ -2711,7 +2710,7 @@
     });
   };
 
-  /* ══════════════ CONFIRM ══════════════ */
+  /* ============== CONFIRM ============== */
   let _confirmCb = null;
   function openConfirm(text, cb) {
     document.getElementById('confirmTxt').textContent = text;
@@ -2728,7 +2727,7 @@
     if (cb) await cb();
   });
 
-  /* ══════════════ INIT ══════════════ */
+  /* ============== INIT ============== */
   loadDashboard();
 </script>
 

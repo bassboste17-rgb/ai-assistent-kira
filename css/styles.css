@@ -2440,14 +2440,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ---------- Blog Grid ---------- */
 .blog-grid {
-  column-count: 4;
-  column-gap: 16px;
+  column-count: 3 !important;
+  column-gap: 10px;
   display: block;
 }
 
 .blog-card {
   break-inside: avoid;
-  margin-bottom: 16px;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
   background: transparent;
   border-radius: 16px;
   overflow: hidden;
@@ -2473,7 +2475,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .blog-card-image img {
   width: 100%;
-  height: auto;
+  height: auto !important;
   display: block;
   transition: transform 0.5s ease, opacity 0.3s ease;
 }
@@ -2577,6 +2579,20 @@ h1, h2, h3, h4, h5, h6 {
 .blog-card-link:hover {
   gap: 10px;
   color: var(--color-accent);
+}
+
+.blog-photo-count {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  z-index: 5;
 }
 
 /* ---------- Services Grid ---------- */
@@ -3441,11 +3457,11 @@ h1, h2, h3, h4, h5, h6 {
     font-size: clamp(28px, 6vw, 40px);
   }
   .blog-grid {
-    column-count: 2;
-    column-gap: 10px;
+    column-count: 2 !important;
+    column-gap: 8px;
   }
   .blog-card {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .blog-card-body {
     padding: 12px;
@@ -3484,3 +3500,42 @@ h1, h2, h3, h4, h5, h6 {
     padding: 24px 20px;
   }
 }
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lightbox.open { opacity: 1; pointer-events: all; }
+.lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 48px; height: 48px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  transition: background 0.2s;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.2); }
