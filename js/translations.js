@@ -104,7 +104,7 @@ const translations = {
   "contact.title":      { ru: "Готовы к путешествию мечты?", en: "Ready for your dream trip?", ka: "მზად ხართ ოცნების მოგზაურობისთვის?" },
   "contact.desc":       { ru: "Оставьте заявку, и мы свяжемся с вами в течение часа, чтобы помочь спланировать идеальное путешествие по Грузии.", en: "Leave a request and we will contact you within an hour to help plan the perfect trip to Georgia.", ka: "დატოვეთ მოთხოვნა და ჩვენ ერთ საათში დაგიკავშირდებით, რომ დაგეხმაროთ იდეალური მოგზაურობის დაგეგმვაში საქართველოში." },
   "contact.address.title": { ru: "Адрес",   en: "Address",    ka: "მისამართი" },
-  "contact.address":       { ru: "??????, ??. ????? ??????? 18", en: "Batumi, 18 Zh. Shartava St.", ka: "??????, ????? ???????? 18" },
+  "contact.address":       { ru: "Батуми, ул. Жиули Шартава 18", en: "Batumi, 18 Zh. Shartava St.", ka: "ბათუმი, ჟიული შარტავას 18" },
   "contact.phone.title":   { ru: "Телефон", en: "Phone",      ka: "ტელეფონი" },
   "contact.email.title":   { ru: "Email",   en: "Email",      ka: "ელფოსტა" },
   "contact.hours.title":   { ru: "Время работы",     en: "Working Hours",  ka: "სამუშაო საათები" },

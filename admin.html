@@ -1160,7 +1160,17 @@
           <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
         </div>
 
-        <div class="fg full"><label>მარშრუტი</label><input type="text" id="dtRoute" placeholder="თბილისი - მცხეთა - ჯვარი - ანანური"></div>
+        <div class="fg full">
+          <label>მარშრუტი / Route / Маршрут</label>
+          <div class="lang-tabs" data-target="dtRouteLang">
+            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
+            <button type="button" class="lang-tab" data-lang="ru">RU</button>
+            <button type="button" class="lang-tab" data-lang="en">EN</button>
+          </div>
+          <div class="lang-panel active" data-lang="ka" data-group="dtRouteLang"><input type="text" id="dtRoute_ka" placeholder="თბილისი - მცხეთა - ჯვარი - ანანური"></div>
+          <div class="lang-panel" data-lang="ru" data-group="dtRouteLang"><input type="text" id="dtRoute_ru" placeholder="Тбилиси - Мцхета - Джвари - Ананури"></div>
+          <div class="lang-panel" data-lang="en" data-group="dtRouteLang"><input type="text" id="dtRoute_en" placeholder="Tbilisi - Mtskheta - Jvari - Ananuri"></div>
+        </div>
 
         <div class="fg full">
           <label>რეგიონი (შეარჩიეთ ერთი ან რამოდენიმე)</label>
@@ -1180,16 +1190,16 @@
           </div>
         </div>
 
-        <div class="fg">
-          <label>ტიპი</label>
-          <select id="dtType">
-            <option value="ექსკურსია">ექსკურსია</option>
-            <option value="სათავგადასავლო">სათავგადასავლო</option>
-            <option value="კულტურული">კულტურული</option>
-            <option value="ფოტოტური">ფოტოტური</option>
-            <option value="გასტრონომიული">გასტრონომიული</option>
-            <option value="ინდივიდუალური">ინდივიდუალური</option>
-          </select>
+        <div class="fg full">
+          <label>ტიპი / Type / Тип</label>
+          <div class="lang-tabs" data-target="dtTypeLang">
+            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
+            <button type="button" class="lang-tab" data-lang="ru">RU</button>
+            <button type="button" class="lang-tab" data-lang="en">EN</button>
+          </div>
+          <div class="lang-panel active" data-lang="ka" data-group="dtTypeLang"><input type="text" id="dtType_ka" placeholder="ექსკურსია"></div>
+          <div class="lang-panel" data-lang="ru" data-group="dtTypeLang"><input type="text" id="dtType_ru" placeholder="Экскурсия"></div>
+          <div class="lang-panel" data-lang="en" data-group="dtTypeLang"><input type="text" id="dtType_en" placeholder="Excursion"></div>
         </div>
 
         <div class="fg"><label>ფასი (USD) *</label><input type="number" id="dtPrice" placeholder="45" min="1" required></div>
@@ -1272,7 +1282,17 @@
           <div class="lang-panel" data-lang="en" data-group="mdtDescLang"><textarea id="mdtDesc_en" placeholder="Tour description (English)..."></textarea></div>
         </div>
 
-        <div class="fg full"><label>მარშრუტი</label><input type="text" id="mdtRoute" placeholder="თბილისი - სვანეთი - ბათუმი - თბილისი"></div>
+        <div class="fg full">
+          <label>მარშრუტი / Route / Маршрут</label>
+          <div class="lang-tabs" data-target="mdtRouteLang">
+            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
+            <button type="button" class="lang-tab" data-lang="ru">RU</button>
+            <button type="button" class="lang-tab" data-lang="en">EN</button>
+          </div>
+          <div class="lang-panel active" data-lang="ka" data-group="mdtRouteLang"><input type="text" id="mdtRoute_ka" placeholder="თბილისი - სვანეთი - ბათუმი - თბილისი"></div>
+          <div class="lang-panel" data-lang="ru" data-group="mdtRouteLang"><input type="text" id="mdtRoute_ru" placeholder="Тбилиси - Сванетия - Батуми - Тбилиси"></div>
+          <div class="lang-panel" data-lang="en" data-group="mdtRouteLang"><input type="text" id="mdtRoute_en" placeholder="Tbilisi - Svaneti - Batumi - Tbilisi"></div>
+        </div>
 
         <div class="fg full">
           <label>რეგიონი (შეარჩიეთ ერთი ან რამოდენიმე)</label>
@@ -1292,16 +1312,16 @@
           </div>
         </div>
 
-        <div class="fg">
-          <label>ტიპი</label>
-          <select id="mdtType">
-            <option value="ექსკურსია">ექსკურსია</option>
-            <option value="სათავგადასავლო">სათავგადასავლო</option>
-            <option value="კულტურული">კულტურული</option>
-            <option value="ფოტოტური">ფოტოტური</option>
-            <option value="გასტრონომიული">გასტრონომიული</option>
-            <option value="ინდივიდუალური">ინდივიდუალური</option>
-          </select>
+        <div class="fg full">
+          <label>ტიპი / Type / Тип</label>
+          <div class="lang-tabs" data-target="mdtTypeLang">
+            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
+            <button type="button" class="lang-tab" data-lang="ru">RU</button>
+            <button type="button" class="lang-tab" data-lang="en">EN</button>
+          </div>
+          <div class="lang-panel active" data-lang="ka" data-group="mdtTypeLang"><input type="text" id="mdtType_ka" placeholder="ექსკურსია"></div>
+          <div class="lang-panel" data-lang="ru" data-group="mdtTypeLang"><input type="text" id="mdtType_ru" placeholder="Экскурсия"></div>
+          <div class="lang-panel" data-lang="en" data-group="mdtTypeLang"><input type="text" id="mdtType_en" placeholder="Excursion"></div>
         </div>
 
         <div class="fg"><label>ფასი (USD) *</label><input type="number" id="mdtPrice" placeholder="250" min="1" required></div>
@@ -2197,6 +2217,16 @@
   };
 
   window.editDayTour = function(id) {
+    // Safely check if all required elements exist
+    const requiredElements = ['dtDocId', 'dtName_ka', 'dtPrice', 'dtDays', 'dtNights', 'dtMinGroup', 'dtMaxGroup', 'dayTourModalWrap'];
+    for (const elemId of requiredElements) {
+      if (!document.getElementById(elemId)) {
+        console.error('[editDayTour] Required element not found:', elemId);
+        alert('ფორმის ელემენტები ჯერ არ ჩატვირთა. გთხოვთ დაელოდოთ...');
+        return;
+      }
+    }
+    
     const t = allDayTours.find(x => x.id === id);
     if (!t) return;
     document.getElementById('dayTourModalTitle').textContent = 'ტურის რედაქტირება';
@@ -2207,8 +2237,12 @@
     document.getElementById('dtDesc_ka').value = t.desc_ka || t.desc || '';
     document.getElementById('dtDesc_ru').value = t.desc_ru || '';
     document.getElementById('dtDesc_en').value = t.desc_en || '';
-    document.getElementById('dtRoute').value   = t.route || '';
-    document.getElementById('dtType').value    = t.type || 'ექსკურსია';
+    document.getElementById('dtRoute_ka').value = t.route_ka || t.route || '';
+    document.getElementById('dtRoute_ru').value = t.route_ru || '';
+    document.getElementById('dtRoute_en').value = t.route_en || '';
+    document.getElementById('dtType_ka').value = t.type_ka || t.type || '';
+    document.getElementById('dtType_ru').value = t.type_ru || '';
+    document.getElementById('dtType_en').value = t.type_en || '';
     document.getElementById('dtPrice').value   = t.price || '';
     document.getElementById('dtDays').value    = t.days ?? 1;
     document.getElementById('dtNights').value  = t.nights ?? 0;
@@ -2241,9 +2275,13 @@
       desc_ka: document.getElementById('dtDesc_ka').value.trim(),
       desc_ru: document.getElementById('dtDesc_ru').value.trim(),
       desc_en: document.getElementById('dtDesc_en').value.trim(),
-      route:    document.getElementById('dtRoute').value.trim(),
+      route_ka: document.getElementById('dtRoute_ka').value.trim(),
+      route_ru: document.getElementById('dtRoute_ru').value.trim(),
+      route_en: document.getElementById('dtRoute_en').value.trim(),
+      type_ka:  document.getElementById('dtType_ka').value.trim(),
+      type_ru:  document.getElementById('dtType_ru').value.trim(),
+      type_en:  document.getElementById('dtType_en').value.trim(),
       regions:  getSelectedRegions(),
-      type:     document.getElementById('dtType').value,
       price,
       days:     parseInt(document.getElementById('dtDays').value) || 0,
       nights:   parseInt(document.getElementById('dtNights').value) || 0,
@@ -2452,9 +2490,13 @@
     document.getElementById('mdtDesc_ka').value = t.desc_ka || t.desc || '';
     document.getElementById('mdtDesc_ru').value = t.desc_ru || '';
     document.getElementById('mdtDesc_en').value = t.desc_en || '';
-    document.getElementById('mdtRoute').value   = t.route || '';
-    document.getElementById('mdtType').value    = t.type || 'ექსკურსია';
-    document.getElementById('mdtPrice').value   = t.price || '';
+    document.getElementById('mdtRoute_ka').value = t.route_ka || t.route || '';
+    document.getElementById('mdtRoute_ru').value = t.route_ru || '';
+    document.getElementById('mdtRoute_en').value = t.route_en || '';
+    document.getElementById('mdtType_ka').value  = t.type_ka || t.type || '';
+    document.getElementById('mdtType_ru').value  = t.type_ru || '';
+    document.getElementById('mdtType_en').value  = t.type_en || '';
+    document.getElementById('mdtPrice').value    = t.price || '';
     document.getElementById('mdtDays').value    = t.days ?? 3;
     document.getElementById('mdtNights').value  = t.nights ?? 2;
     document.getElementById('mdtMinGroup').value = t.minGroup || '';
@@ -2486,9 +2528,13 @@
       desc_ka: document.getElementById('mdtDesc_ka').value.trim(),
       desc_ru: document.getElementById('mdtDesc_ru').value.trim(),
       desc_en: document.getElementById('mdtDesc_en').value.trim(),
-      route:    document.getElementById('mdtRoute').value.trim(),
+      route_ka: document.getElementById('mdtRoute_ka').value.trim(),
+      route_ru: document.getElementById('mdtRoute_ru').value.trim(),
+      route_en: document.getElementById('mdtRoute_en').value.trim(),
+      type_ka:  document.getElementById('mdtType_ka').value.trim(),
+      type_ru:  document.getElementById('mdtType_ru').value.trim(),
+      type_en:  document.getElementById('mdtType_en').value.trim(),
       regions:  getMdtSelectedRegions(),
-      type:     document.getElementById('mdtType').value,
       price,
       days:     parseInt(document.getElementById('mdtDays').value) || 0,
       nights:   parseInt(document.getElementById('mdtNights').value) || 0,
