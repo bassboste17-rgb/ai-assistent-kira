@@ -1192,14 +1192,20 @@
 
         <div class="fg full">
           <label>ტიპი / Type / Тип</label>
-          <div class="lang-tabs" data-target="dtTypeLang">
-            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
-            <button type="button" class="lang-tab" data-lang="ru">RU</button>
-            <button type="button" class="lang-tab" data-lang="en">EN</button>
-          </div>
-          <div class="lang-panel active" data-lang="ka" data-group="dtTypeLang"><input type="text" id="dtType_ka" placeholder="ექსკურსია"></div>
-          <div class="lang-panel" data-lang="ru" data-group="dtTypeLang"><input type="text" id="dtType_ru" placeholder="Экскурсия"></div>
-          <div class="lang-panel" data-lang="en" data-group="dtTypeLang"><input type="text" id="dtType_en" placeholder="Excursion"></div>
+          <select id="dtTypeSelect" class="tour-type-select">
+            <option value="">-- აირჩიეთ ტიპი --</option>
+            <option value="excursion" data-ka="ექსკურსია" data-ru="Экскурсия" data-en="Excursion">ექსკურსია / Экскурсия / Excursion</option>
+            <option value="gastro" data-ka="გასტრონომია" data-ru="Гастрономический" data-en="Gastronomic">გასტრონომია / Гастрономический / Gastronomic</option>
+            <option value="wine" data-ka="ღვინის ტური" data-ru="Винный тур" data-en="Wine Tour">ღვინის ტური / Винный тур / Wine Tour</option>
+            <option value="adventure" data-ka="თავგადასავალი" data-ru="Приключение" data-en="Adventure">თავგადასავალი / Приключение / Adventure</option>
+            <option value="cultural" data-ka="კულტურული" data-ru="Культурный" data-en="Cultural">კულტურული / Культурный / Cultural</option>
+            <option value="nature" data-ka="ბუნება" data-ru="Природа" data-en="Nature">ბუნება / Природа / Nature</option>
+            <option value="beach" data-ka="პლაჟი" data-ru="Пляжный" data-en="Beach">პლაჟი / Пляжный / Beach</option>
+            <option value="historical" data-ka="ისტორიული" data-ru="Исторический" data-en="Historical">ისტორიული / Исторический / Historical</option>
+          </select>
+          <input type="hidden" id="dtType_ka">
+          <input type="hidden" id="dtType_ru">
+          <input type="hidden" id="dtType_en">
         </div>
 
         <div class="fg"><label>ფასი (USD) *</label><input type="number" id="dtPrice" placeholder="45" min="1" required></div>
@@ -1314,14 +1320,20 @@
 
         <div class="fg full">
           <label>ტიპი / Type / Тип</label>
-          <div class="lang-tabs" data-target="mdtTypeLang">
-            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
-            <button type="button" class="lang-tab" data-lang="ru">RU</button>
-            <button type="button" class="lang-tab" data-lang="en">EN</button>
-          </div>
-          <div class="lang-panel active" data-lang="ka" data-group="mdtTypeLang"><input type="text" id="mdtType_ka" placeholder="ექსკურსია"></div>
-          <div class="lang-panel" data-lang="ru" data-group="mdtTypeLang"><input type="text" id="mdtType_ru" placeholder="Экскурсия"></div>
-          <div class="lang-panel" data-lang="en" data-group="mdtTypeLang"><input type="text" id="mdtType_en" placeholder="Excursion"></div>
+          <select id="mdtTypeSelect" class="tour-type-select">
+            <option value="">-- აირჩიეთ ტიპი --</option>
+            <option value="excursion" data-ka="ექსკურსია" data-ru="Экскурсия" data-en="Excursion">ექსკურსია / Экскурсия / Excursion</option>
+            <option value="gastro" data-ka="გასტრონომია" data-ru="Гастрономический" data-en="Gastronomic">გასტრონომია / Гастрономический / Gastronomic</option>
+            <option value="wine" data-ka="ღვინის ტური" data-ru="Винный тур" data-en="Wine Tour">ღვინის ტური / Винный тур / Wine Tour</option>
+            <option value="adventure" data-ka="თავგადასავალი" data-ru="Приключение" data-en="Adventure">თავგადასავალი / Приключение / Adventure</option>
+            <option value="cultural" data-ka="კულტურული" data-ru="Культурный" data-en="Cultural">კულტურული / Культурный / Cultural</option>
+            <option value="nature" data-ka="ბუნება" data-ru="Природа" data-en="Nature">ბუნება / Природа / Nature</option>
+            <option value="beach" data-ka="პლაჟი" data-ru="Пляжный" data-en="Beach">პლაჟი / Пляжный / Beach</option>
+            <option value="historical" data-ka="ისტორიული" data-ru="Исторический" data-en="Historical">ისტორიული / Исторический / Historical</option>
+          </select>
+          <input type="hidden" id="mdtType_ka">
+          <input type="hidden" id="mdtType_ru">
+          <input type="hidden" id="mdtType_en">
         </div>
 
         <div class="fg"><label>ფასი (USD) *</label><input type="number" id="mdtPrice" placeholder="250" min="1" required></div>
@@ -2036,12 +2048,40 @@
   }
 
   function setSelectedRegions(regions) {
-    const arr = toArray(regions);
-    document.querySelectorAll('#regionGrid .region-chip').forEach(c => {
-      c.classList.toggle('selected', arr.includes(c.dataset.region));
-    });
+  const arr = toArray(regions);
+  document.querySelectorAll('#regionGrid .region-chip').forEach(c => {
+  c.classList.toggle('selected', arr.includes(c.dataset.region));
+  });
   }
 
+  // Tour type select handler - updates hidden inputs when select changes
+  function setupTypeSelect(selectId, kaId, ruId, enId) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    select.addEventListener('change', function() {
+      const option = this.options[this.selectedIndex];
+      document.getElementById(kaId).value = option.dataset.ka || '';
+      document.getElementById(ruId).value = option.dataset.ru || '';
+      document.getElementById(enId).value = option.dataset.en || '';
+    });
+  }
+  setupTypeSelect('dtTypeSelect', 'dtType_ka', 'dtType_ru', 'dtType_en');
+  
+  // Function to set type select value based on existing type_ka value
+  function setTypeSelectValue(selectId, type_ka) {
+    const select = document.getElementById(selectId);
+    if (!select || !type_ka) { select.value = ''; return; }
+    // Find option that matches the type_ka
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].dataset.ka === type_ka) {
+        select.value = select.options[i].value;
+        return;
+      }
+    }
+    // If not found, reset to empty
+    select.value = '';
+  }
+  
   // Convert file to base64 string (without data: prefix)
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -2206,6 +2246,7 @@
     document.getElementById('dtDocId').value = '';
     document.getElementById('dtDays').value = '1';
     document.getElementById('dtNights').value = '0';
+    document.getElementById('dtTypeSelect').value = '';
     dtUploadedImages = [];
     renderUploadedPhotos();
     setSelectedRegions([]);
@@ -2243,6 +2284,7 @@
     document.getElementById('dtType_ka').value = t.type_ka || t.type || '';
     document.getElementById('dtType_ru').value = t.type_ru || '';
     document.getElementById('dtType_en').value = t.type_en || '';
+    setTypeSelectValue('dtTypeSelect', t.type_ka || t.type || '');
     document.getElementById('dtPrice').value   = t.price || '';
     document.getElementById('dtDays').value    = t.days ?? 1;
     document.getElementById('dtNights').value  = t.nights ?? 0;
@@ -2342,12 +2384,15 @@
   }
 
   function setMdtSelectedRegions(regions) {
-    const arr = toArray(regions);
-    document.querySelectorAll('#mdtRegionGrid .region-chip').forEach(c => {
-      c.classList.toggle('selected', arr.includes(c.dataset.region));
-    });
+  const arr = toArray(regions);
+  document.querySelectorAll('#mdtRegionGrid .region-chip').forEach(c => {
+  c.classList.toggle('selected', arr.includes(c.dataset.region));
+  });
   }
 
+  // Setup type select for multi-day tours
+  setupTypeSelect('mdtTypeSelect', 'mdtType_ka', 'mdtType_ru', 'mdtType_en');
+  
   function renderMdtUploadedPhotos() {
     const container = document.getElementById('mdtUploadedPhotos');
     container.innerHTML = mdtUploadedImages.map((img, i) => `
@@ -2463,16 +2508,17 @@
   });
 
   // Open / close modal
-  window.openMultiDayTourModal = function() {
-    document.getElementById('multiDayTourModalTitle').textContent = 'ტურის დამატება';
-    document.getElementById('multiDayTourForm').reset();
-    document.getElementById('mdtDocId').value = '';
-    document.getElementById('mdtDays').value = '3';
-    document.getElementById('mdtNights').value = '2';
-    mdtUploadedImages = [];
-    renderMdtUploadedPhotos();
-    setMdtSelectedRegions([]);
-    document.getElementById('multiDayTourModalWrap').classList.add('open');
+window.openMultiDayTourModal = function() {
+  document.getElementById('multiDayTourModalTitle').textContent = 'ტურის დამატება';
+  document.getElementById('multiDayTourForm').reset();
+  document.getElementById('mdtDocId').value = '';
+  document.getElementById('mdtDays').value = '3';
+  document.getElementById('mdtNights').value = '2';
+  document.getElementById('mdtTypeSelect').value = '';
+  mdtUploadedImages = [];
+  renderMdtUploadedPhotos();
+  setMdtSelectedRegions([]);
+  document.getElementById('multiDayTourModalWrap').classList.add('open');
   };
 
   window.closeMultiDayTourModal = function() {
@@ -2496,6 +2542,7 @@
     document.getElementById('mdtType_ka').value  = t.type_ka || t.type || '';
     document.getElementById('mdtType_ru').value  = t.type_ru || '';
     document.getElementById('mdtType_en').value  = t.type_en || '';
+    setTypeSelectValue('mdtTypeSelect', t.type_ka || t.type || '');
     document.getElementById('mdtPrice').value    = t.price || '';
     document.getElementById('mdtDays').value    = t.days ?? 3;
     document.getElementById('mdtNights').value  = t.nights ?? 2;
@@ -2645,7 +2692,7 @@
     }
     tb.innerHTML = list.map(b => `
       <tr>
-        <td data-label="სათაური"><strong>${b.title_ka || b.title || '—'}</strong></td>
+        <td data-label="სათაურ��"><strong>${b.title_ka || b.title || '—'}</strong></td>
         <td data-label="კატეგორია"><span class="badge b-blue">${b.category || '—'}</span></td>
         <td data-label="თარიღი">${fmtDate(b.createdAt)}</td>
         <td data-label="ფოტო">${(b.photos && b.photos.length) || (b.image ? 1 : 0)} ფოტო</td>

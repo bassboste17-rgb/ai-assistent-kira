@@ -55,7 +55,7 @@ const translations = {
   "tours.hour":           { ru: "час",    en: "hour",    ka: "საათი" },
   "tours.people":         { ru: "чел.",   en: "people",  ka: "ადამ." },
   "tours.person":         { ru: "чел.",   en: "person",  ka: "ადამ." },
-  "tours.featured":       { ru: "Рекомендуем", en: "Featured", ka: "რეკომენდირებული" },
+  "tours.featured":       { ru: "Рекомендуем", en: "Featured", ka: "რეკომენდირებ��ლი" },
 
   // -- MAP SECTION --
   "map.tag":       { ru: "География",   en: "Geography",    ka: "გეოგრაფია" },
@@ -85,7 +85,7 @@ const translations = {
   "reviews.title":     { ru: "Что говорят наши клиенты", en: "What Our Clients Say", ka: "რას ამბობენ ჩვენი კლიენტები" },
   "reviews.subtitle":  { ru: "Реальные истории и впечатления путешественников, доверивших нам свой отдых", en: "Real stories and impressions of travelers who trusted us with their vacation", ka: "მოგზაურთა რეალური ისტორიები და შთაბეჭდილებები, რომლებმაც თავიანთი დასვენება ჩვენ გვანდეს" },
   "reviews.add.title": { ru: "Оставить отзыв",  en: "Leave a Review",  ka: "დატოვეთ შეფასება" },
-  "reviews.add.desc":  { ru: "Поделитесь своими впечатлениями о путешествии с DAMQ Travel", en: "Share your impressions of traveling with DAMQ Travel", ka: "გაგვიზიარეთ თქვენი შთაბეჭდილებები DAMQ Travel-თან მოგზაურობის შესახებ" },
+  "reviews.add.desc":  { ru: "Поделитесь своими впечатления��и о путешествии с DAMQ Travel", en: "Share your impressions of traveling with DAMQ Travel", ka: "გაგვიზიარეთ თქვენი შთაბეჭდილებები DAMQ Travel-თან მოგზაურობის შესახებ" },
   "reviews.form.first":  { ru: "Имя",      en: "First Name",   ka: "სახელი" },
   "reviews.form.last":   { ru: "Фамилия",  en: "Last Name",    ka: "გვარი" },
   "reviews.form.country":{ ru: "Страна",   en: "Country",      ka: "ქვეყანა" },
@@ -181,7 +181,7 @@ const translations = {
   "services.multitours.title.many":{ ru: "многодневных туров", en: "multi-day tours",  ka: "მრავალდღიანი ტური" },
   "services.multitours.fallback":  { ru: "Многодневные туры",  en: "Multi-day Tours",  ka: "მრავალდღიანი ტურები" },
   "services.multitours.sub":       { ru: "Путешествия с проживанием, транспортом и полным сопровождением гида", en: "Trips with accommodation, transport and full guide support", ka: "მოგზაურობები საცხოვრებლით, ტრანსპორტით და გიდის სრული თანხლებით" },
-  "services.soon":                 { ru: "Скоро здесь появятся туры", en: "Tours coming soon", ka: "ტურები მალე გამოჩნდება" },
+  "services.soon":                 { ru: "Скоро здесь появятся туры", en: "Tours coming soon", ka: "ტურები მალე გამოჩნდე��ა" },
   "services.empty.title":          { ru: "Туры не найдены",    en: "No tours found",    ka: "ტურები ვერ მოიძებნა" },
   "services.empty.desc":           { ru: "По выбранному фильтру туров пока нет. Попробуйте другую категорию.", en: "No tours match the selected filter. Try a different category.", ka: "შერჩეული ფილტრით ტურები არ მოიძებნა. სცადეთ სხვა კატეგორია." },
   "services.error.title":          { ru: "Ошибка загрузки",    en: "Loading Error",     ka: "ჩატვირთვის შეცდომა" },
@@ -242,7 +242,7 @@ const translations = {
   "services.step3.title":   { ru: "Подтвердите бронь",  en: "Confirm Booking",   ka: "ჯავშნის დადასტურება" },
   "services.step3.desc":    { ru: "Получите детальную программу тура и подтвердите бронирование — всё остальное мы организуем за вас.", en: "Receive a detailed tour program and confirm your booking — we'll organize everything else for you.", ka: "მიიღეთ ტურის დეტალური პროგრამა და დაადასტურეთ ჯავშანი — დანარჩენს ჩვენ მოვაგვარებთ თქვენთვის." },
   "services.step4.title":   { ru: "Наслаждайтесь!",     en: "Enjoy!",            ka: "ისიამოვნეთ!" },
-  "services.step4.desc":    { ru: "Встречаем вас в назначенном месте и сопровождаем на протяжении всего путешествия.", en: "We meet you at the designated location and accompany you throughout the entire journey.", ka: "შეგხვდებით დანიშნულ ადგილას და თან გახლავართ მთელი მოგზაურობის განმავლობაში." },
+  "services.step4.desc":    { ru: "Встречаем вас в назначенном месте и сопровождаем на протяжении всего путешествия.", en: "We meet you at the designated location and accompany you throughout the entire journey.", ka: "შეგხვდებით დანიშნულ ადგილას და თან გახლავართ მთელი მოგზაურობის განმავლობაშ��." },
 
   // -- SERVICES - FAQ --
   "services.faq.tag":       { ru: "FAQ",              en: "FAQ",              ka: "FAQ" },
@@ -344,12 +344,22 @@ const translations = {
   "country.usa":          { ru: "США",          en: "USA",          ka: "აშშ" },
   "country.other":        { ru: "Другая",       en: "Other",        ka: "სხვა" },
 
+  // -- TOUR TYPES (for admin dropdown and detail page) --
+  "tourtype.excursion":     { ru: "Экскурсия",          en: "Excursion",           ka: "ექსკურსია" },
+  "tourtype.gastro":        { ru: "Гастрономический",   en: "Gastronomic",         ka: "გასტრონომია" },
+  "tourtype.wine":          { ru: "Винный тур",         en: "Wine Tour",           ka: "ღვინის ტური" },
+  "tourtype.adventure":     { ru: "Приключение",        en: "Adventure",           ka: "თავგადასავალი" },
+  "tourtype.cultural":      { ru: "Культурный",         en: "Cultural",            ka: "კულტურული" },
+  "tourtype.nature":        { ru: "Природа",            en: "Nature",              ka: "ბუნება" },
+  "tourtype.beach":         { ru: "Пляжный",            en: "Beach",               ka: "პლაჟი" },
+  "tourtype.historical":    { ru: "Исторический",       en: "Historical",          ka: "ისტორიული" },
+
   // -- TOUR SELECT OPTIONS --
   "tour.tbilisi":    { ru: "Тбилиси и окрестности",  en: "Tbilisi & Surroundings",  ka: "თბილისი და შემოგარენი" },
   "tour.kazbegi":    { ru: "Казбеги и горы",          en: "Kazbegi & Mountains",     ka: "ყაზბეგი და მთები" },
   "tour.wine":       { ru: "Винный тур по Кахетии",   en: "Wine Tour in Kakheti",   ka: "კახეთის ღვინის ტური" },
   "tour.svaneti":    { ru: "Сванетия",                en: "Svaneti",                 ka: "სვანეთი" },
-  "tour.batumi":     { ru: "Батуми и побережье",      en: "Batumi & Coastline",      ka: "ბათუმი და სანაპირო" },
+  "tour.batumi":     { ru: "��атуми и побережье",      en: "Batumi & Coastline",      ka: "ბათუმი და სანაპირო" },
   "tour.custom":     { ru: "Индивидуальный тур",      en: "Custom Tour",             ka: "ინდივიდუალური ტური" },
 // -- SEASON PAGES --
   "season.back":                    { ru: "Назад",                        en: "Back",                         ka: "უკან" },

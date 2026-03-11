@@ -686,6 +686,32 @@
       const lang = getLang();
       return t['desc_' + lang] || t.desc || '';
     }
+    function localType(t) {
+      const lang = getLang();
+      return t['type_' + lang] || t.type_ka || t.type || '';
+    }
+    // Map Georgian region names to translation keys
+    const regionKeyMap = {
+      'თბილისი': 'region.tbilisi',
+      'კახეთი': 'region.kakheti',
+      'იმერეთი': 'region.imereti',
+      'სამეგრელო': 'region.samegrelo',
+      'აჭარა': 'region.adjara',
+      'გურია': 'region.guria',
+      'სვანეთი': 'region.svaneti',
+      'რაჭა-ლეჩხუმი': 'region.racha',
+      'მცხეთა-მთიანეთი': 'region.mtskheta',
+      'შიდა ქართლი': 'region.shida',
+      'ქვემო ქართლი': 'region.kvemo',
+      'სამცხე-ჯავახეთი': 'region.samtskhe'
+    };
+    function translateRegion(regionName, lang) {
+      const key = regionKeyMap[regionName];
+      if (key && window.t) {
+        return window.t(key, lang) || regionName;
+      }
+      return regionName;
+    }
 
     function renderTour(t) {
       const photos = toArray(t.photos);
@@ -705,7 +731,8 @@
         : (t.group || '');
 
       const heroImage = (photos.length ? (photos[0].url || photos[0].thumb) : t.image) || '';
-      const location = regions.join(', ') || t.location || '';
+      const translatedRegions = regions.map(r => translateRegion(r, lang));
+      const location = translatedRegions.join(', ') || t.location || '';
 
       const tourName = localName(t);
       const tourDesc = localDesc(t);
@@ -774,7 +801,7 @@
               ${regions.map(r => `
                 <span class="detail-region-chip">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  ${r}
+                  ${translateRegion(r, lang)}
                 </span>`).join('')}
             </div>` : ''}
 
@@ -820,10 +847,10 @@
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   <div><strong>${_t('detail.location')}</strong><br>${location}</div>
                 </div>` : ''}
-                ${t.type ? `
+                ${(t.type || t.type_ka) ? `
                 <div class="sidebar-info-row">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                  <div><strong>${_t('detail.type')}</strong><br>${t.type}</div>
+                  <div><strong>${_t('detail.type')}</strong><br>${localType(t)}</div>
                 </div>` : ''}
               </div>
               <a href="contact.html" class="btn-book-full">
