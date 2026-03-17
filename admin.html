@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" id="adminHtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -917,6 +917,93 @@
     .auth-actions { display: grid; gap: 10px; }
     .auth-note { font-size: 0.78rem; color: #777; line-height: 1.3; }
     .sidebar-footer .btn-site + .btn-site { margin-top: 0.55rem; }
+
+    /* ===========================================
+       ADMIN LANGUAGE SWITCHER
+    =========================================== */
+    .admin-lang-switcher {
+      position: relative;
+    }
+    .admin-lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #555;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .admin-lang-toggle:hover {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+    .admin-lang-switcher.active .admin-lang-toggle {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.06);
+    }
+    .admin-lang-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 140px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 5px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: all 0.2s;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      z-index: 200;
+    }
+    .admin-lang-switcher.active .admin-lang-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .admin-lang-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 9px 12px;
+      background: none;
+      border: none;
+      border-radius: 6px;
+      color: #555;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .admin-lang-option:hover {
+      background: #f5f5f5;
+      color: var(--text);
+    }
+    .admin-lang-option.active {
+      background: rgba(212,175,55,0.1);
+      color: #b8960f;
+    }
+    .admin-lang-flag {
+      width: 24px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: #f0f0f0;
+      border-radius: 4px;
+      color: #666;
+    }
   </style>
 </head>
 <body>
@@ -932,47 +1019,47 @@
     </div>
     <div class="sidebar-badge">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      ადმინისტრატორი
+      <span data-i18n="admin.sidebar.admin">Администратор</span>
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-label">მთავარი</div>
+      <div class="nav-label" data-i18n="admin.sidebar.main">Главная</div>
       <button class="nav-item active" data-page="dashboard">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        დაფა
+        <span data-i18n="admin.sidebar.dashboard">Панель</span>
       </button>
 
-      <div class="nav-label">მართვა</div>
+      <div class="nav-label" data-i18n="admin.sidebar.management">Управление</div>
       <button class="nav-item" data-page="bookings">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        ჯავშნები
+        <span data-i18n="admin.sidebar.bookings">Бронирования</span>
         <span class="nav-count" id="cntBookings">0</span>
       </button>
       <button class="nav-item" data-page="dayTours">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        1-დღიანი ტურები
+        <span data-i18n="admin.sidebar.day.tours">Однодневные туры</span>
         <span class="nav-count" id="cntDayTours">0</span>
       </button>
       <button class="nav-item" data-page="multiDayTours">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        მრავალდღიანი ტურები
+        <span data-i18n="admin.sidebar.multi.tours">Многодневные туры</span>
         <span class="nav-count" id="cntMultiDayTours">0</span>
       </button>
       <button class="nav-item" data-page="blogs">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        ბლოგები
+        <span data-i18n="admin.sidebar.blogs">Блоги</span>
         <span class="nav-count" id="cntBlogs">0</span>
       </button>
       <button class="nav-item" data-page="reviews">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        შეფასებები
+        <span data-i18n="admin.sidebar.reviews">Отзывы</span>
         <span class="nav-count" id="cntReviews">0</span>
       </button>
 
-      <div class="nav-label">საიტი</div>
+      <div class="nav-label" data-i18n="admin.sidebar.site">Сайт</div>
       <a href="home.html" target="_blank" class="nav-item">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        საიტის გახსნა
+        <span data-i18n="admin.sidebar.open.site">Открыть сайт</span>
       </a>
     </nav>
 
@@ -981,16 +1068,16 @@
         <div class="user-avatar" id="uAvatar">A</div>
         <div class="user-info">
           <div class="user-email" id="uEmail">admin@damq.ge</div>
-          <div class="user-role">ადმინისტრატორი</div>
+          <div class="user-role" data-i18n="admin.sidebar.admin">Администратор</div>
         </div>
       </div>
       <a href="home.html" class="btn-site">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        მთავარზე
+        <span data-i18n="admin.sidebar.home">На главную</span>
       </a>
       <button class="btn-site" id="btnLogout" type="button" style="display:none;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Log out
+        <span data-i18n="admin.sidebar.logout">Выйти</span>
       </button>
     </div>
   </aside>
@@ -1005,14 +1092,44 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <div>
-          <div class="topbar-title" id="pgTitle">დაფა</div>
-          <div class="topbar-subtitle" id="pgSub">DAMQ Travel-ის მიმოხილვა</div>
+          <div class="topbar-title" id="pgTitle" data-i18n="admin.topbar.dashboard">Панель управления</div>
+          <div class="topbar-subtitle" id="pgSub" data-i18n="admin.topbar.dashboard.sub">Обзор DAMQ Travel</div>
         </div>
       </div>
-      <button class="btn btn-dark" id="btnAddTour" style="display:none;" onclick="openTourModal()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        ტურის დამატება
-      </button>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <!-- Language Switcher -->
+        <div class="admin-lang-switcher" id="adminLangSwitcher">
+          <button class="admin-lang-toggle" id="adminLangToggle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <span id="adminLangLabel">RU</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="admin-lang-dropdown" id="adminLangDropdown">
+            <button class="admin-lang-option active" data-lang="ru">
+              <span class="admin-lang-flag">RU</span>
+              <span>Русский</span>
+            </button>
+            <button class="admin-lang-option" data-lang="en">
+              <span class="admin-lang-flag">EN</span>
+              <span>English</span>
+            </button>
+            <button class="admin-lang-option" data-lang="ka">
+              <span class="admin-lang-flag">KA</span>
+              <span>ქართული</span>
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-dark" id="btnAddTour" style="display:none;" onclick="openTourModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span data-i18n="admin.topbar.add.tour">Добавить тур</span>
+        </button>
+      </div>
     </div>
 
     <!-- --- DASHBOARD --- -->
@@ -1022,35 +1139,35 @@
           <div class="stat-icon si-gold">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
-          <div><div class="stat-val" id="sTours">—</div><div class="stat-lbl">ტური</div></div>
+          <div><div class="stat-val" id="sTours">—</div><div class="stat-lbl" data-i18n="admin.stats.tours">Туров</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon si-green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
-          <div><div class="stat-val" id="sBookings">—</div><div class="stat-lbl">ჯავშანი</div></div>
+          <div><div class="stat-val" id="sBookings">—</div><div class="stat-lbl" data-i18n="admin.stats.bookings">Бронирований</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon si-blue">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <div><div class="stat-val" id="sReviews">—</div><div class="stat-lbl">შეფასება</div></div>
+          <div><div class="stat-val" id="sReviews">—</div><div class="stat-lbl" data-i18n="admin.stats.reviews">Отзывов</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon si-purple">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
           </div>
-          <div><div class="stat-val" id="sPending">—</div><div class="stat-lbl">პასუხის მოლოდინში</div></div>
+          <div><div class="stat-val" id="sPending">—</div><div class="stat-lbl" data-i18n="admin.stats.pending">Ожидают ответа</div></div>
         </div>
       </div>
       <div class="card">
         <div class="card-head">
-          <div class="card-title">ბოლო ჯავშნები</div>
-          <button class="btn btn-ghost" onclick="switchPage('bookings')">ყველა ჯავშანი →</button>
+          <div class="card-title" data-i18n="admin.recent.bookings">Последние бронирования</div>
+          <button class="btn btn-ghost" onclick="switchPage('bookings')"><span data-i18n="admin.all.bookings">Все бронирования →</span></button>
         </div>
         <table class="table">
-          <thead><tr><th>სახელი</th><th>ტური</th><th>ტელეფონი</th><th>სტატუსი</th><th>თარიღი</th></tr></thead>
-          <tbody id="recentTbody"><tr class="loading-row"><td colspan="5">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.table.name">Имя</th><th data-i18n="admin.table.tour">Тур</th><th data-i18n="admin.table.phone">Телефон</th><th data-i18n="admin.table.status">Статус</th><th data-i18n="admin.table.date">Дата</th></tr></thead>
+          <tbody id="recentTbody"><tr class="loading-row"><td colspan="5" data-i18n="admin.table.loading">Загрузка...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1217,7 +1334,7 @@
             <input type="checkbox" id="fFeatured" style="width: 18px; height: 18px; cursor: pointer; accent-color: #d4af37;">
             <span style="font-weight: 600; color: #1a1a2e;">✨ რეკომენდირებული (მხოლოდ მრავალდღიანი)</span>
           </label>
-          <p style="font-size: 0.75rem; color: #888; margin: 6px 0 0 28px;">მონიშნეთ, რომ გამოჩნდეს მთავარ მენიუში</p>
+          <p style="font-size: 0.75rem; color: #888; margin: 6px 0 0 28px;">მონიშნეთ, რ���მ გამოჩნდეს მთავარ მენიუში</p>
         </div>
         <div class="fg full">
           <label>სურათის ბმული</label>
@@ -3714,6 +3831,85 @@ window.openMultiDayTourModal = function() {
 
   /* ============== INIT ============== */
   _moduleReadyResolve();
+  
+  /* ============== LANGUAGE SWITCHER ============== */
+  (function initAdminLang() {
+    const switcher = document.getElementById('adminLangSwitcher');
+    const toggle = document.getElementById('adminLangToggle');
+    const langLabel = document.getElementById('adminLangLabel');
+    
+    if (!switcher || !toggle) return;
+    
+    // Restore saved language
+    const savedLang = localStorage.getItem('damq_lang') || 'ru';
+    setAdminLanguage(savedLang);
+    
+    // Toggle dropdown
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switcher.classList.toggle('active');
+    });
+    
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!switcher.contains(e.target)) {
+        switcher.classList.remove('active');
+      }
+    });
+    
+    // Language option click
+    document.querySelectorAll('.admin-lang-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const lang = opt.getAttribute('data-lang');
+        setAdminLanguage(lang);
+        switcher.classList.remove('active');
+      });
+    });
+    
+    function setAdminLanguage(lang) {
+      localStorage.setItem('damq_lang', lang);
+      
+      // Update label
+      if (langLabel) langLabel.textContent = lang.toUpperCase();
+      
+      // Sync options
+      document.querySelectorAll('.admin-lang-option').forEach(opt => {
+        opt.classList.toggle('active', opt.getAttribute('data-lang') === lang);
+      });
+      
+      // Translate elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = window.t ? window.t(key, lang) : key;
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = val;
+        } else {
+          el.innerHTML = val;
+        }
+      });
+      
+      // Translate placeholders
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        const val = window.t ? window.t(key, lang) : key;
+        el.placeholder = val;
+      });
+      
+      // Update HTML lang
+      document.documentElement.lang = lang === 'ka' ? 'ka' : lang === 'en' ? 'en' : 'ru';
+    }
+    
+    // Make globally available
+    window.setAdminLanguage = setAdminLanguage;
+  })();
+</script>
+
+<!-- Translations Script -->
+<script src="js/translations.js"></script>
+<script>
+  // Re-apply translations after translations.js loads
+  const savedLang = localStorage.getItem('damq_lang') || 'ru';
+  if (window.setAdminLanguage) window.setAdminLanguage(savedLang);
 </script>
 
 </body>
