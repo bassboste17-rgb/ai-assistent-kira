@@ -917,6 +917,38 @@
     .auth-actions { display: grid; gap: 10px; }
     .auth-note { font-size: 0.78rem; color: #777; line-height: 1.3; }
     .sidebar-footer .btn-site + .btn-site { margin-top: 0.55rem; }
+
+    /* ===========================================
+       LANGUAGE SWITCHER
+    =========================================== */
+    .admin-lang-switch {
+      display: flex;
+      gap: 4px;
+      background: rgba(0,0,0,0.04);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .admin-lang-switch .lang-btn {
+      background: transparent;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .admin-lang-switch .lang-btn:hover {
+      background: rgba(212,175,55,0.1);
+      color: var(--gold);
+    }
+    .admin-lang-switch .lang-btn.active {
+      background: var(--gold);
+      color: var(--dark);
+    }
   </style>
 </head>
 <body>
@@ -924,21 +956,21 @@
 <!-- Auth gate: Firebase Authentication (Email/Password) -->
 <div class="auth-overlay" id="authOverlay">
   <div class="auth-card">
-    <div class="auth-title">Admin Sign In</div>
-    <div class="auth-sub">Sign in with an admin account to continue.</div>
+    <div class="auth-title" data-i18n="admin.auth.title">Admin Sign In</div>
+    <div class="auth-sub" data-i18n="admin.auth.subtitle">Sign in with an admin account to continue.</div>
     <form id="authForm" class="auth-actions">
       <div class="auth-field">
-        <label for="authEmail">Email</label>
+        <label for="authEmail" data-i18n="admin.auth.email">Email</label>
         <input class="auth-input" id="authEmail" type="email" autocomplete="username" required>
       </div>
       <div class="auth-field">
-        <label for="authPassword">Password</label>
+        <label for="authPassword" data-i18n="admin.auth.password">Password</label>
         <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" required>
       </div>
       <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
-      <button class="btn btn-dark" id="authLoginBtn" type="submit"><span>Sign in</span></button>
-      <div class="auth-note">
-        If sign-in fails with <code>auth/operation-not-allowed</code>, enable <b>Email/Password</b> in Firebase Console → Authentication → Sign-in method.
+      <button class="btn btn-dark" id="authLoginBtn" type="submit"><span data-i18n="admin.auth.signin">Sign in</span></button>
+      <div class="auth-note" data-i18n="admin.auth.note">
+        If sign-in fails with <code>auth/operation-not-allowed</code>, enable <b>Email/Password</b> in Firebase Console.
       </div>
     </form>
   </div>
@@ -959,43 +991,43 @@
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-label">მთავარი</div>
+      <div class="nav-label" data-i18n="admin.nav.main">მთავარი</div>
       <button class="nav-item active" data-page="dashboard">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        დაფა
+        <span data-i18n="admin.nav.dashboard">დაფა</span>
       </button>
 
-      <div class="nav-label">მართვა</div>
+      <div class="nav-label" data-i18n="admin.nav.management">მართვა</div>
       <button class="nav-item" data-page="bookings">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        ჯავშნები
+        <span data-i18n="admin.nav.bookings">ჯავშნები</span>
         <span class="nav-count" id="cntBookings">0</span>
       </button>
       <button class="nav-item" data-page="dayTours">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        1-დღიანი ტურები
+        <span data-i18n="admin.nav.dayTours">1-დღიანი ტურები</span>
         <span class="nav-count" id="cntDayTours">0</span>
       </button>
       <button class="nav-item" data-page="multiDayTours">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        მრავალდღიანი ტურები
+        <span data-i18n="admin.nav.multiDayTours">მრავალდღიანი ტურები</span>
         <span class="nav-count" id="cntMultiDayTours">0</span>
       </button>
       <button class="nav-item" data-page="blogs">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        ბლოგები
+        <span data-i18n="admin.nav.blogs">ბლოგები</span>
         <span class="nav-count" id="cntBlogs">0</span>
       </button>
       <button class="nav-item" data-page="reviews">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        შეფასებები
+        <span data-i18n="admin.nav.reviews">შეფასებები</span>
         <span class="nav-count" id="cntReviews">0</span>
       </button>
 
-      <div class="nav-label">საიტი</div>
+      <div class="nav-label" data-i18n="admin.nav.site">საიტი</div>
       <a href="home.html" target="_blank" class="nav-item">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        საიტის გახსნა
+        <span data-i18n="admin.nav.openSite">საიტის გახსნა</span>
       </a>
     </nav>
 
@@ -1028,14 +1060,22 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <div>
-          <div class="topbar-title" id="pgTitle">დაფა</div>
-          <div class="topbar-subtitle" id="pgSub">DAMQ Travel-ის მიმოხილვა</div>
+          <div class="topbar-title" id="pgTitle" data-i18n="admin.nav.dashboard">დაფა</div>
+          <div class="topbar-subtitle" id="pgSub" data-i18n="admin.dashboard.subtitle">DAMQ Travel-ის მიმოხილვა</div>
         </div>
       </div>
-      <button class="btn btn-dark" id="btnAddTour" style="display:none;" onclick="openTourModal()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        ტურის დამატება
-      </button>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <!-- Language Switcher -->
+        <div class="admin-lang-switch">
+          <button class="lang-btn" data-lang="ka" title="ქართული">KA</button>
+          <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+        <button class="btn btn-dark" id="btnAddTour" style="display:none;" onclick="openTourModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span data-i18n="admin.btn.addTour">ტურის დამატება</span>
+        </button>
+      </div>
     </div>
 
     <!-- --- DASHBOARD --- -->
@@ -1815,14 +1855,30 @@
     if (!user) return false;
 
     const email = (user.email || '').toLowerCase().trim();
+    
+    // Check 1: Is email in hardcoded ADMIN_EMAILS list?
     if (email && ADMIN_EMAILS.has(email)) return true;
 
+    // Check 2: Does user have admin custom claim?
     try {
       const token = await user.getIdTokenResult();
-      return token?.claims?.admin === true;
+      if (token?.claims?.admin === true) return true;
     } catch {
-      return false;
+      // Continue to database check
     }
+
+    // Check 3: Check admin role in Firebase Realtime Database
+    try {
+      const snap = await get(ref(db, `admins/${user.uid}`));
+      if (snap.exists()) {
+        const adminData = snap.val();
+        if (adminData?.role === 'admin' || adminData?.isAdmin === true) return true;
+      }
+    } catch {
+      // Database check failed
+    }
+
+    return false;
   }
 
   let _started = false;
@@ -1952,7 +2008,7 @@
     approved:'b-green', pending:'b-gold', rejected:'b-red'
   };
   const STATUS_LBL = {
-    new:'ახალი', contacted:'დავუკავშირდით', confirmed:'დადასტურებული',
+    new:'ახალი', contacted:'დავუკავშირდით', confirmed:'დადასტურებულ���',
     completed:'დასრულებული', cancelled:'გაუქმებული',
     approved:'დამტკიცებული', pending:'მოლოდინში', rejected:'უარყოფილი'
   };
@@ -3771,6 +3827,72 @@ window.openMultiDayTourModal = function() {
 
   /* ============== INIT ============== */
   _moduleReadyResolve();
+</script>
+
+<!-- Translation Script for Admin Panel -->
+<script src="js/translations.js"></script>
+<script>
+(function() {
+  // Get current language from localStorage or default to 'ka' (Georgian)
+  let currentLang = localStorage.getItem('damq_admin_lang') || 'ka';
+
+  // Apply translations to page
+  function applyTranslations(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (window.translations && window.translations[key] && window.translations[key][lang]) {
+        // Handle innerHTML for elements that may contain HTML
+        if (el.tagName === 'BUTTON' || el.querySelector('svg')) {
+          // For buttons, only change the text content, not SVG
+          const textNodes = Array.from(el.childNodes).filter(n => n.nodeType === Node.TEXT_NODE);
+          if (textNodes.length > 0) {
+            textNodes[0].textContent = window.translations[key][lang];
+          } else {
+            // Check for span inside
+            const span = el.querySelector('span[data-i18n]');
+            if (!span) {
+              el.innerHTML = window.translations[key][lang];
+            }
+          }
+        } else {
+          el.textContent = window.translations[key][lang];
+        }
+      }
+    });
+  }
+
+  // Update language button states
+  function updateLangButtons(lang) {
+    document.querySelectorAll('.admin-lang-switch .lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  // Set language
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('damq_admin_lang', lang);
+    applyTranslations(lang);
+    updateLangButtons(lang);
+  }
+
+  // Initialize language switcher
+  document.addEventListener('DOMContentLoaded', function() {
+    // Apply initial translations
+    applyTranslations(currentLang);
+    updateLangButtons(currentLang);
+
+    // Language switcher click handlers
+    document.querySelectorAll('.admin-lang-switch .lang-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        setLanguage(this.dataset.lang);
+      });
+    });
+  });
+
+  // Make setLanguage available globally
+  window.setAdminLanguage = setLanguage;
+})();
 </script>
 
 </body>
