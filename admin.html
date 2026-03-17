@@ -870,16 +870,16 @@
     /* ===========================================
        AUTH (Firebase email/password)
     =========================================== */
-    .auth-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10,10,10,0.72);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      z-index: 9999;
-    }
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,10,0.72);
+  display: none; /* დამალული თავიდან - JS აჩვენებს საჭიროებისას */
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 9999;
+  }
     .auth-card {
       width: 100%;
       max-width: 420px;
@@ -1588,7 +1588,7 @@
             </div>
             <div class="upload-zone-text"><strong>აირჩიეთ ფოტოები</strong> ან გადმოიტანეთ აქ</div>
           </div>
-          <div class="upload-progress" id="mdtUploadProgress">იტვირთება...</div>
+          <div class="upload-progress" id="mdtUploadProgress">იტვირთებ���...</div>
           <div class="uploaded-photos" id="mdtUploadedPhotos"></div>
         </div>
       </form>
@@ -1998,7 +1998,7 @@
   const PAGE_META = {
     dashboard: ['დაფა',        'DAMQ Travel-ის მიმოხილვა'],
     tours:     ['ტურების მართვა','დაამატეთ და დაარედაქტირეთ ტურები'],
-    bookings:  ['ჯავშნები',          'კლიენტების მოთხოვნები'],
+    bookings:  ['ჯავშნები',          'კლიენტების მოთხ���ვნები'],
     reviews:   ['შეფასებები',          'კლიენტების შეფასებების მართვა'],
     dayTours:  ['1-დღიანი ტურები', 'დაამატეთ და მართეთ 1-დღიანი ტურები'],
     multiDayTours: ['მრავალდღიანი ტურები', 'დაამატეთ და მართეთ მრავალდღიანი ტურები'],
