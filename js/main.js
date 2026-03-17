@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoModal();
     initReviewForm();
     initToursSliders();
+    initWhatsappFabHideOnFooter();
 
     setTimeout(() => {
       document.querySelector('.hero')?.classList.add('loaded');
@@ -93,6 +94,101 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   loadAndInit();
+
+  /* ---------- WhatsApp FAB: Hide On Footer (Mobile) ---------- */
+  function initWhatsappFabHideOnFooter() {
+    const footer = document.querySelector('footer.footer') || document.querySelector('footer');
+    const fabs = Array.from(document.querySelectorAll('.whatsapp-fab'));
+    if (!footer || fabs.length === 0) return;
+
+    const mq = window.matchMedia('(max-width: 768px)');
+    let observer = null;
+    let fallbackScrollHandler = null;
+    let fallbackResizeHandler = null;
+
+    function setHidden(shouldHide) {
+      // Never hide on non-mobile layouts
+      if (!mq.matches) shouldHide = false;
+
+      fabs.forEach((fab) => {
+        fab.style.opacity = shouldHide ? '0' : '';
+        fab.style.visibility = shouldHide ? 'hidden' : '';
+        fab.style.pointerEvents = shouldHide ? 'none' : '';
+
+        if (shouldHide) {
+          fab.setAttribute('aria-hidden', 'true');
+          fab.setAttribute('tabindex', '-1');
+        } else {
+          fab.removeAttribute('aria-hidden');
+          fab.removeAttribute('tabindex');
+        }
+      });
+    }
+
+    function isFooterInFabZone() {
+      const footerRect = footer.getBoundingClientRect();
+      const fabRect = fabs[0].getBoundingClientRect();
+      return footerRect.top <= fabRect.bottom;
+    }
+
+    function cleanup() {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+      if (fallbackScrollHandler) {
+        window.removeEventListener('scroll', fallbackScrollHandler);
+        fallbackScrollHandler = null;
+      }
+      if (fallbackResizeHandler) {
+        window.removeEventListener('resize', fallbackResizeHandler);
+        fallbackResizeHandler = null;
+      }
+      setHidden(false);
+    }
+
+    function setup() {
+      cleanup();
+      if (!mq.matches) return;
+
+      // Hide when footer reaches the FAB area (prevents overlap on mobile)
+      if ('IntersectionObserver' in window) {
+        const fabRect = fabs[0].getBoundingClientRect();
+        const bottomMargin = Math.round(fabRect.bottom - window.innerHeight);
+        observer = new IntersectionObserver(
+          (entries) => {
+            const inZone = entries.some((e) => e.isIntersecting);
+            setHidden(inZone);
+          },
+          { root: null, threshold: 0, rootMargin: `0px 0px ${bottomMargin}px 0px` }
+        );
+        observer.observe(footer);
+        // Ensure correct initial state
+        setHidden(isFooterInFabZone());
+        return;
+      }
+
+      // Fallback for older browsers
+      const update = () => setHidden(isFooterInFabZone());
+      fallbackScrollHandler = () => update();
+      fallbackResizeHandler = () => update();
+      window.addEventListener('scroll', fallbackScrollHandler, { passive: true });
+      window.addEventListener('resize', fallbackResizeHandler);
+      update();
+    }
+
+    // Setup now and on breakpoint changes/orientation changes
+    if (mq.addEventListener) {
+      mq.addEventListener('change', setup);
+    } else if (mq.addListener) {
+      mq.addListener(setup);
+    }
+    window.addEventListener('resize', () => {
+      if (mq.matches) setup();
+    });
+
+    setup();
+  }
 
   /* ---------- Navbar ---------- */
   function initNavbar() {
