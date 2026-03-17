@@ -1831,15 +1831,17 @@
     if (!user) {
       _started = false;
       setUserUI(null);
-      showAuthOverlay('');
+      // გადამისამართება login გვერდზე
+      window.location.href = "login.html";
       return;
     }
 
     const ok = await userIsAdmin(user);
     if (!ok) {
       setUserUI(null);
-      showAuthOverlay('No admin access for this account.');
       await signOut(auth);
+      // გადამისამართება login გვერდზე
+      window.location.href = "login.html";
       return;
     }
 
@@ -1884,6 +1886,7 @@
 
   btnLogout?.addEventListener('click', async () => {
     await signOut(auth);
+    window.location.href = "login.html";
   });
 
   // Show the overlay immediately; auth state will hide it if already signed in.
@@ -1952,7 +1955,7 @@
     approved:'b-green', pending:'b-gold', rejected:'b-red'
   };
   const STATUS_LBL = {
-    new:'ახალი', contacted:'დავუკავშირდით', confirmed:'დადასტურებული',
+    new:'ახალი', contacted:'დავუკავშირდით', confirmed:'დადასტურებულ���',
     completed:'დასრულებული', cancelled:'გაუქმებული',
     approved:'დამტკიცებული', pending:'მოლოდინში', rejected:'უარყოფილი'
   };

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ავტორიზაცია — DAMQ Travel</title>
+  <link rel="icon" type="image/png" href="images/logodamq.png">
+  <link rel="apple-touch-icon" href="images/logodamq.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <div class="loading-text">მიმდინარეობს...</div>
+    </div>
+  </div>
+
+  <!-- Auth Page -->
+  <div class="auth-page">
+    <div class="auth-card" id="authCard">
+      <!-- Logo -->
+      <div class="auth-logo">
+        <img src="images/logodamq.png" alt="DAMQ Logo" class="logo-icon">
+        <span class="logo-text">DAMQ</span>
+        <span class="logo-divider"></span>
+        <span class="logo-sub">ადმინ პანელი</span>
+      </div>
+
+      <!-- Messages (shared between forms) -->
+      <div id="authError" class="auth-error"></div>
+      <div id="authSuccess" class="auth-success"></div>
+
+      <!-- Login Form -->
+      <form class="auth-form active" id="loginForm">
+        <h1 class="auth-title">შესვლა</h1>
+        <p class="auth-subtitle">შეიყვანეთ თქვენი მონაცემები ადმინ პანელში შესასვლელად</p>
+
+        <div class="form-group">
+          <label for="loginEmail">ელ-ფოსტა</label>
+          <input 
+            type="email" 
+            id="loginEmail" 
+            placeholder="example@mail.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">პაროლი</label>
+          <div class="password-wrap">
+            <input 
+              type="password" 
+              id="loginPassword" 
+              placeholder="შეიყვანეთ პაროლი"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" class="password-toggle" id="toggleLoginPass">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth" id="loginBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          <span>შესვლა</span>
+        </button>
+
+        <div class="auth-switch">
+          არ გაქვთ ანგარიში? <a href="#" id="showRegister">რეგისტრაცია</a>
+        </div>
+      </form>
+
+      <!-- Register Form -->
+      <form class="auth-form" id="registerForm">
+        <h1 class="auth-title">რეგისტრაცია</h1>
+        <p class="auth-subtitle">შექმენით ახალი ანგარიში ადმინ პანელისთვის</p>
+
+        <div class="form-group">
+          <label for="registerName">სახელი</label>
+          <input 
+            type="text" 
+            id="registerName" 
+            placeholder="თქვენი სახელი"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="registerEmail">ელ-ფოსტა</label>
+          <input 
+            type="email" 
+            id="registerEmail" 
+            placeholder="example@mail.com"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="registerPassword">პაროლი</label>
+          <div class="password-wrap">
+            <input 
+              type="password" 
+              id="registerPassword" 
+              placeholder="მინიმუმ 6 სიმბოლო"
+              autocomplete="new-password"
+              required
+            >
+            <button type="button" class="password-toggle" id="toggleRegisterPass">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="registerConfirmPassword">პაროლის დადასტურება</label>
+          <div class="password-wrap">
+            <input 
+              type="password" 
+              id="registerConfirmPassword" 
+              placeholder="გაიმეორეთ პაროლი"
+              autocomplete="new-password"
+              required
+            >
+            <button type="button" class="password-toggle" id="toggleRegisterConfirmPass">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-auth" id="registerBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="8.5" cy="7" r="4"/>
+            <line x1="20" y1="8" x2="20" y2="14"/>
+            <line x1="23" y1="11" x2="17" y2="11"/>
+          </svg>
+          <span>რეგისტრაცია</span>
+        </button>
+
+        <div class="auth-switch">
+          უკვე გაქვთ ანგარიში? <a href="#" id="showLogin">შესვლა</a>
+        </div>
+      </form>
+
+      <!-- Back to Site Link -->
+      <a href="index.html" class="back-to-site">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        მთავარ გვერდზე დაბრუნება
+      </a>
+    </div>
+  </div>
+
+  <!-- Auth Script -->
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>
