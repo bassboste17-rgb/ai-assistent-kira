@@ -78,9 +78,11 @@ async function logout() {
   return signOut(auth);
 }
 
-// ადმინ ელ-ფოსტების სია
+// ადმინ ელ-ფოსტების სია - აქ დაამატეთ ახალი ადმინების ელ-ფოსტები
 const ADMIN_EMAILS = new Set([
-  "admin@damq.ge"
+  "admin@damq.ge",
+  // დაამატეთ ახალი ადმინი ასე:
+  // "newadmin@example.com",
 ]);
 
 // შემოწმება არის თუ არა ადმინი
