@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ka">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -917,9 +917,17 @@
     .auth-actions { display: grid; gap: 10px; }
     .auth-note { font-size: 0.78rem; color: #777; line-height: 1.3; }
     .sidebar-footer .btn-site + .btn-site { margin-top: 0.55rem; }
+    
+    /* Language Switcher */
+    .lang-switcher .lang-btn:hover {
+      background: rgba(212,175,55,0.15) !important;
+      border-color: rgba(212,175,55,0.35) !important;
+      color: #d4af37 !important;
+    }
   </style>
 </head>
 <body>
+<script src="js/translations.js"></script>
 
 <div class="app">
 
@@ -932,47 +940,47 @@
     </div>
     <div class="sidebar-badge">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      ადმინისტრატორი
+      <span data-i18n="admin.sidebar.badge">ადმინისტრატორი</span>
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-label">მთავარი</div>
+      <div class="nav-label" data-i18n="admin.nav.main">მთავარი</div>
       <button class="nav-item active" data-page="dashboard">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        დაფა
+        <span data-i18n="admin.nav.dashboard">დაფა</span>
       </button>
 
-      <div class="nav-label">მართვა</div>
+      <div class="nav-label" data-i18n="admin.nav.management">მართვა</div>
       <button class="nav-item" data-page="bookings">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        ჯავშნები
+        <span data-i18n="admin.nav.bookings">ჯავშნები</span>
         <span class="nav-count" id="cntBookings">0</span>
       </button>
       <button class="nav-item" data-page="dayTours">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        1-დღიანი ტურები
+        <span data-i18n="admin.nav.dayTours">1-დღიანი ტურები</span>
         <span class="nav-count" id="cntDayTours">0</span>
       </button>
       <button class="nav-item" data-page="multiDayTours">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        მრავალდღიანი ტურები
+        <span data-i18n="admin.nav.multiDayTours">მრავალდღიანი ტურები</span>
         <span class="nav-count" id="cntMultiDayTours">0</span>
       </button>
       <button class="nav-item" data-page="blogs">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        ბლოგები
+        <span data-i18n="admin.nav.blogs">ბლოგები</span>
         <span class="nav-count" id="cntBlogs">0</span>
       </button>
       <button class="nav-item" data-page="reviews">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        შეფასებები
+        <span data-i18n="admin.nav.reviews">შეფასებები</span>
         <span class="nav-count" id="cntReviews">0</span>
       </button>
 
-      <div class="nav-label">საიტი</div>
+      <div class="nav-label" data-i18n="admin.nav.site">საიტი</div>
       <a href="home.html" target="_blank" class="nav-item">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        საიტის გახსნა
+        <span data-i18n="admin.nav.openSite">საიტის გახსნა</span>
       </a>
     </nav>
 
@@ -981,16 +989,22 @@
         <div class="user-avatar" id="uAvatar">A</div>
         <div class="user-info">
           <div class="user-email" id="uEmail">admin@damq.ge</div>
-          <div class="user-role">ადმინისტრატორი</div>
+          <div class="user-role" data-i18n="admin.role.admin">ადმინისტრატორი</div>
         </div>
+      </div>
+      <!-- Language Switcher -->
+      <div class="lang-switcher" style="display:flex;gap:4px;margin-bottom:0.6rem;">
+        <button type="button" class="lang-btn" data-lang="ka" style="flex:1;padding:0.4rem;border:1.5px solid rgba(255,255,255,0.15);border-radius:6px;background:transparent;color:rgba(255,255,255,0.5);font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;">KA</button>
+        <button type="button" class="lang-btn" data-lang="ru" style="flex:1;padding:0.4rem;border:1.5px solid rgba(255,255,255,0.15);border-radius:6px;background:transparent;color:rgba(255,255,255,0.5);font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;">RU</button>
+        <button type="button" class="lang-btn" data-lang="en" style="flex:1;padding:0.4rem;border:1.5px solid rgba(255,255,255,0.15);border-radius:6px;background:transparent;color:rgba(255,255,255,0.5);font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;">EN</button>
       </div>
       <a href="home.html" class="btn-site">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        მთავარზე
+        <span data-i18n="admin.nav.toHome">მთავარზე</span>
       </a>
       <button class="btn-site" id="btnLogout" type="button" style="display:none;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Log out
+        <span data-i18n="admin.nav.logout">Log out</span>
       </button>
     </div>
   </aside>
@@ -1005,13 +1019,13 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <div>
-          <div class="topbar-title" id="pgTitle">დაფა</div>
-          <div class="topbar-subtitle" id="pgSub">DAMQ Travel-ის მიმოხილვა</div>
+          <div class="topbar-title" id="pgTitle" data-i18n="admin.dashboard.title">დაფა</div>
+          <div class="topbar-subtitle" id="pgSub" data-i18n="admin.dashboard.subtitle">DAMQ Travel-ის მიმოხილვა</div>
         </div>
       </div>
       <button class="btn btn-dark" id="btnAddTour" style="display:none;" onclick="openTourModal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        ტურის დამატება
+        <span data-i18n="admin.btn.addTour">ტურის დამატება</span>
       </button>
     </div>
 
@@ -1022,35 +1036,35 @@
           <div class="stat-icon si-gold">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
-          <div><div class="stat-val" id="sTours">—</div><div class="stat-lbl">ტური</div></div>
+          <div><div class="stat-val" id="sTours">—</div><div class="stat-lbl" data-i18n="admin.stat.tours">ტური</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon si-green">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           </div>
-          <div><div class="stat-val" id="sBookings">—</div><div class="stat-lbl">ჯავშანი</div></div>
+          <div><div class="stat-val" id="sBookings">—</div><div class="stat-lbl" data-i18n="admin.stat.bookings">ჯავშანი</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon si-blue">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <div><div class="stat-val" id="sReviews">—</div><div class="stat-lbl">შეფასება</div></div>
+          <div><div class="stat-val" id="sReviews">—</div><div class="stat-lbl" data-i18n="admin.stat.reviews">შეფასება</div></div>
         </div>
         <div class="stat-card">
           <div class="stat-icon si-purple">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
           </div>
-          <div><div class="stat-val" id="sPending">—</div><div class="stat-lbl">პასუხის მოლოდინში</div></div>
+          <div><div class="stat-val" id="sPending">—</div><div class="stat-lbl" data-i18n="admin.stat.pending">პასუხის მოლოდინში</div></div>
         </div>
       </div>
       <div class="card">
         <div class="card-head">
-          <div class="card-title">ბოლო ჯავშნები</div>
-          <button class="btn btn-ghost" onclick="switchPage('bookings')">ყველა ჯავშანი →</button>
+          <div class="card-title" data-i18n="admin.recent.title">ბოლო ჯავშნები</div>
+          <button class="btn btn-ghost" onclick="switchPage('bookings')" data-i18n="admin.recent.viewAll">ყველა ჯავშანი →</button>
         </div>
         <table class="table">
-          <thead><tr><th>სახელი</th><th>ტური</th><th>ტელეფონი</th><th>სტატუსი</th><th>თარიღი</th></tr></thead>
-          <tbody id="recentTbody"><tr class="loading-row"><td colspan="5">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.th.name">სახელი</th><th data-i18n="admin.th.tour">ტური</th><th data-i18n="admin.th.phone">ტელეფონი</th><th data-i18n="admin.th.status">სტატუსი</th><th data-i18n="admin.th.date">თარიღი</th></tr></thead>
+          <tbody id="recentTbody"><tr class="loading-row"><td colspan="5" data-i18n="admin.loading">იტვირთება...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1059,18 +1073,18 @@
     <div class="page" id="toursPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title">ყველა ტური</div>
+          <div class="card-title" data-i18n="admin.card.allTours">ყველა ტური</div>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
-            <input type="search" class="search" id="toursSearch" placeholder="ტურის ძიება...">
+            <input type="search" class="search" id="toursSearch" data-i18n-placeholder="admin.search.tour" placeholder="ტურის ძიება...">
             <button class="btn btn-dark" onclick="openTourModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              ახალი ტური
+              <span data-i18n="admin.btn.newTour">ახალი ტური</span>
             </button>
           </div>
         </div>
         <table class="table">
-          <thead><tr><th>სახელი</th><th>ტიპი</th><th>ფასი</th><th>ხანგრძლივობა</th><th>ჯგუფი</th><th>ნიშანი</th><th>მოქმედება</th></tr></thead>
-          <tbody id="toursTbody"><tr class="loading-row"><td colspan="7">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.th.name">სახელი</th><th data-i18n="admin.th.type">ტიპი</th><th data-i18n="admin.th.price">ფასი</th><th data-i18n="admin.th.duration">ხანგრძლივობა</th><th data-i18n="admin.th.group">ჯგუფი</th><th data-i18n="admin.th.badge">ნიშანი</th><th data-i18n="admin.th.action">მოქმედება</th></tr></thead>
+          <tbody id="toursTbody"><tr class="loading-row"><td colspan="7" data-i18n="admin.loading">იტვირთება...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1079,12 +1093,12 @@
     <div class="page" id="bookingsPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title">კლიენტების ჯავშნები</div>
-          <input type="search" class="search" id="bookSearch" placeholder="ძიება სახელით...">
+          <div class="card-title" data-i18n="admin.card.clientBookings">კლიენტების ჯავშნები</div>
+          <input type="search" class="search" id="bookSearch" data-i18n-placeholder="admin.search.name" placeholder="ძიება სახელით...">
         </div>
         <table class="table">
-          <thead><tr><th>სახელი</th><th>ტელეფონი</th><th>Email</th><th>ტური</th><th>შეტყობინება</th><th>სტატუსი</th><th>თარიღი</th><th>მოქმედება</th></tr></thead>
-          <tbody id="bookingsTbody"><tr class="loading-row"><td colspan="8">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.th.name">სახელი</th><th data-i18n="admin.th.phone">ტელეფონი</th><th data-i18n="admin.th.email">Email</th><th data-i18n="admin.th.tour">ტური</th><th data-i18n="admin.th.message">შეტყობინება</th><th data-i18n="admin.th.status">სტატუსი</th><th data-i18n="admin.th.date">თარიღი</th><th data-i18n="admin.th.action">მოქმედება</th></tr></thead>
+          <tbody id="bookingsTbody"><tr class="loading-row"><td colspan="8" data-i18n="admin.loading">იტვირთება...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1093,12 +1107,12 @@
     <div class="page" id="reviewsPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title">კლიენტების შეფასებები</div>
-          <input type="search" class="search" id="revSearch" placeholder="ძიება სახელით...">
+          <div class="card-title" data-i18n="admin.card.clientReviews">კლიენტების შეფასებები</div>
+          <input type="search" class="search" id="revSearch" data-i18n-placeholder="admin.search.name" placeholder="ძიება სახელით...">
         </div>
         <table class="table">
-          <thead><tr><th>ავტორი</th><th>ქვეყანა</th><th>შეფასება</th><th>ტექსტი</th><th>სტატუსი</th><th>თარიღი</th><th>მოქმედება</th></tr></thead>
-          <tbody id="reviewsTbody"><tr class="loading-row"><td colspan="7">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.th.author">ავტორი</th><th data-i18n="admin.th.country">ქვეყანა</th><th data-i18n="admin.th.rating">შეფასება</th><th data-i18n="admin.th.text">ტექსტი</th><th data-i18n="admin.th.status">სტატუსი</th><th data-i18n="admin.th.date">თარიღი</th><th data-i18n="admin.th.action">მოქმედება</th></tr></thead>
+          <tbody id="reviewsTbody"><tr class="loading-row"><td colspan="7" data-i18n="admin.loading">იტვირთება...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1107,18 +1121,18 @@
     <div class="page" id="dayToursPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title">1-დღიანი ტურები</div>
+          <div class="card-title" data-i18n="admin.card.dayTours">1-დღიანი ტურები</div>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
-            <input type="search" class="search" id="dayToursSearch" placeholder="ტურის ძიება...">
+            <input type="search" class="search" id="dayToursSearch" data-i18n-placeholder="admin.search.tour" placeholder="ტურის ძიება...">
             <button class="btn btn-dark" onclick="openDayTourModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              ტურის დამატება
+              <span data-i18n="admin.btn.addTour">ტურის დამატება</span>
             </button>
           </div>
         </div>
         <table class="table">
-          <thead><tr><th>სახელი</th><th>რეგიონი</th><th>ტიპი</th><th>ფასი</th><th>ხანგრძლივობა</th><th>ჯგუფი</th><th>ფოტო</th><th>მოქმედება</th></tr></thead>
-          <tbody id="dayToursTbody"><tr class="loading-row"><td colspan="8">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.th.name">სახელი</th><th data-i18n="admin.th.region">რეგიონი</th><th data-i18n="admin.th.type">ტიპი</th><th data-i18n="admin.th.price">ფასი</th><th data-i18n="admin.th.duration">ხანგრძლივობა</th><th data-i18n="admin.th.group">ჯგუფი</th><th data-i18n="admin.th.photo">ფოტო</th><th data-i18n="admin.th.action">მოქმედება</th></tr></thead>
+          <tbody id="dayToursTbody"><tr class="loading-row"><td colspan="8" data-i18n="admin.loading">იტვირთება...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1127,18 +1141,18 @@
     <div class="page" id="multiDayToursPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title">მრავალდღიანი ტურები</div>
+          <div class="card-title" data-i18n="admin.card.multiDayTours">მრავალდღიანი ტურები</div>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
-            <input type="search" class="search" id="multiDayToursSearch" placeholder="ტურის ძიება...">
+            <input type="search" class="search" id="multiDayToursSearch" data-i18n-placeholder="admin.search.tour" placeholder="ტურის ძიება...">
             <button class="btn btn-dark" onclick="openMultiDayTourModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              ტურის დამატება
+              <span data-i18n="admin.btn.addTour">ტურის დამატება</span>
             </button>
           </div>
         </div>
         <table class="table">
-          <thead><tr><th>სახელი</th><th>რეგიონი</th><th>ტიპი</th><th>ფასი</th><th>ხანგრძლივობა</th><th>ჯგუფი</th><th>ფოტო</th><th>მოქმედება</th></tr></thead>
-          <tbody id="multiDayToursTbody"><tr class="loading-row"><td colspan="8">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.th.name">სახელი</th><th data-i18n="admin.th.region">რეგიონი</th><th data-i18n="admin.th.type">ტიპი</th><th data-i18n="admin.th.price">ფასი</th><th data-i18n="admin.th.duration">ხანგრძლივობა</th><th data-i18n="admin.th.group">ჯგუფი</th><th data-i18n="admin.th.photo">ფოტო</th><th data-i18n="admin.th.action">მოქმედება</th></tr></thead>
+          <tbody id="multiDayToursTbody"><tr class="loading-row"><td colspan="8" data-i18n="admin.loading">იტვირთება...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1147,18 +1161,18 @@
     <div class="page" id="blogsPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title">ბლოგები</div>
+          <div class="card-title" data-i18n="admin.card.blogs">ბლოგები</div>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
-            <input type="search" class="search" id="blogsSearch" placeholder="ბლოგის ძიება...">
+            <input type="search" class="search" id="blogsSearch" data-i18n-placeholder="admin.search.blog" placeholder="ბლოგის ძიება...">
             <button class="btn btn-dark" onclick="openBlogModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              ბლოგის დამატება
+              <span data-i18n="admin.btn.addBlog">ბლოგის დამატება</span>
             </button>
           </div>
         </div>
         <table class="table">
-          <thead><tr><th>სათაური</th><th>კატეგორია</th><th>თარიღი</th><th>ფოტო</th><th>მოქმედება</th></tr></thead>
-          <tbody id="blogsTbody"><tr class="loading-row"><td colspan="5">იტვირთება...</td></tr></tbody>
+          <thead><tr><th data-i18n="admin.th.title">სათაური</th><th data-i18n="admin.th.category">კატეგორია</th><th data-i18n="admin.th.date">თარიღი</th><th data-i18n="admin.th.photo">ფოტო</th><th data-i18n="admin.th.action">მოქმედება</th></tr></thead>
+          <tbody id="blogsTbody"><tr class="loading-row"><td colspan="5" data-i18n="admin.loading">იტვირთება...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -1178,11 +1192,68 @@
 <div class="modal-wrap" id="tourModalWrap">
   <div class="modal">
     <div class="modal-hdr">
-      <div class="modal-title" id="tourModalTitle">ახალი ტური</div>
+      <div class="modal-title" id="tourModalTitle" data-i18n="admin.modal.newTour">ახალი ტური</div>
       <button class="modal-close" onclick="closeTourModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
+    <div class="modal-body">
+      <form id="tourForm" class="form-grid">
+        <input type="hidden" id="tourDocId">
+        <div class="fg full"><label data-i18n="admin.form.tourName">ტურის სახელი *</label><input type="text" id="fName" placeholder="სვანეთი — კავკასიის მარგალიტი" required></div>
+        <div class="fg full"><label data-i18n="admin.form.description">აღწერა *</label><textarea id="fDesc" placeholder="ტურის მოკლე აღწერა..." required></textarea></div>
+        <div class="fg">
+          <label data-i18n="admin.form.tourType">ტურის ტიპი</label>
+          <select id="fType">
+            <option value="day" data-i18n="admin.type.day">ერთდღიანი</option>
+            <option value="multi" data-i18n="admin.type.multi">მრავალდღიანი</option>
+            <option value="wine" data-i18n="admin.type.wine">ღვინის</option>
+            <option value="photo" data-i18n="admin.type.photo">ფოტოტური</option>
+            <option value="custom" data-i18n="admin.type.custom">ინდივიდუალური</option>
+          </select>
+        </div>
+        <div class="fg"><label data-i18n="admin.form.price">ფასი (USD) *</label><input type="number" id="fPrice" placeholder="45" min="1" required></div>
+        <div class="fg"><label data-i18n="admin.form.duration">ხანგრძლივობა</label><input type="text" id="fDuration" placeholder="1 დღე / 3 დღე 2 ღამე"></div>
+        <div class="fg"><label data-i18n="admin.form.groupSize">ჯგუფის ზომა</label><input type="text" id="fGroup" placeholder="1–15 ადამ."></div>
+        <div class="fg">
+          <label data-i18n="admin.form.badge">ნიშანი / ბეჯი</label>
+          <select id="fBadge">
+            <option value="" data-i18n="admin.badge.none">ნიშნის გარეშე</option>
+            <option value="Хит" data-i18n="admin.badge.hit">ჰიტი</option>
+            <option value="Топ" data-i18n="admin.badge.top">ტოპი</option>
+            <option value="Новинка" data-i18n="admin.badge.new">სიახლე</option>
+            <option value="Рекомендуем" data-i18n="admin.badge.recommended">რეკომენდირებული</option>
+          </select>
+        </div>
+        <div class="fg"><label data-i18n="admin.form.rating">რეიტინგი (1–5)</label><input type="number" id="fRating" placeholder="4.9" min="1" max="5" step="0.1"></div>
+        <div class="fg" style="grid-column: 1; padding: 12px 0; background: rgba(212, 175, 55, 0.08); border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.2); padding: 14px;">
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin: 0;">
+            <input type="checkbox" id="fFeatured" style="width: 18px; height: 18px; cursor: pointer; accent-color: #d4af37;">
+            <span style="font-weight: 600; color: #1a1a2e;" data-i18n="admin.form.featured">რეკომენდირებული (მხოლოდ მრავალდღიანი)</span>
+          </label>
+          <p style="font-size: 0.75rem; color: #888; margin: 6px 0 0 28px;" data-i18n="admin.form.featuredHint">მონიშნეთ, რომ გამოჩნდეს მთავარ მენიუში</p>
+        </div>
+        <div class="fg full">
+          <label data-i18n="admin.form.imageUrl">სურათის ბმული</label>
+          <input type="text" id="fImage" placeholder="images/tour-svaneti.jpg ან https://...">
+          <span class="fg-hint" data-i18n="admin.form.imageHint">ფარდობითი გზა ან სრული URL</span>
+        </div>
+        <div class="fg full"><label data-i18n="admin.form.location">ლოკაცია</label><input type="text" id="fLocation" placeholder="სვანეთი, საქართველო"></div>
+        <div class="fg full">
+          <label data-i18n="admin.form.includes">რა შედის (მძიმით გამოყავით)</label>
+          <input type="text" id="fIncludes" placeholder="გიდი, ტრანსპორტი, ბილეთები, სადილი">
+        </div>
+      </form>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-ghost" onclick="closeTourModal()" data-i18n="admin.btn.cancel">გაუქმება</button>
+      <button class="btn btn-dark" onclick="saveTour()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        <span data-i18n="admin.btn.save">შენახვა</span>
+      </button>
+    </div>
+  </div>
+</div>
     <div class="modal-body">
       <form id="tourForm" class="form-grid">
         <input type="hidden" id="tourDocId">
@@ -1217,7 +1288,7 @@
             <input type="checkbox" id="fFeatured" style="width: 18px; height: 18px; cursor: pointer; accent-color: #d4af37;">
             <span style="font-weight: 600; color: #1a1a2e;">✨ რეკომენდირებული (მხოლოდ მრავალდღიანი)</span>
           </label>
-          <p style="font-size: 0.75rem; color: #888; margin: 6px 0 0 28px;">მონიშნეთ, რომ გამოჩნდეს მთავარ მენიუში</p>
+          <p style="font-size: 0.75rem; color: #888; margin: 6px 0 0 28px;">მონიშნეთ, რ���მ გამოჩნდეს მთავარ მენიუში</p>
         </div>
         <div class="fg full">
           <label>სურათის ბმული</label>
@@ -1245,7 +1316,7 @@
 <div class="modal-wrap" id="bookModalWrap">
   <div class="modal sm">
     <div class="modal-hdr">
-      <div class="modal-title">ჯავშნის სტატუსი</div>
+      <div class="modal-title" data-i18n="admin.modal.bookingStatus">ჯავშნის სტატუსი</div>
       <button class="modal-close" onclick="closeBookModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -1253,19 +1324,19 @@
     <div class="modal-body">
       <input type="hidden" id="bookDocId">
       <div class="fg">
-        <label>სტატუსის შეცვლა</label>
+        <label data-i18n="admin.form.changeStatus">სტატუსის შეცვლა</label>
         <select id="bookStatus">
-          <option value="new">ახალი</option>
-          <option value="contacted">დავუკავშირდით</option>
-          <option value="confirmed">დადასტურებული</option>
-          <option value="completed">დასრულებული</option>
-          <option value="cancelled">გაუქმებული</option>
+          <option value="new" data-i18n="admin.status.new">ახალი</option>
+          <option value="contacted" data-i18n="admin.status.contacted">დავუკავშირდით</option>
+          <option value="confirmed" data-i18n="admin.status.confirmed">დადასტურებული</option>
+          <option value="completed" data-i18n="admin.status.completed">დასრულებული</option>
+          <option value="cancelled" data-i18n="admin.status.cancelled">გაუქმებული</option>
         </select>
       </div>
     </div>
     <div class="modal-ftr">
-      <button class="btn btn-ghost" onclick="closeBookModal()">გაუქმება</button>
-      <button class="btn btn-dark" onclick="saveBookStatus()">შენახვა</button>
+      <button class="btn btn-ghost" onclick="closeBookModal()" data-i18n="admin.btn.cancel">გაუქმება</button>
+      <button class="btn btn-dark" onclick="saveBookStatus()" data-i18n="admin.btn.save">შენახვა</button>
     </div>
   </div>
 </div>
@@ -1274,23 +1345,23 @@
 <div class="modal-wrap" id="viewBookModalWrap">
   <div class="modal">
     <div class="modal-hdr">
-      <div class="modal-title">ჯავშნის დეტალები</div>
+      <div class="modal-title" data-i18n="admin.modal.bookingDetails">ჯავშნის დეტალები</div>
       <button class="modal-close" onclick="closeViewBookModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="modal-body">
-      <div class="fg full"><label>სახელი</label><div id="vbName" style="font-weight:600;font-size:1.1rem;"></div></div>
+      <div class="fg full"><label data-i18n="admin.th.name">სახელი</label><div id="vbName" style="font-weight:600;font-size:1.1rem;"></div></div>
       <div class="form-grid" style="margin-top:10px;">
-        <div class="fg"><label>ტელეფონი</label><div id="vbPhone"></div></div>
-        <div class="fg"><label>Email</label><div id="vbEmail"></div></div>
+        <div class="fg"><label data-i18n="admin.th.phone">ტელეფონი</label><div id="vbPhone"></div></div>
+        <div class="fg"><label data-i18n="admin.th.email">Email</label><div id="vbEmail"></div></div>
       </div>
-      <div class="fg full" style="margin-top:10px;"><label>ტური</label><div id="vbTour" style="color:#2563eb;font-weight:500;"></div></div>
-      <div class="fg full" style="margin-top:10px;"><label>შეტყობინება</label><div id="vbMessage" style="background:#f9f9f9;padding:15px;border-radius:8px;min-height:80px;white-space:pre-wrap;"></div></div>
-      <div class="fg full" style="margin-top:10px;"><label>თარიღი</label><div id="vbDate" style="color:#888;font-size:0.85rem;"></div></div>
+      <div class="fg full" style="margin-top:10px;"><label data-i18n="admin.th.tour">ტური</label><div id="vbTour" style="color:#2563eb;font-weight:500;"></div></div>
+      <div class="fg full" style="margin-top:10px;"><label data-i18n="admin.th.message">შეტყობინება</label><div id="vbMessage" style="background:#f9f9f9;padding:15px;border-radius:8px;min-height:80px;white-space:pre-wrap;"></div></div>
+      <div class="fg full" style="margin-top:10px;"><label data-i18n="admin.th.date">თარიღი</label><div id="vbDate" style="color:#888;font-size:0.85rem;"></div></div>
     </div>
     <div class="modal-ftr">
-      <button class="btn btn-dark" onclick="closeViewBookModal()">დახურვა</button>
+      <button class="btn btn-dark" onclick="closeViewBookModal()" data-i18n="admin.btn.close">დახურვა</button>
     </div>
   </div>
 </div>
@@ -1302,12 +1373,12 @@
       <div class="confirm-icon">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
       </div>
-      <div class="confirm-ttl">წავშალოთ ჩანაწერი?</div>
-      <p class="confirm-txt" id="confirmTxt">ეს მოქმედება შეუქცევადია.</p>
+      <div class="confirm-ttl" data-i18n="admin.confirm.delete">წავშალოთ ჩანაწერი?</div>
+      <p class="confirm-txt" id="confirmTxt" data-i18n="admin.confirm.irreversible">ეს მოქმედება შეუქცევადია.</p>
     </div>
     <div class="modal-ftr">
-      <button class="btn btn-ghost" onclick="closeConfirm()">გაუქმება</button>
-      <button class="btn btn-danger-s" id="confirmOkBtn">წაშლა</button>
+      <button class="btn btn-ghost" onclick="closeConfirm()" data-i18n="admin.btn.cancel">გაუქმება</button>
+      <button class="btn btn-danger-s" id="confirmOkBtn" data-i18n="admin.btn.delete">წაშლა</button>
     </div>
   </div>
 </div>
@@ -1316,7 +1387,7 @@
 <div class="modal-wrap" id="dayTourModalWrap">
   <div class="modal" style="max-width:680px;">
     <div class="modal-hdr">
-      <div class="modal-title" id="dayTourModalTitle">ტურის დამატება</div>
+      <div class="modal-title" id="dayTourModalTitle" data-i18n="admin.modal.addTour">ტურის დამატება</div>
       <button class="modal-close" onclick="closeDayTourModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -1326,49 +1397,49 @@
         <input type="hidden" id="dtDocId">
 
         <div class="fg full">
-          <label>სახელი / Name / Название *</label>
+          <label data-i18n="admin.form.nameMulti">სახელი / Name / Название *</label>
           <div class="lang-tabs" data-target="dtNameLang">
             <button type="button" class="lang-tab active" data-lang="ka">KA</button>
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
           <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="dtNameLang"><input type="text" id="dtName_ka" placeholder="ტურის სახელი (ქართული)" required></div>
-            <div class="lang-panel" data-lang="ru" data-group="dtNameLang"><input type="text" id="dtName_ru" placeholder="Название тура (русский)" required></div>
-            <div class="lang-panel" data-lang="en" data-group="dtNameLang"><input type="text" id="dtName_en" placeholder="Tour name (English)" required></div>
+            <div class="lang-panel active" data-lang="ka" data-group="dtNameLang"><input type="text" id="dtName_ka" data-i18n-placeholder="admin.ph.tourNameKa" placeholder="ტურის სახელი (ქართული)" required></div>
+            <div class="lang-panel" data-lang="ru" data-group="dtNameLang"><input type="text" id="dtName_ru" data-i18n-placeholder="admin.ph.tourNameRu" placeholder="Название тура (русский)" required></div>
+            <div class="lang-panel" data-lang="en" data-group="dtNameLang"><input type="text" id="dtName_en" data-i18n-placeholder="admin.ph.tourNameEn" placeholder="Tour name (English)" required></div>
           </div>
         </div>
 
         <div class="fg full">
-          <label>აღწერა / Description / Описание *</label>
+          <label data-i18n="admin.form.descMulti">აღწერა / Description / Описание *</label>
           <div class="lang-tabs" data-target="dtDescLang">
             <button type="button" class="lang-tab active" data-lang="ka">KA</button>
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
           <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
-            <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
-            <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
+            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" data-i18n-placeholder="admin.ph.tourDescKa" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
+            <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" data-i18n-placeholder="admin.ph.tourDescRu" placeholder="Описание тура (русский)..."></textarea></div>
+            <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" data-i18n-placeholder="admin.ph.tourDescEn" placeholder="Tour description (English)..."></textarea></div>
           </div>
         </div>
 
         <div class="fg full">
-          <label>მარშრუტი / Route / Маршрут</label>
+          <label data-i18n="admin.form.routeMulti">მარშრუტი / Route / Маршрут</label>
           <div class="lang-tabs" data-target="dtRouteLang">
             <button type="button" class="lang-tab active" data-lang="ka">KA</button>
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
           <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="dtRouteLang"><input type="text" id="dtRoute_ka" placeholder="თბილისი - მცხეთა - ჯვარი - ანანური"></div>
-            <div class="lang-panel" data-lang="ru" data-group="dtRouteLang"><input type="text" id="dtRoute_ru" placeholder="Тбилиси - Мцхета - Джвари - Ананури"></div>
-            <div class="lang-panel" data-lang="en" data-group="dtRouteLang"><input type="text" id="dtRoute_en" placeholder="Tbilisi - Mtskheta - Jvari - Ananuri"></div>
+            <div class="lang-panel active" data-lang="ka" data-group="dtRouteLang"><input type="text" id="dtRoute_ka" data-i18n-placeholder="admin.ph.routeKa" placeholder="თბილისი - მცხეთა - ჯვარი - ანანური"></div>
+            <div class="lang-panel" data-lang="ru" data-group="dtRouteLang"><input type="text" id="dtRoute_ru" data-i18n-placeholder="admin.ph.routeRu" placeholder="Тбилиси - Мцхета - Джвари - Ананури"></div>
+            <div class="lang-panel" data-lang="en" data-group="dtRouteLang"><input type="text" id="dtRoute_en" data-i18n-placeholder="admin.ph.routeEn" placeholder="Tbilisi - Mtskheta - Jvari - Ananuri"></div>
           </div>
         </div>
 
         <div class="fg full">
-          <label>რეგიონი (შეარჩიეთ ერთი ან რამოდენიმე)</label>
+          <label data-i18n="admin.form.region">რეგიონი (შეარჩიეთ ერთი ან რამოდენიმე)</label>
           <div class="region-grid" id="regionGrid">
             <button type="button" class="region-chip" data-region="თბილისი">თბილისი</button>
             <button type="button" class="region-chip" data-region="კახეთი">კახეთი</button>
@@ -1386,9 +1457,9 @@
         </div>
 
         <div class="fg full">
-          <label>ტიპი / Type / Тип</label>
+          <label data-i18n="admin.form.typeMulti">ტიპი / Type / Тип</label>
           <select id="dtTypeSelect" class="tour-type-select">
-            <option value="">-- აირჩიეთ ტიპი --</option>
+            <option value="" data-i18n="admin.form.selectType">-- აირჩიეთ ტიპი --</option>
             <option value="excursion" data-ka="ექსკურსია" data-ru="Экскурсия" data-en="Excursion">ექსკურსია / Экскурсия / Excursion</option>
             <option value="gastro" data-ka="გასტრონომია" data-ru="Гастрономический" data-en="Gastronomic">გასტრონომია / Гастрономический / Gastronomic</option>
             <option value="wine" data-ka="ღვინის ტური" data-ru="Винный тур" data-en="Wine Tour">ღვინის ტური / Винный тур / Wine Tour</option>
@@ -1403,44 +1474,44 @@
           <input type="hidden" id="dtType_en">
         </div>
 
-        <div class="fg"><label>ფასი (USD) *</label><input type="number" id="dtPrice" placeholder="45" min="1" required></div>
+        <div class="fg"><label data-i18n="admin.form.price">ფასი (USD) *</label><input type="number" id="dtPrice" placeholder="45" min="1" required></div>
 
         <div class="fg full">
-          <label>ხანგრძლივობა</label>
+          <label data-i18n="admin.form.duration">ხანგრძლივობა</label>
           <div class="duration-row">
             <div class="dur-field">
               <input type="number" id="dtDays" placeholder="0" min="0" value="1">
-              <span class="dur-label">დღე</span>
+              <span class="dur-label" data-i18n="admin.form.day">დღე</span>
             </div>
             <div class="dur-field">
               <input type="number" id="dtNights" placeholder="0" min="0" value="0">
-              <span class="dur-label">ღამე</span>
+              <span class="dur-label" data-i18n="admin.form.night">ღამე</span>
             </div>
           </div>
         </div>
 
-        <div class="fg"><label>მინ. პერსონალი *</label><input type="number" id="dtMinGroup" placeholder="1" min="1" required></div>
-        <div class="fg"><label>მაქს. პერსონალი *</label><input type="number" id="dtMaxGroup" placeholder="15" min="1" required></div>
+        <div class="fg"><label data-i18n="admin.form.minPers">მინ. პერსონალი *</label><input type="number" id="dtMinGroup" placeholder="1" min="1" required></div>
+        <div class="fg"><label data-i18n="admin.form.maxPers">მაქს. პერსონალი *</label><input type="number" id="dtMaxGroup" placeholder="15" min="1" required></div>
 
         <div class="fg full">
-          <label>ფოტოები (აიტვირთება ImgBB-ზე)</label>
+          <label data-i18n="admin.form.photos">ფოტოები (აიტვირთება ImgBB-ზე)</label>
           <div class="upload-zone" id="dtUploadZone">
             <input type="file" id="dtPhotoInput" accept="image/*" multiple>
             <div class="upload-zone-icon">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             </div>
-            <div class="upload-zone-text"><strong>აირჩიეთ ფოტოები</strong> ან გადმოიტანეთ აქ</div>
+            <div class="upload-zone-text"><strong data-i18n="admin.form.selectPhotos">აირჩიეთ ფოტოები</strong> <span data-i18n="admin.form.dropHere">ან გადმოიტანეთ აქ</span></div>
           </div>
-          <div class="upload-progress" id="dtUploadProgress">იტვირთება...</div>
+          <div class="upload-progress" id="dtUploadProgress" data-i18n="admin.form.uploading">იტვირთება...</div>
           <div class="uploaded-photos" id="dtUploadedPhotos"></div>
         </div>
       </form>
     </div>
     <div class="modal-ftr">
-      <button class="btn btn-ghost" onclick="closeDayTourModal()">გაუქმება</button>
+      <button class="btn btn-ghost" onclick="closeDayTourModal()" data-i18n="admin.btn.cancel">გაუქმება</button>
       <button class="btn btn-dark" onclick="saveDayTour()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        შენახვა
+        <span data-i18n="admin.btn.save">შენახვა</span>
       </button>
     </div>
   </div>
@@ -1450,7 +1521,7 @@
 <div class="modal-wrap" id="multiDayTourModalWrap">
   <div class="modal" style="max-width:680px;">
     <div class="modal-hdr">
-      <div class="modal-title" id="multiDayTourModalTitle">ტურის დამატება</div>
+      <div class="modal-title" id="multiDayTourModalTitle" data-i18n="admin.modal.addTour">ტურის დამატება</div>
       <button class="modal-close" onclick="closeMultiDayTourModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -1584,53 +1655,53 @@
 <div class="modal-wrap" id="blogModalWrap">
   <div class="modal" style="max-width:680px;">
     <div class="modal-hdr">
-      <div class="modal-title" id="blogModalTitle">ბლოგის დამატება</div>
-      <button class="modal-close" onclick="closeBlogModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form id="blogForm" class="form-grid">
-        <input type="hidden" id="blogDocId">
-
-        <div class="fg full">
-          <label>სათაური / Title / Заголовок *</label>
-          <div class="lang-tabs" data-target="blogTitleLang">
-            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
-            <button type="button" class="lang-tab" data-lang="ru">RU</button>
-            <button type="button" class="lang-tab" data-lang="en">EN</button>
-          </div>
-          <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="blogTitleLang"><input type="text" id="blogTitle_ka" placeholder="სათაური (ქართული)" required></div>
-            <div class="lang-panel" data-lang="ru" data-group="blogTitleLang"><input type="text" id="blogTitle_ru" placeholder="Заголовок (русский)"></div>
-            <div class="lang-panel" data-lang="en" data-group="blogTitleLang"><input type="text" id="blogTitle_en" placeholder="Title (English)"></div>
-          </div>
-        </div>
-
-        <div class="fg full">
-          <label>შინაარსი / Content / Содержание *</label>
-          <div class="lang-tabs" data-target="blogDescLang">
-            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
-            <button type="button" class="lang-tab" data-lang="ru">RU</button>
-            <button type="button" class="lang-tab" data-lang="en">EN</button>
-          </div>
-          <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="blogDescLang"><textarea id="blogDesc_ka" placeholder="შინაარსი (ქართული)..." required style="min-height:150px"></textarea></div>
-            <div class="lang-panel" data-lang="ru" data-group="blogDescLang"><textarea id="blogDesc_ru" placeholder="Содержание (русский)..." style="min-height:150px"></textarea></div>
-            <div class="lang-panel" data-lang="en" data-group="blogDescLang"><textarea id="blogDesc_en" placeholder="Content (English)..." style="min-height:150px"></textarea></div>
-          </div>
-        </div>
-
-        <div class="fg">
-          <label>კატეგორია</label>
-          <select id="blogCategory">
-            <option value="mountains">მთები</option>
-            <option value="wine">ღვინო</option>
-            <option value="cities">ქალაქები</option>
-            <option value="culture">კულტურა</option>
-            <option value="tips">რჩევები</option>
-          </select>
-        </div>
+<div class="modal-title" id="blogModalTitle" data-i18n="admin.modal.addBlog">ბლოგის დამატება</div>
+  <button class="modal-close" onclick="closeBlogModal()">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  </div>
+  <div class="modal-body">
+  <form id="blogForm" class="form-grid">
+  <input type="hidden" id="blogDocId">
+  
+  <div class="fg full">
+  <label data-i18n="admin.form.blogTitle">სათაური / Title / Заголовок *</label>
+  <div class="lang-tabs" data-target="blogTitleLang">
+  <button type="button" class="lang-tab active" data-lang="ka">KA</button>
+  <button type="button" class="lang-tab" data-lang="ru">RU</button>
+  <button type="button" class="lang-tab" data-lang="en">EN</button>
+  </div>
+  <div class="lang-panels">
+  <div class="lang-panel active" data-lang="ka" data-group="blogTitleLang"><input type="text" id="blogTitle_ka" data-i18n-placeholder="admin.ph.blogTitleKa" placeholder="სათაური (ქართული)" required></div>
+  <div class="lang-panel" data-lang="ru" data-group="blogTitleLang"><input type="text" id="blogTitle_ru" data-i18n-placeholder="admin.ph.blogTitleRu" placeholder="Заголовок (русский)"></div>
+  <div class="lang-panel" data-lang="en" data-group="blogTitleLang"><input type="text" id="blogTitle_en" data-i18n-placeholder="admin.ph.blogTitleEn" placeholder="Title (English)"></div>
+  </div>
+  </div>
+  
+  <div class="fg full">
+  <label data-i18n="admin.form.blogContent">შინაარსი / Content / Содержание *</label>
+  <div class="lang-tabs" data-target="blogDescLang">
+  <button type="button" class="lang-tab active" data-lang="ka">KA</button>
+  <button type="button" class="lang-tab" data-lang="ru">RU</button>
+  <button type="button" class="lang-tab" data-lang="en">EN</button>
+  </div>
+  <div class="lang-panels">
+  <div class="lang-panel active" data-lang="ka" data-group="blogDescLang"><textarea id="blogDesc_ka" data-i18n-placeholder="admin.ph.blogContentKa" placeholder="შინაარსი (ქართული)..." required style="min-height:150px"></textarea></div>
+  <div class="lang-panel" data-lang="ru" data-group="blogDescLang"><textarea id="blogDesc_ru" data-i18n-placeholder="admin.ph.blogContentRu" placeholder="Содержание (русский)..." style="min-height:150px"></textarea></div>
+  <div class="lang-panel" data-lang="en" data-group="blogDescLang"><textarea id="blogDesc_en" data-i18n-placeholder="admin.ph.blogContentEn" placeholder="Content (English)..." style="min-height:150px"></textarea></div>
+  </div>
+  </div>
+  
+  <div class="fg">
+  <label data-i18n="admin.form.category">კატეგორია</label>
+  <select id="blogCategory">
+  <option value="mountains" data-i18n="admin.cat.mountains">მთები</option>
+  <option value="wine" data-i18n="admin.cat.wine">ღვინო</option>
+  <option value="cities" data-i18n="admin.cat.cities">ქალაქები</option>
+  <option value="culture" data-i18n="admin.cat.culture">კულტურა</option>
+  <option value="tips" data-i18n="admin.cat.tips">რჩევები</option>
+  </select>
+  </div>
 
         <div class="fg full">
           <label>ფოტოები (აიტვირთება ImgBB-ზე)</label>
@@ -1708,8 +1779,8 @@
 <div class="overlay" id="loadingOverlay">
   <div class="overlay-box">
     <div class="spinner"></div>
-    <div class="overlay-label" id="loadingLabel">ინახება...</div>
-    <div class="overlay-sub">მიმდინარეობს ჩაწერა Firebase-ში</div>
+    <div class="overlay-label" id="loadingLabel" data-i18n="admin.saving">ინახება...</div>
+    <div class="overlay-sub" data-i18n="admin.savingToFirebase">მიმდინარეობს ჩაწერა Firebase-ში</div>
   </div>
 </div>
 
@@ -3714,6 +3785,90 @@ window.openMultiDayTourModal = function() {
 
   /* ============== INIT ============== */
   _moduleReadyResolve();
+
+  /* ============== LANGUAGE SWITCHER ============== */
+  (function() {
+    const ADMIN_LANG_KEY = 'damq_admin_lang';
+    let currentLang = localStorage.getItem(ADMIN_LANG_KEY) || 'ka';
+
+    function applyAdminTranslations(lang) {
+      if (!window.translations) return;
+
+      // Update all elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const trans = window.translations[key];
+        if (trans && trans[lang]) {
+          if (el.tagName === 'OPTION') {
+            el.textContent = trans[lang];
+          } else {
+            el.innerHTML = trans[lang];
+          }
+        }
+      });
+
+      // Update all elements with data-i18n-placeholder attribute
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const trans = window.translations[key];
+        if (trans && trans[lang]) {
+          el.placeholder = trans[lang];
+        }
+      });
+
+      // Update html lang attribute
+      document.documentElement.lang = lang;
+    }
+
+    function updateLangBtnState(lang) {
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        const btnLang = btn.getAttribute('data-lang');
+        if (btnLang === lang) {
+          btn.style.background = 'rgba(212,175,55,0.2)';
+          btn.style.borderColor = 'rgba(212,175,55,0.5)';
+          btn.style.color = '#d4af37';
+        } else {
+          btn.style.background = 'transparent';
+          btn.style.borderColor = 'rgba(255,255,255,0.15)';
+          btn.style.color = 'rgba(255,255,255,0.5)';
+        }
+      });
+    }
+
+    function setAdminLang(lang) {
+      currentLang = lang;
+      localStorage.setItem(ADMIN_LANG_KEY, lang);
+      applyAdminTranslations(lang);
+      updateLangBtnState(lang);
+    }
+
+    // Initialize language switcher buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        setAdminLang(lang);
+      });
+    });
+
+    // Apply translations when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        applyAdminTranslations(currentLang);
+        updateLangBtnState(currentLang);
+      });
+    } else {
+      applyAdminTranslations(currentLang);
+      updateLangBtnState(currentLang);
+    }
+
+    // Expose function globally for dynamic content
+    window.applyAdminTranslations = function() {
+      applyAdminTranslations(currentLang);
+    };
+    window.getAdminLang = function() {
+      return currentLang;
+    };
+  })();
 </script>
 
 </body>
