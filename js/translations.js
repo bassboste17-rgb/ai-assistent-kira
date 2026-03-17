@@ -36,7 +36,7 @@ const translations = {
   // -- TOURS SECTION --
   "tours.tag":            { ru: "Наши туры",           en: "Our Tours",          ka: "ჩვენი ტურები" },
   "tours.title.full":     { ru: "Полные пакеты туров", en: "Full Tour Packages", ka: "სრული ტურ-პაკეტები" },
-  "tours.subtitle":       { ru: "Многодневные туры по Грузии, где всё заранее продумано для вашего комфорта и спокойного путешествия.", en: "Multi-day tours in Georgia, where everything is planned in advance for your comfort and a stress-free journey.", ka: "მრავალდღიანი ტურები საქართველოში, სადაც ყველაფერი წინასწარ არის დაგეგმილი თქვენი კომფორტისა და მშვიდი მოგზაურობისთვის." },
+  "tours.subtitle":       { ru: "Многодневные туры по Грузии, где всё заранее продумано для вашего комфорта и спокойного путешествия.", en: "Multi-day tours in Georgia, where everything is planned in advance for your comfort and a stress-free journey.", ka: "მრავალდღიანი ტურები საქართ��ელოში, სადაც ყველაფერი წინასწარ არის დაგეგმილი თქვენი კომფორტისა და მშვიდი მოგზაურობისთვის." },
   "tours.divider.title":  { ru: "Однодневные туры",    en: "Day Tours",          ka: "ერთდღიანი ტურები" },
   "tours.divider.desc":   { ru: "Увлекательные экскурсии на один день по лучшим направлениям Грузии", en: "Exciting one-day excursions to the best destinations in Georgia", ka: "საინტერესო ერთდღიანი ექსკურსიები საქართველოს საუკეთესო მიმართულებებით" },
   "tours.viewall":        { ru: "Все туры и услуги",   en: "All Tours & Services", ka: "ყველა ტური და სერვისი" },
@@ -110,7 +110,7 @@ const translations = {
   "contact.hours.title":   { ru: "Время работы",     en: "Working Hours",  ka: "სამუშაო საათები" },
   "contact.hours":         { ru: "Пн-Вс: 09:00 - 21:00", en: "Mon-Sun: 09:00 - 21:00", ka: "ორშ-კვი: 09:00 - 21:00" },
   "contact.form.title":    { ru: "Оставить заявку",   en: "Leave a Request", ka: "მოთხოვნის დატოვება" },
-  "contact.form.subtitle": { ru: "Заполните форму, и мы свяжемся с вами в ближайшее время", en: "Fill out the form and we will contact you shortly", ka: "შეავსეთ ფორმა და ჩვენ მალე დაგიკავშირდებით" },
+  "contact.form.subtitle": { ru: "Заполните форму, и мы свяжемся с вами в ближайшее время", en: "Fill out the form and we will contact you shortly", ka: "შეავსეთ ფო��მა და ჩვენ მალე დაგიკავშირდებით" },
   "contact.form.name":     { ru: "Имя",      en: "Name",       ka: "სახელი" },
   "contact.form.name.ph":  { ru: "Ваше имя", en: "Your name",  ka: "თქვენი სახელი" },
   "contact.form.phone":    { ru: "Телефон",   en: "Phone",      ka: "ტელეფონი" },
@@ -216,6 +216,83 @@ const translations = {
   "admin.card.client.reviews":  { ru: "Отзывы клиентов",       en: "Client Reviews",  ka: "კლიენტების შეფასებები" },
   "admin.card.day.tours":   { ru: "Однодневные туры", en: "Day Tours",      ka: "1-დღიანი ტურები" },
   "admin.card.multi.tours": { ru: "Многодневные туры", en: "Multi-day Tours", ka: "მრავალდღიანი ტურები" },
+  "admin.card.blogs":       { ru: "Блоги",            en: "Blogs",          ka: "ბლოგები" },
+  
+  "admin.add.tour":         { ru: "Добавить тур",     en: "Add Tour",       ka: "ტურის დამატება" },
+  "admin.add.blog":         { ru: "Добавить блог",    en: "Add Blog",       ka: "ბლოგის დამატება" },
+  "admin.search.blog":      { ru: "Поиск блога...",   en: "Search blog...", ka: "ბლოგის ძიება..." },
+  "admin.table.title":      { ru: "Заголовок",        en: "Title",          ka: "სათაური" },
+  "admin.table.category":   { ru: "Категория",        en: "Category",       ka: "კატეგორია" },
+  
+  // Page titles/subtitles
+  "admin.page.tours.sub":      { ru: "Добавление и редактирование туров", en: "Add and edit tours", ka: "ტურების დამატება და რედაქტირება" },
+  "admin.page.bookings":       { ru: "Бронирования",         en: "Bookings",           ka: "ჯავშნები" },
+  "admin.page.bookings.sub":   { ru: "Управление бронированиями клиентов", en: "Manage client bookings", ka: "კლიენტების ჯავშნების მართვა" },
+  "admin.page.dayTours":       { ru: "Однодневные туры",     en: "Day Tours",          ka: "1-დღიანი ტურები" },
+  "admin.page.dayTours.sub":   { ru: "Добавление и управление однодневными турами", en: "Add and manage day tours", ka: "1-დღიანი ტურების დამატება და მართვა" },
+  "admin.page.multiTours":     { ru: "Многодневные туры",    en: "Multi-day Tours",    ka: "მრავალდღიანი ტურები" },
+  "admin.page.multiTours.sub": { ru: "Добавление и управление многодневными турами", en: "Add and manage multi-day tours", ka: "მრავალდღიანი ტურების დამატება და მართვა" },
+  "admin.page.blogs":          { ru: "Блоги",                en: "Blogs",              ka: "ბლოგები" },
+  "admin.page.blogs.sub":      { ru: "Управление блогами и новостями", en: "Manage blog posts and news", ka: "ბლოგ პოსტებისა და სიახლეების მართვა" },
+  "admin.page.reviews":        { ru: "Отзывы",               en: "Reviews",            ka: "შეფასებები" },
+  "admin.page.reviews.sub":    { ru: "Управление отзывами клиентов", en: "Manage client reviews", ka: "კლიენტების შეფასებების მართვა" },
+  
+  // Modal titles
+  "admin.modal.new.tour":     { ru: "Новый тур",             en: "New Tour",           ka: "ახალი ტური" },
+  "admin.modal.edit.tour":    { ru: "Редактировать тур",     en: "Edit Tour",          ka: "ტურის რედაქტირება" },
+  "admin.modal.add.tour":     { ru: "Добавить тур",          en: "Add Tour",           ka: "ტურის დამატება" },
+  "admin.modal.booking.status": { ru: "Статус бронирования", en: "Booking Status",     ka: "ჯავშნის სტატუსი" },
+  "admin.modal.booking.details": { ru: "Детали бронирования", en: "Booking Details",   ka: "ჯავშნის დეტალები" },
+  "admin.modal.confirm.delete": { ru: "Удалить запись?",     en: "Delete record?",     ka: "წავშალოთ ჩანაწერი?" },
+  "admin.modal.delete.warning": { ru: "Это действие необратимо.", en: "This action cannot be undone.", ka: "ეს მოქმედება შეუქცევადია." },
+  "admin.modal.add.blog":     { ru: "Добавить блог",         en: "Add Blog",           ka: "ბლოგის დამატება" },
+  "admin.modal.edit.blog":    { ru: "Редактировать блог",    en: "Edit Blog",          ka: "ბლოგის რედაქტირება" },
+  
+  // Form labels
+  "admin.form.tour.name":     { ru: "Название тура *",       en: "Tour name *",        ka: "ტურის სახელი *" },
+  "admin.form.name.lang":     { ru: "Название / Name / სახელი *", en: "Name / Name / სახელი *", ka: "სახელი / Name / Название *" },
+  "admin.form.description":   { ru: "Описание *",            en: "Description *",      ka: "აღწერა *" },
+  "admin.form.tour.type":     { ru: "Тип тура",              en: "Tour type",          ka: "ტურის ტიპი" },
+  "admin.form.price":         { ru: "Цена (USD) *",          en: "Price (USD) *",      ka: "ფასი (USD) *" },
+  "admin.form.duration":      { ru: "Длительность",          en: "Duration",           ka: "ხანგრძლივობა" },
+  "admin.form.group.size":    { ru: "Размер группы",         en: "Group size",         ka: "ჯგუფის ზომა" },
+  "admin.form.badge":         { ru: "Метка / Бейдж",         en: "Badge / Label",      ka: "ნიშანი / ბეჯი" },
+  "admin.form.rating":        { ru: "Рейтинг (1-5)",         en: "Rating (1-5)",       ka: "რეიტინგი (1-5)" },
+  "admin.form.featured":      { ru: "Рекомендуемый (только многодневные)", en: "Featured (multi-day only)", ka: "რეკომენდირებული (მხოლოდ მრავალდღიანი)" },
+  "admin.form.featured.hint": { ru: "Отметьте, чтобы показывался в главном меню", en: "Check to show in main menu", ka: "მონიშნეთ, რომ გამოჩნდეს მთავარ მენიუში" },
+  "admin.form.image.url":     { ru: "Ссылка на изображение", en: "Image URL",          ka: "სურათის ბმული" },
+  "admin.form.location":      { ru: "Локация",               en: "Location",           ka: "ლოკაცია" },
+  "admin.form.includes":      { ru: "Что включено (через запятую)", en: "What's included (comma separated)", ka: "რა შედის (მძიმით გამოყავით)" },
+  "admin.form.change.status": { ru: "Изменить статус",       en: "Change status",      ka: "სტატუსის შეცვლა" },
+  
+  // Buttons
+  "admin.btn.cancel":         { ru: "Отмена",                en: "Cancel",             ka: "გაუქმება" },
+  "admin.btn.save":           { ru: "Сохранить",             en: "Save",               ka: "შენახვა" },
+  "admin.btn.delete":         { ru: "Удалить",               en: "Delete",             ka: "წაშლა" },
+  "admin.btn.close":          { ru: "Закрыть",               en: "Close",              ka: "დახურვა" },
+  
+  // Statuses
+  "admin.status.new":         { ru: "Новый",                 en: "New",                ka: "ახალი" },
+  "admin.status.contacted":   { ru: "Связались",             en: "Contacted",          ka: "დავუკავშირდით" },
+  "admin.status.confirmed":   { ru: "Подтверждено",          en: "Confirmed",          ka: "დადასტურებული" },
+  "admin.status.completed":   { ru: "Завершено",             en: "Completed",          ka: "დასრულებული" },
+  "admin.status.cancelled":   { ru: "Отменено",              en: "Cancelled",          ka: "გაუქმებული" },
+  "admin.status.pending":     { ru: "Ожидает",               en: "Pending",            ka: "მოლოდინში" },
+  "admin.status.approved":    { ru: "Одобрено",              en: "Approved",           ka: "დამტკიცებული" },
+  
+  // Tour types
+  "admin.type.day":           { ru: "Однодневный",           en: "Day trip",           ka: "ერთდღიანი" },
+  "admin.type.multi":         { ru: "Многодневный",          en: "Multi-day",          ka: "მრავალდღიანი" },
+  "admin.type.wine":          { ru: "Винный",                en: "Wine",               ka: "ღვინის" },
+  "admin.type.photo":         { ru: "Фототур",               en: "Photo tour",         ka: "ფოტოტური" },
+  "admin.type.custom":        { ru: "Индивидуальный",        en: "Custom",             ka: "ინდივიდუალური" },
+  
+  // Badge options
+  "admin.badge.none":         { ru: "Без метки",             en: "No badge",           ka: "ნიშნის გარეშე" },
+  "admin.badge.hit":          { ru: "Хит",                   en: "Hit",                ka: "ჰიტი" },
+  "admin.badge.top":          { ru: "Топ",                   en: "Top",                ka: "ტოპი" },
+  "admin.badge.new":          { ru: "Новинка",               en: "New",                ka: "სიახლე" },
+  "admin.badge.recommended":  { ru: "Рекомендуем",           en: "Recommended",        ka: "რეკომენდირებული" },
 
   // -- LEGAL --
   "legal.tag":           { ru: "Юридическая информация", en: "Legal", ka: "იურიდიული ინფორმაცია" },
@@ -229,7 +306,7 @@ const translations = {
   "privacy.s1.li1":      { ru: "Контактные данные: имя, телефон, email (если вы его указали).", en: "Contact details: name, phone number, email (if you provide it).", ka: "საკონტაქტო მონაცემები: სახელი, ტელეფონის ნომერი, ელფოსტა (თუ მიუთითებთ)." },
   "privacy.s1.li2":      { ru: "Данные заявки/бронирования: интересующий тур, даты (если указаны), количество человек и текст сообщения.", en: "Request/booking details: tour of interest, dates (if provided), number of people, and message text.", ka: "მოთხოვნის/ჯავშნის მონაცემები: საინტერესო ტური, თარიღები (თუ მითითებულია), მონაწილეთა რაოდენობა და შეტყობინების ტექსტი." },
   "privacy.s1.li3":      { ru: "Данные отзывов: имя/фамилия, страна, рейтинг, текст отзыва (если вы оставляете отзыв).", en: "Review data: first/last name, country, rating, review text (if you leave a review).", ka: "შეფასების მონაცემები: სახელი/გვარი, ქვეყანა, რეიტინგი, შეფასების ტექსტი (თუ ტოვებთ შეფასებას)." },
-  "privacy.s1.li4":      { ru: "Технические данные: язык интерфейса (сохраняется в браузере), а также стандартные сетевые данные, которые могут передаваться при посещении сайта.", en: "Technical data: interface language (stored in your browser), and standard network data that may be transmitted when visiting the website.", ka: "ტექნიკური მონაცემები: ინტერფეისის ენა (ინახება თქვენს ბრაუზერში) და ასევე სტანდარტული ქსელური მონაცემები, რომლებიც შეიძლება გადაიცეს საიტის მონახულებისას." },
+  "privacy.s1.li4":      { ru: "Технические данные: язык интерфейса (сохраняется в браузере), а также стандартные сетевые данные, которые могут передаваться при посещении сайта.", en: "Technical data: interface language (stored in your browser), and standard network data that may be transmitted when visiting the website.", ka: "ტექნიკური მონაცემები: ინტერფეისის ენა (ინახება თქვენს ბრაუზერში) და ასევე სტანდარტული ქსელური მონაცემები, რომლებიც შეიძლება გადაიცეს საიტის მონახულებ��სას." },
   "privacy.s2.title":    { ru: "2. Как мы используем данные", en: "2. How We Use Data", ka: "2. როგორ ვიყენებთ მონაცემებს" },
   "privacy.s2.p1":       { ru: "Мы используем данные, чтобы отвечать на запросы, помогать с подбором тура, подтверждать бронирования и улучшать качество сервиса.", en: "We use data to respond to requests, help choose a tour, confirm bookings, and improve service quality.", ka: "მონაცემებს ვიყენებთ მოთხოვნებზე პასუხისთვის, ტურის შერჩევაში დასახმარებლად, ჯავშნების დასადასტურებლად და მომსახურების ხარისხის გასაუმჯობესებლად." },
   "privacy.s3.title":    { ru: "3. Передача данных третьим лицам", en: "3. Sharing Data with Third Parties", ka: "3. მონაცემების გადაცემა მესამე პირებზე" },
@@ -250,7 +327,7 @@ const translations = {
   "terms.subtitle":      { ru: "Последнее обновление: 13 марта 2026 г.", en: "Last updated: March 13, 2026", ka: "ბოლო განახლება: 13 მარტი, 2026" },
   "terms.intro":         { ru: "Используя сайт DAMQ Travel, вы соглашаетесь с этими Условиями. Если вы не согласны, пожалуйста, не используйте сайт.", en: "By using the DAMQ Travel website, you agree to these Terms. If you do not agree, please do not use the website.", ka: "DAMQ Travel-ის ვებ-საიტის გამოყენებით თქვენ ეთანხმებით ამ პირობებს. თუ არ ეთანხმებით, გთხოვთ, არ გამოიყენოთ საიტი." },
   "terms.s1.title":      { ru: "1. Информация на сайте", en: "1. Information on the Website", ka: "1. ინფორმაცია საიტზე" },
-  "terms.s1.p1":         { ru: "Мы стараемся поддерживать информацию о турах актуальной, но некоторые детали могут меняться. Финальные условия подтверждаются при бронировании.", en: "We try to keep tour information up to date, but some details may change. Final terms are confirmed at booking.", ka: "ჩვენ ვცდილობთ, ტურის ინფორმაცია მუდმივად აქტუალური იყოს, თუმცა ზოგი დეტალი შეიძლება შეიცვალოს. საბოლოო პირობები დასტურდება დაჯავშნისას." },
+  "terms.s1.p1":         { ru: "Мы стара��мся поддерживать информацию о турах актуальной, но некоторые детали могут меняться. Финальные условия подтверждаются при бронировании.", en: "We try to keep tour information up to date, but some details may change. Final terms are confirmed at booking.", ka: "ჩვენ ვცდილობთ, ტურის ინფორმაცია მუდმივად აქტუალური იყოს, თუმცა ზოგი დეტალი შეიძლება შეიცვალოს. საბოლოო პირობები დასტურდება დაჯავშნისას." },
   "terms.s2.title":      { ru: "2. Бронирование", en: "2. Booking", ka: "2. დაჯავშნა" },
   "terms.s2.p1":         { ru: "Заявка на сайте или в WhatsApp не является гарантированным бронированием, пока мы не подтвердим её в переписке/звонке.", en: "A request submitted on the website or via WhatsApp is not a guaranteed booking until we confirm it via chat/call.", ka: "საიტზე ან WhatsApp-ში დატოვებული მოთხოვნა არ ითვლება გარანტირებულ ჯავშნად, სანამ ჩვენ არ დაგიდასტურებთ მიმოწერით/ზარით." },
   "terms.s3.title":      { ru: "3. Цены и оплата", en: "3. Prices and Payment", ka: "3. ფასები და გადახდა" },
@@ -360,7 +437,7 @@ const translations = {
   "services.s5.title":    { ru: "Фотосъёмка в туре",        en: "Tour Photography",           ka: "ფოტოგრაფია ტურში" },
   "services.s5.desc":     { ru: "Профессиональный фотограф запечатлит лучшие моменты вашего путешествия на самых живописных локациях Грузии.", en: "A professional photographer will capture the best moments of your trip at the most scenic locations in Georgia.", ka: "პროფესიონალი ფოტოგრაფი საქართველოს ულამაზეს ლოკაციებზე თქვენი მოგზაურობის საუკეთესო მომენტებს დააფიქსირებს." },
   "services.s6.title":    { ru: "Поддержка 24/7",           en: "24/7 Support",               ka: "24/7 მხარდაჭერა" },
-  "services.s6.desc":     { ru: "Наш менеджер на связи круглосуточно на протяжении всего вашего путешествия. Решаем любые вопросы мгновенно.", en: "Our manager is available 24/7 throughout your entire trip. We resolve any issues instantly.", ka: "ჩვენი მენეჯერი მთელი მოგზაურობის განმავლობაში 24 საათის მანძილზე ხელმისაწვდომია. ნებისმიერ საკითხს მყისიერად ვწყვეტთ." },
+  "services.s6.desc":     { ru: "Наш менеджер на связи круглосуточно на протяжении всего вашего путешествия. Решаем любые вопросы мгновенно.", en: "Our manager is available 24/7 throughout your entire trip. We resolve any issues instantly.", ka: "ჩვენი მენეჯერი მთელი მოგზაურობის განმავლობაში 24 საათის მანძილზე ხელმისაწვდომია. ნებისმიერ საკითხს მყი���იერად ვწყვეტთ." },
 
   // -- SERVICES - Why Us --
   "services.why.tag":      { ru: "Почему мы",         en: "Why Us",           ka: "რატომ ჩვენ" },
@@ -385,7 +462,7 @@ const translations = {
   "services.step3.title":   { ru: "Подтвердите бронь",  en: "Confirm Booking",   ka: "ჯავშნის დადასტურება" },
   "services.step3.desc":    { ru: "Получите детальную программу тура и подтвердите бронирование — всё остальное мы организуем за вас.", en: "Receive a detailed tour program and confirm your booking — we'll organize everything else for you.", ka: "მიიღეთ ტურის დეტალური პროგრამა და დაადასტურეთ ჯავშანი — დანარჩენს ჩვენ მოვაგვარებთ თქვენთვის." },
   "services.step4.title":   { ru: "Наслаждайтесь!",     en: "Enjoy!",            ka: "ისიამოვნეთ!" },
-  "services.step4.desc":    { ru: "Встречаем вас в назначенном месте и сопровождаем на протяжении всего путешествия.", en: "We meet you at the designated location and accompany you throughout the entire journey.", ka: "შეგხვდებით დანიშნულ ადგილას და თან გახლავართ მთელი მოგზაურობის განმავლობაში." },
+  "services.step4.desc":    { ru: "Встречаем вас в назначенном месте и сопров��ждаем на протяжении всего путешествия.", en: "We meet you at the designated location and accompany you throughout the entire journey.", ka: "შეგხვდებით დანიშნულ ადგილას და თან გახლავართ მთელი მოგზაურობის განმავლობაში." },
 
   // -- SERVICES - FAQ --
   "services.faq.tag":       { ru: "FAQ",              en: "FAQ",              ka: "FAQ" },
@@ -423,7 +500,7 @@ const translations = {
   "blog.article2.title":  { ru: "Гид по грузинскому вину: от Саперави до Хванчкары", en: "Guide to Georgian Wine: From Saperavi to Khvanchkara", ka: "ქართული ღვინის გიდი: საფერავიდან ხვანჭკარამდე" },
   "blog.article2.desc":   { ru: "Грузия — родина виноделия с 8000-летней историей. Расскажем о главных сортах, которые стоит попробовать в вашем путешествии.", en: "Georgia is the birthplace of winemaking with an 8000-year history. We'll tell you about the main varieties worth trying on your trip.", ka: "საქართველო მეღვინეობის სამშობლოა 8000 წლიანი ისტორიით. მოგიყვებით მთავარი ჯიშების შესახებ, რომლებიც მოგზაურობაში ღირს დააგემოვნოთ." },
   "blog.article3.title":  { ru: "Тбилиси за 48 часов: идеальный маршрут", en: "Tbilisi in 48 Hours: The Perfect Itinerary", ka: "თბილისი 48 საათში: იდეალური მარშრუტი" },
-  "blog.article3.desc":   { ru: "Как провести два дня в столице Грузии с максимальной пользой — от старого города до современных кварталов.", en: "How to spend two days in the capital of Georgia most effectively — from the old town to modern districts.", ka: "როგორ გაატაროთ ორი დღე საქართველოს დედაქალაქში მაქსიმალური სარგებლით — ძველი ქალაქიდან თანამედროვე კვარტლებამდე." },
+  "blog.article3.desc":   { ru: "Как провести два дня в столице Грузии с максимальной пользой — от старого город�� до современных кварталов.", en: "How to spend two days in the capital of Georgia most effectively — from the old town to modern districts.", ka: "როგორ გაატაროთ ორი დღე საქართველოს დედაქალაქში მაქსიმალური სარგებლით — ძველი ქალაქიდან თანამედროვე კვარტლებამდე." },
   "blog.article4.title":  { ru: "Военно-Грузинская дорога: путешествие к небу", en: "Georgian Military Highway: Journey to the Sky", ka: "საქართველოს სამხედრო გზა: მოგზაურობა ცისკენ" },
   "blog.article4.desc":   { ru: "Одна из самых живописных дорог мира проведёт вас через ущелья, перевалы и к подножию великого Казбека.", en: "One of the most scenic roads in the world will take you through gorges, passes and to the foot of mighty Kazbek.", ka: "ერთ-ერთი ულამაზესი გზა მსოფლიოში გაგიყვანთ ხეობებში, უღელტეხილებზე და დიდებული ყაზბეგის ძირში." },
 
@@ -449,7 +526,7 @@ const translations = {
   "region.imereti.desc":  { ru: "Кутаиси, храм Баграти, пещера Прометея", en: "Kutaisi, Bagrati temple, Prometheus cave", ka: "ქუთაისი, ბაგრატის ტაძარი, პრომეთეს გამოქვაბული" },
   "region.imereti.badge": { ru: "Культура",         en: "Culture",          ka: "კულტურა" },
   "region.samegrelo":     { ru: "Самегрело",        en: "Samegrelo",        ka: "სამეგრელო" },
-  "region.samegrelo.desc":{ ru: "Мартвильский каньон, каньон Окаце, озеро Палиастоми", en: "Martvili canyon, Okatse canyon, Paliastomi lake", ka: "მარტვილის კანიონი, ოკაცეს კანიონი, ფალიასტომის ტბა" },
+  "region.samegrelo.desc":{ ru: "Мартвильский каньон, каньон Окаце, озеро Палиастоми", en: "Martvili canyon, Okatse canyon, Paliastomi lake", ka: "მარტვილის კ��ნიონი, ოკაცეს კანიონი, ფალიასტომის ტბა" },
   "region.samegrelo.badge":{ ru: "Природа",         en: "Nature",           ka: "ბუნება" },
   "region.samtskhe":      { ru: "Самцхе-Джавахети", en: "Samtskhe-Javakheti", ka: "სამცხე-ჯავახეთი" },
   "region.samtskhe.desc": { ru: "Пещерный монастырь Вардзия, Боржоми, крепость Рабат", en: "Vardzia cave monastery, Borjomi, Rabat fortress", ka: "ვარძიის გამოქვაბული მონასტერი, ბორჯომი, რაბათის ციხე" },
@@ -538,7 +615,7 @@ const translations = {
   "season.spring.activity3.desc":   { ru: "Комфортное время для посещения древних монастырей и крепостей", en: "Comfortable time to visit ancient monasteries and fortresses", ka: "კომფორტული დრო უძველესი მონასტრებისა და ციხესიმაგრეების მოსანახულებლად" },
   "season.spring.weather.temp":     { ru: "Днём комфортно",               en: "Comfortable daytime",          ka: "დღისით კომფორტული" },
   "season.spring.cta.title":        { ru: "Готовы к весеннему приключению?", en: "Ready for a Spring Adventure?", ka: "მზად ხართ გაზაფხულის თავგადასავლისთვის?" },
-  "season.spring.cta.desc":         { ru: "Забронируйте тур прямо сейчас и откройте для себя весеннюю Грузию с опытными гидами DAMQ Travel", en: "Book a tour now and discover spring Georgia with experienced DAMQ Travel guides", ka: "დაჯავშნეთ ტური ახლავე და აღმოაჩინეთ გაზაფხულის საქართველო DAMQ Travel-ის გამოცდილ გიდებთან ერთად" },
+  "season.spring.cta.desc":         { ru: "Забронируйте тур прямо сейчас и откройте для себя весеннюю Гру��ию с опытными гидами DAMQ Travel", en: "Book a tour now and discover spring Georgia with experienced DAMQ Travel guides", ka: "დაჯავშნეთ ტური ახლავე და აღმოაჩინეთ გაზაფხულის საქართველო DAMQ Travel-ის გამოცდილ გიდებთან ერთად" },
 
   // Summer
   "season.summer.hero.title":       { ru: "Летняя <em>Грузия</em>",       en: "Summer <em>Georgia</em>",      ka: "ზაფხულის <em>საქართველო</em>" },
@@ -547,7 +624,7 @@ const translations = {
   "season.summer.highlights.title": { ru: "Почему стоит приехать летом",  en: "Why Visit in Summer",          ka: "რატომ უნდა ეწვიოთ ზაფხულში" },
   "season.summer.highlights.subtitle": { ru: "Лето в Грузии — это море возможностей для пляжного отдыха, горных приключений и культурных открытий", en: "Summer in Georgia offers endless opportunities for beach holidays, mountain adventures and cultural discoveries", ka: "ზაფხული საქართველოში — პლაჟზე დასვენების, მთის თავგადასავლებისა და კულტურული აღმოჩენების უსაზღვრო შესაძლებლობებია" },
   "season.summer.highlight1.title": { ru: "Черное море",                  en: "Black Sea",                    ka: "შავი ზღვა" },
-  "season.summer.highlight1.desc":  { ru: "Пляжи Батуми, Кобулети и Уреки с уникальным магнитным песком", en: "Batumi, Kobuleti and Ureki beaches with unique magnetic sand", ka: "ბათუმის, ქობულეთისა და ურეკის პლაჟები უნიკალური მაგნიტური ქვიშით" },
+  "season.summer.highlight1.desc":  { ru: "Пляжи Батуми, Коб��лети и Уреки с уникальным магнитным песком", en: "Batumi, Kobuleti and Ureki beaches with unique magnetic sand", ka: "ბათუმის, ქობულეთისა და ურეკის პლაჟები უნიკალური მაგნიტური ქვიშით" },
   "season.summer.highlight2.title": { ru: "Горные маршруты",              en: "Mountain Routes",              ka: "მთის მარშრუტები" },
   "season.summer.highlight2.desc":  { ru: "Идеальное время для треккинга в Сванетии, Тушетии и Хевсуретии", en: "Perfect time for trekking in Svaneti, Tusheti and Khevsureti", ka: "იდეალური დრო ლაშქრობისთვის სვანეთში, თუშეთსა და ხევსურეთში" },
   "season.summer.highlight3.title": { ru: "Фестивали",                    en: "Festivals",                    ka: "ფესტივალები" },
@@ -577,7 +654,7 @@ const translations = {
   "season.autumn.highlight1.title": { ru: "Праздник Ртвели",              en: "Rtveli Festival",              ka: "რთველის დღესასწაული" },
   "season.autumn.highlight1.desc":  { ru: "Традиционный сбор винограда и изготовление вина в квеври", en: "Traditional grape harvest and winemaking in qvevri", ka: "ყურძნის ტრადიციული კრეფა და ღვინის დაყენება ქვევრში" },
   "season.autumn.highlight2.title": { ru: "Золотые пейзажи",              en: "Golden Landscapes",            ka: "ოქროსფერი პეიზაჟები" },
-  "season.autumn.highlight2.desc":  { ru: "Виноградники и леса окрашиваются в золотые и багряные тона", en: "Vineyards and forests turn golden and crimson", ka: "ვენახები და ტყეები ოქროსფერ და ალისფერ ფერებში იღებავება" },
+  "season.autumn.highlight2.desc":  { ru: "Виноградники и леса окрашив��ются в золотые и багряные тона", en: "Vineyards and forests turn golden and crimson", ka: "ვენახები და ტყეები ოქროსფერ და ალისფერ ფერებში იღებავება" },
   "season.autumn.highlight3.title": { ru: "Тёплая погода",                en: "Warm Weather",                 ka: "თბილი ამინდი" },
   "season.autumn.highlight3.desc":  { ru: "Комфортные 18-25°C и мягкие солнечные дни", en: "Comfortable 18-25°C and mild sunny days", ka: "კომფორტული 18-25°C და რბილი მზიანი დღეები" },
   "season.autumn.activities.title": { ru: "Чем заняться осенью",          en: "What to Do in Autumn",         ka: "რა გააკეთოთ შემოდგომაზე" },
