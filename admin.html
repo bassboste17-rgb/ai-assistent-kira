@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ადმინი — DAMQ Travel</title>
-  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="icon" type="image/png" href="images/logodamq.png">
+  <link rel="apple-touch-icon" href="images/logodamq.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
@@ -237,6 +238,59 @@
 
     .page { display: none; padding: 2rem; }
     .page.active { display: block; }
+
+    /* ----- FOOTER ----- */
+    .admin-footer {
+      margin-top: auto;
+      padding: 0.9rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .admin-footer small {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .admin-footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .admin-footer-links a {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.45rem 0.85rem;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      color: #333;
+      background: var(--white);
+      transition: all 0.2s;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .admin-footer-links a:hover {
+      border-color: rgba(212,175,55,0.35);
+      background: rgba(212,175,55,0.08);
+      color: var(--dark);
+    }
+
+    .admin-footer-links a[aria-current="page"] {
+      border-color: rgba(212,175,55,0.35);
+      background: rgba(212,175,55,0.12);
+      color: var(--dark);
+    }
 
     /* ===========================================
        BUTTONS
@@ -663,6 +717,77 @@
     .upload-progress.active { display: block; }
 
     /* ===========================================
+       VIDEO UPLOAD (Cloudinary)
+    =========================================== */
+    .upload-hint {
+      margin-top: 0.45rem;
+      font-size: 0.75rem;
+      color: #777;
+      line-height: 1.35;
+    }
+    .quota-line {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: #666;
+    }
+    .quota-line strong { color: var(--gold); }
+
+    .uploaded-videos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 0.7rem;
+    }
+    .uploaded-video {
+      position: relative;
+      width: 240px;
+      height: 135px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      background: #000;
+    }
+    .uploaded-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cld-settings {
+      margin-top: 0.8rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: rgba(212,175,55,0.03);
+      padding: 0.75rem 0.9rem;
+    }
+    .cld-settings summary {
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.86rem;
+      color: #444;
+      letter-spacing: 0.02em;
+    }
+    .cld-settings[open] summary { margin-bottom: 0.6rem; }
+    .cld-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.65rem;
+    }
+    .cld-grid .fg.full { grid-column: 1 / -1; }
+    .cld-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Hide blog category column (not used) */
+    #blogsPage .table thead th:nth-child(2),
+    #blogsPage .table tbody td:nth-child(2) { display: none; }
+
+    /* ===========================================
        DURATION INPUTS
     =========================================== */
     .duration-row {
@@ -696,35 +821,35 @@
     /* ===========================================
        LANGUAGE TABS (Multi-lang inputs)
     =========================================== */
-    .lang-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 0.5rem;
-      background: #f5f3ee;
-      border-radius: 8px;
-      padding: 3px;
+    /* Show all language inputs at once (no tab switching). */
+    .lang-tabs { display: none; }
+    .lang-panels {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
     }
-    .lang-tab {
-      flex: 1;
-      padding: 0.4rem 0.6rem;
-      border: none;
-      background: transparent;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
-      color: #888;
-      transition: all 0.2s;
-    }
-    .lang-tab:hover { color: #555; }
-    .lang-tab.active {
-      background: var(--white);
-      color: var(--dark);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-    .lang-panel { display: none; }
+    .lang-panel { display: block; }
     .lang-panel.active { display: block; }
+    .lang-panel::before {
+      content: attr(data-lang);
+      display: block;
+      margin: 0 0 4px 2px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #7a7a7a;
+      text-transform: uppercase;
+    }
+    .field-error {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+    }
+    .field-error-msg {
+      margin: 4px 0 0 2px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #ef4444;
+    }
 
     /* ===========================================
        RESPONSIVE
@@ -735,14 +860,89 @@
       .main { margin-left: 0; }
       .hamburger { display: flex; }
       .form-grid { grid-template-columns: 1fr; }
+      .lang-panels { grid-template-columns: 1fr; }
       .table thead { display: none; }
       .table tr { display: block; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.8rem; }
       .table td { display: flex; justify-content: space-between; align-items: center; border: none; padding: 0.55rem 0.9rem; }
       .table td::before { content: attr(data-label); font-weight: 700; font-size: 0.74rem; color: var(--muted); }
     }
+
+    /* ===========================================
+       AUTH (Firebase email/password)
+    =========================================== */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,10,0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 9999;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      padding: 22px;
+    }
+    .auth-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+    .auth-sub { color: #666; font-size: 0.88rem; margin-bottom: 14px; }
+    .auth-field { display: grid; gap: 6px; margin-bottom: 12px; }
+    .auth-field label { font-size: 0.78rem; font-weight: 800; color: #555; }
+    .auth-input {
+      width: 100%;
+      padding: 0.72rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .auth-input:focus {
+      border-color: rgba(212,175,55,0.55);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.14);
+    }
+    .auth-error {
+      min-height: 18px;
+      margin: 6px 0 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #ef4444;
+    }
+    .auth-actions { display: grid; gap: 10px; }
+    .auth-note { font-size: 0.78rem; color: #777; line-height: 1.3; }
+    .sidebar-footer .btn-site + .btn-site { margin-top: 0.55rem; }
   </style>
 </head>
 <body>
+
+<!-- Auth gate: Firebase Authentication (Email/Password) -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <div class="auth-title">Admin Sign In</div>
+    <div class="auth-sub">Sign in with an admin account to continue.</div>
+    <form id="authForm" class="auth-actions">
+      <div class="auth-field">
+        <label for="authEmail">Email</label>
+        <input class="auth-input" id="authEmail" type="email" autocomplete="username" required>
+      </div>
+      <div class="auth-field">
+        <label for="authPassword">Password</label>
+        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" required>
+      </div>
+      <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
+      <button class="btn btn-dark" id="authLoginBtn" type="submit"><span>Sign in</span></button>
+      <div class="auth-note">
+        If sign-in fails with <code>auth/operation-not-allowed</code>, enable <b>Email/Password</b> in Firebase Console → Authentication → Sign-in method.
+      </div>
+    </form>
+  </div>
+</div>
 
 <div class="app">
 
@@ -811,6 +1011,10 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         მთავარზე
       </a>
+      <button class="btn-site" id="btnLogout" type="button" style="display:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Log out
+      </button>
     </div>
   </aside>
 
@@ -982,6 +1186,14 @@
       </div>
     </div>
 
+    <footer class="admin-footer">
+      <small>&copy; 2026 DAMQ Travel</small>
+      <div class="admin-footer-links">
+        <a href="home.html" target="_blank" rel="noopener">Site</a>
+        <a href="admin.html" aria-current="page">Admin</a>
+      </div>
+    </footer>
+
   </div><!-- /main -->
 </div><!-- /app -->
 
@@ -1143,9 +1355,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="dtNameLang"><input type="text" id="dtName_ka" placeholder="ტურის სახელი (ქართული)" required></div>
-          <div class="lang-panel" data-lang="ru" data-group="dtNameLang"><input type="text" id="dtName_ru" placeholder="Название тура (русский)"></div>
-          <div class="lang-panel" data-lang="en" data-group="dtNameLang"><input type="text" id="dtName_en" placeholder="Tour name (English)"></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="dtNameLang"><input type="text" id="dtName_ka" placeholder="ტურის სახელი (ქართული)" required></div>
+            <div class="lang-panel" data-lang="ru" data-group="dtNameLang"><input type="text" id="dtName_ru" placeholder="Название тура (русский)" required></div>
+            <div class="lang-panel" data-lang="en" data-group="dtNameLang"><input type="text" id="dtName_en" placeholder="Tour name (English)" required></div>
+          </div>
         </div>
 
         <div class="fg full">
@@ -1155,9 +1369,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
-          <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
-          <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
+            <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
+            <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
+          </div>
         </div>
 
         <div class="fg full">
@@ -1167,9 +1383,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="dtRouteLang"><input type="text" id="dtRoute_ka" placeholder="თბილისი - მცხეთა - ჯვარი - ანანური"></div>
-          <div class="lang-panel" data-lang="ru" data-group="dtRouteLang"><input type="text" id="dtRoute_ru" placeholder="Тбилиси - Мцхета - Джвари - Ананури"></div>
-          <div class="lang-panel" data-lang="en" data-group="dtRouteLang"><input type="text" id="dtRoute_en" placeholder="Tbilisi - Mtskheta - Jvari - Ananuri"></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="dtRouteLang"><input type="text" id="dtRoute_ka" placeholder="თბილისი - მცხეთა - ჯვარი - ანანური"></div>
+            <div class="lang-panel" data-lang="ru" data-group="dtRouteLang"><input type="text" id="dtRoute_ru" placeholder="Тбилиси - Мцхета - Джвари - Ананури"></div>
+            <div class="lang-panel" data-lang="en" data-group="dtRouteLang"><input type="text" id="dtRoute_en" placeholder="Tbilisi - Mtskheta - Jvari - Ananuri"></div>
+          </div>
         </div>
 
         <div class="fg full">
@@ -1192,14 +1410,20 @@
 
         <div class="fg full">
           <label>ტიპი / Type / Тип</label>
-          <div class="lang-tabs" data-target="dtTypeLang">
-            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
-            <button type="button" class="lang-tab" data-lang="ru">RU</button>
-            <button type="button" class="lang-tab" data-lang="en">EN</button>
-          </div>
-          <div class="lang-panel active" data-lang="ka" data-group="dtTypeLang"><input type="text" id="dtType_ka" placeholder="ექსკურსია"></div>
-          <div class="lang-panel" data-lang="ru" data-group="dtTypeLang"><input type="text" id="dtType_ru" placeholder="Экскурсия"></div>
-          <div class="lang-panel" data-lang="en" data-group="dtTypeLang"><input type="text" id="dtType_en" placeholder="Excursion"></div>
+          <select id="dtTypeSelect" class="tour-type-select">
+            <option value="">-- აირჩიეთ ტიპი --</option>
+            <option value="excursion" data-ka="ექსკურსია" data-ru="Экскурсия" data-en="Excursion">ექსკურსია / Экскурсия / Excursion</option>
+            <option value="gastro" data-ka="გასტრონომია" data-ru="Гастрономический" data-en="Gastronomic">გასტრონომია / Гастрономический / Gastronomic</option>
+            <option value="wine" data-ka="ღვინის ტური" data-ru="Винный тур" data-en="Wine Tour">ღვინის ტური / Винный тур / Wine Tour</option>
+            <option value="adventure" data-ka="თავგადასავალი" data-ru="Приключение" data-en="Adventure">თავგადასავალი / Приключение / Adventure</option>
+            <option value="cultural" data-ka="კულტურული" data-ru="Культурный" data-en="Cultural">კულტურული / Культурный / Cultural</option>
+            <option value="nature" data-ka="ბუნება" data-ru="Природа" data-en="Nature">ბუნება / Природа / Nature</option>
+            <option value="beach" data-ka="პლაჟი" data-ru="Пляжный" data-en="Beach">პლაჟი / Пляжный / Beach</option>
+            <option value="historical" data-ka="ისტორიული" data-ru="Исторический" data-en="Historical">ისტორიული / Исторический / Historical</option>
+          </select>
+          <input type="hidden" id="dtType_ka">
+          <input type="hidden" id="dtType_ru">
+          <input type="hidden" id="dtType_en">
         </div>
 
         <div class="fg"><label>ფასი (USD) *</label><input type="number" id="dtPrice" placeholder="45" min="1" required></div>
@@ -1265,9 +1489,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="mdtNameLang"><input type="text" id="mdtName_ka" placeholder="ტურის სახელი (ქართული)" required></div>
-          <div class="lang-panel" data-lang="ru" data-group="mdtNameLang"><input type="text" id="mdtName_ru" placeholder="Название тура (русский)"></div>
-          <div class="lang-panel" data-lang="en" data-group="mdtNameLang"><input type="text" id="mdtName_en" placeholder="Tour name (English)"></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="mdtNameLang"><input type="text" id="mdtName_ka" placeholder="ტურის სახელი (ქართული)" required></div>
+            <div class="lang-panel" data-lang="ru" data-group="mdtNameLang"><input type="text" id="mdtName_ru" placeholder="Название тура (русский)" required></div>
+            <div class="lang-panel" data-lang="en" data-group="mdtNameLang"><input type="text" id="mdtName_en" placeholder="Tour name (English)" required></div>
+          </div>
         </div>
 
         <div class="fg full">
@@ -1277,9 +1503,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="mdtDescLang"><textarea id="mdtDesc_ka" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
-          <div class="lang-panel" data-lang="ru" data-group="mdtDescLang"><textarea id="mdtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
-          <div class="lang-panel" data-lang="en" data-group="mdtDescLang"><textarea id="mdtDesc_en" placeholder="Tour description (English)..."></textarea></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="mdtDescLang"><textarea id="mdtDesc_ka" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
+            <div class="lang-panel" data-lang="ru" data-group="mdtDescLang"><textarea id="mdtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
+            <div class="lang-panel" data-lang="en" data-group="mdtDescLang"><textarea id="mdtDesc_en" placeholder="Tour description (English)..."></textarea></div>
+          </div>
         </div>
 
         <div class="fg full">
@@ -1289,9 +1517,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="mdtRouteLang"><input type="text" id="mdtRoute_ka" placeholder="თბილისი - სვანეთი - ბათუმი - თბილისი"></div>
-          <div class="lang-panel" data-lang="ru" data-group="mdtRouteLang"><input type="text" id="mdtRoute_ru" placeholder="Тбилиси - Сванетия - Батуми - Тбилиси"></div>
-          <div class="lang-panel" data-lang="en" data-group="mdtRouteLang"><input type="text" id="mdtRoute_en" placeholder="Tbilisi - Svaneti - Batumi - Tbilisi"></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="mdtRouteLang"><input type="text" id="mdtRoute_ka" placeholder="თბილისი - სვანეთი - ბათუმი - თბილისი"></div>
+            <div class="lang-panel" data-lang="ru" data-group="mdtRouteLang"><input type="text" id="mdtRoute_ru" placeholder="Тбилиси - Сванетия - Батуми - Тбилиси"></div>
+            <div class="lang-panel" data-lang="en" data-group="mdtRouteLang"><input type="text" id="mdtRoute_en" placeholder="Tbilisi - Svaneti - Batumi - Tbilisi"></div>
+          </div>
         </div>
 
         <div class="fg full">
@@ -1314,14 +1544,20 @@
 
         <div class="fg full">
           <label>ტიპი / Type / Тип</label>
-          <div class="lang-tabs" data-target="mdtTypeLang">
-            <button type="button" class="lang-tab active" data-lang="ka">KA</button>
-            <button type="button" class="lang-tab" data-lang="ru">RU</button>
-            <button type="button" class="lang-tab" data-lang="en">EN</button>
-          </div>
-          <div class="lang-panel active" data-lang="ka" data-group="mdtTypeLang"><input type="text" id="mdtType_ka" placeholder="ექსკურსია"></div>
-          <div class="lang-panel" data-lang="ru" data-group="mdtTypeLang"><input type="text" id="mdtType_ru" placeholder="Экскурсия"></div>
-          <div class="lang-panel" data-lang="en" data-group="mdtTypeLang"><input type="text" id="mdtType_en" placeholder="Excursion"></div>
+          <select id="mdtTypeSelect" class="tour-type-select">
+            <option value="">-- აირჩიეთ ტიპი --</option>
+            <option value="excursion" data-ka="ექსკურსია" data-ru="Экскурсия" data-en="Excursion">ექსკურსია / Экскурсия / Excursion</option>
+            <option value="gastro" data-ka="გასტრონომია" data-ru="Гастрономический" data-en="Gastronomic">გასტრონომია / Гастрономический / Gastronomic</option>
+            <option value="wine" data-ka="ღვინის ტური" data-ru="Винный тур" data-en="Wine Tour">ღვინის ტური / Винный тур / Wine Tour</option>
+            <option value="adventure" data-ka="თავგადასავალი" data-ru="Приключение" data-en="Adventure">თავგადასავალი / Приключение / Adventure</option>
+            <option value="cultural" data-ka="კულტურული" data-ru="Культурный" data-en="Cultural">კულტურული / Культурный / Cultural</option>
+            <option value="nature" data-ka="ბუნება" data-ru="Природа" data-en="Nature">ბუნება / Природа / Nature</option>
+            <option value="beach" data-ka="პლაჟი" data-ru="Пляжный" data-en="Beach">პლაჟი / Пляжный / Beach</option>
+            <option value="historical" data-ka="ისტორიული" data-ru="Исторический" data-en="Historical">ისტორიული / Исторический / Historical</option>
+          </select>
+          <input type="hidden" id="mdtType_ka">
+          <input type="hidden" id="mdtType_ru">
+          <input type="hidden" id="mdtType_en">
         </div>
 
         <div class="fg"><label>ფასი (USD) *</label><input type="number" id="mdtPrice" placeholder="250" min="1" required></div>
@@ -1387,9 +1623,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="blogTitleLang"><input type="text" id="blogTitle_ka" placeholder="სათაური (ქართული)" required></div>
-          <div class="lang-panel" data-lang="ru" data-group="blogTitleLang"><input type="text" id="blogTitle_ru" placeholder="Заголовок (русский)"></div>
-          <div class="lang-panel" data-lang="en" data-group="blogTitleLang"><input type="text" id="blogTitle_en" placeholder="Title (English)"></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="blogTitleLang"><input type="text" id="blogTitle_ka" placeholder="სათაური (ქართული)" required></div>
+            <div class="lang-panel" data-lang="ru" data-group="blogTitleLang"><input type="text" id="blogTitle_ru" placeholder="Заголовок (русский)"></div>
+            <div class="lang-panel" data-lang="en" data-group="blogTitleLang"><input type="text" id="blogTitle_en" placeholder="Title (English)"></div>
+          </div>
         </div>
 
         <div class="fg full">
@@ -1399,9 +1637,11 @@
             <button type="button" class="lang-tab" data-lang="ru">RU</button>
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
-          <div class="lang-panel active" data-lang="ka" data-group="blogDescLang"><textarea id="blogDesc_ka" placeholder="შინაარსი (ქართული)..." required style="min-height:150px"></textarea></div>
-          <div class="lang-panel" data-lang="ru" data-group="blogDescLang"><textarea id="blogDesc_ru" placeholder="Содержание (русский)..." style="min-height:150px"></textarea></div>
-          <div class="lang-panel" data-lang="en" data-group="blogDescLang"><textarea id="blogDesc_en" placeholder="Content (English)..." style="min-height:150px"></textarea></div>
+          <div class="lang-panels">
+            <div class="lang-panel active" data-lang="ka" data-group="blogDescLang"><textarea id="blogDesc_ka" placeholder="შინაარსი (ქართული)..." required style="min-height:150px"></textarea></div>
+            <div class="lang-panel" data-lang="ru" data-group="blogDescLang"><textarea id="blogDesc_ru" placeholder="Содержание (русский)..." style="min-height:150px"></textarea></div>
+            <div class="lang-panel" data-lang="en" data-group="blogDescLang"><textarea id="blogDesc_en" placeholder="Content (English)..." style="min-height:150px"></textarea></div>
+          </div>
         </div>
 
         <div class="fg">
@@ -1426,6 +1666,54 @@
           </div>
           <div class="upload-progress" id="blogUploadProgress">იტვირთება...</div>
           <div class="uploaded-photos" id="blogUploadedPhotos"></div>
+        </div>
+
+        <div class="fg full">
+          <label>Video (uploads to Cloudinary)</label>
+          <div class="upload-zone" id="blogVideoUploadZone">
+            <input type="file" id="blogVideoInput" accept="video/*">
+            <div class="upload-zone-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="upload-zone-text"><strong>Select video</strong> or drop it here</div>
+          </div>
+          <div class="upload-progress" id="blogVideoProgress">Uploading...</div>
+          <div class="quota-line" id="blogVideoQuotaLine">-</div>
+          <div class="uploaded-videos" id="blogUploadedVideos"></div>
+
+          <details class="cld-settings" id="cldSettingsDetails">
+            <summary>Cloudinary Settings (Admin)</summary>
+            <div class="cld-grid">
+              <div class="fg">
+                <label>Cloud name</label>
+                <input type="text" id="cldCloudName" placeholder="e.g. damqtravel">
+              </div>
+              <div class="fg">
+                <label>API Key</label>
+                <input type="text" id="cldApiKey" placeholder="e.g. 1234567890">
+              </div>
+              <div class="fg">
+                <label>API Secret</label>
+                <input type="password" id="cldApiSecret" placeholder="••••••••">
+              </div>
+              <div class="fg">
+                <label>Monthly video limit (GB)</label>
+                <input type="number" id="cldMonthlyLimitGb" min="0" step="0.1" placeholder="e.g. 2">
+              </div>
+              <div class="fg">
+                <label>Monthly uploads limit</label>
+                <input type="number" id="cldMonthlyLimitCount" min="0" step="1" placeholder="e.g. 20">
+              </div>
+              <div class="fg full">
+                <div class="cld-actions">
+                  <button type="button" class="btn btn-ghost" onclick="saveCloudinarySettings()">Save settings</button>
+                  <button type="button" class="btn btn-ghost" onclick="clearCloudinarySettings()">Clear</button>
+                  <button type="button" class="btn btn-ghost" onclick="refreshCloudinaryUsage()">Refresh usage</button>
+                </div>
+                <div class="upload-hint">API Secret is stored only in this browser (localStorage). Do not publish this admin page publicly.</div>
+              </div>
+            </div>
+          </details>
         </div>
       </form>
     </div>
@@ -1457,6 +1745,9 @@
   import {
     getDatabase, ref, get, set, push, update, remove, child, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  import {
+    getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   /* --- Config --- */
   const app = initializeApp({
@@ -1470,6 +1761,133 @@
     measurementId:     "G-3TFFBQWHNM"
   });
   const db = getDatabase(app);
+  const auth = getAuth(app);
+
+  let _moduleReadyResolve;
+  const _moduleReady = new Promise((resolve) => { _moduleReadyResolve = resolve; });
+
+  // ===== Auth gate (Admin only) =====
+  // Option A (simple): allow specific emails.
+  // Option B (recommended): set a custom claim { admin: true } and rely on that.
+  const ADMIN_EMAILS = new Set([
+    "admin@damq.ge"
+  ]);
+
+  const authOverlay = document.getElementById('authOverlay');
+  const authForm = document.getElementById('authForm');
+  const authEmail = document.getElementById('authEmail');
+  const authPassword = document.getElementById('authPassword');
+  const authError = document.getElementById('authError');
+  const authLoginBtn = document.getElementById('authLoginBtn');
+  const btnLogout = document.getElementById('btnLogout');
+
+  let _authMsg = '';
+  function setAuthError(msg) {
+    if (authError) authError.textContent = msg || '';
+  }
+  function showAuthOverlay(msg) {
+    if (msg !== undefined) _authMsg = msg || '';
+    if (authOverlay) authOverlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setAuthError(_authMsg);
+    if (btnLogout) btnLogout.style.display = 'none';
+  }
+  function hideAuthOverlay() {
+    _authMsg = '';
+    if (authOverlay) authOverlay.style.display = 'none';
+    document.body.style.overflow = '';
+    setAuthError('');
+  }
+
+  function setUserUI(user) {
+    const email = (user?.email || '').trim();
+    const uEmail = document.getElementById('uEmail');
+    const uAvatar = document.getElementById('uAvatar');
+    if (uEmail) uEmail.textContent = email || '—';
+    if (uAvatar) {
+      const letter = (email || 'A').charAt(0).toUpperCase();
+      uAvatar.textContent = letter || 'A';
+    }
+    if (btnLogout) btnLogout.style.display = user ? 'flex' : 'none';
+  }
+
+  async function userIsAdmin(user) {
+    if (!user) return false;
+
+    const email = (user.email || '').toLowerCase().trim();
+    if (email && ADMIN_EMAILS.has(email)) return true;
+
+    try {
+      const token = await user.getIdTokenResult();
+      return token?.claims?.admin === true;
+    } catch {
+      return false;
+    }
+  }
+
+  let _started = false;
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      _started = false;
+      setUserUI(null);
+      showAuthOverlay('');
+      return;
+    }
+
+    const ok = await userIsAdmin(user);
+    if (!ok) {
+      setUserUI(null);
+      showAuthOverlay('No admin access for this account.');
+      await signOut(auth);
+      return;
+    }
+
+    setUserUI(user);
+    hideAuthOverlay();
+
+    if (!_started) {
+      _started = true;
+      await _moduleReady;
+      loadDashboard();
+    }
+  });
+
+  authForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setAuthError('');
+    const email = authEmail?.value?.trim() || '';
+    const password = authPassword?.value || '';
+    if (!email || !password) {
+      setAuthError('Enter email and password.');
+      return;
+    }
+
+    if (authLoginBtn) authLoginBtn.disabled = true;
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      const code = err?.code || '';
+      const map = {
+        'auth/user-not-found': 'User not found.',
+        'auth/wrong-password': 'Wrong password.',
+        'auth/invalid-email': 'Invalid email.',
+        'auth/too-many-requests': 'Too many attempts. Try later.',
+        'auth/invalid-credential': 'Invalid email or password.',
+        'auth/operation-not-allowed': 'Enable Email/Password in Firebase Console.',
+      };
+      setAuthError(map[code] || err?.message || 'Sign-in failed.');
+    } finally {
+      if (authLoginBtn) authLoginBtn.disabled = false;
+    }
+  });
+
+  btnLogout?.addEventListener('click', async () => {
+    await signOut(auth);
+  });
+
+  // Show the overlay immediately; auth state will hide it if already signed in.
+  showAuthOverlay('');
 
   /* --- RTDB helpers --- */
   async function rtdbGetAll(path) {
@@ -1697,7 +2115,7 @@
             ${t.featured && t.type === 'multi' ? `<br><span class="badge b-gold" style="font-size:0.65rem;margin-top:4px;">რეკომენდირებული</span>` : ''}
           </div>
         </td>
-        <td data-label="Тип"><span class="badge b-blue">${TYPE_LBL[t.type] || t.type || '—'}</span></td>
+        <td data-label="Тип"><span class="badge b-blue">${TYPE_LBL[t.type] || t.type_ka || t.type_ru || t.type_en || t.type || '—'}</span></td>
         <td data-label="Цена"><strong>$${t.price || '—'}</strong></td>
         <td data-label="Длит.">${t.duration || '—'}</td>
         <td data-label="Группа">${t.group || '—'}</td>
@@ -2036,12 +2454,40 @@
   }
 
   function setSelectedRegions(regions) {
-    const arr = toArray(regions);
-    document.querySelectorAll('#regionGrid .region-chip').forEach(c => {
-      c.classList.toggle('selected', arr.includes(c.dataset.region));
-    });
+  const arr = toArray(regions);
+  document.querySelectorAll('#regionGrid .region-chip').forEach(c => {
+  c.classList.toggle('selected', arr.includes(c.dataset.region));
+  });
   }
 
+  // Tour type select handler - updates hidden inputs when select changes
+  function setupTypeSelect(selectId, kaId, ruId, enId) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    select.addEventListener('change', function() {
+      const option = this.options[this.selectedIndex];
+      document.getElementById(kaId).value = option.dataset.ka || '';
+      document.getElementById(ruId).value = option.dataset.ru || '';
+      document.getElementById(enId).value = option.dataset.en || '';
+    });
+  }
+  setupTypeSelect('dtTypeSelect', 'dtType_ka', 'dtType_ru', 'dtType_en');
+  
+  // Function to set type select value based on existing type_ka value
+  function setTypeSelectValue(selectId, type_ka) {
+    const select = document.getElementById(selectId);
+    if (!select || !type_ka) { select.value = ''; return; }
+    // Find option that matches the type_ka
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].dataset.ka === type_ka) {
+        select.value = select.options[i].value;
+        return;
+      }
+    }
+    // If not found, reset to empty
+    select.value = '';
+  }
+  
   // Convert file to base64 string (without data: prefix)
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -2175,7 +2621,7 @@
           </div>
         </td>
         <td data-label="რეგიონი">${regions.map(r => `<span class="badge b-gold" style="margin:1px;">${r}</span>`).join(' ') || '—'}</td>
-        <td data-label="ტიპი"><span class="badge b-blue">${t.type || '—'}</span></td>
+        <td data-label="ტიპი"><span class="badge b-blue">${t.type_ka || t.type || t.type_ru || t.type_en || '—'}</span></td>
         <td data-label="ფასი"><strong>$${t.price || '—'}</strong></td>
         <td data-label="ხანგრძლივობა">${dur.join(', ') || '—'}</td>
         <td data-label="ჯგუფი">${t.minGroup || '?'} – ${t.maxGroup || '?'} პერს.</td>
@@ -2203,9 +2649,11 @@
   window.openDayTourModal = function() {
     document.getElementById('dayTourModalTitle').textContent = 'ტურის დამატება';
     document.getElementById('dayTourForm').reset();
+    clearAllFieldErrors(document.getElementById('dayTourModalWrap'));
     document.getElementById('dtDocId').value = '';
     document.getElementById('dtDays').value = '1';
     document.getElementById('dtNights').value = '0';
+    document.getElementById('dtTypeSelect').value = '';
     dtUploadedImages = [];
     renderUploadedPhotos();
     setSelectedRegions([]);
@@ -2227,6 +2675,7 @@
       }
     }
     
+    clearAllFieldErrors(document.getElementById('dayTourModalWrap'));
     const t = allDayTours.find(x => x.id === id);
     if (!t) return;
     document.getElementById('dayTourModalTitle').textContent = 'ტურის რედაქტირება';
@@ -2243,6 +2692,7 @@
     document.getElementById('dtType_ka').value = t.type_ka || t.type || '';
     document.getElementById('dtType_ru').value = t.type_ru || '';
     document.getElementById('dtType_en').value = t.type_en || '';
+    setTypeSelectValue('dtTypeSelect', t.type_ka || t.type || '');
     document.getElementById('dtPrice').value   = t.price || '';
     document.getElementById('dtDays').value    = t.days ?? 1;
     document.getElementById('dtNights').value  = t.nights ?? 0;
@@ -2254,7 +2704,52 @@
     document.getElementById('dayTourModalWrap').classList.add('open');
   };
 
+  function clearAllFieldErrors(scope) {
+    const root = scope || document;
+    root.querySelectorAll('.field-error').forEach(el => {
+      el.classList.remove('field-error');
+      el.removeAttribute('aria-invalid');
+    });
+    root.querySelectorAll('.field-error-msg').forEach(el => el.remove());
+  }
+
+  function setFieldError(input, message) {
+    if (!input) return;
+    input.classList.add('field-error');
+    input.setAttribute('aria-invalid', 'true');
+
+    const panel = input.closest('.lang-panel') || input.parentElement;
+    if (panel) {
+      let msg = panel.querySelector('.field-error-msg');
+      if (!msg) {
+        msg = document.createElement('div');
+        msg.className = 'field-error-msg';
+        input.insertAdjacentElement('afterend', msg);
+      }
+      msg.textContent = message;
+    }
+
+    input.addEventListener('input', () => {
+      input.classList.remove('field-error');
+      input.removeAttribute('aria-invalid');
+      const p = input.closest('.lang-panel') || input.parentElement;
+      const msg = p?.querySelector('.field-error-msg');
+      if (msg) msg.remove();
+    }, { once: true });
+  }
+
+  function showMissingLangField({ group, lang, inputId, message }) {
+    const input = document.getElementById(inputId);
+    if (input) {
+      setFieldError(input, message);
+      try { input.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { input.scrollIntoView(true); }
+      input.focus();
+    }
+    toast(message, 'err');
+  }
+
   window.saveDayTour = async function() {
+    clearAllFieldErrors(document.getElementById('dayTourModalWrap'));
     const docId = document.getElementById('dtDocId').value;
     const name_ka = document.getElementById('dtName_ka').value.trim();
     const name_ru = document.getElementById('dtName_ru').value.trim();
@@ -2262,7 +2757,10 @@
     const price = Number(document.getElementById('dtPrice').value);
     const minGroup = Number(document.getElementById('dtMinGroup').value);
     const maxGroup = Number(document.getElementById('dtMaxGroup').value);
-    if (!name_ka || !price || !minGroup || !maxGroup) {
+    if (!name_ka) return showMissingLangField({ group:'dtNameLang', lang:'ka', inputId:'dtName_ka', message:'შეავსეთ ტურის სახელი ქართულად' });
+    if (!name_ru) return showMissingLangField({ group:'dtNameLang', lang:'ru', inputId:'dtName_ru', message:'შეავსეთ ტურის სახელი რუსულად' });
+    if (!name_en) return showMissingLangField({ group:'dtNameLang', lang:'en', inputId:'dtName_en', message:'შეავსეთ ტურის სახელი ინგლისურად' });
+    if (!price || !minGroup || !maxGroup) {
       toast('შეავსეთ ყველა სავალდებულო ველი', 'err');
       return;
     }
@@ -2342,12 +2840,15 @@
   }
 
   function setMdtSelectedRegions(regions) {
-    const arr = toArray(regions);
-    document.querySelectorAll('#mdtRegionGrid .region-chip').forEach(c => {
-      c.classList.toggle('selected', arr.includes(c.dataset.region));
-    });
+  const arr = toArray(regions);
+  document.querySelectorAll('#mdtRegionGrid .region-chip').forEach(c => {
+  c.classList.toggle('selected', arr.includes(c.dataset.region));
+  });
   }
 
+  // Setup type select for multi-day tours
+  setupTypeSelect('mdtTypeSelect', 'mdtType_ka', 'mdtType_ru', 'mdtType_en');
+  
   function renderMdtUploadedPhotos() {
     const container = document.getElementById('mdtUploadedPhotos');
     container.innerHTML = mdtUploadedImages.map((img, i) => `
@@ -2438,7 +2939,7 @@
           </div>
         </td>
         <td data-label="რეგიონი">${regions.map(r => `<span class="badge b-gold" style="margin:1px;">${r}</span>`).join(' ') || '—'}</td>
-        <td data-label="ტიპი"><span class="badge b-blue">${t.type || '—'}</span></td>
+        <td data-label="ტიპი"><span class="badge b-blue">${t.type_ka || t.type || t.type_ru || t.type_en || '—'}</span></td>
         <td data-label="ფასი"><strong>$${t.price || '—'}</strong></td>
         <td data-label="ხანგრძლივობა">${dur.join(', ') || '—'}</td>
         <td data-label="ჯგუფი">${t.minGroup || '?'} – ${t.maxGroup || '?'} პერს.</td>
@@ -2463,16 +2964,18 @@
   });
 
   // Open / close modal
-  window.openMultiDayTourModal = function() {
-    document.getElementById('multiDayTourModalTitle').textContent = 'ტურის დამატება';
-    document.getElementById('multiDayTourForm').reset();
-    document.getElementById('mdtDocId').value = '';
-    document.getElementById('mdtDays').value = '3';
-    document.getElementById('mdtNights').value = '2';
-    mdtUploadedImages = [];
-    renderMdtUploadedPhotos();
-    setMdtSelectedRegions([]);
-    document.getElementById('multiDayTourModalWrap').classList.add('open');
+window.openMultiDayTourModal = function() {
+  document.getElementById('multiDayTourModalTitle').textContent = 'ტურის დამატება';
+  document.getElementById('multiDayTourForm').reset();
+  clearAllFieldErrors(document.getElementById('multiDayTourModalWrap'));
+  document.getElementById('mdtDocId').value = '';
+  document.getElementById('mdtDays').value = '3';
+  document.getElementById('mdtNights').value = '2';
+  document.getElementById('mdtTypeSelect').value = '';
+  mdtUploadedImages = [];
+  renderMdtUploadedPhotos();
+  setMdtSelectedRegions([]);
+  document.getElementById('multiDayTourModalWrap').classList.add('open');
   };
 
   window.closeMultiDayTourModal = function() {
@@ -2482,6 +2985,7 @@
   window.editMultiDayTour = function(id) {
     const t = allMultiDayTours.find(x => x.id === id);
     if (!t) return;
+    clearAllFieldErrors(document.getElementById('multiDayTourModalWrap'));
     document.getElementById('multiDayTourModalTitle').textContent = 'ტურის რედაქტირება';
     document.getElementById('mdtDocId').value   = t.id;
     document.getElementById('mdtName_ka').value = t.name_ka || t.name || '';
@@ -2496,6 +3000,7 @@
     document.getElementById('mdtType_ka').value  = t.type_ka || t.type || '';
     document.getElementById('mdtType_ru').value  = t.type_ru || '';
     document.getElementById('mdtType_en').value  = t.type_en || '';
+    setTypeSelectValue('mdtTypeSelect', t.type_ka || t.type || '');
     document.getElementById('mdtPrice').value    = t.price || '';
     document.getElementById('mdtDays').value    = t.days ?? 3;
     document.getElementById('mdtNights').value  = t.nights ?? 2;
@@ -2508,6 +3013,7 @@
   };
 
   window.saveMultiDayTour = async function() {
+    clearAllFieldErrors(document.getElementById('multiDayTourModalWrap'));
     const docId = document.getElementById('mdtDocId').value;
     const name_ka = document.getElementById('mdtName_ka').value.trim();
     const name_ru = document.getElementById('mdtName_ru').value.trim();
@@ -2515,7 +3021,10 @@
     const price = Number(document.getElementById('mdtPrice').value);
     const minGroup = Number(document.getElementById('mdtMinGroup').value);
     const maxGroup = Number(document.getElementById('mdtMaxGroup').value);
-    if (!name_ka || !price || !minGroup || !maxGroup) {
+    if (!name_ka) return showMissingLangField({ group:'mdtNameLang', lang:'ka', inputId:'mdtName_ka', message:'შეავსეთ ტურის სახელი ქართულად' });
+    if (!name_ru) return showMissingLangField({ group:'mdtNameLang', lang:'ru', inputId:'mdtName_ru', message:'შეავსეთ ტურის სახელი რუსულად' });
+    if (!name_en) return showMissingLangField({ group:'mdtNameLang', lang:'en', inputId:'mdtName_en', message:'შეავსეთ ტურის სახელი ინგლისურად' });
+    if (!price || !minGroup || !maxGroup) {
       toast('შეავსეთ ყველა სავალდებულო ველი', 'err');
       return;
     }
@@ -2580,10 +3089,245 @@
   /* ============== BLOGS ============== */
   let allBlogs = [];
   let blogUploadedImages = []; // array of { url, deleteUrl }
+  let blogUploadedVideo = null; // { url, publicId, bytes, duration, format, createdAt }
+  let cloudinaryUsageSnapshot = null; // { fetchedAt, plan, credits, error }
+
+  const CLD_SETTINGS_KEY = 'damq_cloudinary_settings_v1';
+  const CLD_USAGE_BASE_PATH = 'adminUsage/cloudinaryVideo';
+  const CLD_DEFAULT_FOLDER = 'damq/blog/videos';
+
+  function safeJsonParse(str) {
+    try { return JSON.parse(str); } catch { return null; }
+  }
+
+  function getCloudinarySettings() {
+    const raw = localStorage.getItem(CLD_SETTINGS_KEY);
+    const parsed = raw ? safeJsonParse(raw) : null;
+    return {
+      cloudName: parsed?.cloudName || '',
+      apiKey: parsed?.apiKey || '',
+      apiSecret: parsed?.apiSecret || '',
+      monthlyLimitBytes: Number.isFinite(parsed?.monthlyLimitBytes) ? parsed.monthlyLimitBytes : 0,
+      monthlyLimitCount: Number.isFinite(parsed?.monthlyLimitCount) ? parsed.monthlyLimitCount : 0
+    };
+  }
+
+  function setCloudinarySettings(next) {
+    localStorage.setItem(CLD_SETTINGS_KEY, JSON.stringify({
+      cloudName: next.cloudName || '',
+      apiKey: next.apiKey || '',
+      apiSecret: next.apiSecret || '',
+      monthlyLimitBytes: Number(next.monthlyLimitBytes) || 0,
+      monthlyLimitCount: Number(next.monthlyLimitCount) || 0
+    }));
+  }
+
+  function formatBytes(bytes) {
+    const n = Number(bytes) || 0;
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let value = Math.max(0, n);
+    let i = 0;
+    while (value >= 1024 && i < units.length - 1) { value /= 1024; i++; }
+    const digits = i === 0 ? 0 : 1;
+    return `${value.toFixed(digits)} ${units[i]}`;
+  }
+
+  function currentMonthKey() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  async function rtdbGetValue(path) {
+    const snap = await get(ref(db, path));
+    return snap.exists() ? snap.val() : null;
+  }
+
+  async function getMonthlyVideoUsage(monthKey = currentMonthKey()) {
+    const val = await rtdbGetValue(`${CLD_USAGE_BASE_PATH}/${monthKey}`);
+    return {
+      bytes: Number(val?.bytes) || 0,
+      count: Number(val?.count) || 0
+    };
+  }
+
+  async function addMonthlyVideoUsage(bytesToAdd, monthKey = currentMonthKey()) {
+    const cur = await getMonthlyVideoUsage(monthKey);
+    const next = {
+      bytes: cur.bytes + (Number(bytesToAdd) || 0),
+      count: cur.count + 1,
+      updatedAt: Date.now()
+    };
+    await set(ref(db, `${CLD_USAGE_BASE_PATH}/${monthKey}`), next);
+    return next;
+  }
+
+  function writeCloudinarySettingsToUi(settings) {
+    const cloud = document.getElementById('cldCloudName');
+    const key = document.getElementById('cldApiKey');
+    const sec = document.getElementById('cldApiSecret');
+    const gb = document.getElementById('cldMonthlyLimitGb');
+    const cnt = document.getElementById('cldMonthlyLimitCount');
+    if (cloud) cloud.value = settings.cloudName || '';
+    if (key) key.value = settings.apiKey || '';
+    if (sec) sec.value = settings.apiSecret || '';
+    if (gb) gb.value = settings.monthlyLimitBytes ? (settings.monthlyLimitBytes / (1024 ** 3)).toFixed(1) : '';
+    if (cnt) cnt.value = settings.monthlyLimitCount ? String(settings.monthlyLimitCount) : '';
+  }
+
+  function readCloudinarySettingsFromUi() {
+    const cloudName = (document.getElementById('cldCloudName')?.value || '').trim();
+    const apiKey = (document.getElementById('cldApiKey')?.value || '').trim();
+    const apiSecret = (document.getElementById('cldApiSecret')?.value || '').trim();
+    const monthlyLimitGb = parseFloat((document.getElementById('cldMonthlyLimitGb')?.value || '').trim());
+    const monthlyLimitCount = parseInt((document.getElementById('cldMonthlyLimitCount')?.value || '').trim(), 10);
+    const monthlyLimitBytes = Number.isFinite(monthlyLimitGb) && monthlyLimitGb > 0 ? Math.round(monthlyLimitGb * (1024 ** 3)) : 0;
+    return {
+      cloudName,
+      apiKey,
+      apiSecret,
+      monthlyLimitBytes,
+      monthlyLimitCount: Number.isFinite(monthlyLimitCount) && monthlyLimitCount > 0 ? monthlyLimitCount : 0
+    };
+  }
+
+  // Cloudinary usage (Admin API). Note: may fail in the browser due to CORS.
+  function extractCloudinaryMetric(raw, key) {
+    const v = raw?.[key];
+    if (!v || typeof v !== 'object') return null;
+    const usage = Number(v.usage ?? v.used ?? v.value);
+    const limit = Number(v.limit ?? v.max ?? v.allowed);
+    if (!Number.isFinite(usage) || !Number.isFinite(limit) || limit <= 0) return null;
+    return { usage, limit };
+  }
+
+  function parseCloudinaryUsage(raw) {
+    const credits =
+      extractCloudinaryMetric(raw, 'credits') ||
+      (Number.isFinite(Number(raw?.credits_usage)) && Number.isFinite(Number(raw?.credits_limit))
+        ? { usage: Number(raw.credits_usage), limit: Number(raw.credits_limit) }
+        : null);
+    const bandwidth = extractCloudinaryMetric(raw, 'bandwidth');
+    const storage = extractCloudinaryMetric(raw, 'storage');
+
+    return {
+      plan: raw?.plan || '',
+      credits,
+      bandwidth,
+      storage
+    };
+  }
+
+  async function fetchCloudinaryUsage(settings) {
+    const cloudName = (settings.cloudName || '').trim();
+    const apiKey = (settings.apiKey || '').trim();
+    const apiSecret = (settings.apiSecret || '').trim();
+
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/usage`;
+    const auth = btoa(`${apiKey}:${apiSecret}`);
+
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: { Authorization: `Basic ${auth}` },
+      cache: 'no-store'
+    });
+
+    if (!res.ok) throw new Error(`Cloudinary usage failed (${res.status})`);
+    return await res.json();
+  }
+
+  async function refreshCloudinaryUsageInternal() {
+    const settings = getCloudinarySettings();
+    if (!settings.cloudName || !settings.apiKey || !settings.apiSecret) {
+      cloudinaryUsageSnapshot = null;
+      return;
+    }
+    try {
+      const raw = await fetchCloudinaryUsage(settings);
+      cloudinaryUsageSnapshot = { fetchedAt: Date.now(), ...parseCloudinaryUsage(raw) };
+    } catch (err) {
+      cloudinaryUsageSnapshot = { fetchedAt: Date.now(), error: err?.message || String(err) };
+    }
+  }
+
+  window.refreshCloudinaryUsage = async function() {
+    await refreshCloudinaryUsageInternal();
+    updateBlogVideoQuotaLine().catch(() => {});
+    if (cloudinaryUsageSnapshot?.error) toast('Cloudinary usage: ' + cloudinaryUsageSnapshot.error, 'err');
+    else toast('Cloudinary usage updated');
+  };
+
+  async function updateBlogVideoQuotaLine() {
+    const el = document.getElementById('blogVideoQuotaLine');
+    if (!el) return;
+
+    const settings = getCloudinarySettings();
+    const usage = await getMonthlyVideoUsage();
+
+    const parts = [];
+
+    const credits = cloudinaryUsageSnapshot?.credits;
+    if (credits && Number.isFinite(credits.usage) && Number.isFinite(credits.limit) && credits.limit > 0) {
+      const left = Math.max(0, credits.limit - credits.usage);
+      parts.push(`Cloudinary credits: ${credits.usage} / ${credits.limit} (${left} left)`);
+    }
+
+    const bandwidth = cloudinaryUsageSnapshot?.bandwidth;
+    if (bandwidth && Number.isFinite(bandwidth.usage) && Number.isFinite(bandwidth.limit) && bandwidth.limit > 0) {
+      const left = Math.max(0, bandwidth.limit - bandwidth.usage);
+      parts.push(`Cloudinary bandwidth: ${formatBytes(bandwidth.usage)} / ${formatBytes(bandwidth.limit)} (${formatBytes(left)} left)`);
+    }
+
+    const storage = cloudinaryUsageSnapshot?.storage;
+    if (storage && Number.isFinite(storage.usage) && Number.isFinite(storage.limit) && storage.limit > 0) {
+      const left = Math.max(0, storage.limit - storage.usage);
+      parts.push(`Cloudinary storage: ${formatBytes(storage.usage)} / ${formatBytes(storage.limit)} (${formatBytes(left)} left)`);
+    }
+
+    if (settings.monthlyLimitBytes > 0) {
+      const left = Math.max(0, settings.monthlyLimitBytes - usage.bytes);
+      parts.push(`Uploads size: ${formatBytes(usage.bytes)} / ${formatBytes(settings.monthlyLimitBytes)} (${formatBytes(left)} left)`);
+    }
+    if (settings.monthlyLimitCount > 0) {
+      const left = Math.max(0, settings.monthlyLimitCount - usage.count);
+      parts.push(`Uploads: ${usage.count} / ${settings.monthlyLimitCount} (${left} left)`);
+    }
+
+    if (parts.length === 0) {
+      if (cloudinaryUsageSnapshot?.error) {
+        el.textContent = 'Cloudinary usage unavailable (CORS?). Set manual limits in Cloudinary Settings.';
+      } else {
+        el.innerHTML = `Monthly limit not set. <strong>Set it in Cloudinary Settings</strong>.`;
+      }
+      return;
+    }
+
+    el.innerHTML = `This month: <strong>${parts.join(' &bull; ')}</strong>`;
+  }
+
+  window.saveCloudinarySettings = async function() {
+    const next = readCloudinarySettingsFromUi();
+    setCloudinarySettings(next);
+    toast('Cloudinary settings saved');
+    await refreshCloudinaryUsageInternal();
+    updateBlogVideoQuotaLine().catch(() => {});
+  };
+
+  window.clearCloudinarySettings = async function() {
+    localStorage.removeItem(CLD_SETTINGS_KEY);
+    cloudinaryUsageSnapshot = null;
+    writeCloudinarySettingsToUi(getCloudinarySettings());
+    toast('Cloudinary settings cleared');
+    updateBlogVideoQuotaLine().catch(() => {});
+  };
 
   // File input handler for blogs
   const blogPhotoInput = document.getElementById('blogPhotoInput');
   const blogUploadZone = document.getElementById('blogUploadZone');
+
+  // Hide blog category field (not used)
+  const blogCategory = document.getElementById('blogCategory');
+  const blogCategoryWrap = blogCategory?.closest('.fg');
+  if (blogCategoryWrap) blogCategoryWrap.style.display = 'none';
 
   blogPhotoInput.addEventListener('change', async (e) => {
     const files = Array.from(e.target.files);
@@ -2623,6 +3367,247 @@
     blogUploadedImages.splice(idx, 1);
     renderBlogUploadedPhotos();
   };
+
+  function renderBlogUploadedVideo() {
+    const container = document.getElementById('blogUploadedVideos');
+    if (!container) return;
+    if (!blogUploadedVideo || !blogUploadedVideo.url) {
+      container.innerHTML = '';
+      return;
+    }
+    container.innerHTML = `
+      <div class="uploaded-video">
+        <video src="${blogUploadedVideo.url}" controls playsinline preload="metadata"></video>
+        <button type="button" class="remove-photo" onclick="removeBlogVideo()">&times;</button>
+      </div>
+      <div class="upload-hint">${blogUploadedVideo.bytes ? formatBytes(blogUploadedVideo.bytes) : ''}${blogUploadedVideo.duration ? ` &bull; ${Math.round(blogUploadedVideo.duration)}s` : ''}</div>
+    `;
+  }
+
+  window.removeBlogVideo = function() {
+    blogUploadedVideo = null;
+    renderBlogUploadedVideo();
+    toast('Video removed');
+  };
+
+  function sha1HexFallback(message) {
+    function rotl(n, s) { return (n << s) | (n >>> (32 - s)); }
+    function toHex(val) {
+      const hex = (val >>> 0).toString(16);
+      return '00000000'.slice(hex.length) + hex;
+    }
+
+    const msg = unescape(encodeURIComponent(String(message)));
+    const msgLen = msg.length;
+    const words = [];
+
+    for (let i = 0; i < msgLen; i++) {
+      words[i >> 2] |= msg.charCodeAt(i) << (24 - (i % 4) * 8);
+    }
+    words[msgLen >> 2] |= 0x80 << (24 - (msgLen % 4) * 8);
+    words[((msgLen + 8) >> 6) * 16 + 15] = msgLen * 8;
+
+    const w = new Array(80);
+    let a = 0x67452301;
+    let b = 0xEFCDAB89;
+    let c = 0x98BADCFE;
+    let d = 0x10325476;
+    let e = 0xC3D2E1F0;
+
+    for (let i = 0; i < words.length; i += 16) {
+      const oldA = a, oldB = b, oldC = c, oldD = d, oldE = e;
+      for (let j = 0; j < 80; j++) {
+        w[j] = j < 16 ? (words[i + j] | 0) : rotl(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1);
+
+        let t;
+        if (j < 20) t = (rotl(a, 5) + ((b & c) | (~b & d)) + e + w[j] + 0x5A827999) | 0;
+        else if (j < 40) t = (rotl(a, 5) + (b ^ c ^ d) + e + w[j] + 0x6ED9EBA1) | 0;
+        else if (j < 60) t = (rotl(a, 5) + ((b & c) | (b & d) | (c & d)) + e + w[j] + 0x8F1BBCDC) | 0;
+        else t = (rotl(a, 5) + (b ^ c ^ d) + e + w[j] + 0xCA62C1D6) | 0;
+
+        e = d;
+        d = c;
+        c = rotl(b, 30);
+        b = a;
+        a = t;
+      }
+      a = (a + oldA) | 0;
+      b = (b + oldB) | 0;
+      c = (c + oldC) | 0;
+      d = (d + oldD) | 0;
+      e = (e + oldE) | 0;
+    }
+
+    return toHex(a) + toHex(b) + toHex(c) + toHex(d) + toHex(e);
+  }
+
+  async function sha1Hex(message) {
+    if (window.crypto?.subtle) {
+      try {
+        const data = new TextEncoder().encode(String(message));
+        const hash = await window.crypto.subtle.digest('SHA-1', data);
+        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+      } catch {
+        // fall through
+      }
+    }
+    return sha1HexFallback(message);
+  }
+
+  async function cloudinarySignature(params, apiSecret) {
+    const base = Object.keys(params)
+      .sort()
+      .map(k => `${k}=${params[k]}`)
+      .join('&');
+    return await sha1Hex(base + apiSecret);
+  }
+
+  function xhrPostFormData(url, formData, onProgress) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.responseType = 'json';
+
+      xhr.upload.onprogress = (e) => {
+        if (onProgress && e.lengthComputable) onProgress(e.loaded, e.total);
+      };
+
+      xhr.onload = () => {
+        const ok = xhr.status >= 200 && xhr.status < 300;
+        const body = xhr.response || safeJsonParse(xhr.responseText) || null;
+        if (!ok) {
+          const msg = body?.error?.message || body?.message || `Upload failed (${xhr.status})`;
+          reject(new Error(msg));
+          return;
+        }
+        resolve(body);
+      };
+
+      xhr.onerror = () => reject(new Error('Network error'));
+      xhr.send(formData);
+    });
+  }
+
+  async function uploadVideoToCloudinary(file, settings, onProgress) {
+    const cloudName = (settings.cloudName || '').trim();
+    const apiKey = (settings.apiKey || '').trim();
+    const apiSecret = (settings.apiSecret || '').trim();
+
+    const timestamp = Math.floor(Date.now() / 1000);
+    const paramsToSign = { folder: CLD_DEFAULT_FOLDER, timestamp };
+    const signature = await cloudinarySignature(paramsToSign, apiSecret);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('api_key', apiKey);
+    formData.append('timestamp', String(timestamp));
+    formData.append('folder', CLD_DEFAULT_FOLDER);
+    formData.append('signature', signature);
+
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
+    return await xhrPostFormData(url, formData, onProgress);
+  }
+
+  const blogVideoInput = document.getElementById('blogVideoInput');
+  const blogVideoUploadZone = document.getElementById('blogVideoUploadZone');
+
+  if (blogVideoInput) {
+    blogVideoInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const progress = document.getElementById('blogVideoProgress');
+      const settingsDetails = document.getElementById('cldSettingsDetails');
+
+      const settings = getCloudinarySettings();
+      if (!settings.cloudName || !settings.apiKey || !settings.apiSecret) {
+        toast('Set Cloudinary Settings first', 'err');
+        if (settingsDetails) settingsDetails.open = true;
+        blogVideoInput.value = '';
+        return;
+      }
+
+      try {
+        await refreshCloudinaryUsageInternal();
+        const credits = cloudinaryUsageSnapshot?.credits;
+        if (credits && Number.isFinite(credits.usage) && Number.isFinite(credits.limit) && credits.limit > 0 && credits.usage >= credits.limit) {
+          toast('Cloudinary monthly limit reached (credits)', 'err');
+          blogVideoInput.value = '';
+          updateBlogVideoQuotaLine().catch(() => {});
+          return;
+        }
+
+        const usage = await getMonthlyVideoUsage();
+        if (settings.monthlyLimitBytes > 0 && (usage.bytes + file.size) > settings.monthlyLimitBytes) {
+          toast('Monthly GB limit reached (video upload blocked)', 'err');
+          blogVideoInput.value = '';
+          updateBlogVideoQuotaLine().catch(() => {});
+          return;
+        }
+        if (settings.monthlyLimitCount > 0 && (usage.count + 1) > settings.monthlyLimitCount) {
+          toast('Monthly uploads limit reached (video upload blocked)', 'err');
+          blogVideoInput.value = '';
+          updateBlogVideoQuotaLine().catch(() => {});
+          return;
+        }
+
+        if (progress) {
+          progress.classList.add('active');
+          progress.textContent = 'Uploading...';
+        }
+
+        const res = await uploadVideoToCloudinary(file, settings, (loaded, total) => {
+          if (!progress || !total) return;
+          const pct = Math.round((loaded / total) * 100);
+          progress.textContent = `Uploading... ${pct}%`;
+        });
+
+        blogUploadedVideo = {
+          url: res?.secure_url || res?.url || '',
+          publicId: res?.public_id || '',
+          bytes: Number(res?.bytes) || 0,
+          duration: Number(res?.duration) || 0,
+          format: res?.format || '',
+          createdAt: res?.created_at || ''
+        };
+
+        renderBlogUploadedVideo();
+        toast('Video uploaded');
+
+        try {
+          await addMonthlyVideoUsage(blogUploadedVideo.bytes || file.size);
+          await refreshCloudinaryUsageInternal();
+          await updateBlogVideoQuotaLine();
+        } catch (quotaErr) {
+          console.warn('Quota update error:', quotaErr);
+          toast('Uploaded, but failed to update quota counter', 'err');
+        }
+      } catch (err) {
+        console.error('Cloudinary upload error:', err);
+        toast('Video upload error: ' + (err?.message || err), 'err');
+      } finally {
+        if (progress) progress.classList.remove('active');
+        blogVideoInput.value = '';
+      }
+    });
+  }
+
+  if (blogVideoUploadZone && blogVideoInput) {
+    blogVideoUploadZone.addEventListener('dragover', e => { e.preventDefault(); blogVideoUploadZone.classList.add('dragging'); });
+    blogVideoUploadZone.addEventListener('dragleave', () => blogVideoUploadZone.classList.remove('dragging'));
+    blogVideoUploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      blogVideoUploadZone.classList.remove('dragging');
+      if (e.dataTransfer?.files?.length) {
+        blogVideoInput.files = e.dataTransfer.files;
+        blogVideoInput.dispatchEvent(new Event('change'));
+      }
+    });
+  }
+
+  writeCloudinarySettingsToUi(getCloudinarySettings());
+  updateBlogVideoQuotaLine().catch(() => {});
+  refreshCloudinaryUsageInternal().then(() => updateBlogVideoQuotaLine().catch(() => {}));
 
   async function loadBlogs() {
     document.getElementById('blogsTbody').innerHTML =
@@ -2670,9 +3655,15 @@
   window.openBlogModal = function() {
     document.getElementById('blogModalTitle').textContent = 'ბლოგის დამატება';
     document.getElementById('blogForm').reset();
+    clearAllFieldErrors(document.getElementById('blogModalWrap'));
     document.getElementById('blogDocId').value = '';
     blogUploadedImages = [];
+    blogUploadedVideo = null;
     renderBlogUploadedPhotos();
+    renderBlogUploadedVideo();
+    writeCloudinarySettingsToUi(getCloudinarySettings());
+    updateBlogVideoQuotaLine().catch(() => {});
+    refreshCloudinaryUsageInternal().then(() => updateBlogVideoQuotaLine().catch(() => {}));
     document.getElementById('blogModalWrap').classList.add('open');
   };
 
@@ -2683,6 +3674,7 @@
   window.editBlog = function(id) {
     const b = allBlogs.find(x => x.id === id);
     if (!b) return;
+    clearAllFieldErrors(document.getElementById('blogModalWrap'));
     document.getElementById('blogModalTitle').textContent = 'ბლოგის რედაქტირება';
     document.getElementById('blogDocId').value = b.id;
     document.getElementById('blogTitle_ka').value = b.title_ka || b.title || '';
@@ -2691,7 +3683,6 @@
     document.getElementById('blogDesc_ka').value = b.desc_ka || b.desc || '';
     document.getElementById('blogDesc_ru').value = b.desc_ru || '';
     document.getElementById('blogDesc_en').value = b.desc_en || '';
-    document.getElementById('blogCategory').value = b.category || 'mountains';
     
     if (b.photos) {
       blogUploadedImages = toArray(b.photos).slice();
@@ -2699,6 +3690,11 @@
       blogUploadedImages = b.image ? [{ url: b.image }] : [];
     }
     renderBlogUploadedPhotos();
+    blogUploadedVideo = (b.video && typeof b.video === 'object') ? { ...b.video } : (b.videoUrl ? { url: b.videoUrl } : null);
+    renderBlogUploadedVideo();
+    writeCloudinarySettingsToUi(getCloudinarySettings());
+    updateBlogVideoQuotaLine().catch(() => {});
+    refreshCloudinaryUsageInternal().then(() => updateBlogVideoQuotaLine().catch(() => {}));
     document.getElementById('blogModalWrap').classList.add('open');
   };
 
@@ -2717,9 +3713,9 @@
       desc_ka: document.getElementById('blogDesc_ka').value.trim(),
       desc_ru: document.getElementById('blogDesc_ru').value.trim(),
       desc_en: document.getElementById('blogDesc_en').value.trim(),
-      category: document.getElementById('blogCategory').value,
       image: blogUploadedImages.length > 0 ? blogUploadedImages[0].url : '',
       photos: blogUploadedImages,
+      video: blogUploadedVideo && blogUploadedVideo.url ? blogUploadedVideo : null,
       updatedAt: now
     };
 
@@ -2774,7 +3770,7 @@
   });
 
   /* ============== INIT ============== */
-  loadDashboard();
+  _moduleReadyResolve();
 </script>
 
 </body>

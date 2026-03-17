@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Осень в Грузии | DAMQ Travel</title>
   <meta name="description" content="Осенняя Грузия - винный сезон Ртвели, золотые виноградники и теплые закаты">
+  <link rel="icon" type="image/png" href="images/logodamq.png">
+  <link rel="apple-touch-icon" href="images/logodamq.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -223,7 +225,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span>+995 591 67 41 41</span>
       </a>
-      <a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" class="btn-cta-nav" data-i18n="nav.book">Забронировать</a>
+      <a href="services.html" class="btn-cta-nav" data-i18n="nav.book">Забронировать</a>
       <button type="button" class="navbar-toggle" id="navToggle" aria-label="Toggle menu">
         <svg class="toggle-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         <svg class="toggle-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="18" y1="18" x2="6" y2="6"/></svg>
@@ -245,7 +247,7 @@
       </div>
       <div class="mobile-menu-footer">
         <a href="tel:+995591674141" class="mobile-phone">+995 591 67 41 41</a>
-        <a href="contact.html" class="btn-cta-nav mobile-cta" data-i18n="nav.book">Забронировать</a>
+        <a href="services.html" class="btn-cta-nav mobile-cta" data-i18n="nav.book">Забронировать</a>
       </div>
     </div>
   </div>
@@ -429,13 +431,7 @@
         </div>
         <div class="footer-col">
           <h4 class="footer-heading" data-i18n="footer.popular">Популярные туры</h4>
-          <ul class="footer-list">
-            <li><a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" data-i18n="footer.tour.tbilisi">Тбилиси и окрестности</a></li>
-            <li><a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" data-i18n="footer.tour.kazbegi">Казбеги и горы</a></li>
-            <li><a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" data-i18n="footer.tour.wine">Винный тур по Кахетии</a></li>
-            <li><a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" data-i18n="footer.tour.svaneti">Сванетия</a></li>
-            <li><a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" data-i18n="footer.tour.batumi">Батуми и побережье</a></li>
-          </ul>
+          <ul class="footer-list" id="footerPopularTours"></ul>
         </div>
         <div class="footer-col">
           <h4 class="footer-heading" data-i18n="footer.contacts">Контакты</h4>
@@ -453,8 +449,9 @@
       <div class="footer-bottom-inner">
         <p>&copy; 2026 <span data-i18n="footer.copyright">DAMQ Travel. Все права защищены.</span></p>
         <div class="footer-legal">
-          <a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" data-i18n="footer.privacy">Политика конфиденциальности</a>
-          <a href="https://api.whatsapp.com/send/?phone=995591674141&text&type=phone_number&app_absent=0" data-i18n="footer.terms">Условия использования</a>
+          <a href="privacy-policy.html" data-i18n="footer.privacy">Политика конфиденциальности</a>
+          <a href="terms-of-use.html" data-i18n="footer.terms">Условия использования</a>
+          <a href="admin.html" class="footer-admin" data-i18n="footer.admin">Admin</a>
         </div>
       </div>
     </div>
@@ -468,5 +465,6 @@
 
   <script src="js/translations.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/footer-tours.js"></script>
 </body>
 </html>
