@@ -1,0 +1,60 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ========================================
+    // ადმინის შემოწმების ფუნქცია
+    // ========================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // ========================================
+    // TOURS სურათები
+    // ========================================
+    match /tours/{allPaths=**} {
+      // ყველას შეუძლია წაკითხვა (საჯარო სურათები)
+      allow read: if true;
+      
+      // მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ ატვირთვა
+      // (ადმინის შემოწმება Firestore-დან ვერ ხდება Storage-ში)
+      allow write: if isAuthenticated() &&
+                      request.resource.size < 10 * 1024 * 1024 && // მაქს 10MB
+                      request.resource.contentType.matches('image/.*'); // მხოლოდ სურათები
+    }
+
+    // ========================================
+    // USER AVATARS
+    // ========================================
+    match /avatars/{userId}/{fileName} {
+      // ყველას შეუძლია წაკითხვა
+      allow read: if true;
+      
+      // მომხმარებელს შეუძლია მხოლოდ საკუთარი ავატარის ატვირთვა
+      allow write: if isAuthenticated() && 
+                      request.auth.uid == userId &&
+                      request.resource.size < 5 * 1024 * 1024 && // მაქს 5MB
+                      request.resource.contentType.matches('image/.*');
+    }
+
+    // ========================================
+    // PUBLIC ფოლდერი
+    // ========================================
+    match /public/{allPaths=**} {
+      // ყველას შეუძლია წაკითხვა
+      allow read: if true;
+      
+      // მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ ატვირთვა
+      allow write: if isAuthenticated() &&
+                      request.resource.size < 10 * 1024 * 1024;
+    }
+
+    // ========================================
+    // ყველა სხვა path - დაბლოკილია
+    // ========================================
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

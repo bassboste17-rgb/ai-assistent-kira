@@ -921,29 +921,6 @@
 </head>
 <body>
 
-<!-- Auth gate: Firebase Authentication (Email/Password) -->
-<div class="auth-overlay" id="authOverlay">
-  <div class="auth-card">
-    <div class="auth-title">Admin Sign In</div>
-    <div class="auth-sub">Sign in with an admin account to continue.</div>
-    <form id="authForm" class="auth-actions">
-      <div class="auth-field">
-        <label for="authEmail">Email</label>
-        <input class="auth-input" id="authEmail" type="email" autocomplete="username" required>
-      </div>
-      <div class="auth-field">
-        <label for="authPassword">Password</label>
-        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" required>
-      </div>
-      <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
-      <button class="btn btn-dark" id="authLoginBtn" type="submit"><span>Sign in</span></button>
-      <div class="auth-note">
-        If sign-in fails with <code>auth/operation-not-allowed</code>, enable <b>Email/Password</b> in Firebase Console → Authentication → Sign-in method.
-      </div>
-    </form>
-  </div>
-</div>
-
 <div class="app">
 
   <!-- =========== SIDEBAR =========== -->
@@ -1538,7 +1515,7 @@
             <button type="button" class="region-chip" data-region="მცხეთა-მთიანეთი">მცხეთა-მთიანეთი</button>
             <button type="button" class="region-chip" data-region="შიდა ქართლი">შიდა ქართლი</button>
             <button type="button" class="region-chip" data-region="ქვემო ქართლი">ქვემო ქართლი</button>
-            <button type="button" class="region-chip" data-region="სამცხე-ჯავახეთი">სამცხე-ჯავახეთი</button>
+            <button type="button" class="region-chip" data-region="სამცხე-ჯავახეთი">სამცხე-ჯავ��ხეთი</button>
           </div>
         </div>
 
@@ -1746,7 +1723,7 @@
     getDatabase, ref, get, set, push, update, remove, child, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
   import {
-    getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut
+    getAuth, onAuthStateChanged, signOut
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   /* --- Config --- */
@@ -1773,31 +1750,7 @@
     "admin@damq.ge"
   ]);
 
-  const authOverlay = document.getElementById('authOverlay');
-  const authForm = document.getElementById('authForm');
-  const authEmail = document.getElementById('authEmail');
-  const authPassword = document.getElementById('authPassword');
-  const authError = document.getElementById('authError');
-  const authLoginBtn = document.getElementById('authLoginBtn');
   const btnLogout = document.getElementById('btnLogout');
-
-  let _authMsg = '';
-  function setAuthError(msg) {
-    if (authError) authError.textContent = msg || '';
-  }
-  function showAuthOverlay(msg) {
-    if (msg !== undefined) _authMsg = msg || '';
-    if (authOverlay) authOverlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    setAuthError(_authMsg);
-    if (btnLogout) btnLogout.style.display = 'none';
-  }
-  function hideAuthOverlay() {
-    _authMsg = '';
-    if (authOverlay) authOverlay.style.display = 'none';
-    document.body.style.overflow = '';
-    setAuthError('');
-  }
 
   function setUserUI(user) {
     const email = (user?.email || '').trim();
@@ -1814,15 +1767,35 @@
   async function userIsAdmin(user) {
     if (!user) return false;
 
+    // 1. შევამოწმოთ ელ-ფოსტით
     const email = (user.email || '').toLowerCase().trim();
     if (email && ADMIN_EMAILS.has(email)) return true;
 
+    // 2. შევამოწმოთ custom claims
     try {
       const token = await user.getIdTokenResult();
-      return token?.claims?.admin === true;
-    } catch {
-      return false;
+      if (token?.claims?.admin === true) return true;
+    } catch (e) {
+      console.log("Custom claims check failed:", e);
     }
+
+    // 3. შევამოწმოთ Realtime Database-ში admins
+    try {
+      const adminSnap = await get(ref(db, `admins/${user.uid}`));
+      if (adminSnap.exists()) return true;
+    } catch (e) {
+      console.log("Admins DB check failed:", e);
+    }
+
+    // 4. შევამოწმოთ users-ში role
+    try {
+      const userSnap = await get(ref(db, `users/${user.uid}`));
+      if (userSnap.exists() && userSnap.val().role === "admin") return true;
+    } catch (e) {
+      console.log("Users DB check failed:", e);
+    }
+
+    return false;
   }
 
   let _started = false;
@@ -1831,20 +1804,21 @@
     if (!user) {
       _started = false;
       setUserUI(null);
-      showAuthOverlay('');
+      // გადამისამართება login გვერდზე
+      window.location.href = "login.html";
       return;
     }
 
     const ok = await userIsAdmin(user);
     if (!ok) {
       setUserUI(null);
-      showAuthOverlay('No admin access for this account.');
       await signOut(auth);
+      // გადამისამართება login გვერდზე
+      window.location.href = "login.html";
       return;
     }
 
     setUserUI(user);
-    hideAuthOverlay();
 
     if (!_started) {
       _started = true;
@@ -1853,41 +1827,10 @@
     }
   });
 
-  authForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    setAuthError('');
-    const email = authEmail?.value?.trim() || '';
-    const password = authPassword?.value || '';
-    if (!email || !password) {
-      setAuthError('Enter email and password.');
-      return;
-    }
-
-    if (authLoginBtn) authLoginBtn.disabled = true;
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      const code = err?.code || '';
-      const map = {
-        'auth/user-not-found': 'User not found.',
-        'auth/wrong-password': 'Wrong password.',
-        'auth/invalid-email': 'Invalid email.',
-        'auth/too-many-requests': 'Too many attempts. Try later.',
-        'auth/invalid-credential': 'Invalid email or password.',
-        'auth/operation-not-allowed': 'Enable Email/Password in Firebase Console.',
-      };
-      setAuthError(map[code] || err?.message || 'Sign-in failed.');
-    } finally {
-      if (authLoginBtn) authLoginBtn.disabled = false;
-    }
-  });
-
   btnLogout?.addEventListener('click', async () => {
     await signOut(auth);
+    window.location.href = "login.html";
   });
-
-  // Show the overlay immediately; auth state will hide it if already signed in.
-  showAuthOverlay('');
 
   /* --- RTDB helpers --- */
   async function rtdbGetAll(path) {
@@ -1952,7 +1895,7 @@
     approved:'b-green', pending:'b-gold', rejected:'b-red'
   };
   const STATUS_LBL = {
-    new:'ახალი', contacted:'დავუკავშირდით', confirmed:'დადასტურებული',
+    new:'ახალი', contacted:'დავუკავშირდით', confirmed:'დადასტურებულ���',
     completed:'დასრულებული', cancelled:'გაუქმებული',
     approved:'დამტკიცებული', pending:'მოლოდინში', rejected:'უარყოფილი'
   };
@@ -3021,9 +2964,9 @@ window.openMultiDayTourModal = function() {
     const price = Number(document.getElementById('mdtPrice').value);
     const minGroup = Number(document.getElementById('mdtMinGroup').value);
     const maxGroup = Number(document.getElementById('mdtMaxGroup').value);
-    if (!name_ka) return showMissingLangField({ group:'mdtNameLang', lang:'ka', inputId:'mdtName_ka', message:'შეავსეთ ტურის სახელი ქართულად' });
+    if (!name_ka) return showMissingLangField({ group:'mdtNameLang', lang:'ka', inputId:'mdtName_ka', message:'შეავს��თ ტურის სახელი ქართულად' });
     if (!name_ru) return showMissingLangField({ group:'mdtNameLang', lang:'ru', inputId:'mdtName_ru', message:'შეავსეთ ტურის სახელი რუსულად' });
-    if (!name_en) return showMissingLangField({ group:'mdtNameLang', lang:'en', inputId:'mdtName_en', message:'შეავსეთ ტურის სახელი ინგლისურად' });
+    if (!name_en) return showMissingLangField({ group:'mdtNameLang', lang:'en', inputId:'mdtName_en', message:'შეავსეთ ტურის სახე���ი ინგლისურად' });
     if (!price || !minGroup || !maxGroup) {
       toast('შეავსეთ ყველა სავალდებულო ველი', 'err');
       return;
