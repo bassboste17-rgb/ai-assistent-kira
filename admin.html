@@ -1538,7 +1538,7 @@
             <button type="button" class="region-chip" data-region="მცხეთა-მთიანეთი">მცხეთა-მთიანეთი</button>
             <button type="button" class="region-chip" data-region="შიდა ქართლი">შიდა ქართლი</button>
             <button type="button" class="region-chip" data-region="ქვემო ქართლი">ქვემო ქართლი</button>
-            <button type="button" class="region-chip" data-region="სამცხე-ჯავახეთი">სამცხე-ჯავახეთი</button>
+            <button type="button" class="region-chip" data-region="სამცხე-ჯავახეთი">სამცხე-ჯავ��ხეთი</button>
           </div>
         </div>
 
@@ -1814,15 +1814,35 @@
   async function userIsAdmin(user) {
     if (!user) return false;
 
+    // 1. შევამოწმოთ ელ-ფოსტით
     const email = (user.email || '').toLowerCase().trim();
     if (email && ADMIN_EMAILS.has(email)) return true;
 
+    // 2. შევამოწმოთ custom claims
     try {
       const token = await user.getIdTokenResult();
-      return token?.claims?.admin === true;
-    } catch {
-      return false;
+      if (token?.claims?.admin === true) return true;
+    } catch (e) {
+      console.log("Custom claims check failed:", e);
     }
+
+    // 3. შევამოწმოთ Realtime Database-ში admins
+    try {
+      const adminSnap = await get(ref(db, `admins/${user.uid}`));
+      if (adminSnap.exists()) return true;
+    } catch (e) {
+      console.log("Admins DB check failed:", e);
+    }
+
+    // 4. შევამოწმოთ users-ში role
+    try {
+      const userSnap = await get(ref(db, `users/${user.uid}`));
+      if (userSnap.exists() && userSnap.val().role === "admin") return true;
+    } catch (e) {
+      console.log("Users DB check failed:", e);
+    }
+
+    return false;
   }
 
   let _started = false;
@@ -3024,9 +3044,9 @@ window.openMultiDayTourModal = function() {
     const price = Number(document.getElementById('mdtPrice').value);
     const minGroup = Number(document.getElementById('mdtMinGroup').value);
     const maxGroup = Number(document.getElementById('mdtMaxGroup').value);
-    if (!name_ka) return showMissingLangField({ group:'mdtNameLang', lang:'ka', inputId:'mdtName_ka', message:'შეავსეთ ტურის სახელი ქართულად' });
+    if (!name_ka) return showMissingLangField({ group:'mdtNameLang', lang:'ka', inputId:'mdtName_ka', message:'შეავს��თ ტურის სახელი ქართულად' });
     if (!name_ru) return showMissingLangField({ group:'mdtNameLang', lang:'ru', inputId:'mdtName_ru', message:'შეავსეთ ტურის სახელი რუსულად' });
-    if (!name_en) return showMissingLangField({ group:'mdtNameLang', lang:'en', inputId:'mdtName_en', message:'შეავსეთ ტურის სახელი ინგლისურად' });
+    if (!name_en) return showMissingLangField({ group:'mdtNameLang', lang:'en', inputId:'mdtName_en', message:'შეავსეთ ტურის სახე���ი ინგლისურად' });
     if (!price || !minGroup || !maxGroup) {
       toast('შეავსეთ ყველა სავალდებულო ველი', 'err');
       return;

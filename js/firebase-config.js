@@ -1,5 +1,5 @@
 // ============================================================
-//  DAMQ Travel — Firebase Configuration
+//  DAMQ Travel — Firebase Configuration (Realtime Database)
 // ============================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -11,19 +11,17 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
-  getFirestore,
-  collection,
-  doc,
-  getDocs,
-  getDoc,
-  setDoc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
+  getDatabase,
+  ref,
+  get,
+  set,
+  push,
+  update,
+  remove,
+  child,
   query,
-  orderBy,
-  where
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  orderByChild
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -40,14 +38,18 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
+const db = getDatabase(app);
 
-// Collections
-const COLLECTIONS = {
+// Database paths
+const DB_PATHS = {
   fullTours: "fullTours",
   dayTours: "dayTours",
   admins: "admins",
-  users: "users"
+  users: "users",
+  bookings: "bookings",
+  blogs: "blogs",
+  reviews: "reviews",
+  settings: "settings"
 };
 
 // ── Auth Functions ────────────────────────────────────────────
@@ -62,10 +64,10 @@ async function register(email, password, userData = {}) {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
   
-  // შევინახოთ მომხმარებლის მონაცემები Firestore-ში
-  await setDoc(doc(db, COLLECTIONS.users, user.uid), {
+  // შევინახოთ მომხმარებლის მონაცემები Realtime Database-ში
+  await set(ref(db, `${DB_PATHS.users}/${user.uid}`), {
     email: email,
-    role: "user", // ნაგულისხმევად არის user, არა admin
+    role: "user",
     createdAt: new Date().toISOString(),
     ...userData
   });
@@ -90,47 +92,65 @@ async function checkIsAdmin(user) {
   if (!user) return false;
   
   try {
-    // ჯერ ვამოწმებთ ელ-ფოსტით
+    // 1. ჯერ ვამოწმებთ ელ-ფოსტით (ყველაზე სწრაფი)
     const email = (user.email || '').toLowerCase().trim();
     if (email && ADMIN_EMAILS.has(email)) {
+      console.log("[v0] Admin check: matched by email");
       return true;
     }
     
-    // მერე ვამოწმებთ custom claims-ით
+    // 2. მერე ვამოწმებთ custom claims-ით
     try {
       const token = await user.getIdTokenResult();
       if (token?.claims?.admin === true) {
+        console.log("[v0] Admin check: matched by custom claims");
         return true;
       }
-    } catch {
-      // ignore token errors
+    } catch (e) {
+      console.log("[v0] Custom claims check failed:", e.message);
     }
     
-    // ბოლოს ვამოწმებთ Firestore-ში admins კოლექციაში
-    const adminDoc = await getDoc(doc(db, COLLECTIONS.admins, user.uid));
-    if (adminDoc.exists()) {
-      return true;
+    // 3. ბოლოს ვამოწმებთ Realtime Database-ში admins path-ში
+    try {
+      const adminSnapshot = await get(ref(db, `${DB_PATHS.admins}/${user.uid}`));
+      if (adminSnapshot.exists()) {
+        console.log("[v0] Admin check: matched in admins collection");
+        return true;
+      }
+    } catch (e) {
+      console.log("[v0] Admins collection check failed:", e.message);
     }
     
-    // ვამოწმებთ users კოლექციაში role-ს
-    const userDoc = await getDoc(doc(db, COLLECTIONS.users, user.uid));
-    if (userDoc.exists() && userDoc.data().role === "admin") {
-      return true;
+    // 4. ვამოწმებთ users path-ში role-ს
+    try {
+      const userSnapshot = await get(ref(db, `${DB_PATHS.users}/${user.uid}`));
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.val();
+        if (userData.role === "admin") {
+          console.log("[v0] Admin check: matched by user role");
+          return true;
+        }
+      }
+    } catch (e) {
+      console.log("[v0] Users collection check failed:", e.message);
     }
     
+    console.log("[v0] Admin check: no match found");
     return false;
   } catch (error) {
-    console.error("Error checking admin status:", error);
-    return false;
+    console.error("[v0] Error checking admin status:", error);
+    // თუ შეცდომაა, მაინც ვცდილობთ ელ-ფოსტით
+    const email = (user.email || '').toLowerCase().trim();
+    return email && ADMIN_EMAILS.has(email);
   }
 }
 
 // მომხმარებლის მონაცემების მიღება
 async function getUserData(uid) {
   try {
-    const userDoc = await getDoc(doc(db, COLLECTIONS.users, uid));
-    if (userDoc.exists()) {
-      return userDoc.data();
+    const snapshot = await get(ref(db, `${DB_PATHS.users}/${uid}`));
+    if (snapshot.exists()) {
+      return snapshot.val();
     }
     return null;
   } catch (error) {
@@ -139,34 +159,62 @@ async function getUserData(uid) {
   }
 }
 
-// ── Firestore CRUD Functions ──────────────────────────────────
+// ── Realtime Database CRUD Functions ──────────────────────────
 
-// ყველა დოკუმენტის მიღება
-async function getAll(collectionName) {
-  const q = query(collection(db, collectionName), orderBy("order", "asc"));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+// ყველა ჩანაწერის მიღება
+async function getAll(path) {
+  try {
+    const snapshot = await get(ref(db, path));
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      // გარდაქმნა მასივად ID-ებით
+      return Object.entries(data).map(([id, value]) => ({
+        id,
+        ...value
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.error(`Error getting ${path}:`, error);
+    return [];
+  }
 }
 
-// დოკუმენტის დამატება
-async function addItem(collectionName, data) {
-  return addDoc(collection(db, collectionName), {
+// ერთი ჩანაწერის მიღება
+async function getOne(path, id) {
+  try {
+    const snapshot = await get(ref(db, `${path}/${id}`));
+    if (snapshot.exists()) {
+      return { id, ...snapshot.val() };
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error getting ${path}/${id}:`, error);
+    return null;
+  }
+}
+
+// ჩანაწერის დამატება
+async function addItem(path, data) {
+  const newRef = push(ref(db, path));
+  await set(newRef, {
     ...data,
     createdAt: new Date().toISOString()
   });
+  return newRef.key;
 }
 
-// დოკუმენტის განახლება
-async function updateItem(collectionName, docId, data) {
-  return updateDoc(doc(db, collectionName, docId), {
+// ჩანაწერის განახლება
+async function updateItem(path, id, data) {
+  return update(ref(db, `${path}/${id}`), {
     ...data,
     updatedAt: new Date().toISOString()
   });
 }
 
-// დოკუმენტის წაშლა
-async function deleteItem(collectionName, docId) {
-  return deleteDoc(doc(db, collectionName, docId));
+// ჩანაწერის წაშლა
+async function deleteItem(path, id) {
+  return remove(ref(db, `${path}/${id}`));
 }
 
 // ── Exports ───────────────────────────────────────────────────
@@ -174,7 +222,7 @@ async function deleteItem(collectionName, docId) {
 export {
   auth,
   db,
-  COLLECTIONS,
+  DB_PATHS,
   login,
   register,
   logout,
@@ -182,7 +230,14 @@ export {
   checkIsAdmin,
   getUserData,
   getAll,
+  getOne,
   addItem,
   updateItem,
-  deleteItem
+  deleteItem,
+  ref,
+  get,
+  set,
+  push,
+  update,
+  remove
 };
