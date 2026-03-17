@@ -2049,34 +2049,52 @@
     }
   });
 
-  authForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    setAuthError('');
-    const email = authEmail?.value?.trim() || '';
-    const password = authPassword?.value || '';
-    if (!email || !password) {
-      setAuthError('Enter email and password.');
-      return;
-    }
+  // Make sure authForm exists and add event listener
+  console.log('[v0] Setting up login form listener');
+  console.log('[v0] authForm element:', authForm);
+  
+  if (authForm) {
+    authForm.addEventListener('submit', async (e) => {
+      console.log('[v0] Login form submitted');
+      e.preventDefault();
+      setAuthError('');
+      const email = authEmail?.value?.trim() || '';
+      const password = authPassword?.value || '';
+      
+      console.log('[v0] Login attempt with email:', email);
+      
+      if (!email || !password) {
+        console.log('[v0] Missing email or password');
+        setAuthError('Enter email and password.');
+        return;
+      }
 
-    if (authLoginBtn) authLoginBtn.disabled = true;
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      const code = err?.code || '';
-      const map = {
-        'auth/user-not-found': 'User not found.',
-        'auth/wrong-password': 'Wrong password.',
-        'auth/invalid-email': 'Invalid email.',
-        'auth/too-many-requests': 'Too many attempts. Try later.',
-        'auth/invalid-credential': 'Invalid email or password.',
-        'auth/operation-not-allowed': 'Enable Email/Password in Firebase Console.',
-      };
-      setAuthError(map[code] || err?.message || 'Sign-in failed.');
-    } finally {
-      if (authLoginBtn) authLoginBtn.disabled = false;
-    }
-  });
+      if (authLoginBtn) authLoginBtn.disabled = true;
+      try {
+        console.log('[v0] Calling signInWithEmailAndPassword...');
+        await signInWithEmailAndPassword(auth, email, password);
+        console.log('[v0] Sign in successful!');
+      } catch (err) {
+        console.log('[v0] Sign in error:', err?.code, err?.message);
+        const code = err?.code || '';
+        const map = {
+          'auth/user-not-found': 'User not found.',
+          'auth/wrong-password': 'Wrong password.',
+          'auth/invalid-email': 'Invalid email.',
+          'auth/too-many-requests': 'Too many attempts. Try later.',
+          'auth/invalid-credential': 'Invalid email or password.',
+          'auth/operation-not-allowed': 'Enable Email/Password in Firebase Console.',
+        };
+        const errorMsg = map[code] || err?.message || 'Sign-in failed.';
+        console.log('[v0] Setting error:', errorMsg);
+        setAuthError(errorMsg);
+      } finally {
+        if (authLoginBtn) authLoginBtn.disabled = false;
+      }
+    });
+  } else {
+    console.error('[v0] authForm element not found!');
+  }
 
   btnLogout?.addEventListener('click', async () => {
     await signOut(auth);
@@ -2109,74 +2127,89 @@
     if (regError) regError.textContent = msg;
   }
 
-  registerForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    setRegError('');
-    
-    const email = regEmail?.value?.trim() || '';
-    const password = regPassword?.value || '';
-    const passwordConfirm = regPasswordConfirm?.value || '';
-
-    if (!email || !password || !passwordConfirm) {
-      setRegError('შეავსეთ ყველა ველი.');
-      return;
-    }
-
-    if (password.length < 6) {
-      setRegError('პაროლი უნდა იყოს მინ. 6 სიმბოლო.');
-      return;
-    }
-
-    if (password !== passwordConfirm) {
-      setRegError('პაროლები არ ემთხვევა.');
-      return;
-    }
-
-    if (regSubmitBtn) regSubmitBtn.disabled = true;
-    
-    try {
-      // Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Add user to pending_admins in Realtime Database (waiting for admin approval)
-      await set(ref(db, `pending_admins/${user.uid}`), {
-        email: email,
-        createdAt: Date.now(),
-        status: 'pending'
-      });
-
-      // Sign out immediately - user needs admin role to access
-      await signOut(auth);
-      
-      // Show success message and switch to login tab
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      console.log('[v0] Register form submitted');
+      e.preventDefault();
       setRegError('');
-      alert('რეგისტრაცია წარმატებით დასრულდა! ადმინისტრატორმა უნდა დაგამატოთ ადმინის როლი.');
       
-      // Switch to login tab
-      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-      document.querySelector('.auth-tab[data-tab="login"]')?.classList.add('active');
-      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-      document.getElementById('authForm')?.classList.add('active');
-      
-      // Clear registration form
-      if (regEmail) regEmail.value = '';
-      if (regPassword) regPassword.value = '';
-      if (regPasswordConfirm) regPasswordConfirm.value = '';
+      const email = regEmail?.value?.trim() || '';
+      const password = regPassword?.value || '';
+      const passwordConfirm = regPasswordConfirm?.value || '';
 
-    } catch (err) {
-      const code = err?.code || '';
-      const map = {
-        'auth/email-already-in-use': 'ეს ელფოსტა უკვე რეგისტრირებულია.',
-        'auth/invalid-email': 'არასწორი ელფოსტა.',
-        'auth/weak-password': 'პაროლი ძალიან სუსტია.',
-        'auth/operation-not-allowed': 'ჩართეთ Email/Password Firebase Console-ში.',
-      };
-      setRegError(map[code] || err?.message || 'რეგისტრაცია ვერ მოხერხდა.');
-    } finally {
-      if (regSubmitBtn) regSubmitBtn.disabled = false;
-    }
-  });
+      console.log('[v0] Register attempt with email:', email);
+
+      if (!email || !password || !passwordConfirm) {
+        setRegError('შეავსეთ ყველა ველი.');
+        return;
+      }
+
+      if (password.length < 6) {
+        setRegError('პაროლი უნდა იყოს მინ. 6 სიმბოლო.');
+        return;
+      }
+
+      if (password !== passwordConfirm) {
+        setRegError('პაროლები არ ემთხვევა.');
+        return;
+      }
+
+      if (regSubmitBtn) regSubmitBtn.disabled = true;
+      
+      try {
+        // Create user in Firebase Auth
+        console.log('[v0] Creating Firebase user...');
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log('[v0] User created:', user.uid);
+
+        // Add user to pending_admins in Realtime Database (waiting for admin approval)
+        console.log('[v0] Adding to pending_admins...');
+        await set(ref(db, `pending_admins/${user.uid}`), {
+          email: email,
+          createdAt: Date.now(),
+          status: 'pending'
+        });
+        console.log('[v0] Added to pending_admins');
+
+        // Sign out immediately - user needs admin role to access
+        await signOut(auth);
+        console.log('[v0] User signed out, waiting for admin approval');
+        
+        // Show success message and switch to login tab
+        setRegError('');
+        alert('რეგისტრაცია წარმატებით დასრულდა! ადმინისტრატორმა უნდა დაგამატოთ ადმინის როლი.');
+        
+        // Switch to login tab
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector('.auth-tab[data-tab="login"]')?.classList.add('active');
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        document.getElementById('authForm')?.classList.add('active');
+        
+        // Clear registration form
+        if (regEmail) regEmail.value = '';
+        if (regPassword) regPassword.value = '';
+        if (regPasswordConfirm) regPasswordConfirm.value = '';
+
+      } catch (err) {
+        console.log('[v0] Register error:', err?.code, err?.message);
+        const code = err?.code || '';
+        const map = {
+          'auth/email-already-in-use': 'ეს ელფოსტა უკვე რეგისტრირებულია.',
+          'auth/invalid-email': 'არასწორი ელფოსტა.',
+          'auth/weak-password': 'პაროლი ძალიან სუსტია.',
+          'auth/operation-not-allowed': 'ჩართეთ Email/Password Firebase Console-ში.',
+        };
+        const errorMsg = map[code] || err?.message || 'რეგისტრაცია ვერ მოხერხდა.';
+        console.log('[v0] Setting register error:', errorMsg);
+        setRegError(errorMsg);
+      } finally {
+        if (regSubmitBtn) regSubmitBtn.disabled = false;
+      }
+    });
+  } else {
+    console.error('[v0] registerForm element not found!');
+  }
 
   // Show the overlay immediately; auth state will hide it if already signed in.
   showAuthOverlay('');
