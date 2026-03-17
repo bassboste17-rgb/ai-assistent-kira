@@ -873,24 +873,103 @@
     .auth-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(10,10,10,0.72);
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
       z-index: 9999;
     }
+    .auth-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(212,175,55,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212,175,55,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
     .auth-card {
+      position: relative;
       width: 100%;
       max-width: 420px;
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-      padding: 22px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.1);
+      padding: 28px;
     }
-    .auth-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
-    .auth-sub { color: #666; font-size: 0.88rem; margin-bottom: 14px; }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .auth-logo .logo-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); letter-spacing: 0.06em; }
+    .auth-logo .logo-divider { width: 2px; height: 20px; background: var(--gold); border-radius: 2px; }
+    .auth-logo .logo-sub { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #888; }
+    .auth-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; text-align: center; }
+    .auth-sub { color: #666; font-size: 0.88rem; margin-bottom: 18px; text-align: center; }
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f7f5f0;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #666;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .auth-tab:hover { color: var(--dark); }
+    .auth-tab.active {
+      background: var(--white);
+      color: var(--dark);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .auth-form { display: none; }
+    .auth-form.active { display: block; }
+    .auth-lang-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 4px;
+      background: rgba(255,255,255,0.1);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .auth-lang-switch .lang-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .auth-lang-switch .lang-btn:hover {
+      background: rgba(212,175,55,0.2);
+      color: var(--gold);
+    }
+    .auth-lang-switch .lang-btn.active {
+      background: var(--gold);
+      color: var(--dark);
+    }
     .auth-field { display: grid; gap: 6px; margin-bottom: 12px; }
     .auth-field label { font-size: 0.78rem; font-weight: 800; color: #555; }
     .auth-input {
@@ -955,22 +1034,58 @@
 
 <!-- Auth gate: Firebase Authentication (Email/Password) -->
 <div class="auth-overlay" id="authOverlay">
+  <!-- Language Switcher on Auth Screen -->
+  <div class="auth-lang-switch">
+    <button class="lang-btn" data-lang="ka" title="ქართული">KA</button>
+    <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+    <button class="lang-btn" data-lang="en" title="English">EN</button>
+  </div>
+  
   <div class="auth-card">
-    <div class="auth-title" data-i18n="admin.auth.title">Admin Sign In</div>
-    <div class="auth-sub" data-i18n="admin.auth.subtitle">Sign in with an admin account to continue.</div>
-    <form id="authForm" class="auth-actions">
+    <div class="auth-logo">
+      <span class="logo-text">DAMQ</span>
+      <span class="logo-divider"></span>
+      <span class="logo-sub">ADMIN</span>
+    </div>
+    
+    <!-- Auth Tabs -->
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" data-tab="login" data-i18n="admin.auth.loginTab">შესვლა</button>
+      <button type="button" class="auth-tab" data-tab="register" data-i18n="admin.auth.registerTab">რეგისტრაცია</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="authForm" class="auth-form active">
       <div class="auth-field">
-        <label for="authEmail" data-i18n="admin.auth.email">Email</label>
-        <input class="auth-input" id="authEmail" type="email" autocomplete="username" required>
+        <label for="authEmail" data-i18n="admin.auth.email">ელფოსტა</label>
+        <input class="auth-input" id="authEmail" type="email" autocomplete="username" required placeholder="admin@damq.ge">
       </div>
       <div class="auth-field">
-        <label for="authPassword" data-i18n="admin.auth.password">Password</label>
-        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" required>
+        <label for="authPassword" data-i18n="admin.auth.password">პაროლი</label>
+        <input class="auth-input" id="authPassword" type="password" autocomplete="current-password" required placeholder="••••••••">
       </div>
       <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
-      <button class="btn btn-dark" id="authLoginBtn" type="submit"><span data-i18n="admin.auth.signin">Sign in</span></button>
-      <div class="auth-note" data-i18n="admin.auth.note">
-        If sign-in fails with <code>auth/operation-not-allowed</code>, enable <b>Email/Password</b> in Firebase Console.
+      <button class="btn btn-dark" id="authLoginBtn" type="submit"><span data-i18n="admin.auth.signin">შესვლა</span></button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" class="auth-form">
+      <div class="auth-field">
+        <label for="regEmail" data-i18n="admin.auth.email">ელფოსტა</label>
+        <input class="auth-input" id="regEmail" type="email" autocomplete="email" required placeholder="your@email.com">
+      </div>
+      <div class="auth-field">
+        <label for="regPassword" data-i18n="admin.auth.password">პაროლი</label>
+        <input class="auth-input" id="regPassword" type="password" autocomplete="new-password" required placeholder="მინ. 6 სიმბოლო">
+      </div>
+      <div class="auth-field">
+        <label for="regPasswordConfirm" data-i18n="admin.auth.confirmPassword">პაროლის დადასტურება</label>
+        <input class="auth-input" id="regPasswordConfirm" type="password" autocomplete="new-password" required placeholder="გაიმეორეთ პაროლი">
+      </div>
+      <div class="auth-error" id="regError" role="alert" aria-live="polite"></div>
+      <button class="btn btn-dark" id="regSubmitBtn" type="submit"><span data-i18n="admin.auth.register">რეგისტრაცია</span></button>
+      <div class="auth-note" data-i18n="admin.auth.regNote">
+        რეგისტრაციის შემდეგ, ადმინისტრატორმა უნდა დაგამატოთ ადმინის როლი რომ შეძლოთ შესვლა.
       </div>
     </form>
   </div>
@@ -987,7 +1102,7 @@
     </div>
     <div class="sidebar-badge">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      ადმინისტრატორი
+      <span data-i18n="admin.role">ადმინისტრატორი</span>
     </div>
 
     <nav class="sidebar-nav">
@@ -1041,11 +1156,11 @@
       </div>
       <a href="home.html" class="btn-site">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        მთავარზე
+        <span data-i18n="admin.nav.home">მთავარზე</span>
       </a>
       <button class="btn-site" id="btnLogout" type="button" style="display:none;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Log out
+        <span data-i18n="admin.nav.logout">გასვლა</span>
       </button>
     </div>
   </aside>
@@ -1786,7 +1901,7 @@
     getDatabase, ref, get, set, push, update, remove, child, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
   import {
-    getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   /* --- Config --- */
@@ -1942,6 +2057,102 @@
     await signOut(auth);
   });
 
+  /* --- Auth Tab Switching --- */
+  document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetTab = tab.dataset.tab;
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+      if (targetTab === 'login') {
+        document.getElementById('authForm').classList.add('active');
+      } else {
+        document.getElementById('registerForm').classList.add('active');
+      }
+    });
+  });
+
+  /* --- Registration Form --- */
+  const registerForm = document.getElementById('registerForm');
+  const regEmail = document.getElementById('regEmail');
+  const regPassword = document.getElementById('regPassword');
+  const regPasswordConfirm = document.getElementById('regPasswordConfirm');
+  const regError = document.getElementById('regError');
+  const regSubmitBtn = document.getElementById('regSubmitBtn');
+
+  function setRegError(msg) {
+    if (regError) regError.textContent = msg;
+  }
+
+  registerForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setRegError('');
+    
+    const email = regEmail?.value?.trim() || '';
+    const password = regPassword?.value || '';
+    const passwordConfirm = regPasswordConfirm?.value || '';
+
+    if (!email || !password || !passwordConfirm) {
+      setRegError('შეავსეთ ყველა ველი.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setRegError('პაროლი უნდა იყოს მინ. 6 სიმბოლო.');
+      return;
+    }
+
+    if (password !== passwordConfirm) {
+      setRegError('პაროლები არ ემთხვევა.');
+      return;
+    }
+
+    if (regSubmitBtn) regSubmitBtn.disabled = true;
+    
+    try {
+      // Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Add user to pending_admins in Realtime Database (waiting for admin approval)
+      await set(ref(db, `pending_admins/${user.uid}`), {
+        email: email,
+        createdAt: Date.now(),
+        status: 'pending'
+      });
+
+      // Sign out immediately - user needs admin role to access
+      await signOut(auth);
+      
+      // Show success message and switch to login tab
+      setRegError('');
+      alert('რეგისტრაცია წარმატებით დასრულდა! ადმინისტრატორმა უნდა დაგამატოთ ადმინის როლი.');
+      
+      // Switch to login tab
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector('.auth-tab[data-tab="login"]')?.classList.add('active');
+      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+      document.getElementById('authForm')?.classList.add('active');
+      
+      // Clear registration form
+      if (regEmail) regEmail.value = '';
+      if (regPassword) regPassword.value = '';
+      if (regPasswordConfirm) regPasswordConfirm.value = '';
+
+    } catch (err) {
+      const code = err?.code || '';
+      const map = {
+        'auth/email-already-in-use': 'ეს ელფოსტა უკვე რეგისტრირებულია.',
+        'auth/invalid-email': 'არასწორი ელფოსტა.',
+        'auth/weak-password': 'პაროლი ძალიან სუსტია.',
+        'auth/operation-not-allowed': 'ჩართეთ Email/Password Firebase Console-ში.',
+      };
+      setRegError(map[code] || err?.message || 'რეგისტრაცია ვერ მოხერხდა.');
+    } finally {
+      if (regSubmitBtn) regSubmitBtn.disabled = false;
+    }
+  });
+
   // Show the overlay immediately; auth state will hide it if already signed in.
   showAuthOverlay('');
 
@@ -2035,7 +2246,7 @@
     reviews:   ['შეფასებები',          'კლიენტების შეფასებების მართვა'],
     dayTours:  ['1-დღიანი ტურები', 'დაამატეთ და მართეთ 1-დღიანი ტურები'],
     multiDayTours: ['მრავალდღიანი ტურები', 'დაამატეთ და მართეთ მრავალდღიანი ტურები'],
-    blogs:     ['ბლოგები', 'მართეთ ბლოგ პოსტები და სიახლეები']
+    blogs:     ['ბლოგები', 'მართეთ ბლოგ პოსტები და სიახლ��ები']
   };
 
   window.switchPage = function(pg) {
@@ -3861,9 +4072,9 @@ window.openMultiDayTourModal = function() {
     });
   }
 
-  // Update language button states
+  // Update language button states (both admin panel and auth overlay)
   function updateLangButtons(lang) {
-    document.querySelectorAll('.admin-lang-switch .lang-btn').forEach(btn => {
+    document.querySelectorAll('.admin-lang-switch .lang-btn, .auth-lang-switch .lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
   }
@@ -3882,8 +4093,8 @@ window.openMultiDayTourModal = function() {
     applyTranslations(currentLang);
     updateLangButtons(currentLang);
 
-    // Language switcher click handlers
-    document.querySelectorAll('.admin-lang-switch .lang-btn').forEach(btn => {
+    // Language switcher click handlers (both admin panel and auth overlay)
+    document.querySelectorAll('.admin-lang-switch .lang-btn, .auth-lang-switch .lang-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         setLanguage(this.dataset.lang);
       });
