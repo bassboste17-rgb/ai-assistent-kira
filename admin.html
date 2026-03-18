@@ -1244,7 +1244,7 @@
     <div class="page" id="multiDayToursPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title" data-i18n="admin.card.multi.tours">Многодневные ту��ы</div>
+          <div class="card-title" data-i18n="admin.card.multi.tours">Многодневные ту����ы</div>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
             <input type="search" class="search" id="multiDayToursSearch" placeholder="Поиск тура..." data-i18n-ph="admin.search.tour">
             <button class="btn btn-dark" onclick="openMultiDayTourModal()">
@@ -1463,7 +1463,7 @@
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
           <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის ა��წ���რა (ქართული)..." required></textarea></div>
+            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის �����წ���რა (ქართული)..." required></textarea></div>
             <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
             <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
           </div>
@@ -3186,27 +3186,42 @@ window.openMultiDayTourModal = function() {
   }
 
   async function rtdbGetValue(path) {
-    const snap = await get(ref(db, path));
-    return snap.exists() ? snap.val() : null;
+    try {
+      const snap = await get(ref(db, path));
+      return snap.exists() ? snap.val() : null;
+    } catch (err) {
+      console.warn('[v0] Firebase read error:', err?.message || err);
+      return null;
+    }
   }
 
   async function getMonthlyVideoUsage(monthKey = currentMonthKey()) {
-    const val = await rtdbGetValue(`${CLD_USAGE_BASE_PATH}/${monthKey}`);
-    return {
-      bytes: Number(val?.bytes) || 0,
-      count: Number(val?.count) || 0
-    };
+    try {
+      const val = await rtdbGetValue(`${CLD_USAGE_BASE_PATH}/${monthKey}`);
+      return {
+        bytes: Number(val?.bytes) || 0,
+        count: Number(val?.count) || 0
+      };
+    } catch (err) {
+      console.warn('[v0] getMonthlyVideoUsage error:', err?.message || err);
+      return { bytes: 0, count: 0 };
+    }
   }
 
   async function addMonthlyVideoUsage(bytesToAdd, monthKey = currentMonthKey()) {
-    const cur = await getMonthlyVideoUsage(monthKey);
-    const next = {
-      bytes: cur.bytes + (Number(bytesToAdd) || 0),
-      count: cur.count + 1,
-      updatedAt: Date.now()
-    };
-    await set(ref(db, `${CLD_USAGE_BASE_PATH}/${monthKey}`), next);
-    return next;
+    try {
+      const cur = await getMonthlyVideoUsage(monthKey);
+      const next = {
+        bytes: cur.bytes + (Number(bytesToAdd) || 0),
+        count: cur.count + 1,
+        updatedAt: Date.now()
+      };
+      await set(ref(db, `${CLD_USAGE_BASE_PATH}/${monthKey}`), next);
+      return next;
+    } catch (err) {
+      console.warn('[v0] addMonthlyVideoUsage error:', err?.message || err);
+      return { bytes: 0, count: 0 };
+    }
   }
 
   function writeCloudinarySettingsToUi(settings) {
