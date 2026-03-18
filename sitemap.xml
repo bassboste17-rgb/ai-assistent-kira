@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://damqtravel.com/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://damqtravel.com/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://damqtravel.com/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://damqtravel.com/?lang=ka"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://damqtravel.com/"/>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://damqtravel.com/images/hero.png</image:loc>
+      <image:title>DAMQ Travel - Туры по Грузии</image:title>
+      <image:caption>Красивый пейзаж Грузии - премиум туры от DAMQ Travel</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Services / Tours Page -->
+  <url>
+    <loc>https://damqtravel.com/services.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://damqtravel.com/services.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://damqtravel.com/services.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://damqtravel.com/services.html?lang=ka"/>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Contact Page -->
+  <url>
+    <loc>https://damqtravel.com/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://damqtravel.com/contact.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://damqtravel.com/contact.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://damqtravel.com/contact.html?lang=ka"/>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Blog Page -->
+  <url>
+    <loc>https://damqtravel.com/blog.html</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://damqtravel.com/blog.html?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://damqtravel.com/blog.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://damqtravel.com/blog.html?lang=ka"/>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Season Pages -->
+  <url>
+    <loc>https://damqtravel.com/season-spring.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://damqtravel.com/season-summer.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://damqtravel.com/season-autumn.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://damqtravel.com/season-winter.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://damqtravel.com/privacy-policy.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://damqtravel.com/terms-of-use.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Dynamic Tour Pages (Example URLs - these would be generated dynamically) -->
+  <!-- Tours: Batumi - Mestia -->
+  <url>
+    <loc>https://damqtravel.com/tours/batumi-mestia</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Tours: Tbilisi - Kazbegi -->
+  <url>
+    <loc>https://damqtravel.com/tours/tbilisi-kazbegi</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Tours: Wine Tour Kakheti -->
+  <url>
+    <loc>https://damqtravel.com/tours/wine-tour-kakheti</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Tours: Batumi City Tour -->
+  <url>
+    <loc>https://damqtravel.com/tours/batumi-city-tour</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Tours: Borjomi - Vardzia -->
+  <url>
+    <loc>https://damqtravel.com/tours/borjomi-vardzia</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

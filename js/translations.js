@@ -393,6 +393,98 @@ const translations = {
   "admin.status.pending":     { ru: "В ожидании",             en: "Pending",             ka: "მოლოდინში" },
   "admin.status.rejected":    { ru: "Отклонено",              en: "Rejected",            ka: "უარყოფილი" },
 
+  // -- ADMIN HELP MODAL --
+  "admin.help.title":           { ru: "Инструкция по использованию", en: "User Guide", ka: "გამოყენების ინსტრუქცია" },
+  "admin.help.tab.overview":    { ru: "Обзор", en: "Overview", ka: "მიმოხილვა" },
+  "admin.help.tab.daytour":     { ru: "Однодневные туры", en: "Day Tours", ka: "ერთდღიანი ტურები" },
+  "admin.help.tab.multitour":   { ru: "Многодневные туры", en: "Multi-day Tours", ka: "მრავალდღიანი ტურები" },
+  "admin.help.tab.blog":        { ru: "Блоги", en: "Blogs", ka: "ბლოგები" },
+  "admin.help.tab.bookings":    { ru: "Бронирования", en: "Bookings", ka: "ჯავშნები" },
+  "admin.help.tab.reviews":     { ru: "Отзывы", en: "Reviews", ka: "შეფასებები" },
+  "admin.help.understood":      { ru: "Понятно!", en: "Got it!", ka: "გასაგებია!" },
+  
+  // Overview tab
+  "admin.help.overview.title":  { ru: "Панель администратора DAMQ Travel", en: "DAMQ Travel Admin Panel", ka: "DAMQ Travel ადმინ პანელი" },
+  "admin.help.overview.step1":  { ru: "<strong>Панель</strong> — общая статистика: количество туров, бронирований, отзывов и ожидающих ответа заявок.", en: "<strong>Dashboard</strong> — overall statistics: number of tours, bookings, reviews and pending requests.", ka: "<strong>დაფა</strong> — ზოგადი სტატისტიკა: ტურების, ჯავშნების, შეფასებების და მოლოდინში მყოფი მოთხოვნების რაოდენობა." },
+  "admin.help.overview.step2":  { ru: "<strong>Бронирования</strong> — все заявки на туры от клиентов. Вы можете просмотреть детали и удалить обработанные заявки.", en: "<strong>Bookings</strong> — all tour requests from clients. You can view details and delete processed requests.", ka: "<strong>ჯავშნები</strong> — კლიენტების ყველა მოთხოვნა ტურებზე. შეგიძლიათ ნახოთ დეტალები და წაშალოთ დამუშავებული მოთხოვნები." },
+  "admin.help.overview.step3":  { ru: "<strong>Однодневные туры</strong> — экскурсии на один день. Добавляйте, редактируйте или удаляйте туры.", en: "<strong>Day Tours</strong> — one-day excursions. Add, edit or delete tours.", ka: "<strong>ერთდღიანი ტურები</strong> — ერთდღიანი ექსკურსიები. დაამატეთ, შეცვალეთ ან წაშალეთ ტურები." },
+  "admin.help.overview.step4":  { ru: "<strong>Многодневные туры</strong> — туры с несколькими днями и ночами. Полная программа путешествия.", en: "<strong>Multi-day Tours</strong> — tours with multiple days and nights. Complete travel program.", ka: "<strong>მრავალდღიანი ტურები</strong> — რამდენიმე დღისა და ღამის ტურები. სრული მოგზაურობის პროგრამა." },
+  "admin.help.overview.step5":  { ru: "<strong>Блоги</strong> — статьи о путешествиях, советы и истории. Добавляйте контент для SEO.", en: "<strong>Blogs</strong> — travel articles, tips and stories. Add content for SEO.", ka: "<strong>ბლოგები</strong> — სტატიები მოგზაურობის შესახებ, რჩევები და ისტორიები. დაამატეთ კონტენტი SEO-სთვის." },
+  "admin.help.overview.step6":  { ru: "<strong>Отзывы</strong> — модерация отзывов клиентов. Одобряйте или удаляйте отзывы.", en: "<strong>Reviews</strong> — moderation of client reviews. Approve or delete reviews.", ka: "<strong>შეფასებები</strong> — კლიენტთა შეფასებების მოდერაცია. დაამტკიცეთ ან წაშალეთ შეფასებები." },
+  "admin.help.overview.tip":    { ru: "Совет: Используйте переключатель языка в правом верхнем углу для смены языка интерфейса админ-панели.", en: "Tip: Use the language switcher in the top right corner to change the admin panel interface language.", ka: "რჩევა: გამოიყენეთ ენის გადამრთველი ზედა მარჯვენა კუთხეში ადმინ პანელის ინტერფეისის ენის შესაცვლელად." },
+  
+  // Day Tour tab
+  "admin.help.daytour.title":   { ru: "Как добавить однодневный тур", en: "How to Add a Day Tour", ka: "როგორ დავამატოთ ერთდღიანი ტური" },
+  "admin.help.daytour.step1":   { ru: "Перейдите в раздел <strong>«Однодневные туры»</strong> в боковом меню.", en: "Go to <strong>\"Day Tours\"</strong> section in the sidebar menu.", ka: "გადადით <strong>\"ერთდღიანი ტურები\"</strong> განყოფილებაში გვერდითა მენიუში." },
+  "admin.help.daytour.step2":   { ru: "Нажмите кнопку <strong>«Добавить тур»</strong> в правом верхнем углу.", en: "Click the <strong>\"Add Tour\"</strong> button in the top right corner.", ka: "დააჭირეთ <strong>\"ტურის დამატება\"</strong> ღილაკს ზედა მარჯვენა კუთხეში." },
+  "admin.help.daytour.step3":   { ru: "Заполните <strong>название тура</strong> на трех языках (KA, RU, EN). Грузинский обязателен.", en: "Fill in the <strong>tour name</strong> in three languages (KA, RU, EN). Georgian is required.", ka: "შეავსეთ <strong>ტურის სახელი</strong> სამ ენაზე (KA, RU, EN). ქართული სავალდებულოა." },
+  "admin.help.daytour.step4":   { ru: "Добавьте <strong>описание тура</strong> на трех языках — подробное описание маршрута.", en: "Add the <strong>tour description</strong> in three languages — detailed route description.", ka: "დაამატეთ <strong>ტურის აღწერა</strong> სამ ენაზე — მარშრუტის დეტალური აღწერა." },
+  "admin.help.daytour.step5":   { ru: "Укажите <strong>длительность</strong> (часы), <strong>цену</strong> (USD за человека) и <strong>мин./макс. количество</strong> человек.", en: "Specify the <strong>duration</strong> (hours), <strong>price</strong> (USD per person) and <strong>min/max number</strong> of people.", ka: "მიუთითეთ <strong>ხანგრძლივობა</strong> (საათები), <strong>ფასი</strong> (USD თითო ადამიანზე) და ადამიანების <strong>მინ/მაქს რაოდენობა</strong>." },
+  "admin.help.daytour.step6":   { ru: "Выберите <strong>регионы</strong>, которые посещает тур (можно выбрать несколько).", en: "Select the <strong>regions</strong> the tour visits (you can select multiple).", ka: "აირჩიეთ <strong>რეგიონები</strong>, რომლებსაც ტური მოიცავს (შეგიძლიათ აირჩიოთ რამდენიმე)." },
+  "admin.help.daytour.step7":   { ru: "Загрузите <strong>фотографии</strong> (рекомендуется 3-5 качественных фото). Фото автоматически загружаются на сервер.", en: "Upload <strong>photos</strong> (3-5 quality photos recommended). Photos are automatically uploaded to the server.", ka: "ატვირთეთ <strong>ფოტოები</strong> (რეკომენდირებულია 3-5 ხარისხიანი ფოტო). ფოტოები ავტომატურად აიტვირთება სერვერზე." },
+  "admin.help.daytour.step8":   { ru: "Нажмите <strong>«Сохранить»</strong> — тур появится на сайте.", en: "Click <strong>\"Save\"</strong> — the tour will appear on the website.", ka: "დააჭირეთ <strong>\"შენახვა\"</strong> — ტური გამოჩნდება საიტზე." },
+  "admin.help.daytour.fields.title": { ru: "Поля формы", en: "Form Fields", ka: "ფორმის ველები" },
+  
+  // Form field descriptions
+  "admin.help.field.name":      { ru: "Название *", en: "Name *", ka: "სახელი *" },
+  "admin.help.field.name.desc": { ru: "Название тура на 3 языках. Грузинский (KA) обязателен.", en: "Tour name in 3 languages. Georgian (KA) is required.", ka: "ტურის სახელი 3 ენაზე. ქართული (KA) სავალდებულოა." },
+  "admin.help.field.desc":      { ru: "Описание *", en: "Description *", ka: "აღწერა *" },
+  "admin.help.field.desc.desc": { ru: "Подробное описание маршрута и что включено в тур.", en: "Detailed route description and what's included in the tour.", ka: "მარშრუტის დეტალური აღწერა და რა შედის ტურში." },
+  "admin.help.field.duration":  { ru: "Длительность", en: "Duration", ka: "ხანგრძლივობა" },
+  "admin.help.field.duration.desc": { ru: "Продолжительность в часах (например: 8 часов).", en: "Duration in hours (e.g.: 8 hours).", ka: "ხანგრძლივობა საათებში (მაგ.: 8 საათი)." },
+  "admin.help.field.price":     { ru: "Цена (USD)", en: "Price (USD)", ka: "ფასი (USD)" },
+  "admin.help.field.price.desc":{ ru: "Стоимость на человека в долларах США.", en: "Cost per person in US dollars.", ka: "ღირებულება თითო ადამიანზე აშშ დოლარებში." },
+  "admin.help.field.people":    { ru: "Мин/Макс человек", en: "Min/Max people", ka: "მინ/მაქს ადამიანი" },
+  "admin.help.field.people.desc": { ru: "Минимальное и максимальное количество участников.", en: "Minimum and maximum number of participants.", ka: "მონაწილეთა მინიმალური და მაქსიმალური რაოდენობა." },
+  "admin.help.field.regions":   { ru: "Регионы", en: "Regions", ka: "რეგიონები" },
+  "admin.help.field.regions.desc": { ru: "Выберите регионы/города, которые посещает тур.", en: "Select the regions/cities the tour visits.", ka: "აირჩიეთ რეგიონები/ქალაქები, რომლებსაც ტური მოიცავს." },
+  "admin.help.field.photos":    { ru: "Фотографии", en: "Photos", ka: "ფოტოები" },
+  "admin.help.field.photos.desc": { ru: "Загрузите качественные фото тура (JPG, PNG). Рекомендуется 3-5 фото.", en: "Upload quality tour photos (JPG, PNG). 3-5 photos recommended.", ka: "ატვირთეთ ტურის ხარისხიანი ფოტოები (JPG, PNG). რეკომენდირებულია 3-5 ფოტო." },
+  
+  // Multi-day Tour tab
+  "admin.help.multitour.title": { ru: "Как добавить многодневный тур", en: "How to Add a Multi-day Tour", ka: "როგორ დავამატოთ მრავალდღიანი ტური" },
+  "admin.help.multitour.step1": { ru: "Перейдите в раздел <strong>«Многодневные туры»</strong> в боковом меню.", en: "Go to <strong>\"Multi-day Tours\"</strong> section in the sidebar menu.", ka: "გადადით <strong>\"მრავალდღიანი ტურები\"</strong> განყოფილებაში გვერდითა მენიუში." },
+  "admin.help.multitour.step2": { ru: "Нажмите кнопку <strong>«Добавить тур»</strong>.", en: "Click the <strong>\"Add Tour\"</strong> button.", ka: "დააჭირეთ <strong>\"ტურის დამატება\"</strong> ღილაკს." },
+  "admin.help.multitour.step3": { ru: "Заполните <strong>название</strong> и <strong>описание</strong> на трех языках.", en: "Fill in the <strong>name</strong> and <strong>description</strong> in three languages.", ka: "შეავსეთ <strong>სახელი</strong> და <strong>აღწერა</strong> სამ ენაზე." },
+  "admin.help.multitour.step4": { ru: "Укажите <strong>количество дней</strong> и <strong>ночей</strong> (например: 3 дня, 2 ночи).", en: "Specify the <strong>number of days</strong> and <strong>nights</strong> (e.g.: 3 days, 2 nights).", ka: "მიუთითეთ <strong>დღეების რაოდენობა</strong> და <strong>ღამეები</strong> (მაგ.: 3 დღე, 2 ღამე)." },
+  "admin.help.multitour.step5": { ru: "Установите <strong>цену</strong> и количество <strong>участников</strong>.", en: "Set the <strong>price</strong> and number of <strong>participants</strong>.", ka: "დააყენეთ <strong>ფასი</strong> და <strong>მონაწილეთა</strong> რაოდენობა." },
+  "admin.help.multitour.step6": { ru: "Выберите <strong>регионы</strong> маршрута.", en: "Select the route <strong>regions</strong>.", ka: "აირჩიეთ მარშრუტის <strong>რეგიონები</strong>." },
+  "admin.help.multitour.step7": { ru: "Загрузите <strong>фотографии</strong> и <strong>видео</strong> (опционально) для презентации тура.", en: "Upload <strong>photos</strong> and <strong>video</strong> (optional) to present the tour.", ka: "ატვირთეთ <strong>ფოტოები</strong> და <strong>ვიდეო</strong> (სურვილისამებრ) ტურის წარმოსადგენად." },
+  "admin.help.multitour.step8": { ru: "Отметьте <strong>«Рекомендуем»</strong>, если хотите выделить тур на сайте.", en: "Check <strong>\"Featured\"</strong> if you want to highlight the tour on the website.", ka: "მონიშნეთ <strong>\"რეკომენდირებული\"</strong>, თუ გსურთ ტურის გამოყოფა საიტზე." },
+  "admin.help.multitour.step9": { ru: "Нажмите <strong>«Сохранить»</strong>.", en: "Click <strong>\"Save\"</strong>.", ka: "დააჭირეთ <strong>\"შენახვა\"</strong>." },
+  "admin.help.multitour.tip":   { ru: "Совет: Многодневные туры отображаются в верхней части страницы услуг. Добавляйте качественные видео для лучшей презентации.", en: "Tip: Multi-day tours are displayed at the top of the services page. Add quality videos for better presentation.", ka: "რჩევა: მრავალდღიანი ტურები ნაჩვენებია სერვისების გვერდის ზედა ნაწილში. დაამატეთ ხარისხიანი ვიდეოები უკეთესი პრეზენტაციისთვის." },
+  
+  // Blog tab
+  "admin.help.blog.title":      { ru: "Как добавить блог/статью", en: "How to Add a Blog/Article", ka: "როგორ დავამატოთ ბლოგი/სტატია" },
+  "admin.help.blog.step1":      { ru: "Перейдите в раздел <strong>«Блоги»</strong> в боковом меню.", en: "Go to <strong>\"Blogs\"</strong> section in the sidebar menu.", ka: "გადადით <strong>\"ბლოგები\"</strong> განყოფილებაში გვერდითა მენიუში." },
+  "admin.help.blog.step2":      { ru: "Нажмите кнопку <strong>«Добавить блог»</strong>.", en: "Click the <strong>\"Add Blog\"</strong> button.", ka: "დააჭირეთ <strong>\"ბლოგის დამატება\"</strong> ღილაკს." },
+  "admin.help.blog.step3":      { ru: "Введите <strong>заголовок статьи</strong> на трех языках (KA обязателен).", en: "Enter the <strong>article title</strong> in three languages (KA is required).", ka: "შეიყვანეთ <strong>სტატიის სათაური</strong> სამ ენაზე (KA სავალდებულოა)." },
+  "admin.help.blog.step4":      { ru: "Напишите <strong>содержание статьи</strong> — полезные советы, истории или описания мест.", en: "Write the <strong>article content</strong> — useful tips, stories or place descriptions.", ka: "დაწერეთ <strong>სტატიის შინაარსი</strong> — სასარგებლო რჩევები, ისტორიები ან ადგილების აღწერა." },
+  "admin.help.blog.step5":      { ru: "Выберите <strong>категорию</strong>: Горы, Вино, Города, Культура или Советы.", en: "Select a <strong>category</strong>: Mountains, Wine, Cities, Culture or Tips.", ka: "აირჩიეთ <strong>კატეგორია</strong>: მთები, ღვინო, ქალაქები, კულტურა ან რჩევები." },
+  "admin.help.blog.step6":      { ru: "Загрузите <strong>фото</strong> для обложки статьи.", en: "Upload a <strong>photo</strong> for the article cover.", ka: "ატვირთეთ <strong>ფოტო</strong> სტატიის გარეკანისთვის." },
+  "admin.help.blog.step7":      { ru: "Опционально добавьте <strong>видео</strong> для более интересного контента.", en: "Optionally add a <strong>video</strong> for more engaging content.", ka: "სურვილისამებრ დაამატეთ <strong>ვიდეო</strong> უფრო საინტერესო კონტენტისთვის." },
+  "admin.help.blog.step8":      { ru: "Нажмите <strong>«Сохранить»</strong> — статья появится в блоге.", en: "Click <strong>\"Save\"</strong> — the article will appear in the blog.", ka: "დააჭირეთ <strong>\"შენახვა\"</strong> — სტატია გამოჩნდება ბლოგში." },
+  "admin.help.blog.tip":        { ru: "Совет: Регулярные публикации в блоге улучшают SEO сайта и привлекают новых клиентов.", en: "Tip: Regular blog posts improve website SEO and attract new clients.", ka: "რჩევა: რეგულარული ბლოგ პოსტები აუმჯობესებს საიტის SEO-ს და იზიდავს ახალ კლიენტებს." },
+  
+  // Bookings tab
+  "admin.help.bookings.title":  { ru: "Управление бронированиями", en: "Managing Bookings", ka: "ჯავშნების მართვა" },
+  "admin.help.bookings.step1":  { ru: "В разделе <strong>«Бронирования»</strong> отображаются все заявки от клиентов.", en: "The <strong>\"Bookings\"</strong> section displays all client requests.", ka: "<strong>\"ჯავშნები\"</strong> განყოფილებაში ნაჩვენებია კლიენტების ყველა მოთხოვნა." },
+  "admin.help.bookings.step2":  { ru: "Новые заявки выделяются <strong>красным цветом</strong> в меню для вашего внимания.", en: "New requests are highlighted in <strong>red</strong> in the menu for your attention.", ka: "ახალი მოთხოვნები გამოყოფილია <strong>წითელი ფერით</strong> მენიუში თქვენი ყურადღებისთვის." },
+  "admin.help.bookings.step3":  { ru: "Нажмите <strong>кнопку просмотра</strong> (иконка глаза) для просмотра деталей заявки.", en: "Click the <strong>view button</strong> (eye icon) to view request details.", ka: "დააჭირეთ <strong>ნახვის ღილაკს</strong> (თვალის იკონი) მოთხოვნის დეტალების სანახავად." },
+  "admin.help.bookings.step4":  { ru: "В деталях вы увидите: <strong>имя клиента, телефон, email, выбранный тур, дату и сообщение</strong>.", en: "In the details you will see: <strong>client name, phone, email, selected tour, date and message</strong>.", ka: "დეტალებში ნახავთ: <strong>კლიენტის სახელს, ტელეფონს, ელფოსტას, არჩეულ ტურს, თარიღს და შეტყობინებას</strong>." },
+  "admin.help.bookings.step5":  { ru: "Свяжитесь с клиентом по телефону или email для подтверждения брони.", en: "Contact the client by phone or email to confirm the booking.", ka: "დაუკავშირდით კლიენტს ტელეფონით ან ელფოსტით ჯავშნის დასადასტურებლად." },
+  "admin.help.bookings.step6":  { ru: "После обработки заявки вы можете <strong>удалить</strong> её (иконка корзины).", en: "After processing the request, you can <strong>delete</strong> it (trash icon).", ka: "მოთხოვნის დამუშავების შემდეგ შეგიძლიათ <strong>წაშალოთ</strong> ის (კალათის იკონი)." },
+  "admin.help.bookings.tip":    { ru: "Совет: Отвечайте на заявки как можно быстрее — это повышает доверие клиентов!", en: "Tip: Respond to requests as quickly as possible — this increases client trust!", ka: "რჩევა: უპასუხეთ მოთხოვნებს რაც შეიძლება სწრაფად — ეს ზრდის კლიენტების ნდობას!" },
+  
+  // Reviews tab
+  "admin.help.reviews.title":   { ru: "Модерация отзывов", en: "Review Moderation", ka: "შეფასებების მოდერაცია" },
+  "admin.help.reviews.step1":   { ru: "Перейдите в раздел <strong>«Отзывы»</strong> для просмотра всех отзывов.", en: "Go to the <strong>\"Reviews\"</strong> section to view all reviews.", ka: "გადადით <strong>\"შეფასებები\"</strong> განყოფილებაში ყველა შეფასების სანახავად." },
+  "admin.help.reviews.step2":   { ru: "Отзывы со статусом <strong>«Ожидает»</strong> требуют вашего одобрения.", en: "Reviews with <strong>\"Pending\"</strong> status require your approval.", ka: "<strong>\"მოლოდინში\"</strong> სტატუსის შეფასებები საჭიროებენ თქვენს დამტკიცებას." },
+  "admin.help.reviews.step3":   { ru: "Нажмите <strong>зеленую галочку</strong> для одобрения отзыва — он появится на сайте.", en: "Click the <strong>green checkmark</strong> to approve the review — it will appear on the website.", ka: "დააჭირეთ <strong>მწვანე გამშვებს</strong> შეფასების დასამტკიცებლად — ის გამოჩნდება საიტზე." },
+  "admin.help.reviews.step4":   { ru: "Нажмите <strong>красную корзину</strong> для удаления нежелательного отзыва.", en: "Click the <strong>red trash</strong> to delete an unwanted review.", ka: "დააჭირეთ <strong>წითელ კალათს</strong> არასასურველი შეფასების წასაშლელად." },
+  "admin.help.reviews.step5":   { ru: "Одобренные отзывы отображаются на главной странице в разделе «Отзывы».", en: "Approved reviews are displayed on the homepage in the \"Reviews\" section.", ka: "დამტკიცებული შეფასებები ნაჩვენებია მთავარ გვერდზე \"შეფასებები\" განყოფილებაში." },
+  "admin.help.reviews.tip":     { ru: "Совет: Положительные отзывы повышают доверие к вашему агентству. Публикуйте качественные отзывы!", en: "Tip: Positive reviews increase trust in your agency. Publish quality reviews!", ka: "რჩევა: დადებითი შეფასებები ზრდის ნდობას თქვენი სააგენტოს მიმართ. გამოაქვეყნეთ ხარისხიანი შეფასებები!" },
+
   // -- LEGAL --
   "legal.tag":           { ru: "Юридическая информация", en: "Legal", ka: "იურიდიული ინფორმაცია" },
 

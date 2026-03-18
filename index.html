@@ -2,12 +2,224 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=home.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>DAMQ Travel — Премиум туры по Грузии | Батуми, Тбилиси, Местия</title>
+  <meta name="description" content="DAMQ Travel — ведущее турагентство в Грузии. Однодневные и многодневные туры в Батуми, Тбилиси, Местию, Казбеги. Профессиональные гиды, комфортный транспорт.">
+  <meta name="keywords" content="DAMQ Travel, туры по Грузии, экскурсии Батуми, туры Тбилиси, турагентство Грузия">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://damqtravel.com/">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://damqtravel.com/">
+  <meta property="og:title" content="DAMQ Travel — Премиум туры по Грузии">
+  <meta property="og:description" content="Откройте для себя магию Грузии с DAMQ Travel. Уникальные туры, профессиональные гиды.">
+  <meta property="og:image" content="https://damqtravel.com/images/hero.png">
+  <meta property="og:site_name" content="DAMQ Travel">
+  
+  <!-- Favicons -->
   <link rel="icon" type="image/png" href="images/logodamq.png">
   <link rel="apple-touch-icon" href="images/logodamq.png">
-  <title>DAMQ Travel</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .loader-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    
+    .logo-wrapper {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+    
+    .logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      animation: pulse 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+    }
+    
+    .logo-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 140px;
+      height: 140px;
+      margin: -70px 0 0 -70px;
+      border: 2px solid transparent;
+      border-top-color: #d4af37;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+    }
+    
+    .logo-ring::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border: 2px solid transparent;
+      border-top-color: rgba(212, 175, 55, 0.4);
+      border-radius: 50%;
+      animation: spin 2s linear infinite reverse;
+    }
+    
+    .brand-name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: fadeInUp 0.8s ease-out 0.3s backwards;
+    }
+    
+    .brand-name span {
+      color: #d4af37;
+    }
+    
+    .tagline {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.1em;
+      animation: fadeInUp 0.8s ease-out 0.5s backwards;
+    }
+    
+    .progress-bar {
+      width: 200px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 1rem;
+      animation: fadeInUp 0.8s ease-out 0.7s backwards;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #d4af37, #f4d03f);
+      border-radius: 3px;
+      animation: progress 1.5s ease-in-out forwards;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes progress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+    
+    /* Particles background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(212, 175, 55, 0.3);
+      border-radius: 50%;
+      animation: float 4s infinite ease-in-out;
+    }
+    
+    .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 20%; top: 80%; animation-delay: 0.5s; }
+    .particle:nth-child(3) { left: 30%; top: 40%; animation-delay: 1s; }
+    .particle:nth-child(4) { left: 40%; top: 60%; animation-delay: 1.5s; }
+    .particle:nth-child(5) { left: 50%; top: 30%; animation-delay: 2s; }
+    .particle:nth-child(6) { left: 60%; top: 70%; animation-delay: 0.3s; }
+    .particle:nth-child(7) { left: 70%; top: 50%; animation-delay: 0.8s; }
+    .particle:nth-child(8) { left: 80%; top: 20%; animation-delay: 1.3s; }
+    .particle:nth-child(9) { left: 90%; top: 90%; animation-delay: 1.8s; }
+    .particle:nth-child(10) { left: 5%; top: 50%; animation-delay: 2.3s; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-20px) scale(1.2); opacity: 0.6; }
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecting to <a href="home.html">DAMQ Travel</a>...</p>
+  <!-- Particles Background -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  
+  <!-- Loader Content -->
+  <div class="loader-container">
+    <div class="logo-wrapper">
+      <div class="logo-ring"></div>
+      <img src="images/logodamq.png" alt="DAMQ Travel Logo" class="logo">
+    </div>
+    <div class="brand-name">DAMQ <span>Travel</span></div>
+    <div class="tagline">Discover Georgia</div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+  
+  <script>
+    // Redirect after 1.5 seconds
+    setTimeout(function() {
+      window.location.href = 'home.html';
+    }, 1500);
+  </script>
 </body>
 </html>

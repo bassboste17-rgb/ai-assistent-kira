@@ -1004,6 +1004,179 @@
       border-radius: 4px;
       color: #666;
     }
+
+    /* ===========================================
+       HELP BUTTON & MODAL
+    =========================================== */
+    .help-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold) 0%, #c9a030 100%);
+      border: none;
+      color: var(--dark);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: 0 3px 12px rgba(212,175,55,0.3);
+    }
+    .help-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 5px 18px rgba(212,175,55,0.4);
+    }
+    .help-btn:active {
+      transform: scale(0.96);
+    }
+
+    .help-modal {
+      max-width: 750px;
+    }
+    .help-modal .modal-body {
+      padding: 0;
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+    .help-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: #faf9f6;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .help-tab {
+      padding: 0.85rem 1.2rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #666;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .help-tab:hover {
+      color: var(--text);
+      background: rgba(212,175,55,0.05);
+    }
+    .help-tab.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+      background: var(--white);
+    }
+    .help-content {
+      display: none;
+      padding: 1.5rem;
+    }
+    .help-content.active {
+      display: block;
+    }
+    .help-section {
+      margin-bottom: 1.5rem;
+    }
+    .help-section:last-child {
+      margin-bottom: 0;
+    }
+    .help-section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .help-section-title svg {
+      color: var(--gold);
+    }
+    .help-steps {
+      counter-reset: step;
+      padding-left: 0;
+      list-style: none;
+    }
+    .help-step {
+      position: relative;
+      padding: 0.75rem 0.9rem 0.75rem 3rem;
+      background: #faf9f6;
+      border-radius: 10px;
+      margin-bottom: 0.6rem;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: #444;
+    }
+    .help-step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0.9rem;
+      top: 0.75rem;
+      width: 22px;
+      height: 22px;
+      background: var(--gold);
+      color: var(--dark);
+      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .help-step strong {
+      color: var(--dark);
+    }
+    .help-tip {
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.84rem;
+      color: #666;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .help-tip svg {
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .help-field-list {
+      display: grid;
+      gap: 0.5rem;
+    }
+    .help-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 0.6rem 0.8rem;
+      background: #f5f5f5;
+      border-radius: 8px;
+      font-size: 0.84rem;
+    }
+    .help-field-name {
+      font-weight: 700;
+      color: var(--dark);
+      min-width: 140px;
+      flex-shrink: 0;
+    }
+    .help-field-desc {
+      color: #666;
+    }
+    @media (max-width: 600px) {
+      .help-field {
+        flex-direction: column;
+        gap: 4px;
+      }
+      .help-field-name {
+        min-width: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1097,6 +1270,10 @@
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
+        <!-- Help Button -->
+        <button class="help-btn" id="helpBtn" onclick="openHelpModal()" title="Help / Instructions">
+          ?
+        </button>
         <!-- Language Switcher -->
         <div class="admin-lang-switcher" id="adminLangSwitcher">
           <button class="admin-lang-toggle" id="adminLangToggle">
@@ -1244,7 +1421,7 @@
     <div class="page" id="multiDayToursPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title" data-i18n="admin.card.multi.tours">Многодневные ту����ы</div>
+          <div class="card-title" data-i18n="admin.card.multi.tours">Многодневные туры</div>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
             <input type="search" class="search" id="multiDayToursSearch" placeholder="Поиск тура..." data-i18n-ph="admin.search.tour">
             <button class="btn btn-dark" onclick="openMultiDayTourModal()">
@@ -1463,7 +1640,7 @@
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
           <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის �����წ���რა (ქართული)..." required></textarea></div>
+            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
             <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
             <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
           </div>
@@ -1783,6 +1960,202 @@
       <button class="btn btn-dark" onclick="saveBlog()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
         <span data-i18n="admin.btn.save">Сохранить</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Help/Instructions Modal -->
+<div class="modal-wrap" id="helpModalWrap">
+  <div class="modal help-modal">
+    <div class="modal-hdr">
+      <div class="modal-title" data-i18n="admin.help.title">Инструкция по использованию</div>
+      <button class="modal-close" onclick="closeHelpModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="help-tabs">
+      <button class="help-tab active" data-help-tab="overview" data-i18n="admin.help.tab.overview">Обзор</button>
+      <button class="help-tab" data-help-tab="dayTour" data-i18n="admin.help.tab.daytour">Однодневные туры</button>
+      <button class="help-tab" data-help-tab="multiTour" data-i18n="admin.help.tab.multitour">Многодневные туры</button>
+      <button class="help-tab" data-help-tab="blog" data-i18n="admin.help.tab.blog">Блоги</button>
+      <button class="help-tab" data-help-tab="bookings" data-i18n="admin.help.tab.bookings">Бронирования</button>
+      <button class="help-tab" data-help-tab="reviews" data-i18n="admin.help.tab.reviews">Отзывы</button>
+    </div>
+    <div class="modal-body">
+      
+      <!-- Overview Tab -->
+      <div class="help-content active" data-help-content="overview">
+        <div class="help-section">
+          <div class="help-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span data-i18n="admin.help.overview.title">Панель администратора DAMQ Travel</span>
+          </div>
+          <ol class="help-steps">
+            <li class="help-step" data-i18n="admin.help.overview.step1"><strong>Панель</strong> — общая статистика: количество туров, бронирований, отзывов и ожидающих ответа заявок.</li>
+            <li class="help-step" data-i18n="admin.help.overview.step2"><strong>Бронирования</strong> — все заявки на туры от клиентов. Вы можете просмотреть детали и удалить обработанные заявки.</li>
+            <li class="help-step" data-i18n="admin.help.overview.step3"><strong>Однодневные туры</strong> — экскурсии на один день. Добавляйте, редактируйте или удаляйте туры.</li>
+            <li class="help-step" data-i18n="admin.help.overview.step4"><strong>Многодневные туры</strong> — туры с несколькими днями и ночами. Полная программа путешествия.</li>
+            <li class="help-step" data-i18n="admin.help.overview.step5"><strong>Блоги</strong> — статьи о путешествиях, советы и истории. Добавляйте контент для SEO.</li>
+            <li class="help-step" data-i18n="admin.help.overview.step6"><strong>Отзывы</strong> — модерация отзывов клиентов. Одобряйте или удаляйте отзывы.</li>
+          </ol>
+          <div class="help-tip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span data-i18n="admin.help.overview.tip">Совет: Используйте переключатель языка в правом верхнем углу для смены языка интерфейса админ-панели.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day Tour Tab -->
+      <div class="help-content" data-help-content="dayTour">
+        <div class="help-section">
+          <div class="help-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span data-i18n="admin.help.daytour.title">Как добавить однодневный тур</span>
+          </div>
+          <ol class="help-steps">
+            <li class="help-step" data-i18n="admin.help.daytour.step1">Перейдите в раздел <strong>«Однодневные туры»</strong> в боковом меню.</li>
+            <li class="help-step" data-i18n="admin.help.daytour.step2">Нажмите кнопку <strong>«Добавить тур»</strong> в правом верхнем углу.</li>
+            <li class="help-step" data-i18n="admin.help.daytour.step3">Заполните <strong>название тура</strong> на трех языках (KA, RU, EN). Грузинский обязателен.</li>
+            <li class="help-step" data-i18n="admin.help.daytour.step4">Добавьте <strong>описание тура</strong> на трех языках — подробное описание маршрута.</li>
+            <li class="help-step" data-i18n="admin.help.daytour.step5">Укажите <strong>длительность</strong> (часы), <strong>цену</strong> (USD за человека) и <strong>мин./макс. количество</strong> человек.</li>
+            <li class="help-step" data-i18n="admin.help.daytour.step6">Выберите <strong>регионы</strong>, которые посещает тур (можно выбрать несколько).</li>
+            <li class="help-step" data-i18n="admin.help.daytour.step7">Загрузите <strong>фотографии</strong> (рекомендуется 3-5 качественных фото). Фото автоматически загружаются на сервер.</li>
+            <li class="help-step" data-i18n="admin.help.daytour.step8">Нажмите <strong>«Сохранить»</strong> — тур появится на сайте.</li>
+          </ol>
+          <div class="help-section-title" style="margin-top:1.2rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <span data-i18n="admin.help.daytour.fields.title">Поля формы</span>
+          </div>
+          <div class="help-field-list">
+            <div class="help-field">
+              <span class="help-field-name" data-i18n="admin.help.field.name">Название *</span>
+              <span class="help-field-desc" data-i18n="admin.help.field.name.desc">Название тура на 3 языках. Грузинский (KA) обязателен.</span>
+            </div>
+            <div class="help-field">
+              <span class="help-field-name" data-i18n="admin.help.field.desc">Описание *</span>
+              <span class="help-field-desc" data-i18n="admin.help.field.desc.desc">Подробное описание маршрута и что включено в тур.</span>
+            </div>
+            <div class="help-field">
+              <span class="help-field-name" data-i18n="admin.help.field.duration">Длительность</span>
+              <span class="help-field-desc" data-i18n="admin.help.field.duration.desc">Продолжительность в часах (например: 8 часов).</span>
+            </div>
+            <div class="help-field">
+              <span class="help-field-name" data-i18n="admin.help.field.price">Цена (USD)</span>
+              <span class="help-field-desc" data-i18n="admin.help.field.price.desc">Стоимость на человека в долларах США.</span>
+            </div>
+            <div class="help-field">
+              <span class="help-field-name" data-i18n="admin.help.field.people">Мин/Макс человек</span>
+              <span class="help-field-desc" data-i18n="admin.help.field.people.desc">Минимальное и максимальное количество участников.</span>
+            </div>
+            <div class="help-field">
+              <span class="help-field-name" data-i18n="admin.help.field.regions">Регионы</span>
+              <span class="help-field-desc" data-i18n="admin.help.field.regions.desc">Выберите регионы/города, которые посещает тур.</span>
+            </div>
+            <div class="help-field">
+              <span class="help-field-name" data-i18n="admin.help.field.photos">Фотографии</span>
+              <span class="help-field-desc" data-i18n="admin.help.field.photos.desc">Загрузите качественные фото тура (JPG, PNG). Рекомендуется 3-5 фото.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi-day Tour Tab -->
+      <div class="help-content" data-help-content="multiTour">
+        <div class="help-section">
+          <div class="help-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span data-i18n="admin.help.multitour.title">Как добавить многодневный тур</span>
+          </div>
+          <ol class="help-steps">
+            <li class="help-step" data-i18n="admin.help.multitour.step1">Перейдите в раздел <strong>«Многодневные туры»</strong> в боковом меню.</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step2">Нажмите кнопку <strong>«Добавить тур»</strong>.</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step3">Заполните <strong>название</strong> и <strong>описание</strong> на трех языках.</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step4">Укажите <strong>количество дней</strong> и <strong>ночей</strong> (например: 3 дня, 2 ночи).</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step5">Установите <strong>цену</strong> и количество <strong>участников</strong>.</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step6">Выберите <strong>регионы</strong> маршрута.</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step7">Загрузите <strong>фотографии</strong> и <strong>видео</strong> (опционально) для презентации тура.</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step8">Отметьте <strong>«Рекомендуем»</strong>, если хотите выделить тур на сайте.</li>
+            <li class="help-step" data-i18n="admin.help.multitour.step9">Нажмите <strong>«Сохранить»</strong>.</li>
+          </ol>
+          <div class="help-tip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span data-i18n="admin.help.multitour.tip">Совет: Многодневные туры отображаются в верхней части страницы услуг. Добавляйте качественные видео для лучшей презентации.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Tab -->
+      <div class="help-content" data-help-content="blog">
+        <div class="help-section">
+          <div class="help-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span data-i18n="admin.help.blog.title">Как добавить блог/статью</span>
+          </div>
+          <ol class="help-steps">
+            <li class="help-step" data-i18n="admin.help.blog.step1">Перейдите в раздел <strong>«Блоги»</strong> в боковом меню.</li>
+            <li class="help-step" data-i18n="admin.help.blog.step2">Нажмите кнопку <strong>«Добавить блог»</strong>.</li>
+            <li class="help-step" data-i18n="admin.help.blog.step3">Введите <strong>заголовок статьи</strong> на трех языках (KA обязателен).</li>
+            <li class="help-step" data-i18n="admin.help.blog.step4">Напишите <strong>содержание статьи</strong> — полезные советы, истории или описания мест.</li>
+            <li class="help-step" data-i18n="admin.help.blog.step5">Выберите <strong>категорию</strong>: Горы, Вино, Города, Культура или Советы.</li>
+            <li class="help-step" data-i18n="admin.help.blog.step6">Загрузите <strong>фото</strong> для обложки статьи.</li>
+            <li class="help-step" data-i18n="admin.help.blog.step7">Опционально добавьте <strong>видео</strong> для более интересного контента.</li>
+            <li class="help-step" data-i18n="admin.help.blog.step8">Нажмите <strong>«Сохранить»</strong> — статья появится в блоге.</li>
+          </ol>
+          <div class="help-tip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span data-i18n="admin.help.blog.tip">Совет: Регулярные публикации в блоге улучшают SEO сайта и привлекают новых клиентов.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings Tab -->
+      <div class="help-content" data-help-content="bookings">
+        <div class="help-section">
+          <div class="help-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span data-i18n="admin.help.bookings.title">Управление бронированиями</span>
+          </div>
+          <ol class="help-steps">
+            <li class="help-step" data-i18n="admin.help.bookings.step1">В разделе <strong>«Бронирования»</strong> отображаются все заявки от клиентов.</li>
+            <li class="help-step" data-i18n="admin.help.bookings.step2">Новые заявки выделяются <strong>красным цветом</strong> в меню для вашего внимания.</li>
+            <li class="help-step" data-i18n="admin.help.bookings.step3">Нажмите <strong>кнопку просмотра</strong> (иконка глаза) для просмотра деталей заявки.</li>
+            <li class="help-step" data-i18n="admin.help.bookings.step4">В деталях вы увидите: <strong>имя клиента, телефон, email, выбранный тур, дату и сообщение</strong>.</li>
+            <li class="help-step" data-i18n="admin.help.bookings.step5">Свяжитесь с клиентом по телефону или email для подтверждения брони.</li>
+            <li class="help-step" data-i18n="admin.help.bookings.step6">После обработки заявки вы можете <strong>удалить</strong> её (иконка корзины).</li>
+          </ol>
+          <div class="help-tip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span data-i18n="admin.help.bookings.tip">Совет: Отвечайте на заявки как можно быстрее — это повышает доверие клиентов!</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reviews Tab -->
+      <div class="help-content" data-help-content="reviews">
+        <div class="help-section">
+          <div class="help-section-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span data-i18n="admin.help.reviews.title">Модерация отзывов</span>
+          </div>
+          <ol class="help-steps">
+            <li class="help-step" data-i18n="admin.help.reviews.step1">Перейдите в раздел <strong>«Отзывы»</strong> для просмотра всех отзывов.</li>
+            <li class="help-step" data-i18n="admin.help.reviews.step2">Отзывы со статусом <strong>«Ожидает»</strong> требуют вашего одобрения.</li>
+            <li class="help-step" data-i18n="admin.help.reviews.step3">Нажмите <strong>зеленую галочку</strong> для одобрения отзыва — он появится на сайте.</li>
+            <li class="help-step" data-i18n="admin.help.reviews.step4">Нажмите <strong>красную корзину</strong> для удаления нежелательного отзыва.</li>
+            <li class="help-step" data-i18n="admin.help.reviews.step5">Одобренные отзывы отображаются на главной странице в разделе «Отзывы».</li>
+          </ol>
+          <div class="help-tip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span data-i18n="admin.help.reviews.tip">Совет: Положительные отзывы повышают доверие к вашему агентству. Публикуйте качественные отзывы!</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-dark" onclick="closeHelpModal()">
+        <span data-i18n="admin.help.understood">Понятно!</span>
       </button>
     </div>
   </div>
@@ -2414,14 +2787,14 @@
       document.getElementById('sReviews').textContent   = allReviews.length;
     } catch(e) {
       document.getElementById('reviewsTbody').innerHTML =
-        `<tr><td colspan="7" style="text-align:center;padding:2rem;color:#e55;">ჩატვირთვის შეცდომა</td></tr>`;
+        `<tr><td colspan="7" style="text-align:center;padding:2rem;color:#e55;">ჩატვირთვის ���ეცდომა</td></tr>`;
     }
   }
 
   function renderReviews(list) {
     const tb = document.getElementById('reviewsTbody');
     if (!list.length) {
-      tb.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2.5rem;color:#bbb;">შეფასებები ჯერ არ ა��ის</td></tr>`;
+      tb.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2.5rem;color:#bbb;">შეფასებები ჯერ არ არის</td></tr>`;
       return;
     }
     tb.innerHTML = list.map(r => `
@@ -2671,7 +3044,7 @@
         <td data-label="ფოტო">${photos.length} ${photosLabel}</td>
         <td data-label="მოქმედება">
           <div class="action-btns">
-            <button class="btn-icon edit" title="რე��აქტირება" onclick="editDayTour('${t.id}')">
+            <button class="btn-icon edit" title="რედაქტირება" onclick="editDayTour('${t.id}')">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
             <button class="btn-icon del" title="წაშლა" onclick="confirmDeleteDayTour('${t.id}','${(t.name||'').replace(/'/g,"\\'")}')">
@@ -3106,7 +3479,7 @@ window.openMultiDayTourModal = function() {
     try {
       if (docId) {
         await rtdbUpdate('multiDayTours', docId, data);
-        toast('ტური გ���ნახლდა');
+        toast('ტური განახლდა');
       } else {
         data.createdAt = now;
         await rtdbAdd('multiDayTours', data);
@@ -3681,15 +4054,50 @@ window.openMultiDayTourModal = function() {
     document.getElementById('blogModalWrap').classList.add('open');
   };
 
-  window.closeBlogModal = function() {
-    document.getElementById('blogModalWrap').classList.remove('open');
+window.closeBlogModal = function() {
+  document.getElementById('blogModalWrap').classList.remove('open');
   };
 
+  // ========== HELP MODAL ==========
+  window.openHelpModal = function() {
+    document.getElementById('helpModalWrap').classList.add('open');
+    // Apply translations when modal opens
+    if (typeof applyAdminTranslations === 'function') {
+      applyAdminTranslations();
+    }
+  };
+
+  window.closeHelpModal = function() {
+    document.getElementById('helpModalWrap').classList.remove('open');
+  };
+
+  // Help tabs navigation
+  document.querySelectorAll('.help-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      const targetTab = this.dataset.helpTab;
+      
+      // Update active tab
+      document.querySelectorAll('.help-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Update active content
+      document.querySelectorAll('.help-content').forEach(c => c.classList.remove('active'));
+      document.querySelector(`[data-help-content="${targetTab}"]`).classList.add('active');
+    });
+  });
+
+  // Close help modal on backdrop click
+  document.getElementById('helpModalWrap').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeHelpModal();
+    }
+  });
+  
   window.editBlog = function(id) {
     const b = allBlogs.find(x => x.id === id);
     if (!b) return;
     clearAllFieldErrors(document.getElementById('blogModalWrap'));
-    document.getElementById('blogModalTitle').textContent = '���ლოგის რედაქტირება';
+    document.getElementById('blogModalTitle').textContent = 'ბლოგის რედაქტირება';
     document.getElementById('blogDocId').value = b.id;
     document.getElementById('blogTitle_ka').value = b.title_ka || b.title || '';
     document.getElementById('blogTitle_ru').value = b.title_ru || '';
@@ -3714,7 +4122,7 @@ window.openMultiDayTourModal = function() {
   window.saveBlog = async function() {
     const docId = document.getElementById('blogDocId').value;
     const title_ka = document.getElementById('blogTitle_ka').value.trim();
-    if (!title_ka) { toast('შეავსეთ ს��თაური (ქართული)', 'err'); return; }
+    if (!title_ka) { toast('შეავსეთ სათაური (ქართული)', 'err'); return; }
 
     const now = Date.now();
     const data = {
@@ -3896,6 +4304,7 @@ window.openMultiDayTourModal = function() {
     }, 50);
   });
 </script>
+<script src="js/url-rewrite.js"></script>
 
 </body>
 </html>
