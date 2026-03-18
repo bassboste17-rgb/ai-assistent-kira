@@ -1244,7 +1244,7 @@
     <div class="page" id="multiDayToursPage">
       <div class="card">
         <div class="card-head">
-          <div class="card-title" data-i18n="admin.card.multi.tours">Многодневные туры</div>
+          <div class="card-title" data-i18n="admin.card.multi.tours">Многодневные ту��ы</div>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
             <input type="search" class="search" id="multiDayToursSearch" placeholder="Поиск тура..." data-i18n-ph="admin.search.tour">
             <button class="btn btn-dark" onclick="openMultiDayTourModal()">
@@ -1463,7 +1463,7 @@
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
           <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის ა��წერა (ქართული)..." required></textarea></div>
+            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის ა��წ���რა (ქართული)..." required></textarea></div>
             <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
             <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
           </div>
@@ -1771,42 +1771,10 @@
             <div class="upload-zone-text"><strong>Select video</strong> or drop it here</div>
           </div>
           <div class="upload-progress" id="blogVideoProgress">Uploading...</div>
-          <div class="quota-line" id="blogVideoQuotaLine">-</div>
+          <div class="quota-display" id="blogVideoQuotaDisplay">
+            <div class="quota-line" id="blogVideoQuotaLine">-</div>
+          </div>
           <div class="uploaded-videos" id="blogUploadedVideos"></div>
-
-          <details class="cld-settings" id="cldSettingsDetails">
-            <summary>Cloudinary Settings (Admin)</summary>
-            <div class="cld-grid">
-              <div class="fg">
-                <label>Cloud name</label>
-                <input type="text" id="cldCloudName" placeholder="e.g. damqtravel">
-              </div>
-              <div class="fg">
-                <label>API Key</label>
-                <input type="text" id="cldApiKey" placeholder="e.g. 1234567890">
-              </div>
-              <div class="fg">
-                <label>API Secret</label>
-                <input type="password" id="cldApiSecret" placeholder="••••••••">
-              </div>
-              <div class="fg">
-                <label>Monthly video limit (GB)</label>
-                <input type="number" id="cldMonthlyLimitGb" min="0" step="0.1" placeholder="e.g. 2">
-              </div>
-              <div class="fg">
-                <label>Monthly uploads limit</label>
-                <input type="number" id="cldMonthlyLimitCount" min="0" step="1" placeholder="e.g. 20">
-              </div>
-              <div class="fg full">
-                <div class="cld-actions">
-                  <button type="button" class="btn btn-ghost" onclick="saveCloudinarySettings()">Save settings</button>
-                  <button type="button" class="btn btn-ghost" onclick="clearCloudinarySettings()">Clear</button>
-                  <button type="button" class="btn btn-ghost" onclick="refreshCloudinaryUsage()">Refresh usage</button>
-                </div>
-                <div class="upload-hint">API Secret is stored only in this browser (localStorage). Do not publish this admin page publicly.</div>
-              </div>
-            </div>
-          </details>
         </div>
       </form>
     </div>
@@ -2703,7 +2671,7 @@
         <td data-label="ფოტო">${photos.length} ${photosLabel}</td>
         <td data-label="მოქმედება">
           <div class="action-btns">
-            <button class="btn-icon edit" title="რედაქტირება" onclick="editDayTour('${t.id}')">
+            <button class="btn-icon edit" title="რე��აქტირება" onclick="editDayTour('${t.id}')">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
             <button class="btn-icon del" title="წაშლა" onclick="confirmDeleteDayTour('${t.id}','${(t.name||'').replace(/'/g,"\\'")}')">
@@ -3184,11 +3152,11 @@ window.openMultiDayTourModal = function() {
     const raw = localStorage.getItem(CLD_SETTINGS_KEY);
     const parsed = raw ? safeJsonParse(raw) : null;
     return {
-      cloudName: parsed?.cloudName || 'dgxpz7hgk',
-      apiKey: parsed?.apiKey || '687841165932525',
-      apiSecret: parsed?.apiSecret || 'cLXAl7cQGzx-dB2k-OqB6fC9mIk',
-      monthlyLimitBytes: Number.isFinite(parsed?.monthlyLimitBytes) ? parsed.monthlyLimitBytes : (2 * (1024 ** 3)), // 2 GB default
-      monthlyLimitCount: Number.isFinite(parsed?.monthlyLimitCount) ? parsed.monthlyLimitCount : 30 // 30 uploads default
+      cloudName: 'dgxpz7hgk',
+      apiKey: '687841165932525',
+      apiSecret: 'cLXAl7cQGzx-dB2k-OqB6fC9mIk',
+      monthlyLimitBytes: (2 * (1024 ** 3)), // 2 GB
+      monthlyLimitCount: 30 // 30 uploads per month
     };
   }
 
@@ -3348,35 +3316,35 @@ window.openMultiDayTourModal = function() {
     const credits = cloudinaryUsageSnapshot?.credits;
     if (credits && Number.isFinite(credits.usage) && Number.isFinite(credits.limit) && credits.limit > 0) {
       const left = Math.max(0, credits.limit - credits.usage);
-      parts.push(`Cloudinary credits: ${credits.usage} / ${credits.limit} (${left} left)`);
+      parts.push(`Credits: ${credits.usage} / ${credits.limit} (${left} left)`);
     }
 
     const bandwidth = cloudinaryUsageSnapshot?.bandwidth;
     if (bandwidth && Number.isFinite(bandwidth.usage) && Number.isFinite(bandwidth.limit) && bandwidth.limit > 0) {
       const left = Math.max(0, bandwidth.limit - bandwidth.usage);
-      parts.push(`Cloudinary bandwidth: ${formatBytes(bandwidth.usage)} / ${formatBytes(bandwidth.limit)} (${formatBytes(left)} left)`);
+      parts.push(`Bandwidth: ${formatBytes(bandwidth.usage)} / ${formatBytes(bandwidth.limit)} (${formatBytes(left)} left)`);
     }
 
     const storage = cloudinaryUsageSnapshot?.storage;
     if (storage && Number.isFinite(storage.usage) && Number.isFinite(storage.limit) && storage.limit > 0) {
       const left = Math.max(0, storage.limit - storage.usage);
-      parts.push(`Cloudinary storage: ${formatBytes(storage.usage)} / ${formatBytes(storage.limit)} (${formatBytes(left)} left)`);
+      parts.push(`Storage: ${formatBytes(storage.usage)} / ${formatBytes(storage.limit)} (${formatBytes(left)} left)`);
     }
 
     if (settings.monthlyLimitBytes > 0) {
       const left = Math.max(0, settings.monthlyLimitBytes - usage.bytes);
-      parts.push(`Uploads size: ${formatBytes(usage.bytes)} / ${formatBytes(settings.monthlyLimitBytes)} (${formatBytes(left)} left)`);
+      parts.push(`Your uploads: ${formatBytes(usage.bytes)} / ${formatBytes(settings.monthlyLimitBytes)} (${formatBytes(left)} left)`);
     }
     if (settings.monthlyLimitCount > 0) {
       const left = Math.max(0, settings.monthlyLimitCount - usage.count);
-      parts.push(`Uploads: ${usage.count} / ${settings.monthlyLimitCount} (${left} left)`);
+      parts.push(`Video count: ${usage.count} / ${settings.monthlyLimitCount} (${left} left)`);
     }
 
     if (parts.length === 0) {
       if (cloudinaryUsageSnapshot?.error) {
-        el.textContent = 'Cloudinary usage unavailable (CORS?). Set manual limits in Cloudinary Settings.';
+        el.textContent = 'Cloudinary usage unavailable (CORS?)';
       } else {
-        el.innerHTML = `Monthly limit not set. <strong>Set it in Cloudinary Settings</strong>.`;
+        el.textContent = 'Upload quota configured automatically.';
       }
       return;
     }
@@ -3384,20 +3352,21 @@ window.openMultiDayTourModal = function() {
     el.innerHTML = `This month: <strong>${parts.join(' &bull; ')}</strong>`;
   }
 
+  // Settings are managed externally, no need to save/clear from UI
   window.saveCloudinarySettings = async function() {
-    const next = readCloudinarySettingsFromUi();
-    setCloudinarySettings(next);
-    toast('Cloudinary settings saved');
-    await refreshCloudinaryUsageInternal();
-    updateBlogVideoQuotaLine().catch(() => {});
+    toast('Cloudinary settings are pre-configured');
+    await updateBlogVideoQuotaLine().catch(() => {});
   };
 
   window.clearCloudinarySettings = async function() {
-    localStorage.removeItem(CLD_SETTINGS_KEY);
-    cloudinaryUsageSnapshot = null;
-    writeCloudinarySettingsToUi(getCloudinarySettings());
-    toast('Cloudinary settings cleared');
+    toast('Cannot clear pre-configured settings');
+  };
+
+  window.refreshCloudinaryUsage = async function() {
+    await refreshCloudinaryUsageInternal();
     updateBlogVideoQuotaLine().catch(() => {});
+    if (cloudinaryUsageSnapshot?.error) toast('Cloudinary usage: ' + cloudinaryUsageSnapshot.error, 'err');
+    else toast('Cloudinary usage updated');
   };
 
   // File input handler for blogs
@@ -3685,7 +3654,6 @@ window.openMultiDayTourModal = function() {
     });
   }
 
-  writeCloudinarySettingsToUi(getCloudinarySettings());
   updateBlogVideoQuotaLine().catch(() => {});
   refreshCloudinaryUsageInternal().then(() => updateBlogVideoQuotaLine().catch(() => {}));
 
@@ -3745,7 +3713,6 @@ window.openMultiDayTourModal = function() {
     blogUploadedVideo = null;
     renderBlogUploadedPhotos();
     renderBlogUploadedVideo();
-    writeCloudinarySettingsToUi(getCloudinarySettings());
     updateBlogVideoQuotaLine().catch(() => {});
     refreshCloudinaryUsageInternal().then(() => updateBlogVideoQuotaLine().catch(() => {}));
     document.getElementById('blogModalWrap').classList.add('open');
@@ -3776,7 +3743,6 @@ window.openMultiDayTourModal = function() {
     renderBlogUploadedPhotos();
     blogUploadedVideo = (b.video && typeof b.video === 'object') ? { ...b.video } : (b.videoUrl ? { url: b.videoUrl } : null);
     renderBlogUploadedVideo();
-    writeCloudinarySettingsToUi(getCloudinarySettings());
     updateBlogVideoQuotaLine().catch(() => {});
     refreshCloudinaryUsageInternal().then(() => updateBlogVideoQuotaLine().catch(() => {}));
     document.getElementById('blogModalWrap').classList.add('open');
