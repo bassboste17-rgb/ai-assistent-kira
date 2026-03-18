@@ -1,0 +1,78 @@
+{
+  "rules": {
+    "admins": {
+      ".read": "auth != null",
+      ".write": false
+    },
+
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    "pending_admins": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    },
+
+    "tours": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+    },
+
+    "dayTours": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+    },
+
+    "multiDayTours": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+    },
+
+    "bookings": {
+      ".read": true,
+      ".write": true
+    },
+
+    "blogs": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+    },
+
+    "posts": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+    },
+
+    "reviews": {
+      ".read": true,
+      ".write": true
+    },
+
+    "settings": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+    },
+
+    "statistics": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+    },
+
+    "adminUsage": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).exists()",
+      ".write": "auth != null && root.child('admins').child(auth.uid).exists()",
+      "cloudinaryVideo": {
+        "$monthKey": {
+          ".read": "auth != null && root.child('admins').child(auth.uid).exists()",
+          ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+        }
+      }
+    }
+  }
+}
