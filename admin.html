@@ -3514,7 +3514,7 @@ window.openMultiDayTourModal = function() {
     
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'ml_default');
+    formData.append('upload_preset', 'damq_travel');
     formData.append('folder', CLD_DEFAULT_FOLDER);
 
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
@@ -3714,7 +3714,7 @@ window.openMultiDayTourModal = function() {
   window.saveBlog = async function() {
     const docId = document.getElementById('blogDocId').value;
     const title_ka = document.getElementById('blogTitle_ka').value.trim();
-    if (!title_ka) { toast('შეავსეთ სათაური (ქართული)', 'err'); return; }
+    if (!title_ka) { toast('შეავსეთ ს��თაური (ქართული)', 'err'); return; }
 
     const now = Date.now();
     const data = {
