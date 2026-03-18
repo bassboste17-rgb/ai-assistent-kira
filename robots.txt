@@ -1,0 +1,77 @@
+# robots.txt for DAMQ Travel
+# https://damqtravel.com
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin and login pages
+Disallow: /admin.html
+Disallow: /login.html
+Disallow: /js/firebase-config.js
+
+# Disallow component fragments (not full pages)
+Disallow: /components/
+
+# Allow important assets for rendering
+Allow: /css/
+Allow: /js/main.js
+Allow: /js/translations.js
+Allow: /images/
+
+# Sitemap location
+Sitemap: https://damqtravel.com/sitemap.xml
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Google Images
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yandex (important for Russian-speaking audience)
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Host directive (canonical domain)
+Host: https://damqtravel.com
