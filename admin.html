@@ -3106,7 +3106,7 @@ window.openMultiDayTourModal = function() {
     try {
       if (docId) {
         await rtdbUpdate('multiDayTours', docId, data);
-        toast('ტური განახლდა');
+        toast('ტური გ���ნახლდა');
       } else {
         data.createdAt = now;
         await rtdbAdd('multiDayTours', data);
@@ -3539,19 +3539,11 @@ window.openMultiDayTourModal = function() {
 
   async function uploadVideoToCloudinary(file, settings, onProgress) {
     const cloudName = (settings.cloudName || '').trim();
-    const apiKey = (settings.apiKey || '').trim();
-    const apiSecret = (settings.apiSecret || '').trim();
-
-    const timestamp = Math.floor(Date.now() / 1000);
-    const paramsToSign = { folder: CLD_DEFAULT_FOLDER, timestamp };
-    const signature = await cloudinarySignature(paramsToSign, apiSecret);
-
+    
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('api_key', apiKey);
-    formData.append('timestamp', String(timestamp));
+    formData.append('upload_preset', 'damq_blog_video');
     formData.append('folder', CLD_DEFAULT_FOLDER);
-    formData.append('signature', signature);
 
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
     return await xhrPostFormData(url, formData, onProgress);
@@ -3569,9 +3561,8 @@ window.openMultiDayTourModal = function() {
       const settingsDetails = document.getElementById('cldSettingsDetails');
 
       const settings = getCloudinarySettings();
-      if (!settings.cloudName || !settings.apiKey || !settings.apiSecret) {
-        toast('Set Cloudinary Settings first', 'err');
-        if (settingsDetails) settingsDetails.open = true;
+      if (!settings.cloudName) {
+        toast('Cloudinary cloud name not configured', 'err');
         blogVideoInput.value = '';
         return;
       }
