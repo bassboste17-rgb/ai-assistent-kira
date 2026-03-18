@@ -322,27 +322,33 @@
         const desc = b['desc_' + lang] || b.desc || '';
         const videoUrl = (b.video && typeof b.video === 'object' ? b.video.url : '') || b.videoUrl || '';
         const hasVideo = !!videoUrl;
+        const thumbnail = b.image || (hasVideo ? '' : 'images/placeholder.jpg');
         
         return `
         <article class="blog-card animate-on-scroll" onclick="location.href='blog-detail.html?id=${b.id}'">
-          <div class="blog-card-image">
-            <img src="${b.image || 'images/placeholder.jpg'}" alt="${title}" loading="lazy">
+          <div class="blog-card-media">
             ${hasVideo ? `
-              <div class="blog-video-badge" title="Video">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <video class="blog-card-video" muted loop playsinline preload="metadata" poster="${thumbnail}">
+                <source src="${videoUrl}" type="video/mp4">
+              </video>
+              <div class="blog-video-play-overlay">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
-            ` : ''}
-            <div class="blog-card-body">
-              <div class="blog-card-meta">
-                <span>${formatDate(b.createdAt)}</span>
-              </div>
-              <h3 class="blog-card-title">${title}</h3>
-              <p class="blog-card-desc">${desc}</p>
-              <span class="blog-card-link">
-                <span>${window.t ? window.t('blog.readmore', lang) : 'Read More'}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </span>
+            ` : `
+              <img src="${thumbnail}" alt="${title}" loading="lazy">
+            `}
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span>${formatDate(b.createdAt)}</span>
+              ${hasVideo ? '<span class="blog-video-tag">Video</span>' : ''}
             </div>
+            <h3 class="blog-card-title">${title}</h3>
+            <p class="blog-card-desc">${desc}</p>
+            <span class="blog-card-link">
+              <span>${window.t ? window.t('blog.readmore', lang) : 'Read More'}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
           </div>
         </article>
         `;
