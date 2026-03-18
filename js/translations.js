@@ -206,6 +206,11 @@ const translations = {
   "admin.table.region":     { ru: "Регион",         en: "Region",           ka: "რეგიონი" },
   "admin.table.photo":      { ru: "Фото",           en: "Photo",            ka: "ფოტო" },
   "admin.table.loading":    { ru: "Загрузка...",    en: "Loading...",       ka: "იტვირთება..." },
+  "admin.table.empty.tours":    { ru: "Туры еще не добавлены",     en: "No tours added yet",     ka: "ტურები ჯერ არ დამატებულა" },
+  "admin.table.empty.bookings": { ru: "Бронирований пока нет",     en: "No bookings yet",        ka: "ჯავშნები ჯერ არ არის" },
+  "admin.table.empty.reviews":  { ru: "Отзывов пока нет",          en: "No reviews yet",         ka: "შეფასებები ჯერ არ არის" },
+  "admin.table.empty.blogs":    { ru: "Блоги еще не добавлены",    en: "No blogs added yet",     ka: "ბლოგები ჯერ არ დამატებულა" },
+  "admin.table.load.error":     { ru: "Ошибка загрузки",          en: "Loading error",          ka: "ჩატვირთვის შეცდომა" },
   
   "admin.search.tour":      { ru: "Поиск тура...",  en: "Search tour...",   ka: "ტურის ძიება..." },
   "admin.search.name":      { ru: "Поиск по имени...", en: "Search by name...", ka: "ძიება სახელით..." },
@@ -248,6 +253,68 @@ const translations = {
   "admin.modal.add.blog":     { ru: "Добавить блог",         en: "Add Blog",           ka: "ბლოგის დამატება" },
   "admin.modal.edit.blog":    { ru: "Редактировать блог",    en: "Edit Blog",          ka: "ბლოგის რედაქტირება" },
   
+  // Dynamic messages (admin.html JS)
+  "admin.confirm.delete.tour_named": { ru: "Удалить тур «{name}»?", en: "Delete tour “{name}”?", ka: "წავშალოთ ტური «{name}»?" },
+  "admin.confirm.delete.booking":    { ru: "Удалить это бронирование?", en: "Delete this booking?", ka: "წავშალოთ ეს ჯავშანი?" },
+  "admin.confirm.delete.review":     { ru: "Удалить этот отзыв?", en: "Delete this review?", ka: "წავშალოთ ეს შეფასება?" },
+  "admin.confirm.delete.blog_named": { ru: "Удалить блог \"{title}\"?", en: "Delete blog \"{title}\"?", ka: "წაშალოთ ბლოგი \"{title}\"?" },
+
+  "admin.loading.tour.add":       { ru: "Добавление тура...",     en: "Adding tour...",     ka: "ტურის დამატება..." },
+  "admin.loading.tour.update":    { ru: "Обновление тура...",     en: "Updating tour...",   ka: "ტურის განახლება..." },
+  "admin.loading.tour.delete":    { ru: "Удаление тура...",       en: "Deleting tour...",   ka: "ტურის წაშლა..." },
+  "admin.loading.blog.add":       { ru: "Добавление блога...",    en: "Adding blog...",     ka: "ბლოგის დამატება..." },
+  "admin.loading.blog.update":    { ru: "Обновление блога...",    en: "Updating blog...",   ka: "ბლოგის განახლება..." },
+  "admin.loading.blog.delete":    { ru: "Удаление блога...",      en: "Deleting blog...",   ka: "ბლოგის წაშლა..." },
+  "admin.loading.status.update":  { ru: "Обновление статуса...",  en: "Updating status...", ka: "სტატუსის განახლება..." },
+  "admin.loading.review.approve": { ru: "Одобрение отзыва...",    en: "Approving review...", ka: "შეფასების დამტკიცება..." },
+  "admin.loading.delete":         { ru: "Удаление...",            en: "Deleting...",        ka: "წაშლა..." },
+
+  "admin.upload.progress":        { ru: "Загрузка {cur}/{total}...", en: "Uploading {cur}/{total}...", ka: "იტვირთება {cur}/{total}..." },
+  "admin.toast.photo_upload_error": { ru: "Ошибка загрузки фото: {msg}", en: "Photo upload error: {msg}", ka: "ფოტოს ატვირთვის შეცდომა: {msg}" },
+  "admin.toast.photos_uploaded":  { ru: "Загружено {count} фото",   en: "Uploaded {count} photos",   ka: "{count} ფოტო აიტვირთა" },
+
+  "admin.toast.error":            { ru: "Ошибка: {msg}",           en: "Error: {msg}",              ka: "შეცდომა: {msg}" },
+  "admin.toast.delete_error":     { ru: "Ошибка удаления: {msg}",  en: "Delete error: {msg}",       ka: "წაშლის შეცდომა: {msg}" },
+  "admin.toast.tour.id_missing":  { ru: "Ошибка: ID тура не найден", en: "Error: Tour ID not found", ka: "შეცდომა: ტურის ID ვერ მოიძებნა" },
+  "admin.toast.fill_name_price":  { ru: "Заполните название и цену", en: "Fill in name and price",   ka: "შეავსეთ სახელი და ფასი" },
+  "admin.toast.required_fields":  { ru: "Заполните все обязательные поля", en: "Fill all required fields", ka: "შეავსეთ ყველა სავალდებულო ველი" },
+  "admin.toast.no_message":       { ru: "Сообщения нет",           en: "No message",                ka: "შეტყობინება არ არის" },
+
+  "admin.toast.tour.updated":     { ru: "Тур обновлен",            en: "Tour updated",              ka: "ტური განახლდა" },
+  "admin.toast.tour.added":       { ru: "Тур добавлен",            en: "Tour added",                ka: "ტური დაემატა" },
+  "admin.toast.tour.deleted":     { ru: "Тур удален",              en: "Tour deleted",              ka: "ტური წაიშალა" },
+  "admin.toast.booking.deleted":  { ru: "Бронирование удалено",    en: "Booking deleted",           ka: "ჯავშანი წაიშალა" },
+  "admin.toast.status.updated":   { ru: "Статус обновлен",         en: "Status updated",            ka: "სტატუსი განახლდა" },
+  "admin.toast.review.approved":  { ru: "Отзыв одобрен",           en: "Review approved",           ka: "შეფასება დამტკიცდა" },
+  "admin.toast.review.deleted":   { ru: "Отзыв удален",            en: "Review deleted",            ka: "შეფასება წაიშალა" },
+  "admin.toast.blog.updated":     { ru: "Блог обновлен",           en: "Blog updated",              ka: "ბლოგი განახლდა" },
+  "admin.toast.blog.added":       { ru: "Блог добавлен",           en: "Blog added",                ka: "ბლოგი დაემატა" },
+  "admin.toast.blog.deleted":     { ru: "Блог удален",             en: "Blog deleted",              ka: "ბლოგი წაიშალა" },
+  "admin.toast.blog.title_ka_required": { ru: "Введите заголовок (грузинский)", en: "Fill in title (Georgian)", ka: "შეავსეთ სათაური (ქართული)" },
+
+  "admin.validation.tour.name.ka": { ru: "Введите название тура на грузинском", en: "Enter the tour name in Georgian", ka: "შეავსეთ ტურის სახელი ქართულად" },
+  "admin.validation.tour.name.ru": { ru: "Введите название тура на русском",    en: "Enter the tour name in Russian",  ka: "შეავსეთ ტურის სახელი რუსულად" },
+  "admin.validation.tour.name.en": { ru: "Введите название тура на английском", en: "Enter the tour name in English",  ka: "შეავსეთ ტურის სახელი ინგლისურად" },
+  "admin.alert.form_loading":      { ru: "Элементы формы еще не загрузились. Пожалуйста, подождите...", en: "Form elements are not ready yet. Please wait...", ka: "ფორმის ელემენტები ჯერ არ ჩატვირთა. გთხოვთ დაელოდოთ..." },
+
+  // Cloudinary / blog video (UI toasts + quota line)
+  "admin.cloudinary.toast.usage_error":   { ru: "Статистика Cloudinary: {msg}", en: "Cloudinary usage: {msg}", ka: "Cloudinary-ს გამოყენება: {msg}" },
+  "admin.cloudinary.toast.usage_updated": { ru: "Статистика Cloudinary обновлена", en: "Cloudinary usage updated", ka: "Cloudinary-ს გამოყენება განახლდა" },
+  "admin.cloudinary.toast.quota_update_failed": { ru: "Загружено, но не удалось обновить счетчик квоты", en: "Uploaded, but failed to update quota counter", ka: "აიტვირთა, მაგრამ კვოტის მრიცხველის განახლება ვერ მოხერხდა" },
+  "admin.cloudinary.toast.settings_preconfigured": { ru: "Настройки Cloudinary уже настроены", en: "Cloudinary settings are pre-configured", ka: "Cloudinary-ის პარამეტრები წინასწარ არის კონფიგურირებული" },
+  "admin.cloudinary.toast.settings_cannot_clear":  { ru: "Нельзя очистить преднастроенные параметры", en: "Cannot clear pre-configured settings", ka: "წინასწარ კონფიგურირებული პარამეტრების გასუფთავება შეუძლებელია" },
+  "admin.cloudinary.quota.default":       { ru: "Квота загрузки: 2 ГБ в месяц, максимум 30 видео", en: "Upload quota: 2 GB per month, max 30 videos", ka: "ატვირთვის კვოტა: თვეში 2 GB, მაქს. 30 ვიდეო" },
+  "admin.cloudinary.quota.this_month_html": { ru: "В этом месяце: <strong>{parts}</strong>", en: "This month: <strong>{parts}</strong>", ka: "ამ თვეში: <strong>{parts}</strong>" },
+  "admin.cloudinary.quota.bytes":         { ru: "Загружено: {used} / {limit} (осталось {left})", en: "Uploaded: {used} / {limit} ({left} left)", ka: "ატვირთულია: {used} / {limit} ({left} დარჩა)" },
+  "admin.cloudinary.quota.videos":        { ru: "Видео: {count} / {limit} (осталось {left})", en: "Videos: {count} / {limit} ({left} left)", ka: "ვიდეო: {count} / {limit} ({left} დარჩა)" },
+  "admin.cloudinary.toast.video_removed": { ru: "Видео удалено", en: "Video removed", ka: "ვიდეო წაიშალა" },
+  "admin.cloudinary.toast.video_uploaded": { ru: "Видео загружено", en: "Video uploaded", ka: "ვიდეო აიტვირთა" },
+  "admin.cloudinary.toast.video_upload_error": { ru: "Ошибка загрузки видео: {msg}", en: "Video upload error: {msg}", ka: "ვიდეოს ატვირთვის შეცდომა: {msg}" },
+  "admin.cloudinary.error.cloud_name_missing": { ru: "Не настроено имя облака Cloudinary", en: "Cloudinary cloud name not configured", ka: "Cloudinary-ის cloud name არ არის კონფიგურირებული" },
+  "admin.cloudinary.error.monthly_limit_credits": { ru: "Достигнут месячный лимит Cloudinary (кредиты)", en: "Cloudinary monthly limit reached (credits)", ka: "Cloudinary-ის თვიური ლიმიტი მიღწეულია (credits)" },
+  "admin.cloudinary.error.monthly_limit_gb": { ru: "Достигнут месячный лимит GB (загрузка видео заблокирована)", en: "Monthly GB limit reached (video upload blocked)", ka: "თვიური GB ლიმიტი მიღწეულია (ვიდეოს ატვირთვა დაბლოკილია)" },
+  "admin.cloudinary.error.monthly_limit_uploads": { ru: "Достигнут месячный лимит загрузок (загрузка видео заблокирована)", en: "Monthly uploads limit reached (video upload blocked)", ka: "თვიური ატვირთვების ლიმიტი მიღწეულია (ვიდეოს ატვირთვა დაბლოკილია)" },
+
   // Form labels
   "admin.form.tour.name":     { ru: "Название тура *",       en: "Tour name *",        ka: "ტურის სახელი *" },
   "admin.form.name.lang":     { ru: "Название / Name / სახელი *", en: "Name / Name / სახელი *", ka: "სახელი / Name / Название *" },
@@ -270,6 +337,9 @@ const translations = {
   "admin.btn.save":           { ru: "Сохранить",             en: "Save",               ka: "შენახვა" },
   "admin.btn.delete":         { ru: "Удалить",               en: "Delete",             ka: "წაშლა" },
   "admin.btn.close":          { ru: "Закрыть",               en: "Close",              ka: "დახურვა" },
+  "admin.btn.edit":           { ru: "Редактировать",         en: "Edit",               ka: "რედაქტირება" },
+  "admin.btn.view":           { ru: "Смотреть",              en: "View",               ka: "ნახვა" },
+  "admin.btn.approve":        { ru: "Одобрить",              en: "Approve",            ka: "დამტკიცება" },
   
   // Statuses
   "admin.status.new":         { ru: "Новый",                 en: "New",                ka: "ახალი" },
@@ -348,6 +418,9 @@ const translations = {
   "admin.form.blog.title":    { ru: "Заголовок / Title / სათაური *", en: "Title / Заголовок / სათაური *", ka: "სათაური / Title / Заголовок *" },
   "admin.form.blog.content":  { ru: "Содержание / Content / შინაარსი *", en: "Content / Содержание / შინაარსი *", ka: "შინაარსი / Content / Содержание *" },
   "admin.form.blog.photo":    { ru: "Фотография блога",       en: "Blog photo",          ka: "ბლოგის ფოტო" },
+  "admin.form.blog.video":    { ru: "Видео (загрузка в Cloudinary)", en: "Video (uploads to Cloudinary)", ka: "ვიდეო (იტვირთება Cloudinary-ზე)" },
+  "admin.form.blog.video.select": { ru: "Выберите видео",      en: "Select video",       ka: "აირჩიეთ ვიდეო" },
+  "admin.form.blog.video.drag":   { ru: "или перетащите сюда", en: "or drop it here",    ka: "ან გადმოიტანეთ აქ" },
   
   // Loading overlay
   "admin.loading.firebase":   { ru: "Записываем в Firebase",  en: "Writing to Firebase", ka: "Firebase-ში ჩაწერა" },
