@@ -70,7 +70,17 @@
       "cloudinaryVideo": {
         "$monthKey": {
           ".read": "auth != null && root.child('admins').child(auth.uid).exists()",
-          ".write": "auth != null && root.child('admins').child(auth.uid).exists()"
+          ".write": "auth != null && root.child('admins').child(auth.uid).exists()",
+          ".validate": "newData.hasChildren(['bytes', 'count', 'updatedAt']) || newData.val() === null",
+          "bytes": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "count": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          }
         }
       }
     }
