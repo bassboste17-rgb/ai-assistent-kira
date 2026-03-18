@@ -1463,7 +1463,7 @@
             <button type="button" class="lang-tab" data-lang="en">EN</button>
           </div>
           <div class="lang-panels">
-            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის აღწერა (ქართული)..." required></textarea></div>
+            <div class="lang-panel active" data-lang="ka" data-group="dtDescLang"><textarea id="dtDesc_ka" placeholder="ტურის ა��წერა (ქართული)..." required></textarea></div>
             <div class="lang-panel" data-lang="ru" data-group="dtDescLang"><textarea id="dtDesc_ru" placeholder="Описание тура (русский)..."></textarea></div>
             <div class="lang-panel" data-lang="en" data-group="dtDescLang"><textarea id="dtDesc_en" placeholder="Tour description (English)..."></textarea></div>
           </div>
@@ -2453,7 +2453,7 @@
   function renderReviews(list) {
     const tb = document.getElementById('reviewsTbody');
     if (!list.length) {
-      tb.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2.5rem;color:#bbb;">შეფასებები ჯერ არ არის</td></tr>`;
+      tb.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2.5rem;color:#bbb;">შეფასებები ჯერ არ ა��ის</td></tr>`;
       return;
     }
     tb.innerHTML = list.map(r => `
@@ -3184,11 +3184,11 @@ window.openMultiDayTourModal = function() {
     const raw = localStorage.getItem(CLD_SETTINGS_KEY);
     const parsed = raw ? safeJsonParse(raw) : null;
     return {
-      cloudName: parsed?.cloudName || '',
-      apiKey: parsed?.apiKey || '',
-      apiSecret: parsed?.apiSecret || '',
-      monthlyLimitBytes: Number.isFinite(parsed?.monthlyLimitBytes) ? parsed.monthlyLimitBytes : 0,
-      monthlyLimitCount: Number.isFinite(parsed?.monthlyLimitCount) ? parsed.monthlyLimitCount : 0
+      cloudName: parsed?.cloudName || 'dgxpz7hgk',
+      apiKey: parsed?.apiKey || '687841165932525',
+      apiSecret: parsed?.apiSecret || 'cLXAl7cQGzx-dB2k-OqB6fC9mIk',
+      monthlyLimitBytes: Number.isFinite(parsed?.monthlyLimitBytes) ? parsed.monthlyLimitBytes : (2 * (1024 ** 3)), // 2 GB default
+      monthlyLimitCount: Number.isFinite(parsed?.monthlyLimitCount) ? parsed.monthlyLimitCount : 30 // 30 uploads default
     };
   }
 
