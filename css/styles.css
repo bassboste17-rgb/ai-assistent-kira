@@ -2495,6 +2495,17 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
+.page-blog .blog-card-image {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.page-blog .blog-card-image video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .blog-card-image img {
   width: 100%;
   height: auto !important;

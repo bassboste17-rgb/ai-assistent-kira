@@ -88,7 +88,7 @@
     .page-hero-subtitle { color: rgba(255,255,255,0.68); font-size: 1.05rem; line-height: 1.75; }
   </style>
 </head>
-<body>
+<body class="page-blog">
 
   <!-- Navbar -->
   <div id="navbar-placeholder"><nav class="navbar" id="navbar">
@@ -326,15 +326,20 @@
         return `
         <article class="blog-card animate-on-scroll" onclick="location.href='blog-detail.html?id=${b.id}'">
           <div class="blog-card-image">
-            <img src="${b.image || 'images/placeholder.jpg'}" alt="${title}" loading="lazy">
             ${hasVideo ? `
-              <div class="blog-video-badge" title="Video">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <video class="blog-card-video" muted loop playsinline preload="metadata" poster="${b.image || ''}">
+                <source src="${videoUrl}" type="video/mp4">
+              </video>
+              <div class="blog-video-play-overlay">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
               </div>
-            ` : ''}
+            ` : `
+              <img src="${b.image || 'images/placeholder.jpg'}" alt="${title}" loading="lazy">
+            `}
             <div class="blog-card-body">
               <div class="blog-card-meta">
                 <span>${formatDate(b.createdAt)}</span>
+                ${hasVideo ? '<span class="blog-video-tag">Video</span>' : ''}
               </div>
               <h3 class="blog-card-title">${title}</h3>
               <p class="blog-card-desc">${desc}</p>
