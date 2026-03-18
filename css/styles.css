@@ -2634,27 +2634,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 .blog-video-badge svg { display: block; }
 
-/* Blog Card Media (Video Support) */
-.blog-card-media {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
-  border-radius: var(--radius) var(--radius) 0 0;
-  background: #1a1a1a;
-}
-.blog-card-media img,
-.blog-card-media video {
+/* Blog Card Video Support */
+.blog-card-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
-}
-.blog-card:hover .blog-card-media img,
-.blog-card:hover .blog-card-media video {
-  transform: scale(1.05);
-}
-.blog-card-video {
   background: #000;
 }
 .blog-video-play-overlay {
@@ -2665,6 +2651,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   background: rgba(0,0,0,0.35);
   transition: background 0.3s ease;
+  z-index: 2;
 }
 .blog-video-play-overlay svg {
   width: 64px;
