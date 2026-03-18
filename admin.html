@@ -3266,35 +3266,14 @@ window.openMultiDayTourModal = function() {
   }
 
   async function fetchCloudinaryUsage(settings) {
-    const cloudName = (settings.cloudName || '').trim();
-    const apiKey = (settings.apiKey || '').trim();
-    const apiSecret = (settings.apiSecret || '').trim();
-
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/usage`;
-    const auth = btoa(`${apiKey}:${apiSecret}`);
-
-    const res = await fetch(url, {
-      method: 'GET',
-      headers: { Authorization: `Basic ${auth}` },
-      cache: 'no-store'
-    });
-
-    if (!res.ok) throw new Error(`Cloudinary usage failed (${res.status})`);
-    return await res.json();
+    // Cloudinary usage API doesn't support CORS from browser
+    // This function is disabled to prevent CORS errors
+    throw new Error('Cloudinary usage API is not available from browser (CORS restriction)');
   }
 
   async function refreshCloudinaryUsageInternal() {
-    const settings = getCloudinarySettings();
-    if (!settings.cloudName || !settings.apiKey || !settings.apiSecret) {
-      cloudinaryUsageSnapshot = null;
-      return;
-    }
-    try {
-      const raw = await fetchCloudinaryUsage(settings);
-      cloudinaryUsageSnapshot = { fetchedAt: Date.now(), ...parseCloudinaryUsage(raw) };
-    } catch (err) {
-      cloudinaryUsageSnapshot = { fetchedAt: Date.now(), error: err?.message || String(err) };
-    }
+    // Cloudinary usage API doesn't support CORS, skip it
+    cloudinaryUsageSnapshot = { fetchedAt: Date.now(), error: 'CORS restricted' };
   }
 
   window.refreshCloudinaryUsage = async function() {
@@ -3313,39 +3292,17 @@ window.openMultiDayTourModal = function() {
 
     const parts = [];
 
-    const credits = cloudinaryUsageSnapshot?.credits;
-    if (credits && Number.isFinite(credits.usage) && Number.isFinite(credits.limit) && credits.limit > 0) {
-      const left = Math.max(0, credits.limit - credits.usage);
-      parts.push(`Credits: ${credits.usage} / ${credits.limit} (${left} left)`);
-    }
-
-    const bandwidth = cloudinaryUsageSnapshot?.bandwidth;
-    if (bandwidth && Number.isFinite(bandwidth.usage) && Number.isFinite(bandwidth.limit) && bandwidth.limit > 0) {
-      const left = Math.max(0, bandwidth.limit - bandwidth.usage);
-      parts.push(`Bandwidth: ${formatBytes(bandwidth.usage)} / ${formatBytes(bandwidth.limit)} (${formatBytes(left)} left)`);
-    }
-
-    const storage = cloudinaryUsageSnapshot?.storage;
-    if (storage && Number.isFinite(storage.usage) && Number.isFinite(storage.limit) && storage.limit > 0) {
-      const left = Math.max(0, storage.limit - storage.usage);
-      parts.push(`Storage: ${formatBytes(storage.usage)} / ${formatBytes(storage.limit)} (${formatBytes(left)} left)`);
-    }
-
     if (settings.monthlyLimitBytes > 0) {
       const left = Math.max(0, settings.monthlyLimitBytes - usage.bytes);
-      parts.push(`Your uploads: ${formatBytes(usage.bytes)} / ${formatBytes(settings.monthlyLimitBytes)} (${formatBytes(left)} left)`);
+      parts.push(`Uploaded: ${formatBytes(usage.bytes)} / ${formatBytes(settings.monthlyLimitBytes)} (${formatBytes(left)} left)`);
     }
     if (settings.monthlyLimitCount > 0) {
       const left = Math.max(0, settings.monthlyLimitCount - usage.count);
-      parts.push(`Video count: ${usage.count} / ${settings.monthlyLimitCount} (${left} left)`);
+      parts.push(`Videos: ${usage.count} / ${settings.monthlyLimitCount} (${left} left)`);
     }
 
     if (parts.length === 0) {
-      if (cloudinaryUsageSnapshot?.error) {
-        el.textContent = 'Cloudinary usage unavailable (CORS?)';
-      } else {
-        el.textContent = 'Upload quota configured automatically.';
-      }
+      el.textContent = 'Upload quota: 2 GB per month, max 30 videos';
       return;
     }
 
@@ -3717,7 +3674,7 @@ window.openMultiDayTourModal = function() {
     const b = allBlogs.find(x => x.id === id);
     if (!b) return;
     clearAllFieldErrors(document.getElementById('blogModalWrap'));
-    document.getElementById('blogModalTitle').textContent = 'ბლოგის რედაქტირება';
+    document.getElementById('blogModalTitle').textContent = '���ლოგის რედაქტირება';
     document.getElementById('blogDocId').value = b.id;
     document.getElementById('blogTitle_ka').value = b.title_ka || b.title || '';
     document.getElementById('blogTitle_ru').value = b.title_ru || '';
