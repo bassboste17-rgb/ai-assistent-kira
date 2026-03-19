@@ -392,13 +392,14 @@
     function renderBlogs(blogs) {
       const grid = document.getElementById('blogGrid');
       if (!grid) return;
-      
-      if (blogs.length === 0) {
-        grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#aaa;">ბლოგები ჯერ არ არის დამატებული.</p>';
-        return;
-      }
 
       const lang = getLang();
+       
+      if (blogs.length === 0) {
+        const emptyMsg = window.t ? window.t('blog.empty', lang) : 'No blogs added yet.';
+        grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;padding:2rem;color:#aaa;">${emptyMsg}</p>`;
+        return;
+      }
       
       grid.innerHTML = blogs.map((b, idx) => {
         const title = b['title_' + lang] || b.title || '';

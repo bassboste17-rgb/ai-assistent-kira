@@ -755,6 +755,7 @@ const translations = {
   "blog.readmore":  { ru: "Читать далее", en: "Read More",    ka: "სრულად ნახვა" },
   "blog.back":      { ru: "Назад в блог", en: "Back to Blog", ka: "ბლოგზე დაბრუნება" },
   "blog.loading":   { ru: "Загрузка...",  en: "Loading...",   ka: "იტვირთება..." },
+  "blog.empty":     { ru: "Блоги еще не добавлены.", en: "No blogs added yet.", ka: "ბლოგები ჯერ არ არის დამატებული." },
   "blog.notfound":  { ru: "Статья не найдена", en: "Article not found", ka: "სტატია ვერ მოიძებნა" },
   "blog.cat.mountains": { ru: "Горы",    en: "Mountains",    ka: "მთები" },
   "blog.cat.wine":      { ru: "Вино",    en: "Wine",         ka: "ღვინო" },
